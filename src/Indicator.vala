@@ -59,7 +59,7 @@ public class Indicator : Wingpanel.Indicator {
             stack.add_named (nlist, "list");
             stack.add_named (no_notifications, "no-notifications");
 
-            clear_all_btn = new Wingpanel.Widgets.IndicatorButton (_("Clear all notifications..."));
+            clear_all_btn = new Wingpanel.Widgets.IndicatorButton (_("Clear All Notifications"));
             clear_all_btn.clicked.connect (nlist.clear_all);
 
             var settings_btn = new Wingpanel.Widgets.IndicatorButton (_("Notifications Settings…"));
