@@ -17,11 +17,16 @@
 
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
+    private const uint16 BOX_LIST_WIDTH = 300;
+    private const uint8 BOX_LIST_HEIGHT = 200;
+    private const uint8 BOX_WIDTH = BOX_LIST_HEIGHT;
+    private const uint8 BOX_HEIGHT = 50;
+    private const string[] EXCEPTIONS = ({ "", "indicator-sound", "gnome-settings-daemon" });
+
     private Wingpanel.Widgets.DynamicIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
     private Wingpanel.Widgets.IndicatorButton clear_all_btn;
     private Gtk.Stack stack;
-    private NotDisturbMode not_disturb_box;
 
     private NotificationsList nlist;
     private NotificationMonitor monitor;
@@ -64,7 +69,7 @@ public class Indicator : Wingpanel.Indicator {
             no_notifications_label.use_markup = true;
             no_notifications_label.margin_top = no_notifications_label.margin_bottom = 50;
 
-            not_disturb_box = new NotDisturbMode ();
+            var not_disturb_box = new NotDisturbMode ();
 
             nlist = new NotificationsList ();
 
@@ -84,13 +89,13 @@ public class Indicator : Wingpanel.Indicator {
 
             nlist.switch_stack.connect ((list) => {
                 if (list) {
-                    main_box.set_size_request (300, 200);
-                    stack.set_visible_child (scrolled);
+                    main_box.set_size_request (BOX_LIST_WIDTH, BOX_LIST_HEIGHT);
+                    stack.set_visible_child_name ("list");
                     clear_all_btn.set_visible (true);
                 } else {
                     if (!settings.do_not_disturb) {
-                        main_box.set_size_request (200, 50);
-                        stack.set_visible_child (no_notifications_label);
+                        main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
+                        stack.set_visible_child_name ("no-notifications");
                         dynamic_icon.set_icon_name ("indicator-messages");
                         clear_all_btn.set_visible (false);
                     }
@@ -102,6 +107,9 @@ public class Indicator : Wingpanel.Indicator {
                     return;
 
                 var notification = new Notification.from_message (message);
+                if (notification.app_name in EXCEPTIONS)
+                    return;
+
                 var entry = new NotificationEntry (notification);
                 nlist.add_item (entry);
 
@@ -109,10 +117,10 @@ public class Indicator : Wingpanel.Indicator {
             });
 
             settings.changed["do-not-disturb"].connect (() => {
-                main_box.set_size_request (200, 50);
+                main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
                 dynamic_icon.set_icon_name (get_display_icon_name ());
                 if (settings.do_not_disturb)
-                    stack.set_visible_child (not_disturb_box);
+                    stack.set_visible_child_name ("not-disturb-mode");
                 else
                     nlist.switch_stack (nlist.get_items_length () > 0);    
             });
@@ -130,7 +138,7 @@ public class Indicator : Wingpanel.Indicator {
 
     public override void opened () {
         if (settings.do_not_disturb) {
-            stack.set_visible_child (not_disturb_box);
+            stack.set_visible_child_name ("not-disturb-mode");
             clear_all_btn.set_visible (false); 
             return;
         }

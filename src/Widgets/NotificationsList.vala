@@ -15,13 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotificationsList : Gtk.ListBox {
+public class NotificationsList : Gtk.Box {
     public signal void switch_stack (bool list);
     private GenericArray<NotificationEntry> items;
 
     public NotificationsList () {
-        this.activate_on_single_click = false;
-        this.selection_mode = Gtk.SelectionMode.NONE;
+        this.orientation = Gtk.Orientation.VERTICAL;
+        this.margin_start = this.margin_end = 3;
+        this.margin_top = 2;
 
         items = new GenericArray<NotificationEntry> ();
         this.vexpand = true;
@@ -40,6 +41,8 @@ public class NotificationsList : Gtk.ListBox {
         items.add (entry);
         this.add (entry);
         this.switch_stack (true);
+
+        entry.show_all ();
         this.show_all ();
     }
     

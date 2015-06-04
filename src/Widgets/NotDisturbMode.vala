@@ -29,5 +29,6 @@ Do Not Disturb mode."));
 
         this.add (not_disturb_image);
         this.add (not_disturb_label);
+        this.show_all ();
 	}
 }

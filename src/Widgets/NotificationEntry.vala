@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotificationEntry : Gtk.ListBoxRow {
+public class NotificationEntry : Gtk.Box {
     private Gtk.Image icon;
     private string entry_icon;
     private string entry_summary;
@@ -65,9 +65,11 @@ public class NotificationEntry : Gtk.ListBoxRow {
         body_label.set_alignment (0, 0);
 
         clear_btn = new Gtk.Button.with_label ("Clear");   
+        var btn_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        btn_box.pack_start (clear_btn, false, false, 0);
 
         title_box.pack_start (title_label, false, false, 0);
-        title_box.pack_end (clear_btn, false, false, 0);
+        title_box.pack_end (btn_box, false, false, 0);
 
         vbox.add (title_box);
         vbox.add (body_label);       
@@ -76,6 +78,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         hbox.add (vbox);
         root_vbox.add (hbox); 
         root_vbox.add (new Wingpanel.Widgets.IndicatorSeparator ());  
-        this.add (root_vbox);      
+        this.add (root_vbox);  
+        this.show_all (); 
     }
 }
