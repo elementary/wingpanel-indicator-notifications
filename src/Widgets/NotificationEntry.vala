@@ -1,3 +1,19 @@
+/*-
+ * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Library General Public License as published by
+ * the Free Software Foundation, either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 public class NotificationEntry : Gtk.ListBoxRow {
     private Gtk.Image icon;
@@ -12,6 +28,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
 
+        this.hexpand = true;
         add_widgets ();
     }
     
@@ -31,17 +48,16 @@ public class NotificationEntry : Gtk.ListBoxRow {
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 5);
         var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         
-        var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 70);
+        var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 90);
+        title_box.hexpand = true;
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (entry_summary));
         title_label.max_width_chars = 20;
-        title_label.ellipsize = Pango.EllipsizeMode.END;
         title_label.set_alignment (0, 0);
         title_label.margin_top = 4;
         title_label.use_markup = true;
         title_label.set_line_wrap (true);
-        title_label.hexpand = true;
-        title_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+        title_label.wrap_mode = Pango.WrapMode.WORD;
           
         var body_label = new Gtk.Label (entry_body);
         body_label.set_line_wrap (true);
