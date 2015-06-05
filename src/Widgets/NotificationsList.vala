@@ -17,14 +17,14 @@
 
 public class NotificationsList : Gtk.Box {
     public signal void switch_stack (bool list);
-    private GenericArray<NotificationEntry> items;
+    private List<NotificationEntry> items;
 
     public NotificationsList () {
         this.orientation = Gtk.Orientation.VERTICAL;
         this.margin_start = this.margin_end = 3;
         this.margin_top = 2;
 
-        items = new GenericArray<NotificationEntry> ();
+        items = new List<NotificationEntry> ();
         this.vexpand = true;
         this.show_all ();
     }
@@ -34,11 +34,11 @@ public class NotificationsList : Gtk.Box {
             items.remove (entry);
             this.remove (entry);
 
-            if (items.length == 0)
+            if (items.length () == 0)
                 clear_all ();
         });
 
-        items.add (entry);
+        items.append (entry);
         this.add (entry);
         this.switch_stack (true);
 
@@ -46,13 +46,14 @@ public class NotificationsList : Gtk.Box {
         this.show_all ();
     }
     
-    public int get_items_length () {
-        return items.length;
+    public uint get_items_length () {
+        return items.length ();
     }
     
     public void clear_all () {
-        items.@foreach ((item) => {
-            items.remove (item);     
+        items.@foreach ((entry) => {
+            items.remove (entry);
+            this.remove (entry);
         });
 
         this.switch_stack (false);

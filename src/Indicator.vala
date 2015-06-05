@@ -81,6 +81,11 @@ public class Indicator : Wingpanel.Indicator {
             stack.add_named (no_notifications_label, "no-notifications");
             stack.add_named (not_disturb_box, "not-disturb-mode");
 
+            var not_disturb_switch = new Wingpanel.Widgets.IndicatorSwitch (_("Do Not Disturb"), settings.do_not_disturb);
+            not_disturb_switch.get_switch ().notify["active"].connect (() => { 
+                settings.do_not_disturb = not_disturb_switch.get_switch ().active;
+            });
+
             clear_all_btn = new Wingpanel.Widgets.IndicatorButton (_("Clear All Notifications"));
             clear_all_btn.clicked.connect (nlist.clear_all);
 
@@ -110,13 +115,15 @@ public class Indicator : Wingpanel.Indicator {
                 if (notification.app_name in EXCEPTIONS)
                     return;
 
-                var entry = new NotificationEntry (notification);
+                bool first_item = (nlist.get_items_length () == 0);
+                var entry = new NotificationEntry (notification, first_item);
                 nlist.add_item (entry);
 
                 dynamic_icon.set_icon_name ("indicator-messages-new");
             });
 
             settings.changed["do-not-disturb"].connect (() => {
+                not_disturb_switch.get_switch ().active = settings.do_not_disturb;
                 main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
                 dynamic_icon.set_icon_name (get_display_icon_name ());
                 if (settings.do_not_disturb)
@@ -126,7 +133,10 @@ public class Indicator : Wingpanel.Indicator {
             });
 
 
+            main_box.add (not_disturb_switch);
+            main_box.add (new Wingpanel.Widgets.IndicatorSeparator ());
             main_box.add (stack);
+            main_box.add (new Wingpanel.Widgets.IndicatorSeparator ());
             main_box.pack_end (settings_btn, false, false, 0);
             main_box.pack_end (clear_all_btn, false, false, 0);
             main_box.show ();
@@ -156,13 +166,12 @@ public class Indicator : Wingpanel.Indicator {
 
     private string get_display_icon_name () {
         if (settings.do_not_disturb)
-            // Use symbolic here
-            return "notification-disabled";
+            return "notification-disabled-symbolic";
 
         if (nlist.get_items_length () > 0)
             return "indicator-messages-new";
 
-        return "indicator-messages";    
+        return "notification-symbolic";    
     }
 
     private void show_settings () {

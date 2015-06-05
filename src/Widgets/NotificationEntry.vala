@@ -19,20 +19,20 @@ public class NotificationEntry : Gtk.Box {
     private Gtk.Image icon;
     private string entry_icon;
     private string entry_summary;
-    private string entry_body;
-    
+    public string entry_body;
+
     public Gtk.Button clear_btn;
 
-    public NotificationEntry (Notification notification) {
+    public NotificationEntry (Notification notification, bool first_item = false) {
         this.entry_icon = notification.icon;
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
 
         this.hexpand = true;
-        add_widgets ();
+        add_widgets (first_item);
     }
     
-    private void add_widgets () {
+    private void add_widgets (bool first_item = false) {
         if (entry_icon == "")
             icon = new Gtk.Image.from_icon_name ("help-info", Gtk.IconSize.LARGE_TOOLBAR);
         else if (entry_icon.has_prefix ("/"))
@@ -76,8 +76,9 @@ public class NotificationEntry : Gtk.Box {
         hbox.pack_start (icon, false, false, 0);
         
         hbox.add (vbox);
+        if (!first_item)
+        	root_vbox.add (new Wingpanel.Widgets.IndicatorSeparator ());  
         root_vbox.add (hbox); 
-        root_vbox.add (new Wingpanel.Widgets.IndicatorSeparator ());  
         this.add (root_vbox);  
         this.show_all (); 
     }
