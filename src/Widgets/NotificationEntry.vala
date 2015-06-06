@@ -16,9 +16,10 @@
  */
 
 public class NotificationEntry : Gtk.ListBoxRow {
-	private Notification notification;
+	public Notification notification;
+
     private Gtk.Image icon;
-    //private Gtk.Label time_label;
+    private Gtk.Label time_label;
 
     private string entry_icon;
     private string entry_summary;
@@ -29,12 +30,13 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
     public NotificationEntry (Notification _notification, bool first_item = false) {
     	this.notification = _notification;
-        this.entry_icon = notification.icon;
+        this.entry_icon = notification.app_icon;
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
 
         notification.time_changed.connect ((timespan) => {
-        	//time_label.label = get_string_from_timespan (timespan);
+        	if (!indicator_opened)
+        		time_label.label = get_string_from_timespan (timespan);
 
         	return this.active;
         });
@@ -55,6 +57,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         icon.set_alignment (0, 0);
 
         var root_vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+        root_vbox.margin_start = 30;
 
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 5);
         var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
@@ -62,39 +65,40 @@ public class NotificationEntry : Gtk.ListBoxRow {
         var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 90);
         title_box.hexpand = true;
 
-        var title_label = new Gtk.Label ("<b>%s</b>".printf (entry_summary));
-        title_label.max_width_chars = 20;
+        var title_label = new Gtk.Label (entry_summary);
+        title_label.get_style_context ().add_class ("h4");
+        title_label.max_width_chars = 40;
         title_label.set_alignment (0, 0);
-        title_label.margin_top = 4;
         title_label.use_markup = true;
         title_label.set_line_wrap (true);
         title_label.wrap_mode = Pango.WrapMode.WORD;
           
         var body_label = new Gtk.Label (entry_body);
+        body_label.margin_start = 5;
+        body_label.set_alignment (0, 0);
         body_label.set_line_wrap (true);
         body_label.wrap_mode = Pango.WrapMode.WORD;  
-        body_label.set_alignment (0, 0);
 
-        //time_label = new Gtk.Label ("");
-        //time_label.margin_end = 2;
-        //time_label.get_style_context ().add_class ("h4");
+        time_label = new Gtk.Label ("");
+        time_label.margin_end = 2;
+        time_label.get_style_context ().add_class ("h4");
 
-        clear_btn = new Gtk.Button.with_label ("Clear");   
-        clear_btn.margin_end = 2;
+        clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);  
+        clear_btn.margin_top = 2; 
+        clear_btn.margin_end = clear_btn.margin_top;
+        clear_btn.get_style_context ().add_class ("flat");
 
-        var btn_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
-        btn_box.pack_start (clear_btn, false, false, 0);
+        var box_btn = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10);
+        box_btn.pack_start (time_label, false, false, 0);
+        box_btn.pack_start (clear_btn, false, false, 0);
 
         title_box.pack_start (title_label, false, false, 0);
-        title_box.pack_end (btn_box, false, false, 0);
+        title_box.pack_end (box_btn, false, false, 0);
 
         vbox.add (title_box);
         vbox.add (body_label);       
-        hbox.pack_start (icon, false, false, 0);
         
         hbox.add (vbox);
-        if (!first_item)
-        	root_vbox.add (new Wingpanel.Widgets.IndicatorSeparator ());  
         root_vbox.add (hbox); 
         this.add (root_vbox);  
         this.show_all (); 

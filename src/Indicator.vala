@@ -15,11 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Reflects current state of popover.
+ * Used to inform the time_label to
+ * not change when the popover is shown.
+ */
+public bool indicator_opened = false;
+
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_LIST_WIDTH = 300;
-    private const uint8 BOX_LIST_HEIGHT = 200;
-    private const uint8 BOX_WIDTH = BOX_LIST_HEIGHT;
+    private const uint16 BOX_LIST_HEIGHT = 400;
+    private const uint8 BOX_WIDTH = 200;
     private const uint8 BOX_HEIGHT = 50;
     private const string[] EXCEPTIONS = ({ "", "indicator-sound", "gnome-settings-daemon" });
 
@@ -157,6 +163,7 @@ public class Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
+        indicator_opened = true;
         if (settings.do_not_disturb) {
             stack.set_visible_child_name ("not-disturb-mode");
             clear_all_btn.set_visible (false); 
@@ -171,7 +178,7 @@ public class Indicator : Wingpanel.Indicator {
     }
 
     public override void closed () {
-
+        indicator_opened = false;
     }
 
     private string get_display_icon_name () {

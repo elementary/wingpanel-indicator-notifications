@@ -17,6 +17,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/NotDisturbMode.vala
   Widgets/NotificationsList.vala
   Widgets/NotificationEntry.vala
+  Widgets/AppEntry.vala
   Services/NotificationsMonitor.vala
   Services/Notification.vala
   Services/NSettings.vala
@@ -29,7 +30,7 @@ OPTIONS
 )
 
 add_library (${CMAKE_PROJECT_NAME} MODULE ${VALA_C})
-target_link_libraries(${CMAKE_PROJECT_NAME} ${DEPS_LIBRARIES})
+target_link_libraries (${CMAKE_PROJECT_NAME} ${DEPS_LIBRARIES})
 
 # Installation
 install (TARGETS ${CMAKE_PROJECT_NAME} DESTINATION ${PKGDATADIR})

@@ -17,9 +17,10 @@
 
 public class Notification : Object {
     public string app_name;
+    public string display_name;
     public string summary;
     public string message_body;
-    public string icon;
+    public string app_icon;
     public int32 expire_timeout;
     public uint32 replaces_id;
     public Gdk.Pixbuf? icon_pixbuf;
@@ -43,7 +44,8 @@ public class Notification : Object {
         var body = message.get_body ();
 
         this.app_name = this.get_string (body, Column.APP_NAME);
-        this.icon = this.get_string (body, Column.APP_ICON);
+        this.display_name = app_name;
+        this.app_icon = this.get_string (body, Column.APP_ICON);
         this.summary = this.get_string (body, Column.SUMMARY);
         this.message_body = this.get_string (body, Column.BODY);
         this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
