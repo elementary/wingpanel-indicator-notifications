@@ -20,7 +20,12 @@ public class Notification : Object {
     public string summary;
     public string message_body;
     public string icon;
+    public int32 expire_timeout;
+    public uint32 replaces_id;
     public Gdk.Pixbuf? icon_pixbuf;
+    public DateTime timestamp;
+
+    public signal bool time_changed (TimeSpan span);
 
     private enum Column {
         APP_NAME = 0,
@@ -34,26 +39,6 @@ public class Notification : Object {
         COUNT
     }
 
-    private static string get_string (Variant tuple, int column) {
-        Variant child = tuple.get_child_value (column);
-        return child.dup_string ();
-    }
-
-    private static int get_integer (Variant tuple, int column) {
-        Variant child = tuple.get_child_value (column);
-        return child.get_int32 ();
-    }
-
-    private static bool get_boolean (Variant tuple, int column) {
-        Variant child = tuple.get_child_value (column);
-        return child.get_boolean ();
-    }
-
-    private static uint8 get_byte (Variant tuple, int column) {
-        Variant child = tuple.get_child_value (column);
-        return child.get_byte ();
-    }
-    
     public Notification.from_message (DBusMessage message) {
         var body = message.get_body ();
 
@@ -61,5 +46,40 @@ public class Notification : Object {
         this.icon = this.get_string (body, Column.APP_ICON);
         this.summary = this.get_string (body, Column.SUMMARY);
         this.message_body = this.get_string (body, Column.BODY);
+        this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
+        this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
+        this.timestamp = new DateTime.now_local ();   
+
+        // Begin counting time
+        Timeout.add_seconds_full (Priority.DEFAULT, 1, source_func);     
+    }
+
+    private static string get_string (Variant tuple, int column) {
+        var child = tuple.get_child_value (column);
+        return child.dup_string ();
+    }
+
+    private static int32 get_int32 (Variant tuple, int column) {
+        var child = tuple.get_child_value (column);
+        return child.get_int32 ();
+    }
+
+    private static bool get_bool (Variant tuple, int column) {
+        var child = tuple.get_child_value (column);
+        return child.get_boolean ();
+    }
+
+    private static uint8 get_byte (Variant tuple, int column) {
+        var child = tuple.get_child_value (column);
+        return child.get_byte ();
+    }
+
+    private static uint32 get_uint32 (Variant tuple, int column) {
+        var child = tuple.get_child_value (column);
+        return child.get_uint32 ();
+    }
+    
+    private bool source_func () {
+        return this.time_changed (timestamp.difference (new DateTime.now_local ()));
     }
 }

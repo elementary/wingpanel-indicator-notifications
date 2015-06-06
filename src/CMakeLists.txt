@@ -1,7 +1,7 @@
 find_package (PkgConfig)
 
 # Add all your dependencies to the list below
-pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite dbus-glib-1)
+pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite dbus-glib-1 libnotify)
 
 add_definitions (${DEPS_CFLAGS})
 link_directories (${DEPS_LIBRARY_DIRS})
@@ -24,6 +24,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
 PACKAGES
   wingpanel-2.0
   dbus-glib-1
+  libnotify
   granite
 OPTIONS
   --thread

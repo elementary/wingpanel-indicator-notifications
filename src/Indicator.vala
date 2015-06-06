@@ -38,6 +38,16 @@ public class Indicator : Wingpanel.Indicator {
                 description:_("The notifications indicator"));
 
         this.visible = true;
+        Notifications iface;
+        iface = Bus.get_proxy_sync (BusType.SESSION,
+                                "org.freedesktop.Notifications",
+                                "/org/freedesktop/Notifications");
+
+
+        iface.notification_closed.connect ((id, reason) => {
+            print ("The %u notification was closed for reason: %u\n", id, reason);
+        });
+
         monitor = new NotificationMonitor ();
         settings = new NSettings ();
     }
@@ -74,7 +84,6 @@ public class Indicator : Wingpanel.Indicator {
             nlist = new NotificationsList ();
 
             var scrolled = new Gtk.ScrolledWindow (null, null);
-            scrolled.set_policy (Gtk.PolicyType.ALWAYS, Gtk.PolicyType.ALWAYS);
             scrolled.add (nlist);
 
             stack.add_named (scrolled, "list");
@@ -82,6 +91,7 @@ public class Indicator : Wingpanel.Indicator {
             stack.add_named (not_disturb_box, "not-disturb-mode");
 
             var not_disturb_switch = new Wingpanel.Widgets.IndicatorSwitch (_("Do Not Disturb"), settings.do_not_disturb);
+            not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
             not_disturb_switch.get_switch ().notify["active"].connect (() => { 
                 settings.do_not_disturb = not_disturb_switch.get_switch ().active;
             });

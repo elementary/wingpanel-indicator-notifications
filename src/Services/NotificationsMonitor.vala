@@ -20,6 +20,11 @@
  * http://bazaar.launchpad.net/~jconti/recent-notifications/gnome3/view/head:/src/recent-notifications.vala
  */
 
+[DBus (name = "org.freedesktop.Notifications")]
+public interface Notifications : Object {
+    public signal void notification_closed (uint32 id, uint32 reason);
+}
+
 public class NotificationMonitor : Object {
     private const string MATCH_STRING = "eavesdrop=true,type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
     private DBusConnection connection = null;

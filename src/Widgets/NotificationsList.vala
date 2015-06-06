@@ -15,14 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotificationsList : Gtk.Box {
+public class NotificationsList : Gtk.ListBox {
     public signal void switch_stack (bool list);
     private List<NotificationEntry> items;
 
     public NotificationsList () {
-        this.orientation = Gtk.Orientation.VERTICAL;
         this.margin_start = this.margin_end = 3;
         this.margin_top = 2;
+
+        this.activate_on_single_click = false;
+        this.selection_mode = Gtk.SelectionMode.NONE;
+        this.row_activated.connect (on_row_activated);
 
         items = new List<NotificationEntry> ();
         this.vexpand = true;
@@ -33,6 +36,7 @@ public class NotificationsList : Gtk.Box {
         entry.clear_btn.clicked.connect (() => {
             items.remove (entry);
             this.remove (entry);
+            entry.active = false;
 
             if (items.length () == 0)
                 clear_all ();
@@ -54,9 +58,14 @@ public class NotificationsList : Gtk.Box {
         items.@foreach ((entry) => {
             items.remove (entry);
             this.remove (entry);
+            entry.active = false;
         });
 
         this.switch_stack (false);
         this.show_all ();
+    }
+
+    private void on_row_activated (Gtk.ListBoxRow row) {
+        
     }
 }

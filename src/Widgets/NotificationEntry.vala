@@ -15,18 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotificationEntry : Gtk.Box {
+public class NotificationEntry : Gtk.ListBoxRow {
+	private Notification notification;
     private Gtk.Image icon;
+    //private Gtk.Label time_label;
+
     private string entry_icon;
     private string entry_summary;
-    public string entry_body;
+    private string entry_body;
 
     public Gtk.Button clear_btn;
+    public bool active = true;
 
-    public NotificationEntry (Notification notification, bool first_item = false) {
+    public NotificationEntry (Notification _notification, bool first_item = false) {
+    	this.notification = _notification;
         this.entry_icon = notification.icon;
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
+
+        notification.time_changed.connect ((timespan) => {
+        	//time_label.label = get_string_from_timespan (timespan);
+
+        	return this.active;
+        });
 
         this.hexpand = true;
         add_widgets (first_item);
@@ -64,8 +75,14 @@ public class NotificationEntry : Gtk.Box {
         body_label.wrap_mode = Pango.WrapMode.WORD;  
         body_label.set_alignment (0, 0);
 
+        //time_label = new Gtk.Label ("");
+        //time_label.margin_end = 2;
+        //time_label.get_style_context ().add_class ("h4");
+
         clear_btn = new Gtk.Button.with_label ("Clear");   
-        var btn_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        clear_btn.margin_end = 2;
+
+        var btn_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
         btn_box.pack_start (clear_btn, false, false, 0);
 
         title_box.pack_start (title_label, false, false, 0);
@@ -81,5 +98,26 @@ public class NotificationEntry : Gtk.Box {
         root_vbox.add (hbox); 
         this.add (root_vbox);  
         this.show_all (); 
+    }
+
+    private string get_string_from_timespan (TimeSpan timespan) {
+    	string suffix = "s";
+    	int64 time = (timespan / timespan.SECOND) * -1;
+    	if (time > 59) {
+    		suffix = " min";
+    		time = time / 60;
+
+    		if (time > 59) {
+    			suffix = "h";
+    			time = time / 60;
+
+		    	if (time > 23) {
+		    		suffix = " days";
+		    		time = time / 24;
+		    	}    			
+    		}
+    	}
+
+    	return time.to_string () + suffix;
     }
 }
