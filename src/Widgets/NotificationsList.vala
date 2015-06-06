@@ -40,7 +40,7 @@ public class NotificationsList : Gtk.ListBox {
     
     public void add_item (NotificationEntry entry) { 
         if (entry.notification.app_name == "notify-send" || entry.notification.app_name == "") {
-            entry.notification.display_name = _("Others");
+            entry.notification.display_name = _("Other");
             entry.notification.app_icon = "dialog-information";
         }
 
