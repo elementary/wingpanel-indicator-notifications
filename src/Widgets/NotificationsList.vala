@@ -23,7 +23,6 @@ public class NotificationsList : Gtk.ListBox {
     private int counter = 0;
 
     public NotificationsList () {
-        this.margin_start = this.margin_end = 3;
         this.margin_top = 2;
 
         this.activate_on_single_click = false;
@@ -69,7 +68,9 @@ public class NotificationsList : Gtk.ListBox {
         items.append (entry);
         this.switch_stack (true);
 
+        app_entry.add_notification_entry (entry);
         entry.clear_btn.clicked.connect (() => {
+            app_entry.remove_notification_entry (entry);
             this.remove (entry);
             items.remove (entry);
             entry.active = false;
@@ -79,8 +80,6 @@ public class NotificationsList : Gtk.ListBox {
             else 
                 (this.get_row_at_y (0) as AppEntry).separator.destroy ();   
         });
-
-        app_entry.add_notification_entry (entry);
 
         counter = counter + 2;
         entry.show_all ();

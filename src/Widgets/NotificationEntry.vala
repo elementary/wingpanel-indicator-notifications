@@ -16,7 +16,7 @@
  */
 
 public class NotificationEntry : Gtk.ListBoxRow {
-	public Notification notification;
+    public Notification notification;
 
     private Gtk.Image icon;
     private Gtk.Label time_label;
@@ -28,24 +28,24 @@ public class NotificationEntry : Gtk.ListBoxRow {
     public Gtk.Button clear_btn;
     public bool active = true;
 
-    public NotificationEntry (Notification _notification, bool first_item = false) {
-    	this.notification = _notification;
+    public NotificationEntry (Notification _notification) {
+        this.notification = _notification;
         this.entry_icon = notification.app_icon;
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
 
         notification.time_changed.connect ((timespan) => {
-        	if (!indicator_opened)
-        		time_label.label = get_string_from_timespan (timespan);
+            if (!indicator_opened)
+                time_label.label = get_string_from_timespan (timespan);
 
-        	return this.active;
+            return this.active;
         });
 
         this.hexpand = true;
-        add_widgets (first_item);
+        add_widgets ();
     }
     
-    private void add_widgets (bool first_item = false) {
+    private void add_widgets () {
         if (entry_icon == "")
             icon = new Gtk.Image.from_icon_name ("help-info", Gtk.IconSize.LARGE_TOOLBAR);
         else if (entry_icon.has_prefix ("/"))
@@ -66,7 +66,9 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_box.hexpand = true;
 
         var title_label = new Gtk.Label (entry_summary);
+        title_label.lines = 3;
         title_label.get_style_context ().add_class ("h4");
+        title_label.ellipsize = Pango.EllipsizeMode.END;
         title_label.max_width_chars = 40;
         title_label.set_alignment (0, 0);
         title_label.use_markup = true;
@@ -79,9 +81,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
         body_label.set_line_wrap (true);
         body_label.wrap_mode = Pango.WrapMode.WORD;  
 
-        time_label = new Gtk.Label ("");
+        time_label = new Gtk.Label ("now");
         time_label.margin_end = 2;
-        time_label.get_style_context ().add_class ("h4");
 
         clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);  
         clear_btn.margin_top = 2; 
@@ -104,24 +105,22 @@ public class NotificationEntry : Gtk.ListBoxRow {
         this.show_all (); 
     }
 
-    private string get_string_from_timespan (TimeSpan timespan) {
-    	string suffix = "s";
-    	int64 time = (timespan / timespan.SECOND) * -1;
-    	if (time > 59) {
-    		suffix = " min";
-    		time = time / 60;
+    private string? get_string_from_timespan (TimeSpan timespan) {
+        string suffix = _("min");
+        int64 time = (timespan / timespan.MINUTE) * -1;
+        if (time > 59) {
+            suffix = "h";
+            time = time / 60;
 
-    		if (time > 59) {
-    			suffix = "h";
-    			time = time / 60;
+            if (time > 23) {
+                if (time == 1)
+                    suffix = " " + _("day");
+                else    
+                    suffix = " " + _("days");
+                time = time / 24;
+            }               
+        }
 
-		    	if (time > 23) {
-		    		suffix = " days";
-		    		time = time / 24;
-		    	}    			
-    		}
-    	}
-
-    	return time.to_string () + suffix;
+        return time.to_string () + suffix;
     }
 }

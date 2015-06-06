@@ -18,6 +18,7 @@
 public class AppEntry : Gtk.ListBoxRow {
     public string app_name;
     private List<NotificationEntry> app_notifications;
+    private Gtk.Button clear_btn_entry;
     public Wingpanel.Widgets.IndicatorSeparator separator;
 
     public signal void destroy_entry ();
@@ -28,13 +29,15 @@ public class AppEntry : Gtk.ListBoxRow {
         app_notifications = new List<NotificationEntry> ();
         this.add_notification_entry (entry);
 
-        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
+        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        vbox.hexpand = true;
+
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10);
 
         var label = new Gtk.Label (notification.display_name);
         label.get_style_context ().add_class ("h3");
 
-        var clear_btn_entry = new Gtk.Button.with_label (_("Clear"));
+        clear_btn_entry = new Gtk.Button.with_label (_("Clear"));
         clear_btn_entry.margin_end = 2;
         clear_btn_entry.clicked.connect (() => {
             app_notifications.@foreach ((entry) => {
@@ -59,5 +62,11 @@ public class AppEntry : Gtk.ListBoxRow {
 
     public void add_notification_entry (NotificationEntry entry) {
         app_notifications.prepend (entry);
+    }
+
+    public void remove_notification_entry (NotificationEntry entry) {
+        app_notifications.remove (entry);
+        if (app_notifications.length () == 1)
+            this.destroy ();
     }
 }

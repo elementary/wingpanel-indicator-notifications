@@ -53,7 +53,7 @@ public class Notification : Object {
         this.timestamp = new DateTime.now_local ();   
 
         // Begin counting time
-        Timeout.add_seconds_full (Priority.DEFAULT, 1, source_func);     
+        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);     
     }
 
     private static string get_string (Variant tuple, int column) {

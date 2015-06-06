@@ -27,7 +27,7 @@ public class Indicator : Wingpanel.Indicator {
     private const uint16 BOX_LIST_HEIGHT = 400;
     private const uint8 BOX_WIDTH = 200;
     private const uint8 BOX_HEIGHT = 50;
-    private const string[] EXCEPTIONS = ({ "", "indicator-sound", "gnome-settings-daemon" });
+    private const string[] EXCEPTIONS = ({ "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" });
 
     private Wingpanel.Widgets.DynamicIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
@@ -131,8 +131,7 @@ public class Indicator : Wingpanel.Indicator {
                 if (notification.app_name in EXCEPTIONS)
                     return;
 
-                bool first_item = (nlist.get_items_length () == 0);
-                var entry = new NotificationEntry (notification, first_item);
+                var entry = new NotificationEntry (notification);
                 nlist.add_item (entry);
 
                 dynamic_icon.set_icon_name ("indicator-messages-new");
