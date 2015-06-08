@@ -17,6 +17,7 @@
 
 public class NotificationsList : Gtk.ListBox {
     public signal void switch_stack (bool list);
+    public signal void close_popover ();
     private List<AppEntry> app_entries;
     private List<NotificationEntry> items;
     private HashTable<string, int> table;
@@ -25,7 +26,7 @@ public class NotificationsList : Gtk.ListBox {
     public NotificationsList () {
         this.margin_top = 2;
 
-        this.activate_on_single_click = false;
+        this.activate_on_single_click = true;
         this.selection_mode = Gtk.SelectionMode.NONE;
         this.row_activated.connect (on_row_activated);
 
@@ -128,6 +129,17 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
+        if (row.get_path ().get_object_type () == typeof (AppEntry)) {
+            if ((row as AppEntry).appinfo != null) {
+                try {
+                    (row as AppEntry).appinfo.launch (null, null);
+                } catch (Error e) {
+                    error ("%s\n", e.message);
+                }
 
+                (row as AppEntry).clear_btn_entry.clicked ();
+                this.close_popover ();
+            }
+        }    
     }
 }

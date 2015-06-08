@@ -1,7 +1,7 @@
 find_package (PkgConfig)
 
 # Add all your dependencies to the list below
-pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite)
+pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0)
 
 add_definitions (${DEPS_CFLAGS})
 link_directories (${DEPS_LIBRARY_DIRS})
@@ -14,6 +14,7 @@ include (ValaPrecompile)
 # Add all your vala files and requires packages to the List below to include them in the build
 vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Indicator.vala
+  Utils.vala
   Widgets/NotDisturbMode.vala
   Widgets/NotificationsList.vala
   Widgets/NotificationEntry.vala
@@ -24,7 +25,9 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   wingpanel-2.0
+  gio-2.0
   granite
+  gdk-pixbuf-2.0  
 OPTIONS
   --thread
 )

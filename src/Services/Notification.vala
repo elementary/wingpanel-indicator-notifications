@@ -23,7 +23,6 @@ public class Notification : Object {
     public string app_icon;
     public int32 expire_timeout;
     public uint32 replaces_id;
-    public Gdk.Pixbuf? icon_pixbuf;
     public DateTime timestamp;
 
     public signal bool time_changed (TimeSpan span);
@@ -50,37 +49,28 @@ public class Notification : Object {
         this.message_body = this.get_string (body, Column.BODY);
         this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
+
         this.timestamp = new DateTime.now_local ();   
 
         // Begin counting time
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);     
+        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
-    private static string get_string (Variant tuple, int column) {
+    private string get_string (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.dup_string ();
     }
 
-    private static int32 get_int32 (Variant tuple, int column) {
+    private int32 get_int32 (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.get_int32 ();
     }
 
-    private static bool get_bool (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_boolean ();
-    }
-
-    private static uint8 get_byte (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_byte ();
-    }
-
-    private static uint32 get_uint32 (Variant tuple, int column) {
+    private uint32 get_uint32 (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.get_uint32 ();
     }
-    
+
     private bool source_func () {
         return this.time_changed (timestamp.difference (new DateTime.now_local ()));
     }

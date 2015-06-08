@@ -39,20 +39,12 @@ public class Indicator : Wingpanel.Indicator {
     private NSettings settings;
 
     public Indicator () {
-        GLib.Object (code_name: Wingpanel.Indicator.MESSAGES,
+        Object (code_name: Wingpanel.Indicator.MESSAGES,
                 display_name: _("Notifications indicator"),
                 description:_("The notifications indicator"));
 
         this.visible = true;
-        Notifications iface;
-        iface = Bus.get_proxy_sync (BusType.SESSION,
-                                "org.freedesktop.Notifications",
-                                "/org/freedesktop/Notifications");
 
-
-        iface.notification_closed.connect ((id, reason) => {
-            print ("The %u notification was closed for reason: %u\n", id, reason);
-        });
 
         monitor = new NotificationMonitor ();
         settings = new NSettings ();
@@ -107,6 +99,10 @@ public class Indicator : Wingpanel.Indicator {
 
             var settings_btn = new Wingpanel.Widgets.IndicatorButton (_("Notifications Settings…"));
             settings_btn.clicked.connect (show_settings);
+
+            nlist.close_popover.connect (() => {
+                this.close ();
+            });
 
             nlist.switch_stack.connect ((list) => {
                 if (list) {
@@ -193,7 +189,7 @@ public class Indicator : Wingpanel.Indicator {
     private void show_settings () {
         var cmd = new Granite.Services.SimpleCommand ("/usr/bin", SETTINGS_EXEC);
         cmd.run ();
-    }    
+    }
 }
 
 public Wingpanel.Indicator get_indicator (Module module) {

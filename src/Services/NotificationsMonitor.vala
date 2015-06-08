@@ -21,25 +21,25 @@
  */
 
 [DBus (name = "org.freedesktop.Notifications")]
-public interface Notifications : Object {
+public interface NIface : Object {
     public signal void notification_closed (uint32 id, uint32 reason);
 }
 
 public class NotificationMonitor : Object {
     private const string MATCH_STRING = "eavesdrop=true,type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
-    private DBusConnection connection = null;
+    private const uint32 REASON_DISMISSED = 2;
+    private DBusConnection connection;
+    private NIface? niface = null;
     public signal void received (DBusMessage message);
 
     public NotificationMonitor () {
-        Bus.get.begin (BusType.SESSION, null, (obj, res) => {
-            try {
-                this.connection = Bus.get.end (res);
-            } catch (IOError e) {
-                error("Failed to connect to session bus: %s\n", e.message);
-            }
+        try {
+            connection = Bus.get_sync (BusType.SESSION);
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }
 
-            this.add_filter ();
-        });
+        this.add_filter ();  
     }
 
     private void add_filter () {
@@ -49,26 +49,32 @@ public class NotificationMonitor : Object {
                                                 "AddMatch");
 
         var body = new Variant.parsed ("(%s,)", MATCH_STRING);
-
         message.set_body (body);
-
+        
         try {
-            this.connection.send_message (message, DBusSendMessageFlags.NONE, null);
+            niface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.Notifications",
+                                                      "/org/freedesktop/Notifications"); 
         } catch (Error e) {
-            error("Failed to add match string: %s", e.message);
+            error ("%s\n", e.message);
         }
 
-        this.connection.add_filter ((connection, message, incoming) => {
-            if (incoming) {
-                if ((message.get_message_type () == DBusMessageType.METHOD_CALL) &&
-                    (message.get_interface() == "org.freedesktop.Notifications") &&
-                    (message.get_member() == "Notify")) {
-                        this.received (message);
-                        message = null;
-                }
-            }
-
-            return message;
-        });
+        connection.send_message_with_reply (message, DBusSendMessageFlags.NONE, -1);
+        connection.add_filter (filter_function);
     }
+
+    private DBusMessage filter_function (DBusConnection con, owned DBusMessage message, bool incoming) {
+        if (incoming) {
+            if ((message.get_message_type () == DBusMessageType.METHOD_CALL) &&
+                (message.get_interface () == "org.freedesktop.Notifications") &&
+                (message.get_member () == "Notify")) {  
+                    niface.notification_closed.connect ((id, reason) => {
+                        if (reason != REASON_DISMISSED)
+                            this.received (message);
+                            message = null;                          
+                    });
+            }
+        }
+
+        return message;
+    }  
 }

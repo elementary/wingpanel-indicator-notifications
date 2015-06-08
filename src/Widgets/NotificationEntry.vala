@@ -18,10 +18,8 @@
 public class NotificationEntry : Gtk.ListBoxRow {
     public Notification notification;
 
-    private Gtk.Image icon;
     private Gtk.Label time_label;
 
-    private string entry_icon;
     private string entry_summary;
     private string entry_body;
 
@@ -30,9 +28,14 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
     public NotificationEntry (Notification _notification) {
         this.notification = _notification;
-        this.entry_icon = notification.app_icon;
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
+
+        var style_context = this.get_style_context ();
+        style_context.remove_class ("button");
+        style_context.remove_class ("list-row");
+        style_context.add_class ("menuitem");
+        style_context.add_class ("flat");
 
         notification.time_changed.connect ((timespan) => {
             if (!indicator_opened)
@@ -46,16 +49,6 @@ public class NotificationEntry : Gtk.ListBoxRow {
     }
     
     private void add_widgets () {
-        if (entry_icon == "")
-            icon = new Gtk.Image.from_icon_name ("help-info", Gtk.IconSize.LARGE_TOOLBAR);
-        else if (entry_icon.has_prefix ("/"))
-            icon = new Gtk.Image.from_file (entry_icon);
-        else
-            icon = new Gtk.Image.from_icon_name (entry_icon, Gtk.IconSize.LARGE_TOOLBAR);    
-
-        icon.use_fallback = true;      
-        icon.set_alignment (0, 0);
-
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 5);
         hbox.margin_start = 30;
 
@@ -75,7 +68,6 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_label.wrap_mode = Pango.WrapMode.CHAR;
           
         var body_label = new Gtk.Label (entry_body);
-        body_label.margin_start = 5;
         body_label.set_alignment (0, 0);
         body_label.set_line_wrap (true);
         body_label.wrap_mode = Pango.WrapMode.WORD;  
