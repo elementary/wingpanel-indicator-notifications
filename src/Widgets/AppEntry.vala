@@ -18,7 +18,6 @@
 public class AppEntry : Gtk.ListBoxRow {
     public string app_name;
     public Gtk.Button clear_btn_entry;
-    public Wingpanel.Widgets.IndicatorSeparator separator;
     public AppInfo? appinfo = null;
 
     public signal void destroy_entry ();
@@ -67,8 +66,6 @@ public class AppEntry : Gtk.ListBoxRow {
         hbox.pack_start (label, false, false, 0);
         hbox.pack_end (clear_btn_entry, false, false, 0);
 
-        separator = new Wingpanel.Widgets.IndicatorSeparator ();
-
         vbox.add (hbox);
         this.add (vbox);
         this.show_all ();
@@ -76,15 +73,6 @@ public class AppEntry : Gtk.ListBoxRow {
 
     public unowned List<NotificationEntry> get_notifications () {
         return this.app_notifications;
-    }
-
-    public void show_separator (bool show) {
-        if (show)
-            hbox_sep.add (separator);
-        else    
-            hbox_sep.remove (separator);
-
-        this.show_all ();    
     }
 
     public void add_notification_entry (NotificationEntry entry) {

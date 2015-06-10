@@ -60,8 +60,6 @@ public class NotificationsList : Gtk.ListBox {
 
             if (items.length () == 0)
                 this.clear_all ();
-            else 
-                (this.get_row_at_y (0) as AppEntry).show_separator (false);
         });
 
         app_entry.destroy_entry.connect (() => {
@@ -78,7 +76,6 @@ public class NotificationsList : Gtk.ListBox {
         bool add = !(entry.notification.app_name in construct_app_names ());
         if (add) {
             app_entry = new AppEntry (entry);
-            app_entry.show_separator (false);
 
             app_entries.prepend (app_entry);
             this.prepend (app_entry);
