@@ -119,11 +119,11 @@ public class Indicator : Wingpanel.Indicator {
                 }
             });
 
-            monitor.received.connect ((message) => {
+            monitor.received.connect ((message, id) => {
                 if (settings.do_not_disturb)
                     return;
 
-                var notification = new Notification.from_message (message);
+                var notification = new Notification.from_message (message, id);
                 if (notification.app_name in EXCEPTIONS)
                     return;
 

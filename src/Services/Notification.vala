@@ -23,6 +23,7 @@ public class Notification : Object {
     public string app_icon;
     public int32 expire_timeout;
     public uint32 replaces_id;
+    public uint32 id;
     public DateTime timestamp;
 
     public signal bool time_changed (TimeSpan span);
@@ -39,7 +40,7 @@ public class Notification : Object {
         COUNT
     }
 
-    public Notification.from_message (DBusMessage message) {
+    public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
 
         this.app_name = this.get_string (body, Column.APP_NAME);
@@ -49,6 +50,7 @@ public class Notification : Object {
         this.message_body = this.get_string (body, Column.BODY);
         this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
+        this.id = _id;
 
         this.timestamp = new DateTime.now_local ();   
 

@@ -23,14 +23,25 @@
 [DBus (name = "org.freedesktop.Notifications")]
 public interface NIface : Object {
     public signal void notification_closed (uint32 id, uint32 reason);
+    public abstract uint32 notify (string app_name,
+                                uint32 replaces_id,
+                                string app_icon,
+                                string summary,
+                                string body,
+                                string[] actions,
+                                HashTable<string, Variant> hints,
+                                int32 expire_timeout) throws Error;
 }
 
 public class NotificationMonitor : Object {
     private const string MATCH_STRING = "eavesdrop=true,type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
     private const uint32 REASON_DISMISSED = 2;
+
     private DBusConnection connection;
     private NIface? niface = null;
-    public signal void received (DBusMessage message);
+    private uint32 id_counter = 0;
+
+    public signal void received (DBusMessage message, uint32 id);
 
     public NotificationMonitor () {
         try {
@@ -58,23 +69,45 @@ public class NotificationMonitor : Object {
             error ("%s\n", e.message);
         }
 
-        connection.send_message_with_reply (message, DBusSendMessageFlags.NONE, -1);
-        connection.add_filter (filter_function);
+        id_counter = get_starting_notification_id ();
+        connection.send_message (message, DBusSendMessageFlags.NONE, null);
+        connection.add_filter (message_filter);
     }
 
-    private DBusMessage filter_function (DBusConnection con, owned DBusMessage message, bool incoming) {
+    private DBusMessage message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
         if (incoming) {
             if ((message.get_message_type () == DBusMessageType.METHOD_CALL) &&
                 (message.get_interface () == "org.freedesktop.Notifications") &&
                 (message.get_member () == "Notify")) {  
-                    niface.notification_closed.connect ((id, reason) => {
-                        if (reason != REASON_DISMISSED)
-                            this.received (message);
-                            message = null;                          
-                    });
+                uint32 replaces_id = message.get_body ().get_child_value (1).get_uint32 ();
+                uint32 current_id = replaces_id; 
+
+                if (replaces_id == 0) {
+                    id_counter++;
+                    current_id = id_counter;
+                }
+
+                niface.notification_closed.connect ((id, reason) => {
+                    if (id == 1) {
+                        id_counter = id;
+                        current_id = id_counter;
+                    }
+
+                    if (reason != REASON_DISMISSED && current_id == id) {
+                        this.received (message, id);
+                        message = null;                        
+                    }                      
+                });
             }
         }
 
         return message;
-    }  
+    }
+
+    /* Check what's the current notification id */
+    private uint32 get_starting_notification_id () {
+        var hints = new HashTable<string, Variant> (str_hash, str_equal);
+        string[] actions = {};
+        return niface.notify ("", 0, "", "", "", actions, hints, 1);
+    } 
 }

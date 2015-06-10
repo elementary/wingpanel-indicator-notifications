@@ -17,12 +17,13 @@
 
 public class AppEntry : Gtk.ListBoxRow {
     public string app_name;
-    private List<NotificationEntry> app_notifications;
     public Gtk.Button clear_btn_entry;
     public Wingpanel.Widgets.IndicatorSeparator separator;
     public AppInfo? appinfo = null;
 
     public signal void destroy_entry ();
+
+    private List<NotificationEntry> app_notifications;
 
     public AppEntry (NotificationEntry entry) {
         var notification = entry.notification;
@@ -51,20 +52,39 @@ public class AppEntry : Gtk.ListBoxRow {
                 entry.clear_btn.clicked ();   
             });
             
-            this.destroy ();
+            this.destroy_entry ();
         });
 
-        var image = new Gtk.Image.from_icon_name (notification.app_icon, Gtk.IconSize.LARGE_TOOLBAR);
+        string icon = "";
+        if (notification.app_icon == "") {
+            var glib_icon = appinfo.get_icon ();
+            icon = glib_icon.to_string ();
+        } else    
+            icon = notification.app_icon;        
+
+        var image = new Gtk.Image.from_icon_name (icon, Gtk.IconSize.LARGE_TOOLBAR);
         hbox.pack_start (image, false, false, 0);
         hbox.pack_start (label, false, false, 0);
         hbox.pack_end (clear_btn_entry, false, false, 0);
 
         separator = new Wingpanel.Widgets.IndicatorSeparator ();
 
-        vbox.add (separator);
         vbox.add (hbox);
         this.add (vbox);
         this.show_all ();
+    }
+
+    public unowned List<NotificationEntry> get_notifications () {
+        return this.app_notifications;
+    }
+
+    public void show_separator (bool show) {
+        if (show)
+            hbox_sep.add (separator);
+        else    
+            hbox_sep.remove (separator);
+
+        this.show_all ();    
     }
 
     public void add_notification_entry (NotificationEntry entry) {
@@ -73,7 +93,7 @@ public class AppEntry : Gtk.ListBoxRow {
 
     public void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
-        if (app_notifications.length () == 1)
-            this.destroy ();
+        if (app_notifications.length () == 0)
+            this.destroy_entry ();
     }
 }

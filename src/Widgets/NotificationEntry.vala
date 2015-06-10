@@ -31,15 +31,14 @@ public class NotificationEntry : Gtk.ListBoxRow {
         this.entry_summary = notification.summary;
         this.entry_body = notification.message_body;
 
-        var style_context = this.get_style_context ();
-        style_context.remove_class ("button");
-        style_context.remove_class ("list-row");
-        style_context.add_class ("menuitem");
-        style_context.add_class ("flat");
+        this.get_style_context ().add_class ("menuitem");
 
         notification.time_changed.connect ((timespan) => {
-            if (!indicator_opened)
-                time_label.label = get_string_from_timespan (timespan);
+            if (!indicator_opened) {
+                string? label = get_string_from_timespan (timespan);
+                if (label != null)
+                    time_label.label = label;
+            }
 
             return this.active;
         });
@@ -72,7 +71,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         body_label.set_line_wrap (true);
         body_label.wrap_mode = Pango.WrapMode.WORD;  
 
-        time_label = new Gtk.Label ("now");
+        time_label = new Gtk.Label (_("now"));
         time_label.margin_end = 2;
 
         clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);  
@@ -99,7 +98,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         string suffix = _("min");
         int64 time = (timespan / timespan.MINUTE) * -1;
         if (time > 59) {
-            suffix = "h";
+            suffix = _("h");
             time = time / 60;
 
             if (time > 23) {
@@ -109,7 +108,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
                     suffix = " " + _("days");
                 time = time / 24;
             }               
-        }
+        } else 
+            return null;
 
         return time.to_string () + suffix;
     }

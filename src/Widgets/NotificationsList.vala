@@ -44,32 +44,14 @@ public class NotificationsList : Gtk.ListBox {
             entry.notification.app_icon = "dialog-information";
         }
 
-        bool add_app_entry = !(entry.notification.app_name in construct_app_names ());
-        AppEntry app_entry;
-        if (add_app_entry) {
-            app_entry = new AppEntry (entry);
-            app_entries.append (app_entry);
-            this.insert (app_entry, counter);
+        var app_entry = add_app_entry (entry);
 
-            if (counter == 0)
-                app_entry.separator.destroy ();
-
-            this.insert (entry, counter + 2);
-            table.insert (app_entry.app_name, counter + 1);
-        } else {
-            app_entry = get_app_entry_from_app_name (entry.notification.app_name);
-            int insert_pos = table.@get (app_entry.app_name);
-            this.insert (entry, insert_pos + 1);
-        }
-
-        app_entry.destroy.connect (() => {
-            app_entries.remove (app_entry);
-        });
-
-        items.append (entry);
+        items.prepend (entry);
         this.switch_stack (true);
 
         app_entry.add_notification_entry (entry);
+        this.resort_from_app_entry (app_entry);
+
         entry.clear_btn.clicked.connect (() => {
             app_entry.remove_notification_entry (entry);
             this.remove (entry);
@@ -77,9 +59,13 @@ public class NotificationsList : Gtk.ListBox {
             entry.active = false;
 
             if (items.length () == 0)
-                clear_all ();
+                this.clear_all ();
             else 
-                (this.get_row_at_y (0) as AppEntry).separator.destroy ();   
+                (this.get_row_at_y (0) as AppEntry).show_separator (false);
+        });
+
+        app_entry.destroy_entry.connect (() => {
+            this.destroy_app_entry (app_entry);
         });
 
         counter = counter + 2;
@@ -87,6 +73,55 @@ public class NotificationsList : Gtk.ListBox {
         this.show_all ();
     }
     
+    private AppEntry add_app_entry (NotificationEntry entry) {
+        AppEntry app_entry;        
+        bool add = !(entry.notification.app_name in construct_app_names ());
+        if (add) {
+            app_entry = new AppEntry (entry);
+            app_entry.show_separator (false);
+
+            app_entries.prepend (app_entry);
+            this.prepend (app_entry);
+            this.insert (entry, 1);
+            table.insert (app_entry.app_name, 0);
+        } else {
+            app_entry = get_app_entry_from_app_name (entry.notification.app_name);
+            int insert_pos = table.@get (app_entry.app_name);
+            this.insert (entry, insert_pos + 1);
+        }
+
+        return app_entry;        
+    }
+
+    private void destroy_app_entry (AppEntry app_entry) {
+        app_entries.remove (app_entry); 
+
+        app_entry.get_notifications ().@foreach ((notification_entry) => {
+            notification_entry.destroy (); 
+            items.remove (notification_entry);  
+        });
+
+        Idle.add (() => {
+            app_entry.destroy ();
+            return false;
+        });      
+
+        app_entry.unref ();  
+    }
+
+    private void resort_from_app_entry (AppEntry app_entry) {
+        if (this.get_row_at_index (0) != app_entry) {
+            this.remove (app_entry);
+            this.prepend (app_entry);
+            int counter = 1;
+            app_entry.get_notifications ().@foreach ((notification_entry) => {
+                this.remove (notification_entry);
+                this.add_item (notification_entry);
+                counter++;
+            });
+        }
+    }
+
     private AppEntry? get_app_entry_from_app_name (string app_name) {
         AppEntry? entry = null;
         app_entries.@foreach ((_entry) => {

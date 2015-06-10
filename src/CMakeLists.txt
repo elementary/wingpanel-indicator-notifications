@@ -27,7 +27,6 @@ PACKAGES
   wingpanel-2.0
   gio-2.0
   granite
-  gdk-pixbuf-2.0  
 OPTIONS
   --thread
 )
