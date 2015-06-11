@@ -48,11 +48,9 @@ public class NotificationEntry : Gtk.ListBoxRow {
     }
     
     private void add_widgets () {
-        var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 5);
-        hbox.margin_start = 30;
+        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        vbox.margin_start = 32;
 
-        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
-        
         var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 25);
         title_box.hexpand = true;
 
@@ -87,11 +85,10 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_box.pack_end (box_btn, false, false, 0);
 
         vbox.add (title_box);
-        vbox.add (body_label);       
-        
-        hbox.add (vbox);
-        this.add (hbox);  
-        this.show_all (); 
+        vbox.add (body_label);
+
+        this.add (vbox);
+        this.show_all ();
     }
 
     private string? get_string_from_timespan (TimeSpan timespan) {
