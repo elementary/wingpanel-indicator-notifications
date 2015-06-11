@@ -65,14 +65,11 @@ public class NotificationEntry : Gtk.ListBoxRow {
         var body_label = new Gtk.Label (entry_body);
         body_label.set_alignment (0, 0);
         body_label.set_line_wrap (true);
-        body_label.wrap_mode = Pango.WrapMode.WORD;  
+        body_label.wrap_mode = Pango.WrapMode.WORD;
 
         time_label = new Gtk.Label (_("now"));
-        time_label.margin_end = 2;
 
-        clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);  
-        clear_btn.margin_top = 2; 
-        clear_btn.margin_end = clear_btn.margin_top;
+        clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn.get_style_context ().add_class ("flat");
 
         var box_btn = new Gtk.Grid ();
