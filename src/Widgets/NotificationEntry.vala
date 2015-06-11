@@ -58,7 +58,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         ((Gtk.Misc) title_label).xalign = 0.0f;
         title_label.use_markup = true;
         title_label.set_line_wrap (true);
-        title_label.wrap_mode = Pango.WrapMode.CHAR;
+        title_label.wrap_mode = Pango.WrapMode.WORD;
         title_label.lines = 3;
         title_label.ellipsize = Pango.EllipsizeMode.END;
           
