@@ -48,14 +48,12 @@ public class NotificationEntry : Gtk.ListBoxRow {
     }
     
     private void add_widgets () {
-        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        vbox.margin_start = 32;
-
-        var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 25);
-        title_box.hexpand = true;
+        var grid = new Gtk.Grid ();
+        grid.margin_start = 32;
 
         var title_label = new Gtk.Label ("<b>" + entry_summary + "</b>");
         ((Gtk.Misc) title_label).xalign = 0.0f;
+        title_label.hexpand = true;
         title_label.use_markup = true;
         title_label.set_line_wrap (true);
         title_label.wrap_mode = Pango.WrapMode.WORD;
@@ -77,13 +75,11 @@ public class NotificationEntry : Gtk.ListBoxRow {
         box_btn.add (time_label);
         box_btn.add (clear_btn);
 
-        title_box.pack_start (title_label, false, false, 0);
-        title_box.pack_end (box_btn, false, false, 0);
+        grid.attach (title_label, 0, 0, 1, 1);
+        grid.attach (box_btn, 1, 0, 1, 1);
+        grid.attach (body_label, 0, 1, 2, 1);
 
-        vbox.add (title_box);
-        vbox.add (body_label);
-
-        this.add (vbox);
+        this.add (grid);
         this.show_all ();
     }
 
