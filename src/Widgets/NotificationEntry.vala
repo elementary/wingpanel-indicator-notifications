@@ -52,7 +52,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         grid.margin_start = 32;
 
         var title_label = new Gtk.Label ("<b>" + entry_summary + "</b>");
-        ((Gtk.Misc) title_label).xalign = 0.0f;
+        ((Gtk.Misc) title_label).xalign = 0;
         title_label.hexpand = true;
         title_label.use_markup = true;
         title_label.set_line_wrap (true);
@@ -63,7 +63,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_label.margin_bottom = 6;
 
         var body_label = new Gtk.Label (entry_body);
-        ((Gtk.Misc) body_label).xalign = 0.0f;
+        ((Gtk.Misc) body_label).xalign = 0;
         body_label.set_line_wrap (true);
         body_label.wrap_mode = Pango.WrapMode.WORD;
 
@@ -73,7 +73,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         clear_btn.get_style_context ().add_class ("flat");
 
         var box_btn = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-        box_btn.set_valign (Gtk.Align.START);
+        box_btn.valign = Gtk.Align.START;
         box_btn.add (time_label);
         box_btn.add (clear_btn);
 
