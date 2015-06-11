@@ -54,9 +54,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
         var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 25);
         title_box.hexpand = true;
 
-        var title_label = new Gtk.Label (entry_summary);
+        var title_label = new Gtk.Label ("<b>" + entry_summary + "</b>");
         title_label.lines = 3;
-        title_label.get_style_context ().add_class ("h4");
         title_label.ellipsize = Pango.EllipsizeMode.END;
         title_label.max_width_chars = 40;
         title_label.set_alignment (0, 0);
