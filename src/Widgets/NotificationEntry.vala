@@ -72,9 +72,10 @@ public class NotificationEntry : Gtk.ListBoxRow {
         clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn.get_style_context ().add_class ("flat");
 
-        var box_btn = new Gtk.Grid ();
-        box_btn.attach (time_label, 0, 1, 1, 1);
-        box_btn.attach (clear_btn, 1, 1, 1, 1);
+        var box_btn = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        box_btn.set_valign (Gtk.Align.START);
+        box_btn.add (time_label);
+        box_btn.add (clear_btn);
 
         title_box.pack_start (title_label, false, false, 0);
         title_box.pack_end (box_btn, false, false, 0);
