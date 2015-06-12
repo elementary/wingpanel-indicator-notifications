@@ -48,50 +48,47 @@ public class NotificationEntry : Gtk.ListBoxRow {
     }
     
     private void add_widgets () {
-        var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 5);
-        hbox.margin_start = 30;
+        var grid = new Gtk.Grid ();
+        grid.margin_start = 32;
 
-        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 2);
-        
-        var title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 25);
-        title_box.hexpand = true;
-
-        var title_label = new Gtk.Label (entry_summary);
+        var title_label = new Gtk.Label ("<b>" + entry_summary + "</b>");
+        ((Gtk.Misc) title_label).xalign = 0.0f;
+        title_label.hexpand = true;
+        title_label.use_markup = true;
+        title_label.set_line_wrap (true);
+        title_label.wrap_mode = Pango.WrapMode.WORD;
         title_label.lines = 3;
-        title_label.get_style_context ().add_class ("h4");
         title_label.ellipsize = Pango.EllipsizeMode.END;
         title_label.max_width_chars = 40;
         title_label.set_alignment (0, 0);
         title_label.use_markup = true;
         title_label.set_line_wrap (true);
         title_label.wrap_mode = Pango.WrapMode.WORD;
-          
+
+        title_label.margin_top = 6;
+        title_label.margin_bottom = 6;
+
         var body_label = new Gtk.Label (entry_body);
-        body_label.set_alignment (0, 0);
+        ((Gtk.Misc) body_label).xalign = 0.0f;
         body_label.set_line_wrap (true);
-        body_label.wrap_mode = Pango.WrapMode.WORD;  
+        body_label.wrap_mode = Pango.WrapMode.WORD;
 
         time_label = new Gtk.Label (_("now"));
-        time_label.margin_end = 2;
 
-        clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);  
-        clear_btn.margin_top = 2; 
-        clear_btn.margin_end = clear_btn.margin_top;
+        clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn.get_style_context ().add_class ("flat");
 
-        var box_btn = new Gtk.Grid ();
-        box_btn.attach (time_label, 0, 1, 1, 1);
-        box_btn.attach (clear_btn, 1, 1, 1, 1);
+        var box_btn = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        box_btn.valign = Gtk.Align.START;
+        box_btn.add (time_label);
+        box_btn.add (clear_btn);
 
-        title_box.pack_start (title_label, false, false, 0);
-        title_box.pack_end (box_btn, false, false, 0);
+        grid.attach (title_label, 0, 0, 1, 1);
+        grid.attach (box_btn, 1, 0, 1, 1);
+        grid.attach (body_label, 0, 1, 2, 1);
 
-        vbox.add (title_box);
-        vbox.add (body_label);       
-        
-        hbox.add (vbox);
-        this.add (hbox);  
-        this.show_all (); 
+        this.add (grid);
+        this.show_all ();
     }
 
     private string? get_string_from_timespan (TimeSpan timespan) {
