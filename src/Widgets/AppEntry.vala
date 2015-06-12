@@ -66,9 +66,20 @@ public class AppEntry : Gtk.ListBoxRow {
         hbox.pack_start (label, false, false, 0);
         hbox.pack_end (clear_btn_entry, false, false, 0);
 
+        this.connect_entry (entry);
+
         vbox.add (hbox);
         this.add (vbox);
         this.show_all ();
+    }
+
+    private void connect_entry (NotificationEntry entry) {
+        entry.notify["active"].connect (() => {
+            if (!entry.active) {
+                this.remove_notification_entry (entry);
+                entry.unref ();
+            }
+        });
     }
 
     public unowned List<NotificationEntry> get_notifications () {
@@ -77,6 +88,7 @@ public class AppEntry : Gtk.ListBoxRow {
 
     public void add_notification_entry (NotificationEntry entry) {
         app_notifications.prepend (entry);
+        this.connect_entry (entry);
     }
 
     public void remove_notification_entry (NotificationEntry entry) {

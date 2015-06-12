@@ -21,13 +21,16 @@
  */
 public bool indicator_opened = false;
 
+/* Notiifcations monitor */
+public NotificationMonitor monitor;
+
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_LIST_WIDTH = 300;
     private const uint16 BOX_LIST_HEIGHT = 400;
     private const uint8 BOX_WIDTH = 200;
     private const uint8 BOX_HEIGHT = 50;
-    private const string[] EXCEPTIONS = ({ "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" });
+    private const string[] EXCEPTIONS = { "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
 
     private Wingpanel.Widgets.DynamicIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
@@ -35,7 +38,6 @@ public class Indicator : Wingpanel.Indicator {
     private Gtk.Stack stack;
 
     private NotificationsList nlist;
-    private NotificationMonitor monitor;
     private NSettings settings;
 
     public Indicator () {
@@ -150,7 +152,7 @@ public class Indicator : Wingpanel.Indicator {
             main_box.add (new Wingpanel.Widgets.IndicatorSeparator ());
             main_box.pack_end (settings_btn, false, false, 0);
             main_box.pack_end (clear_all_btn, false, false, 0);
-            main_box.show ();
+            main_box.show_all ();
             nlist.clear_all ();
         }
 

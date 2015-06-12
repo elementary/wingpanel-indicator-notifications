@@ -23,6 +23,7 @@
 [DBus (name = "org.freedesktop.Notifications")]
 public interface NIface : Object {
     public signal void notification_closed (uint32 id, uint32 reason);
+    public signal void action_invoked (string action, uint32 id);
     public abstract uint32 notify (string app_name,
                                 uint32 replaces_id,
                                 string app_icon,
@@ -38,7 +39,7 @@ public class NotificationMonitor : Object {
     private const uint32 REASON_DISMISSED = 2;
 
     private DBusConnection connection;
-    private NIface? niface = null;
+    public NIface? niface = null;
     private uint32 id_counter = 0;
 
     public signal void received (DBusMessage message, uint32 id);
@@ -107,6 +108,7 @@ public class NotificationMonitor : Object {
     /* Check what's the current notification id */
     private uint32 get_starting_notification_id () {
         var hints = new HashTable<string, Variant> (str_hash, str_equal);
+        hints.insert ("suppress-sound", new Variant.boolean (true));
         string[] actions = {};
         return niface.notify ("", 0, "", "", "", actions, hints, 1);
     } 

@@ -53,7 +53,6 @@ public class NotificationsList : Gtk.ListBox {
         this.resort_from_app_entry (app_entry);
 
         entry.clear_btn.clicked.connect (() => {
-            app_entry.remove_notification_entry (entry);
             this.remove (entry);
             items.remove (entry);
             entry.active = false;
@@ -95,7 +94,7 @@ public class NotificationsList : Gtk.ListBox {
 
         app_entry.get_notifications ().@foreach ((notification_entry) => {
             notification_entry.destroy (); 
-            items.remove (notification_entry);  
+            items.remove (notification_entry);
         });
 
         Idle.add (() => {
@@ -162,16 +161,22 @@ public class NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row.get_path ().get_object_type () == typeof (AppEntry)) {
-            if ((row as AppEntry).appinfo != null) {
+            if (((AppEntry) row).appinfo != null) {
                 try {
                     (row as AppEntry).appinfo.launch (null, null);
                 } catch (Error e) {
                     error ("%s\n", e.message);
                 }
 
-                (row as AppEntry).clear_btn_entry.clicked ();
+                ((AppEntry) row).clear_btn_entry.clicked ();
                 this.close_popover ();
             }
-        }    
+        } else {
+            if (((NotificationEntry) row).notification.run_default_action ()) {
+                ((NotificationEntry) row).clear_btn.clicked ();
+                ((NotificationEntry) row).active = false;
+                this.close_popover ();
+            }
+        }
     }
 }

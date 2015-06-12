@@ -40,6 +40,9 @@ public class Notification : Object {
         COUNT
     }
 
+    private string[] actions;
+    private const string DEFAULT = "default";
+
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
 
@@ -52,10 +55,21 @@ public class Notification : Object {
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
         this.id = _id;
 
+        this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
+
         this.timestamp = new DateTime.now_local ();   
 
         // Begin counting time
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
+    }
+
+    public bool run_default_action () {
+        if (DEFAULT in actions) {
+            monitor.niface.action_invoked (DEFAULT, id);
+            return true;
+        }
+
+        return false;
     }
 
     private string get_string (Variant tuple, int column) {
