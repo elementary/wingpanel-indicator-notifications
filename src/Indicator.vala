@@ -73,7 +73,7 @@ public class Indicator : Wingpanel.Indicator {
             stack = new Gtk.Stack ();
             stack.hexpand = true;
 
-            var no_notifications_label = new Gtk.Label ("No Notifications");
+            var no_notifications_label = new Gtk.Label (_("No Notifications"));
             no_notifications_label.get_style_context ().add_class ("h2");
             no_notifications_label.set_sensitive (false);
 
