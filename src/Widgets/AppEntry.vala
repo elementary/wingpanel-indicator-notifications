@@ -19,14 +19,17 @@ public class AppEntry : Gtk.ListBoxRow {
     public string app_name;
     public Gtk.Button clear_btn_entry;
     public AppInfo? appinfo = null;
+    public Wnck.Window? app_window;
 
     public signal void destroy_entry ();
 
     private List<NotificationEntry> app_notifications;
-
-    public AppEntry (NotificationEntry entry) {
+    
+    public AppEntry (NotificationEntry entry, Wnck.Window? _app_window) {
         var notification = entry.notification;
         this.app_name = notification.app_name;
+        this.app_window = _app_window;
+
         app_notifications = new List<NotificationEntry> ();
         this.add_notification_entry (entry);
 
@@ -53,6 +56,20 @@ public class AppEntry : Gtk.ListBoxRow {
             
             this.destroy_entry ();
         });
+
+        /*app_window.notify["is_above"].connect (() => {
+            print ("SIGNALLLL!\n");
+        });
+
+        app_window.actions_changed.connect ((mask, new_action) => {
+            print ("ACTION: %i\n", new_action);
+        });
+
+        app_window.state_changed.connect ((mask, new_state) => {
+            print ("STATE: %i\n", new_state);
+            if (new_state == 0)
+                clear_btn_entry.clicked ();
+        });*/
 
         string icon = "";
         if (notification.app_icon == "") {

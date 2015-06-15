@@ -24,6 +24,7 @@ public class Notification : Object {
     public int32 expire_timeout;
     public uint32 replaces_id;
     public uint32 id;
+    public uint32 pid = 0;
     public DateTime timestamp;
 
     public signal bool time_changed (TimeSpan span);
@@ -55,8 +56,15 @@ public class Notification : Object {
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
         this.id = _id;
 
-        this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
+        try {
+            DBusIface? dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
+            if (dbusiface.name_has_owner (message.get_sender ()))
+                this.pid = dbusiface.get_connection_unix_process_id (message.get_sender ());
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }
 
+        this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
         this.timestamp = new DateTime.now_local ();   
 
         // Begin counting time

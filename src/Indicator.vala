@@ -47,7 +47,6 @@ public class Indicator : Wingpanel.Indicator {
 
         this.visible = true;
 
-
         monitor = new NotificationMonitor ();
         settings = new NSettings ();
     }
@@ -145,7 +144,6 @@ public class Indicator : Wingpanel.Indicator {
                     nlist.switch_stack (nlist.get_items_length () > 0);    
             });
 
-
             main_box.add (not_disturb_switch);
             main_box.add (new Wingpanel.Widgets.IndicatorSeparator ());
             main_box.add (stack);
@@ -159,7 +157,7 @@ public class Indicator : Wingpanel.Indicator {
         return main_box;
     }
 
-    public override void opened () {
+    public override void opened () {  
         indicator_opened = true;
         if (settings.do_not_disturb) {
             stack.set_visible_child_name ("not-disturb-mode");

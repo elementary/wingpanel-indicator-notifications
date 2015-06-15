@@ -34,12 +34,22 @@ public interface NIface : Object {
                                 int32 expire_timeout) throws Error;
 }
 
+[DBus (name = "org.freedesktop.DBus")]
+public interface DBusIface : Object {
+    [DBus (name = "NameHasOwner")]
+    public abstract bool name_has_owner (string name) throws Error;
+
+    [DBus (name = "GetConnectionUnixProcessID")]
+    public abstract uint32 get_connection_unix_process_id (string name) throws Error;
+}
+
 public class NotificationMonitor : Object {
     private const string MATCH_STRING = "eavesdrop=true,type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
     private const uint32 REASON_DISMISSED = 2;
 
     private DBusConnection connection;
     public NIface? niface = null;
+    public DBusIface? dbusiface = null;
     private uint32 id_counter = 0;
 
     public signal void received (DBusMessage message, uint32 id);
@@ -66,6 +76,7 @@ public class NotificationMonitor : Object {
         try {
             niface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.Notifications",
                                                       "/org/freedesktop/Notifications"); 
+            //dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
         } catch (Error e) {
             error ("%s\n", e.message);
         }

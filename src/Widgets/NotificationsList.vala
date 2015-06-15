@@ -20,8 +20,12 @@ public class NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
     private List<AppEntry> app_entries;
     private List<NotificationEntry> items;
+    private List<Gtk.ListBoxRow> separators;
     private HashTable<string, int> table;
     private int counter = 0;
+
+    private unowned List<Wnck.Window> windows;
+    private static Wnck.Screen screen;
 
     public NotificationsList () {
         this.margin_top = 2;
@@ -32,7 +36,10 @@ public class NotificationsList : Gtk.ListBox {
 
         items = new List<NotificationEntry> ();
         app_entries = new List<AppEntry> ();
+        separators = new List<Gtk.ListBoxRow> ();
         table = new HashTable<string, int> (str_hash, str_equal);
+
+        screen = Wnck.Screen.get_default ();
 
         this.vexpand = true;
         this.show_all ();
@@ -44,7 +51,7 @@ public class NotificationsList : Gtk.ListBox {
             entry.notification.app_icon = "dialog-information";
         }
 
-        var app_entry = add_app_entry (entry);
+        var app_entry = this.add_app_entry (entry);
 
         items.prepend (entry);
         this.switch_stack (true);
@@ -56,6 +63,7 @@ public class NotificationsList : Gtk.ListBox {
             this.remove (entry);
             items.remove (entry);
             entry.active = false;
+            this.update_separators ();
 
             if (items.length () == 0)
                 this.clear_all ();
@@ -69,12 +77,76 @@ public class NotificationsList : Gtk.ListBox {
         entry.show_all ();
         this.show_all ();
     }
+
+
+    public uint get_items_length () {
+        return items.length ();
+    }
+ 
+    public void clear_all () {
+        items.@foreach ((item) => {
+            items.remove (item);
+            this.remove (item);
+            item.active = false;
+        });
+
+        app_entries.@foreach ((entry) => {
+            app_entries.remove (entry);
+            this.remove (entry);    
+        });
+
+        counter = 0;
+
+        this.switch_stack (false);
+        this.show_all ();
+    }
     
+    private HashTable<string, int> get_updated_table () {
+        var new_table = new HashTable<string, int> (str_hash, str_equal);
+        uint children = get_items_length () + app_entries.length () + separators.length ();
+        for (int i = 0; i < children; i++) {
+            var row = this.get_row_at_index (i);
+            if (row.get_path ().get_object_type () == typeof (AppEntry))
+                new_table.insert (((AppEntry) row).app_name, i);
+        }
+
+        return new_table;
+    }
+
+    private void update_separators () {
+        var new_table = get_updated_table ();
+
+        if (separators.length () > 0) {
+            separators.@foreach ((sep) => {
+                sep.destroy (); 
+                separators.remove (sep);
+            });
+        }
+
+        new_table.@foreach ((app_name, pos) => {
+            if (pos > 0) {
+                var row = new Gtk.ListBoxRow ();
+                row.activatable = row.selectable = false;
+
+                var separator = new Wingpanel.Widgets.IndicatorSeparator ();
+                row.add (separator);
+                separators.append (row);
+                this.insert (row, pos--);
+            }
+        });
+    }
+
     private AppEntry add_app_entry (NotificationEntry entry) {
         AppEntry app_entry;        
         bool add = !(entry.notification.app_name in construct_app_names ());
         if (add) {
-            app_entry = new AppEntry (entry);
+            var window = this.get_window_from_entry (entry);
+            app_entry = new AppEntry (entry, window);
+
+            screen.active_window_changed.connect ((previous_window) => {
+                if (screen.get_active_window () == app_entry.app_window)
+                    app_entry.clear_btn_entry.clicked ();
+            });
 
             app_entries.prepend (app_entry);
             this.prepend (app_entry);
@@ -86,7 +158,17 @@ public class NotificationsList : Gtk.ListBox {
             this.insert (entry, insert_pos + 1);
         }
 
-        return app_entry;        
+        return app_entry;
+    }
+
+    private Wnck.Window? get_window_from_entry (NotificationEntry entry) {
+        Wnck.Window? window = null;
+        screen.get_windows ().@foreach ((_window) => {
+            if (_window.get_pid () == entry.notification.pid)
+                window = _window;
+        });
+
+        return window;
     }
 
     private void destroy_app_entry (AppEntry app_entry) {
@@ -103,6 +185,7 @@ public class NotificationsList : Gtk.ListBox {
         });      
 
         app_entry.unref ();  
+        this.update_separators ();
     }
 
     private void resort_from_app_entry (AppEntry app_entry) {
@@ -116,6 +199,8 @@ public class NotificationsList : Gtk.ListBox {
                 counter++;
             });
         }
+
+        this.update_separators ();
     }
 
     private AppEntry? get_app_entry_from_app_name (string app_name) {
@@ -137,31 +222,12 @@ public class NotificationsList : Gtk.ListBox {
         return app_names;
     }
 
-    public uint get_items_length () {
-        return items.length ();
-    }
-    
-    public void clear_all () {
-        items.@foreach ((item) => {
-            items.remove (item);
-            this.remove (item);
-            item.active = false;
-        });
-
-        app_entries.@foreach ((entry) => {
-            app_entries.remove (entry);
-            this.remove (entry);    
-        });
-
-        counter = 0;
-
-        this.switch_stack (false);
-        this.show_all ();
-    }
-
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row.get_path ().get_object_type () == typeof (AppEntry)) {
-            if (((AppEntry) row).appinfo != null) {
+            // FIXME: Check out if we have the window opened before by the user
+            if (((AppEntry) row).app_window != null) {
+                ((AppEntry) row).app_window.activate (-1);
+            } else if (((AppEntry) row).appinfo != null) {
                 try {
                     (row as AppEntry).appinfo.launch (null, null);
                 } catch (Error e) {
@@ -169,8 +235,9 @@ public class NotificationsList : Gtk.ListBox {
                 }
 
                 ((AppEntry) row).clear_btn_entry.clicked ();
-                this.close_popover ();
             }
+
+            this.close_popover ();
         } else {
             if (((NotificationEntry) row).notification.run_default_action ()) {
                 ((NotificationEntry) row).clear_btn.clicked ();
