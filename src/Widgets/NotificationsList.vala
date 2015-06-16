@@ -185,7 +185,8 @@ public class NotificationsList : Gtk.ListBox {
         });      
 
         if (app_entry != null)
-            app_entry.unref ();  
+            app_entry.unref (); 
+             
         this.update_separators ();
     }
 

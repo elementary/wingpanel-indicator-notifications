@@ -111,7 +111,7 @@ public class Indicator : Wingpanel.Indicator {
                 } else {
                     main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
                     stack.set_visible_child_name ("no-notifications");
-                    dynamic_icon.set_icon_name ("indicator-messages");
+                    dynamic_icon.set_icon_name (get_display_icon_name ());
                     clear_all_btn.set_visible (false);
                 }
             });
