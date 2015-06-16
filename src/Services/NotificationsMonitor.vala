@@ -76,13 +76,17 @@ public class NotificationMonitor : Object {
         try {
             niface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.Notifications",
                                                       "/org/freedesktop/Notifications"); 
-            //dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
         } catch (Error e) {
             error ("%s\n", e.message);
         }
 
         id_counter = get_starting_notification_id ();
-        connection.send_message (message, DBusSendMessageFlags.NONE, null);
+        try {
+            connection.send_message (message, DBusSendMessageFlags.NONE, null);
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }
+
         connection.add_filter (message_filter);
     }
 
@@ -99,17 +103,21 @@ public class NotificationMonitor : Object {
                     current_id = id_counter;
                 }
 
-                niface.notification_closed.connect ((id, reason) => {
-                    if (id == 1) {
-                        id_counter = id;
-                        current_id = id_counter;
-                    }
+                if (settings.do_not_disturb)
+                    this.received (message, current_id);
+                else {
+                    niface.notification_closed.connect ((id, reason) => {
+                        if (id == 1) {
+                            id_counter = id;
+                            current_id = id_counter;
+                        }
 
-                    if (reason != REASON_DISMISSED && current_id == id) {
-                        this.received (message, id);
-                        message = null;                        
-                    }                      
-                });
+                        if (reason != REASON_DISMISSED && current_id == id) {
+                            this.received (message, id);
+                            message = null;                        
+                        }                      
+                    });                    
+                }
             }
         }
 
@@ -121,6 +129,10 @@ public class NotificationMonitor : Object {
         var hints = new HashTable<string, Variant> (str_hash, str_equal);
         hints.insert ("suppress-sound", new Variant.boolean (true));
         string[] actions = {};
-        return niface.notify ("", 0, "", "", "", actions, hints, 1);
+        try {
+            return niface.notify ("", 0, "", "", "", actions, hints, 1);
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }
     } 
 }

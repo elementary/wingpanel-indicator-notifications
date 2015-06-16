@@ -16,12 +16,12 @@
  */
 
 public class NSettings : Granite.Services.Settings {
-	public string[] apps { get; set; }
-	public bool default_bubbles { get; set; }
-	public bool default_sounds { get; set; }
-	public bool do_not_disturb { get; set; }
+    public string[] apps { get; set; }
+    public bool default_bubbles { get; set; }
+    public bool default_sounds { get; set; }
+    public bool do_not_disturb { get; set; }
 
-	public NSettings () {
-		base ("org.pantheon.desktop.gala.notifications");
-	}	
+    public NSettings () {
+        base ("org.pantheon.desktop.gala.notifications");
+    }
 }

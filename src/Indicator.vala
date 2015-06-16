@@ -24,6 +24,8 @@ public bool indicator_opened = false;
 /* Notiifcations monitor */
 public NotificationMonitor monitor;
 
+public NSettings settings;
+
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_WIDTH = 300;
@@ -37,7 +39,6 @@ public class Indicator : Wingpanel.Indicator {
     private Gtk.Stack stack;
 
     private NotificationsList nlist;
-    private NSettings settings;
 
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES,
@@ -75,7 +76,7 @@ public class Indicator : Wingpanel.Indicator {
 
             var no_notifications_label = new Gtk.Label (_("No Notifications"));
             no_notifications_label.get_style_context ().add_class ("h2");
-            no_notifications_label.set_sensitive (false);
+            no_notifications_label.sensitive = false;
 
             var not_disturb_box = new NotDisturbMode ();
 
@@ -105,24 +106,19 @@ public class Indicator : Wingpanel.Indicator {
             });
 
             nlist.switch_stack.connect ((list) => {
-                if (list) {
+                if (list && !settings.do_not_disturb) {
                     main_box.set_size_request (BOX_WIDTH, BOX_LIST_HEIGHT);
                     stack.set_visible_child_name ("list");
                     clear_all_btn.set_visible (true);
                 } else {
-                    if (!settings.do_not_disturb) {
-                        main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
-                        stack.set_visible_child_name ("no-notifications");
-                        dynamic_icon.set_icon_name ("indicator-messages");
-                        clear_all_btn.set_visible (false);
-                    }
+                    main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
+                    stack.set_visible_child_name ("no-notifications");
+                    dynamic_icon.set_icon_name ("indicator-messages");
+                    clear_all_btn.set_visible (false);
                 }
             });
 
             monitor.received.connect ((message, id) => {
-                if (settings.do_not_disturb)
-                    return;
-
                 var notification = new Notification.from_message (message, id);
                 if (notification.app_name in EXCEPTIONS)
                     return;
@@ -130,7 +126,8 @@ public class Indicator : Wingpanel.Indicator {
                 var entry = new NotificationEntry (notification);
                 nlist.add_item (entry);
 
-                dynamic_icon.set_icon_name ("indicator-messages-new");
+                if (!settings.do_not_disturb)
+                    dynamic_icon.set_icon_name ("indicator-messages-new");
             });
 
             settings.changed["do-not-disturb"].connect (() => {
@@ -150,7 +147,9 @@ public class Indicator : Wingpanel.Indicator {
             main_box.pack_end (settings_btn, false, false, 0);
             main_box.pack_end (clear_all_btn, false, false, 0);
             main_box.show_all ();
+
             nlist.clear_all ();
+            dynamic_icon.set_icon_name (get_display_icon_name ());
         }
 
         return main_box;
@@ -178,11 +177,10 @@ public class Indicator : Wingpanel.Indicator {
     private string get_display_icon_name () {
         if (settings.do_not_disturb)
             return "notification-disabled-symbolic";
-
-        if (nlist.get_items_length () > 0)
+        else if (nlist.get_items_length () > 0)
             return "indicator-messages-new";
-
-        return "notification-symbolic";    
+        else
+            return "notification-symbolic";    
     }
 
     private void show_settings () {

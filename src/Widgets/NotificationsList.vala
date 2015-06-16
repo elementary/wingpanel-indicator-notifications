@@ -24,7 +24,6 @@ public class NotificationsList : Gtk.ListBox {
     private HashTable<string, int> table;
     private int counter = 0;
 
-    private unowned List<Wnck.Window> windows;
     private static Wnck.Screen screen;
 
     public NotificationsList () {
@@ -180,11 +179,13 @@ public class NotificationsList : Gtk.ListBox {
         });
 
         Idle.add (() => {
-            app_entry.destroy ();
+            if (app_entry != null)
+                app_entry.destroy ();
             return false;
         });      
 
-        app_entry.unref ();  
+        if (app_entry != null)
+            app_entry.unref ();  
         this.update_separators ();
     }
 
@@ -227,6 +228,7 @@ public class NotificationsList : Gtk.ListBox {
             // FIXME: Check out if we have the window opened before by the user
             if (((AppEntry) row).app_window != null) {
                 ((AppEntry) row).app_window.activate (-1);
+                this.close_popover ();
             } else if (((AppEntry) row).appinfo != null) {
                 try {
                     (row as AppEntry).appinfo.launch (null, null);
@@ -235,9 +237,8 @@ public class NotificationsList : Gtk.ListBox {
                 }
 
                 ((AppEntry) row).clear_btn_entry.clicked ();
+                this.close_popover ();
             }
-
-            this.close_popover ();
         } else {
             if (((NotificationEntry) row).notification.run_default_action ()) {
                 ((NotificationEntry) row).clear_btn.clicked ();

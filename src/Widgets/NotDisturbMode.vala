@@ -16,10 +16,10 @@
  */
 
 public class NotDisturbMode : Gtk.Box {
-	public NotDisturbMode () {
-		this.orientation = Gtk.Orientation.VERTICAL;
-		this.spacing = 10;
-		this.margin_top = this.margin_bottom = 20;
+    public NotDisturbMode () {
+        this.orientation = Gtk.Orientation.VERTICAL;
+        this.spacing = 10;
+        this.margin_top = this.margin_bottom = 20;
 
         var not_disturb_label = new Gtk.Label (_("elementary is in
 Do Not Disturb mode."));
@@ -29,6 +29,7 @@ Do Not Disturb mode."));
 
         this.add (not_disturb_image);
         this.add (not_disturb_label);
+
         this.show_all ();
-	}
+    }
 }

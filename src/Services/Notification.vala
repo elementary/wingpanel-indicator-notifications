@@ -41,8 +41,9 @@ public class Notification : Object {
         COUNT
     }
 
-    private string[] actions;
     private const string DEFAULT = "default";
+    private string[] actions;
+    private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
@@ -56,19 +57,32 @@ public class Notification : Object {
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
         this.id = _id;
 
-        try {
-            DBusIface? dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
-            if (dbusiface.name_has_owner (message.get_sender ()))
-                this.pid = dbusiface.get_connection_unix_process_id (message.get_sender ());
-        } catch (Error e) {
-            error ("%s\n", e.message);
-        }
+        this.pid_accuired = this.try_get_pid (message.get_sender ());
+        settings.changed["do-not-disturb"].connect (() => {
+            if (!pid_accuired)
+                this.try_get_pid (message.get_sender ());
+        });
 
         this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
         this.timestamp = new DateTime.now_local ();   
 
         // Begin counting time
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
+    }
+
+    private bool try_get_pid (string sender) {
+        if (settings.do_not_disturb) 
+            return false;
+
+        try {
+            DBusIface? dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
+            if (dbusiface.name_has_owner (sender))
+                this.pid = dbusiface.get_connection_unix_process_id (sender);
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }
+
+        return true;
     }
 
     public bool run_default_action () {

@@ -57,20 +57,6 @@ public class AppEntry : Gtk.ListBoxRow {
             this.destroy_entry ();
         });
 
-        /*app_window.notify["is_above"].connect (() => {
-            print ("SIGNALLLL!\n");
-        });
-
-        app_window.actions_changed.connect ((mask, new_action) => {
-            print ("ACTION: %i\n", new_action);
-        });
-
-        app_window.state_changed.connect ((mask, new_state) => {
-            print ("STATE: %i\n", new_state);
-            if (new_state == 0)
-                clear_btn_entry.clicked ();
-        });*/
-
         string icon = "";
         if (notification.app_icon == "") {
             var glib_icon = appinfo.get_icon ();
