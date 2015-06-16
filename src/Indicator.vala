@@ -26,9 +26,8 @@ public NotificationMonitor monitor;
 
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
-    private const uint16 BOX_LIST_WIDTH = 300;
+    private const uint16 BOX_WIDTH = 300;
     private const uint16 BOX_LIST_HEIGHT = 400;
-    private const uint8 BOX_WIDTH = 200;
     private const uint8 BOX_HEIGHT = 50;
     private const string[] EXCEPTIONS = { "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
 
@@ -74,9 +73,9 @@ public class Indicator : Wingpanel.Indicator {
             stack = new Gtk.Stack ();
             stack.hexpand = true;
 
-            var no_notifications_label = new Gtk.Label ("<i>%s</i>".printf ("There are no new notifications."));
-            no_notifications_label.use_markup = true;
-            no_notifications_label.margin_top = no_notifications_label.margin_bottom = 50;
+            var no_notifications_label = new Gtk.Label (_("No Notifications"));
+            no_notifications_label.get_style_context ().add_class ("h2");
+            no_notifications_label.set_sensitive (false);
 
             var not_disturb_box = new NotDisturbMode ();
 
@@ -107,7 +106,7 @@ public class Indicator : Wingpanel.Indicator {
 
             nlist.switch_stack.connect ((list) => {
                 if (list) {
-                    main_box.set_size_request (BOX_LIST_WIDTH, BOX_LIST_HEIGHT);
+                    main_box.set_size_request (BOX_WIDTH, BOX_LIST_HEIGHT);
                     stack.set_visible_child_name ("list");
                     clear_all_btn.set_visible (true);
                 } else {
