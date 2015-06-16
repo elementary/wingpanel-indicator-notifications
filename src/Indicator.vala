@@ -104,17 +104,15 @@ public class Indicator : Wingpanel.Indicator {
             });
 
             nlist.switch_stack.connect ((list) => {
-                if (!settings.do_not_disturb) {
-                    if (list) {
-                        main_box.set_size_request (BOX_WIDTH, BOX_LIST_HEIGHT);
-                        stack.set_visible_child_name ("list");
-                        clear_all_btn.set_visible (true);
-                    } else {
-                        main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
-                        stack.set_visible_child_name ("no-notifications");
-                        dynamic_icon.set_icon_name ("indicator-messages");
-                        clear_all_btn.set_visible (false);
-                    }
+                if (list) {
+                    main_box.set_size_request (BOX_WIDTH, BOX_LIST_HEIGHT);
+                    stack.set_visible_child_name ("list");
+                    clear_all_btn.set_visible (true);
+                } else {
+                    main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
+                    stack.set_visible_child_name ("no-notifications");
+                    dynamic_icon.set_icon_name ("indicator-messages");
+                    clear_all_btn.set_visible (false);
                 }
             });
 
@@ -126,21 +124,12 @@ public class Indicator : Wingpanel.Indicator {
                 var entry = new NotificationEntry (notification);
                 nlist.add_item (entry);
 
-                if (!settings.do_not_disturb)
-                    dynamic_icon.set_icon_name ("indicator-messages-new");
+                dynamic_icon.set_icon_name (get_display_icon_name ());
             });
 
             settings.changed["do-not-disturb"].connect (() => {
                 not_disturb_switch.get_switch ().active = settings.do_not_disturb;
-                main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
                 dynamic_icon.set_icon_name (get_display_icon_name ());
-                if (settings.do_not_disturb) {
-                    stack.set_visible_child_name ("no-notifications");
-                    clear_all_btn.visible = false;
-                } else {
-                    nlist.switch_stack (nlist.get_items_length () > 0);  
-                    clear_all_btn.visible = true;  
-                }
             });
 
             main_box.add (not_disturb_switch);
@@ -160,14 +149,9 @@ public class Indicator : Wingpanel.Indicator {
 
     public override void opened () {  
         indicator_opened = true;
-        if (settings.do_not_disturb) {
-            stack.set_visible_child_name ("no-notifications");
-            clear_all_btn.visible = false; 
-            return;
-        }
 
         nlist.switch_stack (nlist.get_items_length () > 0);
-        if (nlist.get_items_length () > 0 && !settings.do_not_disturb) 
+        if (nlist.get_items_length () > 0) 
             clear_all_btn.visible = true;
         else
             clear_all_btn.visible = false;    
