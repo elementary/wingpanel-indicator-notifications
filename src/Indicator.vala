@@ -29,8 +29,7 @@ public NSettings settings;
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_WIDTH = 300;
-    private const uint16 BOX_LIST_HEIGHT = 400;
-    private const uint8 BOX_HEIGHT = 50;
+    private const uint16 BOX_HEIGHT = 400;
     private const string[] EXCEPTIONS = { "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
 
     private Wingpanel.Widgets.DynamicIcon? dynamic_icon = null;
@@ -105,11 +104,11 @@ public class Indicator : Wingpanel.Indicator {
 
             nlist.switch_stack.connect ((list) => {
                 if (list) {
-                    main_box.set_size_request (BOX_WIDTH, BOX_LIST_HEIGHT);
+                    main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
                     stack.set_visible_child_name ("list");
                     clear_all_btn.set_visible (true);
                 } else {
-                    main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
+                    main_box.set_size_request (BOX_WIDTH, -1);
                     stack.set_visible_child_name ("no-notifications");
                     dynamic_icon.set_icon_name ("indicator-messages");
                     clear_all_btn.set_visible (false);
