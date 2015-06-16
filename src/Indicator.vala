@@ -76,7 +76,8 @@ public class Indicator : Wingpanel.Indicator {
             var no_notifications_label = new Gtk.Label (_("No Notifications"));
             no_notifications_label.get_style_context ().add_class ("h2");
             no_notifications_label.sensitive = false;
-            no_notifications_label.margin_top = no_notifications_label.margin_bottom = 50;
+            no_notifications_label.margin_top = no_notifications_label.margin_bottom = 48;
+            no_notifications_label.margin_start = no_notifications_label.margin_end = 12;
 
             nlist = new NotificationsList ();
 
