@@ -16,7 +16,6 @@ include (ValaPrecompile)
 vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Indicator.vala
   Utils.vala
-  Widgets/NotDisturbMode.vala
   Widgets/NotificationsList.vala
   Widgets/NotificationEntry.vala
   Widgets/AppEntry.vala

@@ -78,7 +78,7 @@ public class AppEntry : Gtk.ListBoxRow {
 
     private void connect_entry (NotificationEntry entry) {
         entry.notify["active"].connect (() => {
-            if (!entry.active) {
+            if (!entry.active && entry != null) {
                 this.remove_notification_entry (entry);
                 entry.unref ();
             }
