@@ -58,7 +58,7 @@ public class Notification : Object {
         this.id = _id;
 
         this.pid_accuired = this.try_get_pid (message.get_sender ());
-        settings.changed["do-not-disturb"].connect (() => {
+        nsettings.changed["do-not-disturb"].connect (() => {
             if (!pid_accuired)
                 this.try_get_pid (message.get_sender ());
         });
@@ -71,7 +71,7 @@ public class Notification : Object {
     }
 
     private bool try_get_pid (string sender) {
-        if (settings.do_not_disturb) 
+        if (nsettings.do_not_disturb) 
             return false;
 
         try {

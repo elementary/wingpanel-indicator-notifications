@@ -24,7 +24,8 @@ public bool indicator_opened = false;
 /* Notiifcations monitor */
 public NotificationMonitor monitor;
 
-public NSettings settings;
+public NSettings nsettings;
+public Settings settings;
 
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
@@ -48,7 +49,8 @@ public class Indicator : Wingpanel.Indicator {
         this.visible = true;
 
         monitor = new NotificationMonitor ();
-        settings = new NSettings ();
+        nsettings = new NSettings ();
+        settings = new Settings ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -57,7 +59,7 @@ public class Indicator : Wingpanel.Indicator {
 
         dynamic_icon.button_press_event.connect ((e) => {
             if (e.button == Gdk.BUTTON_MIDDLE) {
-                settings.do_not_disturb = !settings.do_not_disturb;
+                nsettings.do_not_disturb = !nsettings.do_not_disturb;
                 return Gdk.EVENT_STOP;
             }  
 
@@ -87,10 +89,10 @@ public class Indicator : Wingpanel.Indicator {
             stack.add_named (scrolled, "list");
             stack.add_named (no_notifications_label, "no-notifications");
 
-            var not_disturb_switch = new Wingpanel.Widgets.IndicatorSwitch (_("Do Not Disturb"), settings.do_not_disturb);
+            var not_disturb_switch = new Wingpanel.Widgets.IndicatorSwitch (_("Do Not Disturb"), nsettings.do_not_disturb);
             not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
             not_disturb_switch.get_switch ().notify["active"].connect (() => { 
-                settings.do_not_disturb = not_disturb_switch.get_switch ().active;
+                nsettings.do_not_disturb = not_disturb_switch.get_switch ().active;
             });
 
             clear_all_btn = new Wingpanel.Widgets.IndicatorButton (_("Clear All Notifications"));
@@ -118,7 +120,7 @@ public class Indicator : Wingpanel.Indicator {
 
             monitor.received.connect ((message, id) => {
                 var notification = new Notification.from_message (message, id);
-                if (notification.app_name in EXCEPTIONS)
+                if (notification.app_name in EXCEPTIONS || notification.app_name in settings.blacklist)
                     return;
 
                 var entry = new NotificationEntry (notification);
@@ -127,8 +129,8 @@ public class Indicator : Wingpanel.Indicator {
                 dynamic_icon.set_icon_name (get_display_icon_name ());
             });
 
-            settings.changed["do-not-disturb"].connect (() => {
-                not_disturb_switch.get_switch ().active = settings.do_not_disturb;
+            nsettings.changed["do-not-disturb"].connect (() => {
+                not_disturb_switch.get_switch ().active = nsettings.do_not_disturb;
                 dynamic_icon.set_icon_name (get_display_icon_name ());
             });
 
@@ -162,7 +164,7 @@ public class Indicator : Wingpanel.Indicator {
     }
 
     private string get_display_icon_name () {
-        if (settings.do_not_disturb)
+        if (nsettings.do_not_disturb)
             return "notification-disabled-symbolic";
         else if (nlist.get_items_length () > 0)
             return "indicator-messages-new";

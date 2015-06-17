@@ -103,7 +103,7 @@ public class NotificationMonitor : Object {
                     current_id = id_counter;
                 }
 
-                if (settings.do_not_disturb)
+                if (nsettings.do_not_disturb)
                     this.received (message, current_id);
                 else {
                     niface.notification_closed.connect ((id, reason) => {

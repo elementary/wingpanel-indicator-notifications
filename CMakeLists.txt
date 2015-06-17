@@ -37,5 +37,9 @@ file (GLOB resources "${CMAKE_CURRENT_SOURCE_DIR}/data/*")
 # Traslation stuff
 add_subdirectory (po)
 
+# Data
+add_subdirectory (data)
+
 # Code
 add_subdirectory(src)
+
