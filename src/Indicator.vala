@@ -109,12 +109,12 @@ public class Indicator : Wingpanel.Indicator {
                 if (list) {
                     main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
                     stack.set_visible_child_name ("list");
-                    clear_all_btn.set_visible (true);
+                    clear_all_btn.sensitive = true;
                 } else {
                     main_box.set_size_request (BOX_WIDTH, -1);
                     stack.set_visible_child_name ("no-notifications");
                     dynamic_icon.set_icon_name (get_display_icon_name ());
-                    clear_all_btn.set_visible (false);
+                    clear_all_btn.sensitive = false;
                 }
             });
 
@@ -154,9 +154,9 @@ public class Indicator : Wingpanel.Indicator {
 
         nlist.switch_stack (nlist.get_items_length () > 0);
         if (nlist.get_items_length () > 0) 
-            clear_all_btn.visible = true;
+            clear_all_btn.sensitive = true;
         else
-            clear_all_btn.visible = false;    
+            clear_all_btn.sensitive = false;    
     }
 
     public override void closed () {
