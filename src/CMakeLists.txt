@@ -23,6 +23,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Services/Notification.vala
   Services/NSettings.vala
   Services/Settings.vala
+  Services/Session.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   wingpanel-2.0

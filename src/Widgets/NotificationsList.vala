@@ -64,6 +64,7 @@ public class NotificationsList : Gtk.ListBox {
             entry.active = false;
             this.update_separators ();
 
+            session.remove_notification (entry.notification);  
             if (items.length () == 0)
                 this.clear_all ();
         });
@@ -73,6 +74,8 @@ public class NotificationsList : Gtk.ListBox {
         });
 
         counter = counter + 2;
+
+        session.add_notification (entry.notification);
         entry.show_all ();
         this.show_all ();
     }
@@ -86,7 +89,7 @@ public class NotificationsList : Gtk.ListBox {
         items.@foreach ((item) => {
             items.remove (item);
             this.remove (item);
-            item.active = false;
+            item.active = false; 
         });
 
         app_entries.@foreach ((entry) => {

@@ -7,10 +7,5 @@
             <description>The blacklist contains app exceptions to not show them in the indicator.
 The strings are app names sent directly from the notification server and should not be modified in any way.</description>
         </key>
-        <key type="as" name="session">
-            <default>[]</default>
-            <summary>Stores notifications from session.</summary>
-            <description>Notifications from the session that were missed by the user.</description>
-        </key>        
     </schema>
 </schemalist>

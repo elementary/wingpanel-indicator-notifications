@@ -27,6 +27,8 @@ public NotificationMonitor monitor;
 public NSettings nsettings;
 public Settings settings;
 
+public Session session;
+
 public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_WIDTH = 300;
@@ -50,6 +52,7 @@ public class Indicator : Wingpanel.Indicator {
         monitor = new NotificationMonitor ();
         nsettings = new NSettings ();
         settings = new Settings ();
+        session = new Session ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -96,7 +99,10 @@ public class Indicator : Wingpanel.Indicator {
             });
 
             clear_all_btn = new Wingpanel.Widgets.IndicatorButton (_("Clear All Notifications"));
-            clear_all_btn.clicked.connect (nlist.clear_all);
+            clear_all_btn.clicked.connect (() => {
+                nlist.clear_all ();
+                session.clear ();
+            });
 
             var settings_btn = new Wingpanel.Widgets.IndicatorButton (_("Notifications Settings…"));
             settings_btn.clicked.connect (show_settings);
@@ -143,6 +149,16 @@ public class Indicator : Wingpanel.Indicator {
             main_box.show_all ();
 
             nlist.clear_all ();
+            var previous_session = session.get_session_notifications ();
+            if (previous_session.length () > 0) {
+                previous_session.@foreach ((notification) => {
+                    var entry = new NotificationEntry (notification);
+                    nlist.add_item (entry);
+
+                    dynamic_icon.set_icon_name (get_display_icon_name ());
+                });
+            }
+
             dynamic_icon.set_icon_name (get_display_icon_name ());
         }
 

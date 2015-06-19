@@ -21,9 +21,17 @@ public class Notification : Object {
     public string summary;
     public string message_body;
     public string app_icon;
+    public string sender;
+    public string[] actions;
     public int32 expire_timeout;
     public uint32 replaces_id;
+
+    /* We cannot convert uint64 to uint32 and
+     * we need to store them in the separate 
+     * variables.
+     */
     public uint32 id;
+    public uint64 id_64;
     public uint32 pid = 0;
     public DateTime timestamp;
 
@@ -42,7 +50,6 @@ public class Notification : Object {
     }
 
     private const string DEFAULT = "default";
-    private string[] actions;
     private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -56,12 +63,10 @@ public class Notification : Object {
         this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
         this.id = _id;
+        this.id_64 = -1;
+        this.sender = message.get_sender ();
 
-        this.pid_accuired = this.try_get_pid (message.get_sender ());
-        nsettings.changed["do-not-disturb"].connect (() => {
-            if (!pid_accuired)
-                this.try_get_pid (message.get_sender ());
-        });
+        setup_pid ();
 
         this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
         this.timestamp = new DateTime.now_local ();   
@@ -70,7 +75,36 @@ public class Notification : Object {
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
-    private bool try_get_pid (string sender) {
+    public Notification.from_data (uint64 _id, string _app_name, string _app_icon,
+                                string _summary, string _message_body,
+                                string[] _actions, string _sender) {
+        this.app_name = _app_name;
+        this.display_name = app_name;
+        this.app_icon = _app_icon;
+        this.summary = _summary;
+        this.message_body = _message_body;
+        this.expire_timeout = -1;
+        this.replaces_id = 0;
+        this.id_64 = _id;
+        this.id = -1;
+        this.sender = _sender;
+
+        setup_pid ();
+
+        this.actions = _actions;
+        this.timestamp = new DateTime.now_local ();
+        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
+    }
+
+    private void setup_pid () {
+        this.pid_accuired = this.try_get_pid ();
+        nsettings.changed["do-not-disturb"].connect (() => {
+            if (!pid_accuired)
+                this.try_get_pid ();
+        });
+    }
+
+    private bool try_get_pid () {
         if (nsettings.do_not_disturb) 
             return false;
 
