@@ -35,9 +35,9 @@ public class Indicator : Wingpanel.Indicator {
     private const uint16 BOX_HEIGHT = 400;
     private const string[] EXCEPTIONS = { "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
 
-    private Wingpanel.Widgets.DynamicIcon? dynamic_icon = null;
+    private Wingpanel.Widgets.OverlayIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
-    private Wingpanel.Widgets.IndicatorButton clear_all_btn;
+    private Wingpanel.Widgets.Button clear_all_btn;
     private Gtk.Stack stack;
 
     private NotificationsList nlist;
@@ -57,7 +57,7 @@ public class Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null)
-            dynamic_icon = new Wingpanel.Widgets.DynamicIcon (get_display_icon_name ());
+            dynamic_icon = new Wingpanel.Widgets.OverlayIcon (get_display_icon_name ());
 
         dynamic_icon.button_press_event.connect ((e) => {
             if (e.button == Gdk.BUTTON_MIDDLE) {
@@ -92,19 +92,19 @@ public class Indicator : Wingpanel.Indicator {
             stack.add_named (scrolled, "list");
             stack.add_named (no_notifications_label, "no-notifications");
 
-            var not_disturb_switch = new Wingpanel.Widgets.IndicatorSwitch (_("Do Not Disturb"), nsettings.do_not_disturb);
+            var not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), nsettings.do_not_disturb);
             not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
             not_disturb_switch.get_switch ().notify["active"].connect (() => { 
                 nsettings.do_not_disturb = not_disturb_switch.get_switch ().active;
             });
 
-            clear_all_btn = new Wingpanel.Widgets.IndicatorButton (_("Clear All Notifications"));
+            clear_all_btn = new Wingpanel.Widgets.Button (_("Clear All Notifications"));
             clear_all_btn.clicked.connect (() => {
                 nlist.clear_all ();
                 session.clear ();
             });
 
-            var settings_btn = new Wingpanel.Widgets.IndicatorButton (_("Notifications Settings…"));
+            var settings_btn = new Wingpanel.Widgets.Button (_("Notifications Settings…"));
             settings_btn.clicked.connect (show_settings);
 
             nlist.close_popover.connect (() => {
@@ -119,7 +119,7 @@ public class Indicator : Wingpanel.Indicator {
                 } else {
                     main_box.set_size_request (BOX_WIDTH, -1);
                     stack.set_visible_child_name ("no-notifications");
-                    dynamic_icon.set_icon_name (get_display_icon_name ());
+                    dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
                     clear_all_btn.sensitive = false;
                 }
             });
@@ -132,18 +132,18 @@ public class Indicator : Wingpanel.Indicator {
                 var entry = new NotificationEntry (notification);
                 nlist.add_item (entry);
 
-                dynamic_icon.set_icon_name (get_display_icon_name ());
+                dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
             });
 
             nsettings.changed["do-not-disturb"].connect (() => {
                 not_disturb_switch.get_switch ().active = nsettings.do_not_disturb;
-                dynamic_icon.set_icon_name (get_display_icon_name ());
+                dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
             });
 
             main_box.add (not_disturb_switch);
-            main_box.add (new Wingpanel.Widgets.IndicatorSeparator ());
+            main_box.add (new Wingpanel.Widgets.Separator ());
             main_box.add (stack);
-            main_box.add (new Wingpanel.Widgets.IndicatorSeparator ());
+            main_box.add (new Wingpanel.Widgets.Separator ());
             main_box.pack_end (settings_btn, false, false, 0);
             main_box.pack_end (clear_all_btn, false, false, 0);
             main_box.show_all ();
@@ -155,11 +155,11 @@ public class Indicator : Wingpanel.Indicator {
                     var entry = new NotificationEntry (notification);
                     nlist.add_item (entry);
 
-                    dynamic_icon.set_icon_name (get_display_icon_name ());
+                    dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
                 });
             }
 
-            dynamic_icon.set_icon_name (get_display_icon_name ());
+            dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
         }
 
         return main_box;
@@ -194,8 +194,12 @@ public class Indicator : Wingpanel.Indicator {
     }
 }
 
-public Wingpanel.Indicator get_indicator (Module module) {
+public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug ("Activating Notifications Indicator");
+
+    if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION)
+        return null;
+
     var indicator = new Indicator ();
     return indicator;
 }

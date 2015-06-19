@@ -130,7 +130,7 @@ public class NotificationsList : Gtk.ListBox {
                 var row = new Gtk.ListBoxRow ();
                 row.activatable = row.selectable = false;
 
-                var separator = new Wingpanel.Widgets.IndicatorSeparator ();
+                var separator = new Wingpanel.Widgets.Separator ();
                 row.add (separator);
                 separators.append (row);
                 this.insert (row, pos--);

@@ -40,10 +40,6 @@ public class Session : GLib.Object {
         key.set_list_separator (',');
     }
 
-    public bool get_available () {
-        return (session_file != null);
-    }
-
     public List<Notification> get_session_notifications () {
         var list = new List<Notification> ();
         var _key = new KeyFile ();
@@ -117,7 +113,7 @@ public class Session : GLib.Object {
     }
 
     private void write_contents () {
-        if (!this.get_available ())
+        if (session_file == null)
             create_session_file ();
 
         try {
