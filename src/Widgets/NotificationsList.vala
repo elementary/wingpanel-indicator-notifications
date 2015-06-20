@@ -145,7 +145,7 @@ public class NotificationsList : Gtk.ListBox {
             var window = this.get_window_from_entry (entry);
             app_entry = new AppEntry (entry, window);
 
-            screen.active_window_changed.connect ((previous_window) => {
+            screen.active_window_changed.connect (() => {
                 if (screen.get_active_window () == app_entry.app_window)
                     app_entry.clear_btn_entry.clicked ();
             });
@@ -231,7 +231,7 @@ public class NotificationsList : Gtk.ListBox {
         if (row.get_path ().get_object_type () == typeof (AppEntry)) {
             // FIXME: Check out if we have the window opened before by the user
             if (((AppEntry) row).app_window != null) {
-                ((AppEntry) row).app_window.activate (-1);
+                ((AppEntry) row).app_window.unminimize (Gtk.get_current_event_time ());
                 this.close_popover ();
             } else if (((AppEntry) row).appinfo != null) {
                 try {
