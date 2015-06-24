@@ -119,7 +119,7 @@ public class Indicator : Wingpanel.Indicator {
                 } else {
                     main_box.set_size_request (BOX_WIDTH, -1);
                     stack.set_visible_child_name ("no-notifications");
-                    dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
+                    dynamic_icon.set_main_icon_name (get_display_icon_name ());
                     clear_all_btn.sensitive = false;
                 }
             });
@@ -132,12 +132,12 @@ public class Indicator : Wingpanel.Indicator {
                 var entry = new NotificationEntry (notification);
                 nlist.add_item (entry);
 
-                dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
+                dynamic_icon.set_main_icon_name (get_display_icon_name ());
             });
 
             nsettings.changed["do-not-disturb"].connect (() => {
                 not_disturb_switch.get_switch ().active = nsettings.do_not_disturb;
-                dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
+                dynamic_icon.set_main_icon_name (get_display_icon_name ());
             });
 
             main_box.add (not_disturb_switch);
@@ -155,11 +155,11 @@ public class Indicator : Wingpanel.Indicator {
                     var entry = new NotificationEntry (notification);
                     nlist.add_item (entry);
 
-                    dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
+                    dynamic_icon.set_main_icon_name (get_display_icon_name ());
                 });
             }
 
-            dynamic_icon.set_overlay_icon_name (get_display_icon_name ());
+            dynamic_icon.set_main_icon_name (get_display_icon_name ());
         }
 
         return main_box;
