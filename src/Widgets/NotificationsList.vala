@@ -100,6 +100,7 @@ public class NotificationsList : Gtk.ListBox {
         counter = 0;
 
         this.switch_stack (false);
+        this.close_popover ();
         this.show_all ();
     }
 
@@ -150,7 +151,7 @@ public class NotificationsList : Gtk.ListBox {
                     app_entry.clear_btn_entry.clicked ();
             });
 
-            app_entries.prepend (app_entry);
+            app_entries.append (app_entry);
             this.prepend (app_entry);
             this.insert (entry, 1);
             table.insert (app_entry.app_name, 0);

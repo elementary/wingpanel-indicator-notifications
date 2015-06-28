@@ -63,9 +63,9 @@ public class Indicator : Wingpanel.Indicator {
             if (e.button == Gdk.BUTTON_MIDDLE) {
                 nsettings.do_not_disturb = !nsettings.do_not_disturb;
                 return Gdk.EVENT_STOP;
-            }  
+            }
 
-            return Gdk.EVENT_PROPAGATE;  
+            return Gdk.EVENT_PROPAGATE;
         });
 
         return dynamic_icon;
@@ -94,7 +94,7 @@ public class Indicator : Wingpanel.Indicator {
 
             var not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), nsettings.do_not_disturb);
             not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
-            not_disturb_switch.get_switch ().notify["active"].connect (() => { 
+            not_disturb_switch.get_switch ().notify["active"].connect (() => {
                 nsettings.do_not_disturb = not_disturb_switch.get_switch ().active;
             });
 
@@ -165,14 +165,14 @@ public class Indicator : Wingpanel.Indicator {
         return main_box;
     }
 
-    public override void opened () {  
+    public override void opened () {
         indicator_opened = true;
 
         nlist.switch_stack (nlist.get_items_length () > 0);
-        if (nlist.get_items_length () > 0) 
+        if (nlist.get_items_length () > 0)
             clear_all_btn.sensitive = true;
         else
-            clear_all_btn.sensitive = false;    
+            clear_all_btn.sensitive = false;
     }
 
     public override void closed () {
@@ -182,10 +182,10 @@ public class Indicator : Wingpanel.Indicator {
     private string get_display_icon_name () {
         if (nsettings.do_not_disturb)
             return "notification-disabled-symbolic";
-        else if (nlist.get_items_length () > 0)
+        else if (nlist != null && nlist.get_items_length () > 0)
             return "indicator-messages-new";
         else
-            return "notification-symbolic";    
+            return "notification-symbolic";
     }
 
     private void show_settings () {
@@ -203,4 +203,3 @@ public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorMan
     var indicator = new Indicator ();
     return indicator;
 }
-    

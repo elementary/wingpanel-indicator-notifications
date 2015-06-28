@@ -53,7 +53,7 @@ public class Notification : Object {
     }
 
     private const string DEFAULT = "default";
-    private static bool pid_accuired;
+    private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
