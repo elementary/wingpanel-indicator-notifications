@@ -34,19 +34,19 @@ public class NotificationEntry : Gtk.ListBoxRow {
         this.get_style_context ().add_class ("menuitem");
 
         notification.time_changed.connect ((timespan) => {
-            if (!indicator_opened) {
-                string? label = get_string_from_timespan (timespan);
-                if (label != null)
-                    time_label.label = label;
-            }
+            string label = get_string_from_timespan (timespan);
+            time_label.label = label;
 
             return this.active;
         });
 
         this.hexpand = true;
         add_widgets ();
+
+        if (notification.data_session)
+            notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
     }
-    
+
     private void add_widgets () {
         var grid = new Gtk.Grid ();
         grid.margin_start = 32;
@@ -84,7 +84,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         this.show_all ();
     }
 
-    private string? get_string_from_timespan (TimeSpan timespan) {
+    private string get_string_from_timespan (TimeSpan timespan) {
         string suffix = _("min");
         int64 time = (timespan / timespan.MINUTE) * -1;
         if (time > 59) {
@@ -94,12 +94,12 @@ public class NotificationEntry : Gtk.ListBoxRow {
             if (time > 23) {
                 if (time == 1)
                     suffix = " " + _("day");
-                else    
+                else
                     suffix = " " + _("days");
                 time = time / 24;
-            }               
-        } else 
-            return null;
+            }
+        } else
+            time = 1;
 
         return time.to_string () + suffix;
     }

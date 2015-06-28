@@ -16,7 +16,7 @@
  */
 
 
-/* This class is meant to remember the 
+/* This class is meant to remember the
  * notifications from the current session
  * and restore them in the next session.
  *
@@ -27,15 +27,24 @@
 public class Session : GLib.Object {
     private const string SESSION_NAME_FILE = "/.notifications.session";
     private static File? session_file = null;
-    private static KeyFile key;
     private static string full_path;
+    
+    private const string APP_NAME_KEY = "AppName";
+    private const string APP_ICON_KEY = "AppIcon";
+    private const string SUMMARY_KEY = "Summary";
+    private const string BODY_KEY = "Body";
+    private const string ACTIONS_KEY = "Actions";
+    private const string UNIX_TIME_KEY = "UnixTime";
+    private const string SENDER_KEY = "Sender";
+
+    private KeyFile key;
 
     public Session () {
         full_path = Environment.get_user_cache_dir () + SESSION_NAME_FILE;
         session_file = File.new_for_path (full_path);
         if (!session_file.query_exists ())
             create_session_file ();
-              
+
         key = new KeyFile ();
         key.set_list_separator (',');
     }
@@ -45,33 +54,35 @@ public class Session : GLib.Object {
         var _key = new KeyFile ();
         try {
             _key.load_from_file (full_path, KeyFileFlags.NONE);
-            foreach (unowned string group in _key.get_groups ()) { 
+            foreach (unowned string group in _key.get_groups ()) {
                 var notification = new Notification.from_data (uint64.parse (group),
-                                                            _key.get_string (group, "AppName"),
-                                                            _key.get_string (group,"AppIcon"),
-                                                            _key.get_string (group, "Summary"),
-                                                            _key.get_string (group, "Body"),
-                                                            _key.get_string_list (group, "Actions"),
-                                                            _key.get_string (group, "Sender"));
+                                                            _key.get_string (group, APP_NAME_KEY),
+                                                            _key.get_string (group, APP_ICON_KEY),
+                                                            _key.get_string (group, SUMMARY_KEY),
+                                                            _key.get_string (group, BODY_KEY),
+                                                            _key.get_string_list (group, ACTIONS_KEY),
+                                                            _key.get_int64 (group, UNIX_TIME_KEY),
+                                                            _key.get_string (group, SENDER_KEY));
                 list.append (notification);
             }
         } catch (KeyFileError e) {
             warning ("%s\n", e.message);
         } catch (FileError e) {
             warning ("%s\n", e.message);
-        } 
+        }
 
         return list;
     }
 
     public void add_notification (Notification notification) {
         string id = this.get_notification_id (notification);
-        key.set_string (id, "AppName", notification.app_name);
-        key.set_string (id, "AppIcon", notification.app_icon);
-        key.set_string (id, "Summary", notification.summary);
-        key.set_string (id, "Body", notification.message_body);
-        key.set_string_list (id, "Actions", notification.actions);
-        key.set_string (id, "Sender", notification.sender);
+        key.set_string (id, APP_NAME_KEY, notification.app_name);
+        key.set_string (id, APP_ICON_KEY, notification.app_icon);
+        key.set_string (id, SUMMARY_KEY, notification.summary);
+        key.set_string (id, BODY_KEY, notification.message_body);
+        key.set_string_list (id, ACTIONS_KEY, notification.actions);
+        key.set_int64 (id, UNIX_TIME_KEY, notification.unix_time);
+        key.set_string (id, SENDER_KEY, notification.sender);
 
         write_contents ();
     }
@@ -86,9 +97,10 @@ public class Session : GLib.Object {
         write_contents ();
     }
 
-    public void clear () {  
-        try {      
-        FileUtils.set_contents (session_file.get_path (), ""); 
+    public void clear () {
+        try {
+            key = new KeyFile ();
+            FileUtils.set_contents (session_file.get_path (), "");
         } catch (FileError e) {
             warning ("%s\n", e.message);
         }
@@ -99,7 +111,7 @@ public class Session : GLib.Object {
             session_file.create (FileCreateFlags.REPLACE_DESTINATION);
         } catch (Error e) {
             warning ("%s\n", e.message);
-        }          
+        }
     }
 
     private string get_notification_id (Notification notification) {
@@ -107,9 +119,9 @@ public class Session : GLib.Object {
         if (notification.id == -1)
             id = notification.id_64.to_string ();
         else
-            id = notification.id.to_string ();             
+            id = notification.id.to_string ();
 
-        return id;            
+        return id;
     }
 
     private void write_contents () {
@@ -117,9 +129,9 @@ public class Session : GLib.Object {
             create_session_file ();
 
         try {
-            FileUtils.set_contents (session_file.get_path (), key.to_data ());       
+            FileUtils.set_contents (session_file.get_path (), key.to_data ());
         } catch (FileError e) {
             warning ("%s\n", e.message);
-        }          
-    }    
+        }
+    }
 }

@@ -16,6 +16,8 @@
  */
 
 public class Notification : Object {
+    public bool data_session;
+
     public string app_name;
     public string display_name;
     public string summary;
@@ -27,13 +29,14 @@ public class Notification : Object {
     public uint32 replaces_id;
 
     /* We cannot convert uint64 to uint32 and
-     * we need to store them in the separate 
+     * we need to store them in the separate
      * variables.
      */
     public uint32 id;
     public uint64 id_64;
     public uint32 pid = 0;
     public DateTime timestamp;
+    public int64 unix_time;
 
     public signal bool time_changed (TimeSpan span);
 
@@ -50,10 +53,12 @@ public class Notification : Object {
     }
 
     private const string DEFAULT = "default";
-    private bool pid_accuired;
+    private static bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
+
+        this.data_session = false;
 
         this.app_name = this.get_string (body, Column.APP_NAME);
         this.display_name = app_name;
@@ -69,15 +74,17 @@ public class Notification : Object {
         setup_pid ();
 
         this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
-        this.timestamp = new DateTime.now_local ();   
+        this.timestamp = new DateTime.now_local ();
+        this.unix_time = timestamp.to_unix ();
 
-        // Begin counting time
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
     public Notification.from_data (uint64 _id, string _app_name, string _app_icon,
                                 string _summary, string _message_body,
-                                string[] _actions, string _sender) {
+                                string[] _actions, int64 _unix_time, string _sender) {
+        this.data_session = true;
+
         this.app_name = _app_name;
         this.display_name = app_name;
         this.app_icon = _app_icon;
@@ -92,7 +99,9 @@ public class Notification : Object {
         setup_pid ();
 
         this.actions = _actions;
-        this.timestamp = new DateTime.now_local ();
+        this.unix_time = _unix_time;
+        this.timestamp = new DateTime.from_unix_local (unix_time);
+
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
@@ -105,7 +114,7 @@ public class Notification : Object {
     }
 
     private bool try_get_pid () {
-        if (nsettings.do_not_disturb) 
+        if (nsettings.do_not_disturb)
             return false;
 
         try {

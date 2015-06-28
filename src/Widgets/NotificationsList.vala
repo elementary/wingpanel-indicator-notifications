@@ -43,8 +43,8 @@ public class NotificationsList : Gtk.ListBox {
         this.vexpand = true;
         this.show_all ();
     }
-    
-    public void add_item (NotificationEntry entry) { 
+
+    public void add_item (NotificationEntry entry) {
         if (entry.notification.app_name == "notify-send" || entry.notification.app_name == "") {
             entry.notification.display_name = _("Other");
             entry.notification.app_icon = "dialog-information";
@@ -64,7 +64,7 @@ public class NotificationsList : Gtk.ListBox {
             entry.active = false;
             this.update_separators ();
 
-            session.remove_notification (entry.notification);  
+            session.remove_notification (entry.notification);
             if (items.length () == 0)
                 this.clear_all ();
         });
@@ -84,17 +84,17 @@ public class NotificationsList : Gtk.ListBox {
     public uint get_items_length () {
         return items.length ();
     }
- 
+
     public void clear_all () {
         items.@foreach ((item) => {
             items.remove (item);
             this.remove (item);
-            item.active = false; 
+            item.active = false;
         });
 
         app_entries.@foreach ((entry) => {
             app_entries.remove (entry);
-            this.remove (entry);    
+            this.remove (entry);
         });
 
         counter = 0;
@@ -102,7 +102,7 @@ public class NotificationsList : Gtk.ListBox {
         this.switch_stack (false);
         this.show_all ();
     }
-    
+
     private HashTable<string, int> get_updated_table () {
         var new_table = new HashTable<string, int> (str_hash, str_equal);
         uint children = get_items_length () + app_entries.length () + separators.length ();
@@ -120,7 +120,7 @@ public class NotificationsList : Gtk.ListBox {
 
         if (separators.length () > 0) {
             separators.@foreach ((sep) => {
-                sep.destroy (); 
+                sep.destroy ();
                 separators.remove (sep);
             });
         }
@@ -139,7 +139,7 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     private AppEntry add_app_entry (NotificationEntry entry) {
-        AppEntry app_entry;        
+        AppEntry app_entry;
         bool add = !(entry.notification.app_name in construct_app_names ());
         if (add) {
             var window = this.get_window_from_entry (entry);
@@ -174,10 +174,10 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     private void destroy_app_entry (AppEntry app_entry) {
-        app_entries.remove (app_entry); 
+        app_entries.remove (app_entry);
 
         app_entry.get_notifications ().@foreach ((notification_entry) => {
-            notification_entry.destroy (); 
+            notification_entry.destroy ();
             items.remove (notification_entry);
         });
 
@@ -185,11 +185,11 @@ public class NotificationsList : Gtk.ListBox {
             if (app_entry != null)
                 app_entry.destroy ();
             return false;
-        });      
+        });
 
         if (app_entry != null)
-            app_entry.unref (); 
-             
+            app_entry.unref ();
+
         this.update_separators ();
     }
 
@@ -212,8 +212,8 @@ public class NotificationsList : Gtk.ListBox {
         AppEntry? entry = null;
         app_entries.@foreach ((_entry) => {
              if (_entry.app_name == app_name)
-                entry = _entry;      
-        }); 
+                entry = _entry;
+        });
 
         return entry;
     }
@@ -229,7 +229,10 @@ public class NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row.get_path ().get_object_type () == typeof (AppEntry)) {
-            // FIXME: Check out if we have the window opened before by the user
+            var window = get_window_from_entry (((AppEntry) row).get_notifications ().nth_data (0));
+            if (window != null)
+                ((AppEntry) row).app_window = window;
+
             if (((AppEntry) row).app_window != null) {
                 ((AppEntry) row).app_window.unminimize (Gtk.get_current_event_time ());
                 this.close_popover ();
