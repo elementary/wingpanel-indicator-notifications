@@ -190,6 +190,7 @@ public class Indicator : Wingpanel.Indicator {
 
     private void show_settings () {
         var cmd = new Granite.Services.SimpleCommand ("/usr/bin", SETTINGS_EXEC);
+        this.close ();
         cmd.run ();
     }
 }
