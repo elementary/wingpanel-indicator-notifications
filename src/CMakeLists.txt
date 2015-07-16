@@ -19,6 +19,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/NotificationsList.vala
   Widgets/NotificationEntry.vala
   Widgets/AppEntry.vala
+  Widgets/SeparatorEntry.vala
   Services/NotificationsMonitor.vala
   Services/Notification.vala
   Services/NSettings.vala

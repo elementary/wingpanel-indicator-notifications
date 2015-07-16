@@ -20,7 +20,6 @@ public class NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
     private List<AppEntry> app_entries;
     private List<NotificationEntry> items;
-    private List<Gtk.ListBoxRow> separators;
     private HashTable<string, int> table;
     private int counter = 0;
 
@@ -35,7 +34,6 @@ public class NotificationsList : Gtk.ListBox {
 
         items = new List<NotificationEntry> ();
         app_entries = new List<AppEntry> ();
-        separators = new List<Gtk.ListBoxRow> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
         screen = Wnck.Screen.get_default ();
@@ -59,14 +57,7 @@ public class NotificationsList : Gtk.ListBox {
         this.resort_from_app_entry (app_entry);
 
         entry.clear_btn.clicked.connect (() => {
-            this.remove (entry);
-            items.remove (entry);
-            entry.active = false;
-            this.update_separators ();
-
-            session.remove_notification (entry.notification);
-            if (items.length () == 0)
-                this.clear_all ();
+            this.destroy_notification_entry (entry);
         });
 
         app_entry.destroy_entry.connect (() => {
@@ -77,6 +68,8 @@ public class NotificationsList : Gtk.ListBox {
 
         session.add_notification (entry.notification);
         entry.show_all ();
+
+        this.update_separators ();
         this.show_all ();
     }
 
@@ -104,39 +97,23 @@ public class NotificationsList : Gtk.ListBox {
         this.show_all ();
     }
 
-    private HashTable<string, int> get_updated_table () {
-        var new_table = new HashTable<string, int> (str_hash, str_equal);
-        uint children = get_items_length () + app_entries.length () + separators.length ();
-        for (int i = 0; i < children; i++) {
-            var row = this.get_row_at_index (i);
-            if (row.get_path ().get_object_type () == typeof (AppEntry))
-                new_table.insert (((AppEntry) row).app_name, i);
-        }
-
-        return new_table;
-    }
-
     private void update_separators () {
-        var new_table = get_updated_table ();
+        if (this.get_children ().length () > 0) {
+            foreach (var child in this.get_children ()) {
+                if (child is SeparatorEntry) {
+                    this.remove (child);
+                }
+            }
 
-        if (separators.length () > 0) {
-            separators.@foreach ((sep) => {
-                sep.destroy ();
-                separators.remove (sep);
-            });
+            foreach (var app_entry in app_entries) {
+                if (app_entry.get_index () != 0 && this.get_children ().nth_data (1) != app_entry) {
+                    var row = new SeparatorEntry ();
+                    this.insert (row, app_entry.get_index ());
+                }
+            }
         }
 
-        new_table.@foreach ((app_name, pos) => {
-            if (pos > 0) {
-                var row = new Gtk.ListBoxRow ();
-                row.activatable = row.selectable = false;
-
-                var separator = new Wingpanel.Widgets.Separator ();
-                row.add (separator);
-                separators.append (row);
-                this.insert (row, pos--);
-            }
-        });
+        this.show_all ();
     }
 
     private AppEntry add_app_entry (NotificationEntry entry) {
@@ -174,22 +151,35 @@ public class NotificationsList : Gtk.ListBox {
         return window;
     }
 
+    private async void destroy_notification_entry (NotificationEntry entry) {
+        entry.destroy ();
+        items.remove (entry);
+        entry.active = false;
+
+        session.remove_notification (entry.notification);
+        if (items.length () == 0)
+            this.clear_all (); 
+    }
+
     private void destroy_app_entry (AppEntry app_entry) {
         app_entries.remove (app_entry);
 
         app_entry.get_notifications ().@foreach ((notification_entry) => {
-            notification_entry.destroy ();
+            this.remove (notification_entry);
             items.remove (notification_entry);
         });
 
         Idle.add (() => {
-            if (app_entry != null)
+            if (app_entry != null) {
                 app_entry.destroy ();
+            }
+
             return false;
         });
 
-        if (app_entry != null)
+        if (app_entry != null) {
             app_entry.unref ();
+        }
 
         this.update_separators ();
     }
@@ -205,15 +195,14 @@ public class NotificationsList : Gtk.ListBox {
                 counter++;
             });
         }
-
-        this.update_separators ();
     }
 
     private AppEntry? get_app_entry_from_app_name (string app_name) {
         AppEntry? entry = null;
         app_entries.@foreach ((_entry) => {
-             if (_entry.app_name == app_name)
+            if (_entry.app_name == app_name) {
                 entry = _entry;
+            }
         });
 
         return entry;
@@ -230,12 +219,16 @@ public class NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row.get_path ().get_object_type () == typeof (AppEntry)) {
-            var window = get_window_from_entry (((AppEntry) row).get_notifications ().nth_data (0));
-            if (window != null)
-                ((AppEntry) row).app_window = window;
+            if (((AppEntry) row).app_window == null) {
+                var window = get_window_from_entry (((AppEntry) row).get_notifications ().nth_data (0));
+                if (window != null) {
+                    ((AppEntry) row).app_window = window;
+                }
+            }
 
             if (((AppEntry) row).app_window != null) {
                 ((AppEntry) row).app_window.unminimize (Gtk.get_current_event_time ());
+                ((AppEntry) row).clear_btn_entry.clicked ();
                 this.close_popover ();
             } else if (((AppEntry) row).appinfo != null) {
                 try {
@@ -254,5 +247,7 @@ public class NotificationsList : Gtk.ListBox {
                 this.close_popover ();
             }
         }
+
+        this.update_separators ();
     }
 }

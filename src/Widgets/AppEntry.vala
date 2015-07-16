@@ -24,7 +24,8 @@ public class AppEntry : Gtk.ListBoxRow {
     public signal void destroy_entry ();
 
     private List<NotificationEntry> app_notifications;
-    
+    private string display_name;
+
     public AppEntry (NotificationEntry entry, Wnck.Window? _app_window) {
         var notification = entry.notification;
         this.app_name = notification.app_name;
@@ -44,7 +45,13 @@ public class AppEntry : Gtk.ListBoxRow {
         char[] utf8 = notification.display_name.to_utf8 ();
         utf8[0] = utf8[0].toupper ();
 
-        var label = new Gtk.Label (string.join ("", utf8));
+        if (appinfo != null) {
+            display_name = appinfo.get_name ();
+        } else {
+            display_name = string.join ("", utf8);
+        }
+
+        var label = new Gtk.Label (display_name);
         label.get_style_context ().add_class ("h3");
 
         clear_btn_entry = new Gtk.Button.with_label (_("Clear"));
