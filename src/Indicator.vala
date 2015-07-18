@@ -33,7 +33,7 @@ public class Indicator : Wingpanel.Indicator {
     private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_WIDTH = 300;
     private const uint16 BOX_HEIGHT = 400;
-    private const string[] EXCEPTIONS = { "", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
+    private const string[] EXCEPTIONS = { "", "wingpanel-indicator-sound", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
 
     private Wingpanel.Widgets.OverlayIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
