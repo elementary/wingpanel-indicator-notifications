@@ -32,7 +32,7 @@ public class Notification : Object {
      * we need to store them in the separate
      * variables.
      */
-    public uint32 id;
+    public uint id;
     public uint64 id_64;
     public uint32 pid = 0;
     public DateTime timestamp;
@@ -55,25 +55,49 @@ public class Notification : Object {
     private const string DEFAULT = "default";
     private bool pid_accuired;
 
-    public Notification.from_message (DBusMessage message, uint32 _id) {
-        var body = message.get_body ();
+    public Notification.from_message (DBus.RawMessage message, uint32 _id) {
+        void* _app_name, _replaces_id, _app_icon, _summary, _body, _actions, _hints, _expire_timeout;
+
+        DBus.RawMessageIter iter;
+        message.iter_init (out iter);
 
         this.data_session = false;
 
-        this.app_name = this.get_string (body, Column.APP_NAME);
+        iter.get_basic (out _app_name);
+        iter.next ();
+
+        iter.get_basic (out _replaces_id);
+        iter.next ();
+
+        iter.get_basic (out _app_icon);
+        iter.next ();
+
+        iter.get_basic (out _summary);
+        iter.next ();
+
+        iter.get_basic (out _body);
+        iter.next ();
+
+        iter.get_basic (out _actions);
+        iter.next ();
+        iter.next ();
+
+        iter.get_basic (out _expire_timeout);
+
+        this.app_name = (string) _app_name;
         this.display_name = app_name;
-        this.app_icon = this.get_string (body, Column.APP_ICON);
-        this.summary = this.get_string (body, Column.SUMMARY);
-        this.message_body = this.get_string (body, Column.BODY);
-        this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
-        this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
+        this.replaces_id = (uint) _replaces_id;
+        this.app_icon = (string) _app_icon;
+        this.summary = (string) _summary;
+        this.message_body = (string) _body;
+        this.actions = (string[]) actions;
+        this.expire_timeout = (int) expire_timeout;
         this.id = _id;
         this.id_64 = -1;
         this.sender = message.get_sender ();
 
         setup_pid ();
 
-        this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
         this.timestamp = new DateTime.now_local ();
         this.unix_time = timestamp.to_unix ();
 
@@ -92,8 +116,7 @@ public class Notification : Object {
         this.message_body = _message_body;
         this.expire_timeout = -1;
         this.replaces_id = 0;
-        this.id_64 = _id;
-        this.id = -1;
+        this.id = (uint32) _id;
         this.sender = _sender;
 
         setup_pid ();
@@ -108,19 +131,23 @@ public class Notification : Object {
     private void setup_pid () {
         this.pid_accuired = this.try_get_pid ();
         nsettings.changed["do-not-disturb"].connect (() => {
-            if (!pid_accuired)
+            if (!pid_accuired) {
                 this.try_get_pid ();
+            }
         });
     }
 
     private bool try_get_pid () {
-        if (nsettings.do_not_disturb)
+        if (nsettings.do_not_disturb) {
             return false;
+        }
 
         try {
             DBusIface? dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
-            if (dbusiface.name_has_owner (sender))
+            if (dbusiface.name_has_owner (sender)) {
                 this.pid = dbusiface.get_connection_unix_process_id (sender);
+            }
+
         } catch (Error e) {
             error ("%s\n", e.message);
         }
@@ -135,21 +162,6 @@ public class Notification : Object {
         }
 
         return false;
-    }
-
-    private string get_string (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.dup_string ();
-    }
-
-    private int32 get_int32 (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_int32 ();
-    }
-
-    private uint32 get_uint32 (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_uint32 ();
     }
 
     private bool source_func () {

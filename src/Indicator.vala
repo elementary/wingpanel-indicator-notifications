@@ -49,8 +49,8 @@ public class Indicator : Wingpanel.Indicator {
 
         this.visible = true;
 
-        monitor = new NotificationMonitor ();
         nsettings = new NSettings ();
+        monitor = new NotificationMonitor ();
         settings = new Settings ();
         session = new Session ();
     }
@@ -124,13 +124,11 @@ public class Indicator : Wingpanel.Indicator {
                 }
             });
 
-            monitor.received.connect ((message, id) => {
-                var notification = new Notification.from_message (message, id);
-                if (notification.app_name in EXCEPTIONS || notification.app_name in settings.blacklist)
-                    return;
-
-                var entry = new NotificationEntry (notification);
-                nlist.add_item (entry);
+            monitor.received.connect ((notification) => {
+                if (!(notification.app_name in EXCEPTIONS || notification.app_name in settings.blacklist)) {
+                    var entry = new NotificationEntry (notification);
+                    nlist.add_item (entry);
+                }
 
                 dynamic_icon.set_main_icon_name (get_display_icon_name ());
             });
@@ -198,8 +196,9 @@ public class Indicator : Wingpanel.Indicator {
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug ("Activating Notifications Indicator");
 
-    if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION)
+    if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
+    }
 
     var indicator = new Indicator ();
     return indicator;
