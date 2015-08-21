@@ -117,7 +117,7 @@ public class NotificationMonitor : Object {
         hints.insert ("suppress-sound", new Variant.boolean (true));
         string[] actions = {};
         try {
-           return niface.notify ("", 0, "", "", "", actions, hints, 1);
+            return niface.notify ("", 0, "", "", "", actions, hints, 1);
         } catch (Error e) {
             error ("%s\n", e.message);
         }
