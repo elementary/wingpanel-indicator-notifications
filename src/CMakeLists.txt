@@ -1,7 +1,7 @@
 find_package (PkgConfig)
 
 # Add all your dependencies to the list below
-pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0 libwnck-3.0 dbus-glib-1 libnotify)
+pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0 libwnck-3.0 dbus-glib-1)
 
 add_definitions (${DEPS_CFLAGS})
 add_definitions (-DWNCK_I_KNOW_THIS_IS_UNSTABLE)
@@ -30,7 +30,6 @@ PACKAGES
   wingpanel-2.0
   gio-2.0
   granite
-  libnotify
   libwnck-3.0
 CUSTOM_VAPIS
   Services/dbus-glib-1.vapi
