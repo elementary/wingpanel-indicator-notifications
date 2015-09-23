@@ -1,7 +1,7 @@
 find_package (PkgConfig)
 
 # Add all your dependencies to the list below
-pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0 libwnck-3.0 dbus-glib-1)
+pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0 libwnck-3.0)
 
 add_definitions (${DEPS_CFLAGS})
 add_definitions (-DWNCK_I_KNOW_THIS_IS_UNSTABLE)
@@ -31,8 +31,6 @@ PACKAGES
   gio-2.0
   granite
   libwnck-3.0
-CUSTOM_VAPIS
-  Services/dbus-glib-1.vapi
 )
 
 add_library (${CMAKE_PROJECT_NAME} MODULE ${VALA_C})

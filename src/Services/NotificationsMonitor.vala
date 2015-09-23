@@ -44,7 +44,7 @@ public interface DBusIface : Object {
 }
 
 public class NotificationMonitor : Object {
-    private const string MATCH_RULE = "eavesdrop=true,type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
+    private const string MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
     private const uint32 REASON_DISMISSED = 2;
 
     private DBusConnection connection;
@@ -52,19 +52,26 @@ public class NotificationMonitor : Object {
     public DBusIface? dbusiface = null;
     private uint32 id_counter = 0;
 
-    public signal void received (Notification notification);
+    public signal void received (DBusMessage message, uint32 id);
 
     public NotificationMonitor () {
         try {
             connection = Bus.get_sync (BusType.SESSION);
+            this.add_filter ();  
         } catch (Error e) {
             error ("%s\n", e.message);
         }
-
-        this.add_filter ();
     }
 
     private void add_filter () {
+        var message = new DBusMessage.method_call ("org.freedesktop.DBus",
+                                                "/org/freedesktop/DBus",
+                                                "org.freedesktop.DBus",
+                                                "AddMatch");
+
+        var body = new Variant.parsed ("(%s,)", MATCH_STRING);
+        message.set_body (body);
+        
         try {
             niface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.Notifications",
                                                       "/org/freedesktop/Notifications"); 
@@ -73,42 +80,49 @@ public class NotificationMonitor : Object {
         }
 
         id_counter = get_current_notification_id ();
+        try {
+            connection.send_message (message, DBusSendMessageFlags.NONE, null);
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }
 
-        var filter_connection = DBus.Bus.@get (DBus.BusType.SESSION);
-        var raw_connection = filter_connection.get_connection ();
-        var error = DBus.RawError ();
-        raw_connection.add_match (MATCH_RULE, ref error);
-        raw_connection.add_filter (message_filter);
+        connection.add_filter (message_filter);
     }
 
-    private DBus.RawHandlerResult message_filter (DBus.RawConnection connection, DBus.RawMessage message) {
-        if (message.get_sender () != "org.freedesktop.DBus") {
-            var notification = new Notification.from_message (message, id_counter);
-            uint replaces_id = notification.replaces_id;
-            uint current_id = replaces_id;
+    private DBusMessage message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
+        if (incoming) {
+            if ((message.get_message_type () == DBusMessageType.METHOD_CALL) &&
+                (message.get_interface () == "org.freedesktop.Notifications") &&
+                (message.get_member () == "Notify")) {  
+                uint32 replaces_id = message.get_body ().get_child_value (1).get_uint32 ();
+                uint32 current_id = replaces_id; 
 
-            if (replaces_id == 0) {
-                id_counter++;
-                current_id = id_counter;
-            }
+                if (replaces_id == 0) {
+                    id_counter++;
+                    current_id = id_counter;
+                }
 
-            if (nsettings.do_not_disturb) {
-                this.received (notification);
-            } else {
-                niface.notification_closed.connect ((id, reason) => {
-                    if (id == 1) {
-                        id_counter = id;
-                        current_id = id_counter;
-                    }
+                if (nsettings.do_not_disturb) {
+                    this.received (message, current_id);
+                } else {
+                    niface.notification_closed.connect ((id, reason) => {
+                        if (id == 1) {
+                            id_counter = id;
+                            current_id = id_counter;
+                        }
 
-                    if (reason != REASON_DISMISSED && current_id == id) {
-                        this.received (notification);                
-                    }                      
-                });                 
+                        if (reason != REASON_DISMISSED && current_id == id) {
+                            this.received (message, id);
+                            message = null;                        
+                        }                      
+                    });                    
+                }
+                return null;
+
             }
         }
 
-        return DBus.RawHandlerResult.HANDLED;
+        return message;
     }
 
     /* Check what's the current notification id */
