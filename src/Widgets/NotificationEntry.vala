@@ -25,6 +25,18 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
     public Gtk.Button clear_btn;
     public bool active = true;
+    
+    static Regex entity_regex;
+    static Regex tag_regex;
+
+    static construct {
+        try {
+            entity_regex = new Regex ("&(?!amp;|quot;|apos;|lt;|gt;)");
+            tag_regex = new Regex ("<(?!\\/?[biu]>)");
+        } catch (Error e) {
+            warning ("Invalid regex: %s", e.message);
+        }
+    }
 
     public NotificationEntry (Notification _notification) {
         this.notification = _notification;
@@ -51,7 +63,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         var grid = new Gtk.Grid ();
         grid.margin_start = 32;
 
-        var title_label = new Gtk.Label ("<b>" + entry_summary + "</b>");
+        var title_label = new Gtk.Label ("<b>" + fix_markup (entry_summary) + "</b>");
         ((Gtk.Misc) title_label).xalign = 0.0f;
         title_label.hexpand = true;
         title_label.use_markup = true;
@@ -61,7 +73,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_label.margin_top = 6;
         title_label.margin_bottom = 6;
 
-        var body_label = new Gtk.Label (entry_body);
+        var body_label = new Gtk.Label (fix_markup (entry_body));
         ((Gtk.Misc) body_label).xalign = 0.0f;
         body_label.use_markup = true;
         body_label.set_line_wrap (true);
@@ -83,6 +95,22 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
         this.add (grid);
         this.show_all ();
+    }
+
+    /**
+     * Copied from gnome-shell, fixes the mess of markup that is sent to us
+     */
+    string fix_markup (string markup) {
+        var text = markup;
+
+        try {
+            text = entity_regex.replace (markup, markup.length, 0, "&amp;");
+            text = tag_regex.replace (text, text.length, 0, "&lt;");
+        } catch (Error e) {
+            warning ("Invalid regex: %s", e.message);
+        }
+
+        return text;
     }
 
     private string get_string_from_timespan (TimeSpan timespan) {
