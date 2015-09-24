@@ -124,11 +124,13 @@ public class Indicator : Wingpanel.Indicator {
                 }
             });
 
-            monitor.received.connect ((notification) => {
-                if (!(notification.app_name in EXCEPTIONS || notification.app_name in settings.blacklist)) {
-                    var entry = new NotificationEntry (notification);
-                    nlist.add_item (entry);
-                }
+            monitor.received.connect ((message, id) => {
+                var notification = new Notification.from_message (message, id);
+                if (notification.app_name in EXCEPTIONS || notification.app_name in settings.blacklist)
+                    return;
+
+                var entry = new NotificationEntry (notification);
+                nlist.add_item (entry);
 
                 dynamic_icon.set_main_icon_name (get_display_icon_name ());
             });
