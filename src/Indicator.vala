@@ -84,13 +84,13 @@ public class Indicator : Wingpanel.Indicator {
             var no_notifications_label = new Gtk.Label (_("No Notifications"));
             no_notifications_label.get_style_context ().add_class ("h2");
             no_notifications_label.sensitive = false;
-            no_notifications_label.margin_top = no_notifications_label.margin_bottom = 48;
+            no_notifications_label.margin_top = no_notifications_label.margin_bottom = 24;
             no_notifications_label.margin_start = no_notifications_label.margin_end = 12;
 
             nlist = new NotificationsList ();
 
-            var scrolled = new Gtk.ScrolledWindow (null, null);
-            scrolled.add (nlist);
+            var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
+            scrolled.add_with_viewport (nlist);
 
             stack.add_named (scrolled, "list");
             stack.add_named (no_notifications_label, "no-notifications");
@@ -116,7 +116,7 @@ public class Indicator : Wingpanel.Indicator {
 
             nlist.switch_stack.connect ((list) => {
                 if (list) {
-                    main_box.set_size_request (BOX_WIDTH, BOX_HEIGHT);
+                    main_box.set_size_request (-1, -1);
                     stack.set_visible_child_name ("list");
                     clear_all_btn.sensitive = true;
                 } else {
@@ -127,7 +127,8 @@ public class Indicator : Wingpanel.Indicator {
                 }
             });
 
-            monitor.received.connect ((notification) => {
+            monitor.received.connect ((message, id) => {
+                Notification notification = new Notification.from_message (message, id);
                 string app_name = notification.app_name;
 
                 if (app_name in EXCEPTIONS) {
