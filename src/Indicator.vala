@@ -138,7 +138,7 @@ public class Indicator : Wingpanel.Indicator {
                 Settings? app_settings = app_settings_cache.get (app_name);
 
                 if (app_settings == null) {
-                    var schema = SettingsSchemaSource.get_default ().lookup ("org.pantheon.desktop.gala.notifications.application", false);
+                    var schema = SettingsSchemaSource.get_default ().lookup ("org.pantheon.desktop.gala.notifications.application", true);
 
                     if (schema != null) {
                         app_settings = new Settings.full (schema, null, "/org/pantheon/desktop/gala/notifications/applications/%s/".printf (app_name));
