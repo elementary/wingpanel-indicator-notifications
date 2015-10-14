@@ -114,13 +114,13 @@ public class NotificationEntry : Gtk.ListBoxRow {
     }
 
     private string get_string_from_timespan (TimeSpan timespan) {
-        if (-timespan > GLib.TimeSpan.DAY) {
+        if (-timespan >= GLib.TimeSpan.DAY) {
             ulong days = (ulong)(-timespan/GLib.TimeSpan.DAY);
             return ngettext ("%ld day", "%ld days", days).printf (days);
-        } else if (-timespan > TimeSpan.HOUR) {
+        } else if (-timespan >= TimeSpan.HOUR) {
             ulong hours = (ulong)(-timespan/GLib.TimeSpan.HOUR);
             return ngettext ("%ld hour", "%ld hours", hours).printf (hours);
-        } else if (-timespan > GLib.TimeSpan.MINUTE) {
+        } else if (-timespan >= GLib.TimeSpan.MINUTE) {
             ulong minutes = (ulong)(-timespan/GLib.TimeSpan.MINUTE);
             return ngettext ("%ld minute", "%ld minutes", minutes).printf (minutes);
         } else {
