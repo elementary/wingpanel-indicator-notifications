@@ -2,14 +2,68 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-24 17:18+0200\n"
-"PO-Revision-Date: 2015-06-21 23:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-10-14 16:15+0200\n"
+"PO-Revision-Date: 2015-10-27 12:17+0000\n"
+"Last-Translator: colindemian <dengmengpc@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-10-02 05:52+0000\n"
-"X-Generator: Launchpad (build 17783)\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2015-10-28 06:12+0000\n"
+"X-Generator: Launchpad (build 17833)\n"
 
+#: ../src/Indicator.vala:47
+msgid "Notifications indicator"
+msgstr "通知指示器"
 
+#: ../src/Indicator.vala:48
+msgid "The notifications indicator"
+msgstr "通知指示器"
+
+#: ../src/Indicator.vala:81
+msgid "No Notifications"
+msgstr "无通知"
+
+#: ../src/Indicator.vala:95
+msgid "Do Not Disturb"
+msgstr "勿扰模式"
+
+#: ../src/Indicator.vala:101
+msgid "Clear All Notifications"
+msgstr "清除通知"
+
+#: ../src/Indicator.vala:107
+msgid "Notifications Settings…"
+msgstr "通知设置"
+
+#: ../src/Widgets/AppEntry.vala:57
+msgid "Clear"
+msgstr "清除"
+
+#: ../src/Widgets/NotificationEntry.vala:82
+msgid "now"
+msgstr "当前"
+
+#: ../src/Widgets/NotificationEntry.vala:119
+msgid "%ld day"
+msgid_plural "%ld days"
+msgstr[0] "%ld 天"
+
+#: ../src/Widgets/NotificationEntry.vala:122
+msgid "%ld hour"
+msgid_plural "%ld hours"
+msgstr[0] "%ld 小时"
+
+#: ../src/Widgets/NotificationEntry.vala:125
+msgid "%ld minute"
+msgid_plural "%ld minutes"
+msgstr[0] "%ld 分钟"
+
+#: ../src/Widgets/NotificationEntry.vala:127
+msgid "Now"
+msgstr "现在"
+
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
+msgstr "其他"

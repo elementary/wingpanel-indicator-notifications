@@ -2,14 +2,71 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-24 17:18+0200\n"
-"PO-Revision-Date: 2015-06-21 23:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-10-14 16:15+0200\n"
+"PO-Revision-Date: 2015-10-26 16:51+0000\n"
+"Last-Translator: Corentin Noël <corentin@elementaryos.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-10-02 05:51+0000\n"
-"X-Generator: Launchpad (build 17783)\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Launchpad-Export-Date: 2015-10-28 06:12+0000\n"
+"X-Generator: Launchpad (build 17833)\n"
 
+#: ../src/Indicator.vala:47
+msgid "Notifications indicator"
+msgstr "Indicator Notifications"
 
+#: ../src/Indicator.vala:48
+msgid "The notifications indicator"
+msgstr "L'indicator de notifications"
+
+#: ../src/Indicator.vala:81
+msgid "No Notifications"
+msgstr "Aucune notification"
+
+#: ../src/Indicator.vala:95
+msgid "Do Not Disturb"
+msgstr "Ne pas déranger"
+
+#: ../src/Indicator.vala:101
+msgid "Clear All Notifications"
+msgstr "Effacer toutes les notifications"
+
+#: ../src/Indicator.vala:107
+msgid "Notifications Settings…"
+msgstr "Paramètres des notifications…"
+
+#: ../src/Widgets/AppEntry.vala:57
+msgid "Clear"
+msgstr "Effacer"
+
+#: ../src/Widgets/NotificationEntry.vala:82
+msgid "now"
+msgstr "maintenant"
+
+#: ../src/Widgets/NotificationEntry.vala:119
+msgid "%ld day"
+msgid_plural "%ld days"
+msgstr[0] "%ld jour"
+msgstr[1] "%ld jours"
+
+#: ../src/Widgets/NotificationEntry.vala:122
+msgid "%ld hour"
+msgid_plural "%ld hours"
+msgstr[0] "%ld heure"
+msgstr[1] "%ld heures"
+
+#: ../src/Widgets/NotificationEntry.vala:125
+msgid "%ld minute"
+msgid_plural "%ld minutes"
+msgstr[0] "%ld minute"
+msgstr[1] "%ld minutes"
+
+#: ../src/Widgets/NotificationEntry.vala:127
+msgid "Now"
+msgstr "Maintenant"
+
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
+msgstr "Autre"

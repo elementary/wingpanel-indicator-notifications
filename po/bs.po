@@ -2,14 +2,72 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-24 17:18+0200\n"
+"POT-Creation-Date: 2015-10-14 16:15+0200\n"
 "PO-Revision-Date: 2015-06-21 23:23+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-10-02 05:51+0000\n"
-"X-Generator: Launchpad (build 17783)\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2015-10-28 06:12+0000\n"
+"X-Generator: Launchpad (build 17833)\n"
 
+#: ../src/Indicator.vala:47
+msgid "Notifications indicator"
+msgstr ""
 
+#: ../src/Indicator.vala:48
+msgid "The notifications indicator"
+msgstr ""
+
+#: ../src/Indicator.vala:81
+msgid "No Notifications"
+msgstr ""
+
+#: ../src/Indicator.vala:95
+msgid "Do Not Disturb"
+msgstr ""
+
+#: ../src/Indicator.vala:101
+msgid "Clear All Notifications"
+msgstr ""
+
+#: ../src/Indicator.vala:107
+msgid "Notifications Settings…"
+msgstr ""
+
+#: ../src/Widgets/AppEntry.vala:57
+msgid "Clear"
+msgstr ""
+
+#: ../src/Widgets/NotificationEntry.vala:82
+msgid "now"
+msgstr ""
+
+#: ../src/Widgets/NotificationEntry.vala:119
+msgid "%ld day"
+msgid_plural "%ld days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Widgets/NotificationEntry.vala:122
+msgid "%ld hour"
+msgid_plural "%ld hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Widgets/NotificationEntry.vala:125
+msgid "%ld minute"
+msgid_plural "%ld minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Widgets/NotificationEntry.vala:127
+msgid "Now"
+msgstr ""
+
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
+msgstr ""
