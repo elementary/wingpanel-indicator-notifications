@@ -3,70 +3,70 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-14 16:15+0200\n"
-"PO-Revision-Date: 2015-06-21 23:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2015-10-29 20:10+0000\n"
+"Last-Translator: qezwan <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2015-10-28 06:12+0000\n"
-"X-Generator: Launchpad (build 17833)\n"
+"X-Launchpad-Export-Date: 2015-10-30 05:37+0000\n"
+"X-Generator: Launchpad (build 17838)\n"
 
 #: ../src/Indicator.vala:47
 msgid "Notifications indicator"
-msgstr ""
+msgstr "نیشاندانی ئاگاداریەکان"
 
 #: ../src/Indicator.vala:48
 msgid "The notifications indicator"
-msgstr ""
+msgstr "نیساندانی ئاگادارییێک"
 
 #: ../src/Indicator.vala:81
 msgid "No Notifications"
-msgstr ""
+msgstr "ئاگاداری نییە"
 
 #: ../src/Indicator.vala:95
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "ناتوانی تیکی بدەی"
 
 #: ../src/Indicator.vala:101
 msgid "Clear All Notifications"
-msgstr ""
+msgstr "سڕینەوەی هەمو ئاگادارییەکان"
 
 #: ../src/Indicator.vala:107
 msgid "Notifications Settings…"
-msgstr ""
+msgstr "سازدانی ئاگادارییەکان"
 
 #: ../src/Widgets/AppEntry.vala:57
 msgid "Clear"
-msgstr ""
+msgstr "لابردن"
 
 #: ../src/Widgets/NotificationEntry.vala:82
 msgid "now"
-msgstr ""
+msgstr "ئێستا"
 
 #: ../src/Widgets/NotificationEntry.vala:119
 msgid "%ld day"
 msgid_plural "%ld days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%ld ڕۆژ"
+msgstr[1] "%ld ڕۆژ(کان)"
 
 #: ../src/Widgets/NotificationEntry.vala:122
 msgid "%ld hour"
 msgid_plural "%ld hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%ld کاتژێر"
+msgstr[1] "%ld کاتژێر(ەکان)"
 
 #: ../src/Widgets/NotificationEntry.vala:125
 msgid "%ld minute"
 msgid_plural "%ld minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%ld خولەک"
+msgstr[1] "%ld خولەک(ەکان)"
 
 #: ../src/Widgets/NotificationEntry.vala:127
 msgid "Now"
-msgstr ""
+msgstr "ئێستا"
 
 #: ../src/Widgets/NotificationsList.vala:47
 msgid "Other"
-msgstr ""
+msgstr "ئەوانی تر"
