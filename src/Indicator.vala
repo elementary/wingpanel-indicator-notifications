@@ -77,6 +77,7 @@ public class Indicator : Wingpanel.Indicator {
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
             main_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            main_box.set_size_request (BOX_WIDTH, -1);
 
             stack = new Gtk.Stack ();
             stack.hexpand = true;
@@ -90,6 +91,7 @@ public class Indicator : Wingpanel.Indicator {
             nlist = new NotificationsList ();
 
             var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
+            scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
             scrolled.add_with_viewport (nlist);
 
             stack.add_named (scrolled, "list");
@@ -116,11 +118,9 @@ public class Indicator : Wingpanel.Indicator {
 
             nlist.switch_stack.connect ((list) => {
                 if (list) {
-                    main_box.set_size_request (-1, -1);
                     stack.set_visible_child_name ("list");
                     clear_all_btn.sensitive = true;
                 } else {
-                    main_box.set_size_request (BOX_WIDTH, -1);
                     stack.set_visible_child_name ("no-notifications");
                     dynamic_icon.set_main_icon_name (get_display_icon_name ());
                     clear_all_btn.sensitive = false;

@@ -27,6 +27,12 @@ public class AppEntry : Gtk.ListBoxRow {
     private string display_name;
 
     public AppEntry (NotificationEntry entry, Wnck.Window? _app_window) {
+
+        margin_bottom = 3;
+        margin_top = 3;
+        margin_start = 12;
+        margin_end = 12;
+
         var notification = entry.notification;
         this.app_name = notification.app_name;
         this.app_window = _app_window;
@@ -36,10 +42,7 @@ public class AppEntry : Gtk.ListBoxRow {
 
         appinfo = Utils.get_appinfo_from_app_name (app_name);
 
-        var vbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        vbox.hexpand = true;
-
-        var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10);
+        var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
 
         /* Capitalize the first letter */
         char[] utf8 = notification.display_name.to_utf8 ();
@@ -55,12 +58,11 @@ public class AppEntry : Gtk.ListBoxRow {
         label.get_style_context ().add_class ("h3");
 
         clear_btn_entry = new Gtk.Button.with_label (_("Clear"));
-        clear_btn_entry.margin_end = 2;
         clear_btn_entry.clicked.connect (() => {
             app_notifications.@foreach ((entry) => {
                 entry.clear_btn.clicked ();   
             });
-            
+
             this.destroy_entry ();
         });
 
@@ -68,8 +70,9 @@ public class AppEntry : Gtk.ListBoxRow {
         if (notification.app_icon == "") {
             var glib_icon = appinfo.get_icon ();
             icon = glib_icon.to_string ();
-        } else    
-            icon = notification.app_icon;        
+        } else {
+            icon = notification.app_icon;
+        }
 
         var image = new Gtk.Image.from_icon_name (icon, Gtk.IconSize.LARGE_TOOLBAR);
         hbox.pack_start (image, false, false, 0);
@@ -78,15 +81,14 @@ public class AppEntry : Gtk.ListBoxRow {
 
         this.connect_entry (entry);
 
-        vbox.add (hbox);
-        this.add (vbox);
+        this.add (hbox);
         this.show_all ();
     }
 
     private void connect_entry (NotificationEntry entry) {
         entry.notify["active"].connect (() => {
             if (!entry.active && entry != null) {
-                this.remove_notification_entry (entry);              
+                this.remove_notification_entry (entry);
                 entry.unref ();
             }
         });
