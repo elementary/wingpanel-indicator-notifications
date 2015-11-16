@@ -90,6 +90,7 @@ public class Indicator : Wingpanel.Indicator {
             nlist = new NotificationsList ();
 
             var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
+            scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
             scrolled.add_with_viewport (nlist);
 
             stack.add_named (scrolled, "list");

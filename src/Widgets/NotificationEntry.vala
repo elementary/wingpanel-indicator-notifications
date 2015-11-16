@@ -61,7 +61,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
     private void add_widgets () {
         var grid = new Gtk.Grid ();
-        grid.margin_start = 32;
+        grid.margin_start = 40;
 
         var title_label = new Gtk.Label ("<b>" + fix_markup (entry_summary) + "</b>");
         ((Gtk.Misc) title_label).xalign = 0.0f;
@@ -70,11 +70,10 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_label.set_line_wrap (true);
         title_label.wrap_mode = Pango.WrapMode.WORD;
 
-        title_label.margin_top = 6;
-        title_label.margin_bottom = 6;
-
         var body_label = new Gtk.Label (fix_markup (entry_body));
         ((Gtk.Misc) body_label).xalign = 0.0f;
+        body_label.margin_bottom = 6;
+        body_label.margin_end = 3;
         body_label.use_markup = true;
         body_label.set_line_wrap (true);
         body_label.wrap_mode = Pango.WrapMode.WORD;
