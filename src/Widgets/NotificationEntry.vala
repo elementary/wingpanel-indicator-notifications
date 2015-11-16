@@ -76,7 +76,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
         body_label.margin_end = 3;
         body_label.use_markup = true;
         body_label.set_line_wrap (true);
-        body_label.wrap_mode = Pango.WrapMode.WORD;
+        body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+        body_label.max_width_chars = 32;
 
         time_label = new Gtk.Label (_("now"));
 
