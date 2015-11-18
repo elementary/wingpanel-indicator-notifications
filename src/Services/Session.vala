@@ -66,9 +66,9 @@ public class Session : GLib.Object {
                 list.append (notification);
             }
         } catch (KeyFileError e) {
-            warning ("%s\n", e.message);
+            warning (e.message);
         } catch (FileError e) {
-            warning ("%s\n", e.message);
+            warning (e.message);
         }
 
         return list;
@@ -91,7 +91,7 @@ public class Session : GLib.Object {
         try {
             key.remove_group (this.get_notification_id (notification));
         } catch (KeyFileError e) {
-            warning ("%s\n", e.message);
+            warning (e.message);
         }
 
         write_contents ();
@@ -102,7 +102,7 @@ public class Session : GLib.Object {
             key = new KeyFile ();
             FileUtils.set_contents (session_file.get_path (), "");
         } catch (FileError e) {
-            warning ("%s\n", e.message);
+            warning (e.message);
         }
     }
 
@@ -110,7 +110,7 @@ public class Session : GLib.Object {
         try {
             session_file.create (FileCreateFlags.REPLACE_DESTINATION);
         } catch (Error e) {
-            warning ("%s\n", e.message);
+            warning (e.message);
         }
     }
 
@@ -131,7 +131,7 @@ public class Session : GLib.Object {
         try {
             FileUtils.set_contents (session_file.get_path (), key.to_data ());
         } catch (FileError e) {
-            warning ("%s\n", e.message);
+            warning (e.message);
         }
     }
 }

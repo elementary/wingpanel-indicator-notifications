@@ -113,9 +113,9 @@ public class NotificationMonitor : Object {
 
                         if (reason != REASON_DISMISSED && current_id == id) {
                             this.received (message, id);
-                            message = null;                        
-                        }                      
-                    });                    
+                            message = null;
+                        }
+                    });
                 }
                 return null;
 
