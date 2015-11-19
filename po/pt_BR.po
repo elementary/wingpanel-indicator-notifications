@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-14 16:15+0200\n"
+"POT-Creation-Date: 2015-11-18 21:15+0100\n"
 "PO-Revision-Date: 2015-10-31 23:35+0000\n"
 "Last-Translator: Leonardo Lemos <leonardolemos@live.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,34 +10,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2015-11-01 05:38+0000\n"
-"X-Generator: Launchpad (build 17838)\n"
+"X-Launchpad-Export-Date: 2015-11-19 05:37+0000\n"
+"X-Generator: Launchpad (build 17850)\n"
 
-#: ../src/Indicator.vala:47
+#: ../src/Indicator.vala:49
 msgid "Notifications indicator"
 msgstr "Indicador de notificações"
 
-#: ../src/Indicator.vala:48
+#: ../src/Indicator.vala:50
 msgid "The notifications indicator"
 msgstr "O indicador de notificações"
 
-#: ../src/Indicator.vala:81
+#: ../src/Indicator.vala:85
 msgid "No Notifications"
 msgstr "Sem notificações"
 
-#: ../src/Indicator.vala:95
+#: ../src/Indicator.vala:100
 msgid "Do Not Disturb"
 msgstr "Não perturbe"
 
-#: ../src/Indicator.vala:101
+#: ../src/Indicator.vala:106
 msgid "Clear All Notifications"
 msgstr "Limpar todas as notificações"
 
-#: ../src/Indicator.vala:107
+#: ../src/Indicator.vala:112
 msgid "Notifications Settings…"
 msgstr "Configurações de notificações..."
 
-#: ../src/Widgets/AppEntry.vala:57
+#: ../src/Widgets/AppEntry.vala:60
 msgid "Clear"
 msgstr "Limpar"
 
@@ -45,27 +45,27 @@ msgstr "Limpar"
 msgid "now"
 msgstr "agora"
 
-#: ../src/Widgets/NotificationEntry.vala:119
+#: ../src/Widgets/NotificationEntry.vala:127
+msgid "Now"
+msgstr "Agora"
+
+#: ../src/Widgets/NotificationEntry.vala:133
 msgid "%ld day"
 msgid_plural "%ld days"
 msgstr[0] "%ld dia"
 msgstr[1] "%ld dias"
 
-#: ../src/Widgets/NotificationEntry.vala:122
+#: ../src/Widgets/NotificationEntry.vala:134
 msgid "%ld hour"
 msgid_plural "%ld hours"
 msgstr[0] "%ld hora"
 msgstr[1] "%ld horas"
 
-#: ../src/Widgets/NotificationEntry.vala:125
+#: ../src/Widgets/NotificationEntry.vala:135
 msgid "%ld minute"
 msgid_plural "%ld minutes"
 msgstr[0] "%ld minuto"
 msgstr[1] "%ld minutos"
-
-#: ../src/Widgets/NotificationEntry.vala:127
-msgid "Now"
-msgstr "Agora"
 
 #: ../src/Widgets/NotificationsList.vala:47
 msgid "Other"
