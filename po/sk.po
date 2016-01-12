@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-18 21:15+0100\n"
-"PO-Revision-Date: 2016-01-09 11:36+0000\n"
+"PO-Revision-Date: 2016-01-11 18:38+0000\n"
 "Last-Translator: Lukáš Papík <stereo839@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2016-01-10 05:33+0000\n"
+"X-Launchpad-Export-Date: 2016-01-12 05:46+0000\n"
 "X-Generator: Launchpad (build 17881)\n"
 
 #: ../src/Indicator.vala:49
@@ -52,20 +52,23 @@ msgstr "Teraz"
 #: ../src/Widgets/NotificationEntry.vala:133
 msgid "%ld day"
 msgid_plural "%ld days"
-msgstr[0] "%ld deň"
-msgstr[1] "%ld dni"
+msgstr[0] "%ld dní"
+msgstr[1] "%ld deň"
+msgstr[2] "%ld dni"
 
 #: ../src/Widgets/NotificationEntry.vala:134
 msgid "%ld hour"
 msgid_plural "%ld hours"
-msgstr[0] "%ld hodina"
-msgstr[1] "%ld hodín"
+msgstr[0] "%ld hodín"
+msgstr[1] "%ld hodina"
+msgstr[2] "%ld hodiny"
 
 #: ../src/Widgets/NotificationEntry.vala:135
 msgid "%ld minute"
 msgid_plural "%ld minutes"
-msgstr[0] "%ld minúta"
-msgstr[1] "%ld minút"
+msgstr[0] "%ld minút"
+msgstr[1] "%ld minúta"
+msgstr[2] "%ld minúty"
 
 #: ../src/Widgets/NotificationsList.vala:47
 msgid "Other"
