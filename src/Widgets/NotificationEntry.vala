@@ -70,15 +70,6 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_label.set_line_wrap (true);
         title_label.wrap_mode = Pango.WrapMode.WORD;
 
-        var body_label = new Gtk.Label (fix_markup (entry_body));
-        ((Gtk.Misc) body_label).xalign = 0.0f;
-        body_label.margin_bottom = 6;
-        body_label.margin_end = 3;
-        body_label.use_markup = true;
-        body_label.set_line_wrap (true);
-        body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-        body_label.max_width_chars = 32;
-
         time_label = new Gtk.Label (_("now"));
 
         clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
@@ -91,7 +82,18 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
         grid.attach (title_label, 0, 0, 1, 1);
         grid.attach (box_btn, 1, 0, 1, 1);
-        grid.attach (body_label, 0, 1, 2, 1);
+
+        if (entry_body != "") {
+            var body_label = new Gtk.Label (fix_markup (entry_body));
+            ((Gtk.Misc) body_label).xalign = 0.0f;
+            body_label.margin_bottom = 6;
+            body_label.margin_end = 3;
+            body_label.use_markup = true;
+            body_label.set_line_wrap (true);
+            body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+            body_label.max_width_chars = 32;
+            grid.attach (body_label, 0, 1, 2, 1);
+        }
 
         this.add (grid);
         this.show_all ();
