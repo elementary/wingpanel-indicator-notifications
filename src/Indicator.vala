@@ -202,7 +202,7 @@ public class Indicator : Wingpanel.Indicator {
         if (nsettings.do_not_disturb)
             return "notification-disabled-symbolic";
         else if (nlist != null && nlist.get_items_length () > 0)
-            return "indicator-messages-new";
+            return "notification-new-symbolic";
         else
             return "notification-symbolic";
     }
