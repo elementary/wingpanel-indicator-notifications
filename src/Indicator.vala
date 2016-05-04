@@ -188,10 +188,11 @@ public class Indicator : Wingpanel.Indicator {
         indicator_opened = true;
 
         nlist.switch_stack (nlist.get_items_length () > 0);
-        if (nlist.get_items_length () > 0)
+        if (nlist.get_items_length () > 0) {
             clear_all_btn.sensitive = true;
-        else
+        } else {
             clear_all_btn.sensitive = false;
+        }
     }
 
     public override void closed () {
@@ -199,18 +200,27 @@ public class Indicator : Wingpanel.Indicator {
     }
 
     private string get_display_icon_name () {
-        if (nsettings.do_not_disturb)
+        if (nsettings.do_not_disturb) {
             return "notification-disabled-symbolic";
-        else if (nlist != null && nlist.get_items_length () > 0)
+        } else if (nlist != null && nlist.get_items_length () > 0) {
             return "notification-new-symbolic";
-        else
-            return "notification-symbolic";
+        }
+        
+        return "notification-symbolic";
     }
 
     private void show_settings () {
-        var cmd = new Granite.Services.SimpleCommand ("/usr/bin", SETTINGS_EXEC);
         this.close ();
-        cmd.run ();
+
+        var list = new List<string> ();
+        list.append ("notifications");
+
+        try {
+            var appinfo = AppInfo.create_from_commandline ("switchboard", null, AppInfoCreateFlags.SUPPORTS_URIS);
+            appinfo.launch_uris (list, null);
+        } catch (Error e) {
+            warning ("%s\n", e.message);
+        }
     }
 }
 
