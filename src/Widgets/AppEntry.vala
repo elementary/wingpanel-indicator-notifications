@@ -27,11 +27,10 @@ public class AppEntry : Gtk.ListBoxRow {
     private string display_name;
 
     public AppEntry (NotificationEntry entry, Wnck.Window? _app_window) {
-
         margin_bottom = 3;
         margin_top = 3;
         margin_start = 12;
-        margin_end = 12;
+        margin_end = 6;
 
         var notification = entry.notification;
         this.app_name = notification.app_name;
@@ -57,10 +56,11 @@ public class AppEntry : Gtk.ListBoxRow {
         var label = new Gtk.Label (display_name);
         label.get_style_context ().add_class ("h3");
 
-        clear_btn_entry = new Gtk.Button.with_label (_("Clear"));
+        clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        clear_btn_entry.get_style_context ().add_class ("flat");
         clear_btn_entry.clicked.connect (() => {
             app_notifications.@foreach ((entry) => {
-                entry.clear_btn.clicked ();   
+                entry.clear ();
             });
 
             this.destroy_entry ();
@@ -86,8 +86,8 @@ public class AppEntry : Gtk.ListBoxRow {
     }
 
     private void connect_entry (NotificationEntry entry) {
-        entry.notify["active"].connect (() => {
-            if (!entry.active && entry != null) {
+        entry.clear.connect (() => {
+            if (entry != null) {
                 this.remove_notification_entry (entry);
                 entry.unref ();
             }

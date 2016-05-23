@@ -16,6 +16,8 @@
  */
 
 public class NotificationEntry : Gtk.ListBoxRow {
+    public signal void clear ();
+
     public Notification notification;
 
     private Gtk.Label time_label;
@@ -23,9 +25,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
     private string entry_summary;
     private string entry_body;
 
-    public Gtk.Button clear_btn;
     public bool active = true;
-    
+
     static Regex entity_regex;
     static Regex tag_regex;
 
@@ -62,6 +63,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
     private void add_widgets () {
         var grid = new Gtk.Grid ();
         grid.margin_start = 40;
+        grid.margin_end = 6;
 
         var title_label = new Gtk.Label ("<b>" + fix_markup (entry_summary) + "</b>");
         ((Gtk.Misc) title_label).xalign = 0.0f;
@@ -72,16 +74,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
         time_label = new Gtk.Label (_("now"));
 
-        clear_btn = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        clear_btn.get_style_context ().add_class ("flat");
-
-        var box_btn = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-        box_btn.valign = Gtk.Align.START;
-        box_btn.add (time_label);
-        box_btn.add (clear_btn);
-
         grid.attach (title_label, 0, 0, 1, 1);
-        grid.attach (box_btn, 1, 0, 1, 1);
+        grid.attach (time_label, 1, 0, 1, 1);
 
         if (entry_body != "") {
             var body_label = new Gtk.Label (fix_markup (entry_body));
