@@ -73,13 +73,10 @@ public class NotificationEntry : Gtk.ListBoxRow {
         title_label.wrap_mode = Pango.WrapMode.WORD;
 
         time_label = new Gtk.Label (_("now"));
-
-        var box_btn = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-        box_btn.valign = Gtk.Align.START;
-        box_btn.add (time_label);
+        time_label.valign = Gtk.Align.START;
 
         grid.attach (title_label, 0, 0, 1, 1);
-        grid.attach (box_btn, 1, 0, 1, 1);
+        grid.attach (time_label, 1, 0, 1, 1);
 
         if (entry_body != "") {
             var body_label = new Gtk.Label (fix_markup (entry_body));
