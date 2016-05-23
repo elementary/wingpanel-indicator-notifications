@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-18 21:15+0100\n"
+"POT-Creation-Date: 2016-05-23 18:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,36 +42,32 @@ msgstr ""
 msgid "Notifications Settings…"
 msgstr ""
 
-#: ../src/Widgets/AppEntry.vala:60
-msgid "Clear"
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
 msgstr ""
 
-#: ../src/Widgets/NotificationEntry.vala:82
+#: ../src/Widgets/NotificationEntry.vala:75
 msgid "now"
 msgstr ""
 
-#: ../src/Widgets/NotificationEntry.vala:127
+#: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
 msgstr ""
 
-#: ../src/Widgets/NotificationEntry.vala:133
+#: ../src/Widgets/NotificationEntry.vala:129
 msgid "%ld day"
 msgid_plural "%ld days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/Widgets/NotificationEntry.vala:134
+#: ../src/Widgets/NotificationEntry.vala:130
 msgid "%ld hour"
 msgid_plural "%ld hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/Widgets/NotificationEntry.vala:135
+#: ../src/Widgets/NotificationEntry.vala:131
 msgid "%ld minute"
 msgid_plural "%ld minutes"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../src/Widgets/NotificationsList.vala:47
-msgid "Other"
-msgstr ""
