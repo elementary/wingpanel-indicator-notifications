@@ -43,7 +43,8 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     public void add_item (NotificationEntry entry) {
-        if (entry.notification.app_name == "notify-send" || entry.notification.app_name == "") {
+        if (entry.notification.app_name == "notify-send" || entry.notification.app_name.strip () == "") {
+            entry.notification.app_name = "";
             entry.notification.display_name = _("Other");
             entry.notification.app_icon = "dialog-information";
         }
@@ -124,8 +125,9 @@ public class NotificationsList : Gtk.ListBox {
             app_entry = new AppEntry (entry, window);
 
             screen.active_window_changed.connect (() => {
-                if (screen.get_active_window () == app_entry.app_window)
+                if (screen.get_active_window () == app_entry.app_window) {
                     app_entry.clear_btn_entry.clicked ();
+                }
             });
 
             app_entries.append (app_entry);
@@ -134,8 +136,10 @@ public class NotificationsList : Gtk.ListBox {
             table.insert (app_entry.app_name, 0);
         } else {
             app_entry = get_app_entry_from_app_name (entry.notification.app_name);
-            int insert_pos = table.@get (app_entry.app_name);
-            this.insert (entry, insert_pos + 1);
+            if (app_entry != null) {
+                int insert_pos = table.@get (app_entry.app_name);
+                this.insert (entry, insert_pos + 1);                
+            }
         }
 
         return app_entry;
@@ -144,8 +148,10 @@ public class NotificationsList : Gtk.ListBox {
     private Wnck.Window? get_window_from_entry (NotificationEntry entry) {
         Wnck.Window? window = null;
         screen.get_windows ().@foreach ((_window) => {
-            if (_window.get_pid () == entry.notification.pid)
+            if (_window.get_pid () == entry.notification.pid) {
                 window = _window;
+                return;
+            }
         });
 
         return window;
@@ -157,8 +163,9 @@ public class NotificationsList : Gtk.ListBox {
         entry.active = false;
 
         session.remove_notification (entry.notification);
-        if (items.length () == 0)
+        if (items.length () == 0) {
             this.clear_all ();
+        }
     }
 
     private void destroy_app_entry (AppEntry app_entry) {
@@ -177,10 +184,10 @@ public class NotificationsList : Gtk.ListBox {
             return false;
         });
 
-        if (app_entry != null) {
-            app_entry.unref ();
+        if (items.length () == 0) {
+            this.clear_all ();
         }
-
+        
         this.update_separators ();
     }
 
@@ -202,6 +209,7 @@ public class NotificationsList : Gtk.ListBox {
         app_entries.@foreach ((_entry) => {
             if (_entry.app_name == app_name) {
                 entry = _entry;
+                return;
             }
         });
 

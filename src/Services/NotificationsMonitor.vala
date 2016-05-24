@@ -44,6 +44,8 @@ public interface DBusIface : Object {
 }
 
 public class NotificationMonitor : Object {
+    private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
+    private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
     private const string MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
     private const uint32 REASON_DISMISSED = 2;
 
@@ -73,8 +75,7 @@ public class NotificationMonitor : Object {
         message.set_body (body);
         
         try {
-            niface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.Notifications",
-                                                      "/org/freedesktop/Notifications"); 
+            niface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH); 
         } catch (Error e) {
             error ("%s\n", e.message);
         }
@@ -92,8 +93,8 @@ public class NotificationMonitor : Object {
     private DBusMessage message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
         if (incoming) {
             if ((message.get_message_type () == DBusMessageType.METHOD_CALL) &&
-                (message.get_interface () == "org.freedesktop.Notifications") &&
-                (message.get_member () == "Notify")) {  
+                (message.get_interface () == NOTIFY_IFACE) &&
+                (message.get_member () == "Notify")) {
                 uint32 replaces_id = message.get_body ().get_child_value (1).get_uint32 ();
                 uint32 current_id = replaces_id; 
 
@@ -117,6 +118,7 @@ public class NotificationMonitor : Object {
                         }
                     });
                 }
+
                 return null;
 
             }

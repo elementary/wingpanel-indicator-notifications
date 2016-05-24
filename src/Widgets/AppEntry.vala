@@ -59,10 +59,6 @@ public class AppEntry : Gtk.ListBoxRow {
         clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn_entry.get_style_context ().add_class ("flat");
         clear_btn_entry.clicked.connect (() => {
-            app_notifications.@foreach ((entry) => {
-                entry.clear ();
-            });
-
             this.destroy_entry ();
         });
 
@@ -89,7 +85,6 @@ public class AppEntry : Gtk.ListBoxRow {
         entry.clear.connect (() => {
             if (entry != null) {
                 this.remove_notification_entry (entry);
-                entry.unref ();
             }
         });
     }
@@ -105,7 +100,8 @@ public class AppEntry : Gtk.ListBoxRow {
 
     public void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
-        if (app_notifications.length () == 0)
+        if (app_notifications.length () == 0) {
             this.destroy_entry ();
+        }
     }
 }

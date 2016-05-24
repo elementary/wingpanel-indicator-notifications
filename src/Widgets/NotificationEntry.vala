@@ -56,8 +56,9 @@ public class NotificationEntry : Gtk.ListBoxRow {
         this.hexpand = true;
         add_widgets ();
 
-        if (notification.data_session)
+        if (notification.data_session) {
             notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
+        }
     }
 
     private void add_widgets () {
@@ -96,7 +97,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
     /**
      * Copied from gnome-shell, fixes the mess of markup that is sent to us
      */
-    string fix_markup (string markup) {
+    private string fix_markup (string markup) {
         var text = markup;
 
         try {
