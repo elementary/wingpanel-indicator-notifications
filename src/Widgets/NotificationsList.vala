@@ -93,6 +93,7 @@ public class NotificationsList : Gtk.ListBox {
 
         counter = 0;
 
+        session.clear ();
         this.switch_stack (false);
         this.close_popover ();
         this.show_all ();
@@ -187,7 +188,7 @@ public class NotificationsList : Gtk.ListBox {
         if (items.length () == 0) {
             this.clear_all ();
         }
-        
+
         this.update_separators ();
     }
 

@@ -38,7 +38,6 @@ public class Indicator : Wingpanel.Indicator {
     private static const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
     private static const string REMEMBER_KEY = "remember";
 
-
     private Wingpanel.Widgets.OverlayIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
     private Wingpanel.Widgets.Button clear_all_btn;
