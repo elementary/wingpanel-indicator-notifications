@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-18 21:15+0100\n"
+"POT-Creation-Date: 2016-05-23 18:42-0500\n"
 "PO-Revision-Date: 2016-05-20 21:48+0000\n"
 "Last-Translator: Hlobil Vaclav <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2016-05-21 05:49+0000\n"
-"X-Generator: Launchpad (build 18025)\n"
+"X-Launchpad-Export-Date: 2016-05-24 06:32+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
@@ -37,39 +37,38 @@ msgstr "Vyčistit všechna oznámení"
 msgid "Notifications Settings…"
 msgstr "Nastavení oznámení"
 
-#: ../src/Widgets/AppEntry.vala:60
-msgid "Clear"
-msgstr "Vyčistit"
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
+msgstr "Jiné"
 
-#: ../src/Widgets/NotificationEntry.vala:82
+#: ../src/Widgets/NotificationEntry.vala:75
 msgid "now"
 msgstr "nyní"
 
-#: ../src/Widgets/NotificationEntry.vala:127
+#: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
 msgstr "Nyní"
 
-#: ../src/Widgets/NotificationEntry.vala:133
+#: ../src/Widgets/NotificationEntry.vala:129
 msgid "%ld day"
 msgid_plural "%ld days"
 msgstr[0] "%ld den"
 msgstr[1] "%ld dny"
 msgstr[2] "%ld dnů"
 
-#: ../src/Widgets/NotificationEntry.vala:134
+#: ../src/Widgets/NotificationEntry.vala:130
 msgid "%ld hour"
 msgid_plural "%ld hours"
 msgstr[0] "%ld hodina"
 msgstr[1] "%ld hodiny"
 msgstr[2] "%ld hodin"
 
-#: ../src/Widgets/NotificationEntry.vala:135
+#: ../src/Widgets/NotificationEntry.vala:131
 msgid "%ld minute"
 msgid_plural "%ld minutes"
 msgstr[0] "%ld minuta"
 msgstr[1] "%ld minuty"
 msgstr[2] "%ld minut"
 
-#: ../src/Widgets/NotificationsList.vala:47
-msgid "Other"
-msgstr "Jiné"
+#~ msgid "Clear"
+#~ msgstr "Vyčistit"

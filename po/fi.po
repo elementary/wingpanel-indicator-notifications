@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-18 21:15+0100\n"
+"POT-Creation-Date: 2016-05-23 18:42-0500\n"
 "PO-Revision-Date: 2015-10-27 09:29+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-05-12 05:43+0000\n"
-"X-Generator: Launchpad (build 18025)\n"
+"X-Launchpad-Export-Date: 2016-05-24 06:32+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
@@ -37,36 +37,35 @@ msgstr "Tyhjennä kaikki ilmoitukset"
 msgid "Notifications Settings…"
 msgstr "Ilmoitusten asetukset…"
 
-#: ../src/Widgets/AppEntry.vala:60
-msgid "Clear"
-msgstr "Tyhjennä"
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
+msgstr "Muu"
 
-#: ../src/Widgets/NotificationEntry.vala:82
+#: ../src/Widgets/NotificationEntry.vala:75
 msgid "now"
 msgstr "nyt"
 
-#: ../src/Widgets/NotificationEntry.vala:127
+#: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
 msgstr "Nyt"
 
-#: ../src/Widgets/NotificationEntry.vala:133
+#: ../src/Widgets/NotificationEntry.vala:129
 msgid "%ld day"
 msgid_plural "%ld days"
 msgstr[0] "%ld päivä"
 msgstr[1] "%ld päivää"
 
-#: ../src/Widgets/NotificationEntry.vala:134
+#: ../src/Widgets/NotificationEntry.vala:130
 msgid "%ld hour"
 msgid_plural "%ld hours"
 msgstr[0] "%ld tunti"
 msgstr[1] "%ld tuntia"
 
-#: ../src/Widgets/NotificationEntry.vala:135
+#: ../src/Widgets/NotificationEntry.vala:131
 msgid "%ld minute"
 msgid_plural "%ld minutes"
 msgstr[0] "%ld minuutti"
 msgstr[1] "%ld minuuttia"
 
-#: ../src/Widgets/NotificationsList.vala:47
-msgid "Other"
-msgstr "Muu"
+#~ msgid "Clear"
+#~ msgstr "Tyhjennä"

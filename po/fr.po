@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-18 21:15+0100\n"
+"POT-Creation-Date: 2016-05-23 18:42-0500\n"
 "PO-Revision-Date: 2015-10-26 16:51+0000\n"
 "Last-Translator: Corentin Noël <corentin@elementaryos.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2016-05-12 05:43+0000\n"
-"X-Generator: Launchpad (build 18025)\n"
+"X-Launchpad-Export-Date: 2016-05-24 06:32+0000\n"
+"X-Generator: Launchpad (build 18053)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
@@ -37,36 +37,35 @@ msgstr "Effacer toutes les notifications"
 msgid "Notifications Settings…"
 msgstr "Paramètres des notifications…"
 
-#: ../src/Widgets/AppEntry.vala:60
-msgid "Clear"
-msgstr "Effacer"
+#: ../src/Widgets/NotificationsList.vala:47
+msgid "Other"
+msgstr "Autre"
 
-#: ../src/Widgets/NotificationEntry.vala:82
+#: ../src/Widgets/NotificationEntry.vala:75
 msgid "now"
 msgstr "maintenant"
 
-#: ../src/Widgets/NotificationEntry.vala:127
+#: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
 msgstr "Maintenant"
 
-#: ../src/Widgets/NotificationEntry.vala:133
+#: ../src/Widgets/NotificationEntry.vala:129
 msgid "%ld day"
 msgid_plural "%ld days"
 msgstr[0] "%ld jour"
 msgstr[1] "%ld jours"
 
-#: ../src/Widgets/NotificationEntry.vala:134
+#: ../src/Widgets/NotificationEntry.vala:130
 msgid "%ld hour"
 msgid_plural "%ld hours"
 msgstr[0] "%ld heure"
 msgstr[1] "%ld heures"
 
-#: ../src/Widgets/NotificationEntry.vala:135
+#: ../src/Widgets/NotificationEntry.vala:131
 msgid "%ld minute"
 msgid_plural "%ld minutes"
 msgstr[0] "%ld minute"
 msgstr[1] "%ld minutes"
 
-#: ../src/Widgets/NotificationsList.vala:47
-msgid "Other"
-msgstr "Autre"
+#~ msgid "Clear"
+#~ msgstr "Effacer"
