@@ -39,9 +39,6 @@ public interface DBusIface : Object {
     [DBus (name = "NameHasOwner")]
     public abstract bool name_has_owner (string name) throws Error;
 
-    [DBus (name = "GetNameOwner")]
-    public abstract string get_name_owner (string name) throws Error;
-
     [DBus (name = "GetConnectionUnixProcessID")]
     public abstract uint32 get_connection_unix_process_id (string name) throws Error;
 }
