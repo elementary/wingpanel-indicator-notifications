@@ -23,7 +23,7 @@ public class Utils : Object {
         && appinfo.get_executable () != null
         && appinfo.get_display_name () != null) {
             if (appinfo.get_name ().down () == token
-                || app_name.down ().contains (token)
+                || appinfo.get_executable ().down () == token
                 || appinfo.get_display_name ().down ().contains (token))
                 return true;
         }            
