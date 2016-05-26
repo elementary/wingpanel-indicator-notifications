@@ -189,8 +189,13 @@ public class Indicator : Wingpanel.Indicator {
         Settings? app_settings = app_settings_cache.get (app_name);
 
         var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
-        if (schema != null && app_settings == null && app_name.strip () != "") {
-            app_settings = new Settings.full (schema, null, CHILD_PATH.printf (app_name));
+        string appid = "";
+        if (notification.appinfo != null) {
+            appid = notification.appinfo.get_id ().replace (Notification.DESKTOP_ID_EXT, "");
+        }
+
+        if (schema != null && app_settings == null && appid != "") {
+            app_settings = new Settings.full (schema, null, CHILD_PATH.printf (appid));
             app_settings_cache.set (app_name, app_settings);
         }
 

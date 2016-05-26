@@ -50,9 +50,9 @@ public class Notification : Object {
         COUNT
     }
 
+    public static const string DESKTOP_ID_EXT = ".desktop";
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
-    private const string DESKTOP_ID_EXT = ".desktop";
     private const string[] OTHER_WHITELIST = { "notify-send" };
     private bool pid_accuired;
 
