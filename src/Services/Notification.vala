@@ -40,6 +40,7 @@ public class Notification : Object {
     public int64 unix_time;
 
     public string desktop_id;
+    public AppInfo? appinfo = null;
 
     public signal bool time_changed (TimeSpan span);
 
@@ -57,6 +58,7 @@ public class Notification : Object {
 
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
+    private const string DESKTOP_ID_EXT = ".desktop";
     private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -81,6 +83,14 @@ public class Notification : Object {
         this.unix_time = timestamp.to_unix ();
 
         this.desktop_id = lookup_string (this.hints, DESKTOP_ENTRY_KEY);
+        if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
+            this.desktop_id += DESKTOP_ID_EXT;
+        }
+
+        appinfo = Utils.get_appinfo_from_app_name (app_name);
+        if (desktop_id != "" && appinfo == null) {
+            appinfo = new DesktopAppInfo (desktop_id);
+        }
 
         setup_pid ();
 
@@ -115,7 +125,7 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return app_name != "" || desktop_id.has_suffix (".desktop");
+        return appinfo != null;
     }
 
     private void setup_pid () {

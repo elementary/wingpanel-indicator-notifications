@@ -39,10 +39,7 @@ public class AppEntry : Gtk.ListBoxRow {
         app_notifications = new List<NotificationEntry> ();
         this.add_notification_entry (entry);
 
-        appinfo = Utils.get_appinfo_from_app_name (app_name);
-        if (notification.desktop_id != "" && appinfo == null) {
-            appinfo = new DesktopAppInfo (notification.desktop_id);
-        }
+        appinfo = notification.appinfo;
 
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
 

@@ -241,7 +241,7 @@ public class NotificationsList : Gtk.ListBox {
                 this.close_popover ();
             } else if (((AppEntry) row).appinfo != null) {
                 try {
-                    (row as AppEntry).appinfo.launch (null, null);
+                    ((AppEntry) row).appinfo.launch (null, null);
                 } catch (Error e) {
                     error ("%s\n", e.message);
                 }
