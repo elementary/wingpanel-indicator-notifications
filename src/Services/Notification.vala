@@ -59,6 +59,7 @@ public class Notification : Object {
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string DESKTOP_ID_EXT = ".desktop";
+    private const string[] OTHER_WHITELIST = { "notify-send" };
     private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -92,6 +93,7 @@ public class Notification : Object {
             appinfo = new DesktopAppInfo (desktop_id);
         }
 
+        set_properties ();
         setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
@@ -113,6 +115,7 @@ public class Notification : Object {
         this.id = -1;
         this.sender = _sender;
 
+        set_properties ();
         setup_pid ();
 
         this.actions = _actions;
@@ -125,7 +128,14 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return appinfo != null;
+        return app_name in OTHER_WHITELIST || appinfo != null;
+    }
+
+    private void set_properties () {
+        if (app_name in OTHER_WHITELIST) {
+            this.display_name = _("Other");
+            this.app_icon = "dialog-information";            
+        }
     }
 
     private void setup_pid () {

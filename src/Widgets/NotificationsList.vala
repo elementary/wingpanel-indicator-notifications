@@ -43,12 +43,6 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     public void add_item (NotificationEntry entry) {
-        if (entry.notification.app_name == "notify-send" || entry.notification.app_name.strip () == "") {
-            entry.notification.app_name = "";
-            entry.notification.display_name = _("Other");
-            entry.notification.app_icon = "dialog-information";
-        }
-
         var app_entry = this.add_app_entry (entry);
 
         items.prepend (entry);
