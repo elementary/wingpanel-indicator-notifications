@@ -39,7 +39,7 @@ public class AppEntry : Gtk.ListBoxRow {
         app_notifications = new List<NotificationEntry> ();
         this.add_notification_entry (entry);
 
-        appinfo = Utils.get_appinfo_from_app_name (app_name);
+        appinfo = notification.appinfo;
 
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
 
@@ -59,15 +59,11 @@ public class AppEntry : Gtk.ListBoxRow {
         clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn_entry.get_style_context ().add_class ("flat");
         clear_btn_entry.clicked.connect (() => {
-            app_notifications.@foreach ((entry) => {
-                entry.clear ();
-            });
-
             this.destroy_entry ();
         });
 
         string icon = "";
-        if (notification.app_icon == "") {
+        if (notification.app_icon == "" && appinfo != null) {
             var glib_icon = appinfo.get_icon ();
             icon = glib_icon.to_string ();
         } else {
@@ -89,7 +85,6 @@ public class AppEntry : Gtk.ListBoxRow {
         entry.clear.connect (() => {
             if (entry != null) {
                 this.remove_notification_entry (entry);
-                entry.unref ();
             }
         });
     }
@@ -105,7 +100,8 @@ public class AppEntry : Gtk.ListBoxRow {
 
     public void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
-        if (app_notifications.length () == 0)
+        if (app_notifications.length () == 0) {
             this.destroy_entry ();
+        }
     }
 }

@@ -30,10 +30,12 @@ public Settings settings;
 public Session session;
 
 public class Indicator : Wingpanel.Indicator {
-    private const string SETTINGS_EXEC = "switchboard notifications";
     private const uint16 BOX_WIDTH = 300;
     private const uint16 BOX_HEIGHT = 400;
-    private const string[] EXCEPTIONS = { "", "wingpanel-indicator-sound", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
+    private const string[] EXCEPTIONS = { "wingpanel-indicator-sound", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
+    private static const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
+    private static const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
+    private static const string REMEMBER_KEY = "remember";
 
     private Wingpanel.Widgets.OverlayIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
@@ -127,32 +129,7 @@ public class Indicator : Wingpanel.Indicator {
                 }
             });
 
-            monitor.received.connect ((message, id) => {
-                Notification notification = new Notification.from_message (message, id);
-                string app_name = notification.app_name;
-
-                if (app_name in EXCEPTIONS) {
-                    return;
-                }
-
-                Settings? app_settings = app_settings_cache.get (app_name);
-
-                if (app_settings == null) {
-                    var schema = SettingsSchemaSource.get_default ().lookup ("org.pantheon.desktop.gala.notifications.application", true);
-
-                    if (schema != null) {
-                        app_settings = new Settings.full (schema, null, "/org/pantheon/desktop/gala/notifications/applications/%s/".printf (app_name));
-                        app_settings_cache.set (app_name, app_settings);
-                    }
-                }
-
-                if (app_settings != null && app_settings.get_boolean ("remember")) {
-                    var entry = new NotificationEntry (notification);
-                    nlist.add_item (entry);
-                }
-
-                dynamic_icon.set_main_icon_name (get_display_icon_name ());
-            });
+            monitor.received.connect (on_notification_received);
 
             nsettings.changed["do-not-disturb"].connect (() => {
                 not_disturb_switch.get_switch ().active = nsettings.do_not_disturb;
@@ -171,10 +148,12 @@ public class Indicator : Wingpanel.Indicator {
             var previous_session = session.get_session_notifications ();
             if (previous_session.length () > 0) {
                 previous_session.@foreach ((notification) => {
-                    var entry = new NotificationEntry (notification);
-                    nlist.add_item (entry);
+                    if (notification.message_body.strip () != "" && notification.summary.strip () != "") {
+                        var entry = new NotificationEntry (notification);
+                        nlist.add_item (entry);
 
-                    dynamic_icon.set_main_icon_name (get_display_icon_name ());
+                        dynamic_icon.set_main_icon_name (get_display_icon_name ());                        
+                    }
                 });
             }
 
@@ -197,6 +176,35 @@ public class Indicator : Wingpanel.Indicator {
 
     public override void closed () {
         indicator_opened = false;
+    }
+
+    private void on_notification_received (DBusMessage message, uint32 id) {
+        var notification = new Notification.from_message (message, id);
+        string app_name = notification.app_name;
+
+        if (!notification.get_is_valid () || app_name in EXCEPTIONS) {
+            return;
+        }
+
+        Settings? app_settings = app_settings_cache.get (app_name);
+
+        var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
+        string appid = "";
+        if (notification.appinfo != null) {
+            appid = notification.appinfo.get_id ().replace (Notification.DESKTOP_ID_EXT, "");
+        }
+
+        if (schema != null && app_settings == null && appid != "") {
+            app_settings = new Settings.full (schema, null, CHILD_PATH.printf (appid));
+            app_settings_cache.set (app_name, app_settings);
+        }
+
+        if (app_settings == null || (app_settings != null && app_settings.get_boolean (REMEMBER_KEY))) {
+            var entry = new NotificationEntry (notification);
+            nlist.add_item (entry);
+        }
+
+        dynamic_icon.set_main_icon_name (get_display_icon_name ());        
     }
 
     private string get_display_icon_name () {
