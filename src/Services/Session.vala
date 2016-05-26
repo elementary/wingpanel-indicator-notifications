@@ -20,9 +20,6 @@
  * notifications from the current session
  * and restore them in the next session.
  *
- * KeyFile does not support getting
- * uint32 values so we need
- * to store id's in uint64 variables.
  */
 public class Session : GLib.Object {
     private const string SESSION_NAME_FILE = "/.notifications.session";
@@ -55,7 +52,7 @@ public class Session : GLib.Object {
         try {
             _key.load_from_file (full_path, KeyFileFlags.NONE);
             foreach (unowned string group in _key.get_groups ()) {
-                var notification = new Notification.from_data (uint64.parse (group),
+                var notification = new Notification.from_data ((uint32)int.parse (group),
                                                             _key.get_string (group, APP_NAME_KEY),
                                                             _key.get_string (group, APP_ICON_KEY),
                                                             _key.get_string (group, SUMMARY_KEY),
@@ -75,7 +72,7 @@ public class Session : GLib.Object {
     }
 
     public void add_notification (Notification notification) {
-        string id = this.get_notification_id (notification);
+        string id = notification.id.to_string ();
         key.set_string (id, APP_NAME_KEY, notification.app_name);
         key.set_string (id, APP_ICON_KEY, notification.app_icon);
         key.set_string (id, SUMMARY_KEY, notification.summary);
@@ -89,7 +86,7 @@ public class Session : GLib.Object {
 
     public void remove_notification (Notification notification) {
         try {
-            key.remove_group (this.get_notification_id (notification));
+            key.remove_group (notification.id.to_string ());
         } catch (KeyFileError e) {
             warning (e.message);
         }
@@ -112,16 +109,6 @@ public class Session : GLib.Object {
         } catch (Error e) {
             warning (e.message);
         }
-    }
-
-    private string get_notification_id (Notification notification) {
-        string id;
-        if (notification.id == -1)
-            id = notification.id_64.to_string ();
-        else
-            id = notification.id.to_string ();
-
-        return id;
     }
 
     private void write_contents () {

@@ -28,13 +28,7 @@ public class Notification : Object {
     public Variant hints;
     public int32 expire_timeout;
     public uint32 replaces_id;
-
-    /* We cannot convert uint64 to uint32 and
-     * we need to store them in the separate
-     * variables.
-     */
     public uint32 id;
-    public uint64 id_64;
     public uint32 pid = 0;
     public DateTime timestamp;
     public int64 unix_time;
@@ -76,7 +70,6 @@ public class Notification : Object {
         this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
         this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
         this.id = _id;
-        this.id_64 = -1;
         this.sender = message.get_sender ();
 
         this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
@@ -99,7 +92,7 @@ public class Notification : Object {
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
-    public Notification.from_data (uint64 _id, string _app_name, string _app_icon,
+    public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
                                 string _summary, string _message_body,
                                 string[] _actions, int64 _unix_time, string _sender) {
         this.data_session = true;
@@ -111,8 +104,7 @@ public class Notification : Object {
         this.message_body = _message_body;
         this.expire_timeout = -1;
         this.replaces_id = 0;
-        this.id_64 = _id;
-        this.id = -1;
+        this.id = (uint32)_id;
         this.sender = _sender;
 
         set_properties ();
