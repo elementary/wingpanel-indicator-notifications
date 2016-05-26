@@ -104,7 +104,7 @@ public class Notification : Object {
         this.message_body = _message_body;
         this.expire_timeout = -1;
         this.replaces_id = 0;
-        this.id = (uint32)_id;
+        this.id = _id;
         this.sender = _sender;
 
         set_properties ();
