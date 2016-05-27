@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright (c) 2016 Wingpanel Developers (http://launchpad.net/wingpanel)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -15,10 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NSettings : Granite.Services.Settings {
+public class NotifySettings : Granite.Services.Settings {
+    public static const string DO_NOT_DISTURB_KEY = "do-not-disturb";
+    public static NotifySettings? instance = null;
+
     public bool do_not_disturb { get; set; }
 
-    public NSettings () {
+    public static unowned NotifySettings get_instance () {
+        if (instance == null) {
+            instance = new NotifySettings ();
+        }
+
+        return instance;
+    }
+
+    private NotifySettings () {
         base ("org.pantheon.desktop.gala.notifications");
     }
 }

@@ -23,6 +23,8 @@
  */
 public class Session : GLib.Object {
     private const string SESSION_NAME_FILE = "/.notifications.session";
+    private static Session? instance = null;
+
     private static File? session_file = null;
     private static string full_path;
     
@@ -36,7 +38,15 @@ public class Session : GLib.Object {
 
     private KeyFile key;
 
-    public Session () {
+    public static Session get_instance () {
+        if (instance == null) {
+            instance = new Session ();
+        }
+
+        return instance;
+    }
+
+    private Session () {
         full_path = Environment.get_user_cache_dir () + SESSION_NAME_FILE;
         session_file = File.new_for_path (full_path);
         if (!session_file.query_exists ())

@@ -15,27 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* Reflects current state of popover.
- * Used to inform the time_label to
- * not change when the popover is shown.
- */
-public bool indicator_opened = false;
-
-/* Notiifcations monitor */
-public NotificationMonitor monitor;
-
-public NSettings nsettings;
-public Settings settings;
-
-public Session session;
-
 public class Indicator : Wingpanel.Indicator {
+    private const string[] EXCEPTIONS = { "wingpanel-indicator-sound", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
+    private const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
+    private const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
+    private const string REMEMBER_KEY = "remember";
+
     private const uint16 BOX_WIDTH = 300;
     private const uint16 BOX_HEIGHT = 400;
-    private const string[] EXCEPTIONS = { "wingpanel-indicator-sound", "indicator-sound", "NetworkManager", "gnome-settings-daemon" };
-    private static const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
-    private static const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
-    private static const string REMEMBER_KEY = "remember";
+    private const string LIST_ID = "list";
+    private const string NO_NOTIFICATIONS_ID = "no-notifications";
 
     private Wingpanel.Widgets.OverlayIcon? dynamic_icon = null;
     private Gtk.Box? main_box = null;
@@ -51,13 +40,9 @@ public class Indicator : Wingpanel.Indicator {
                 display_name: _("Notifications indicator"),
                 description:_("The notifications indicator"));
 
-        this.visible = true;
+        visible = true;
 
         app_settings_cache = new Gee.HashMap<string, Settings> ();
-
-        nsettings = new NSettings ();
-        monitor = new NotificationMonitor ();
-        session = new Session ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -66,7 +51,7 @@ public class Indicator : Wingpanel.Indicator {
 
         dynamic_icon.button_press_event.connect ((e) => {
             if (e.button == Gdk.BUTTON_MIDDLE) {
-                nsettings.do_not_disturb = !nsettings.do_not_disturb;
+                NotifySettings.get_instance ().do_not_disturb = !NotifySettings.get_instance ().do_not_disturb;
                 return Gdk.EVENT_STOP;
             }
 
@@ -96,43 +81,30 @@ public class Indicator : Wingpanel.Indicator {
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
             scrolled.add_with_viewport (nlist);
 
-            stack.add_named (scrolled, "list");
-            stack.add_named (no_notifications_label, "no-notifications");
+            stack.add_named (scrolled, LIST_ID);
+            stack.add_named (no_notifications_label, NO_NOTIFICATIONS_ID);
 
-            var not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), nsettings.do_not_disturb);
+            var not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), NotifySettings.get_instance ().do_not_disturb);
             not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
             not_disturb_switch.get_switch ().notify["active"].connect (() => {
-                nsettings.do_not_disturb = not_disturb_switch.get_switch ().active;
+                NotifySettings.get_instance ().do_not_disturb = not_disturb_switch.get_switch ().active;
             });
 
             clear_all_btn = new Wingpanel.Widgets.Button (_("Clear All Notifications"));
             clear_all_btn.clicked.connect (() => {
                 nlist.clear_all ();
-                session.clear ();
+                Session.get_instance ().clear ();
             });
 
             var settings_btn = new Wingpanel.Widgets.Button (_("Notifications Settings…"));
             settings_btn.clicked.connect (show_settings);
 
-            nlist.close_popover.connect (() => {
-                this.close ();
-            });
+            nlist.close_popover.connect (() => close ());
+            nlist.switch_stack.connect (on_switch_stack);
+            NotificationMonitor.get_instance ().received.connect (on_notification_received);
 
-            nlist.switch_stack.connect ((list) => {
-                if (list) {
-                    stack.set_visible_child_name ("list");
-                    clear_all_btn.sensitive = true;
-                } else {
-                    stack.set_visible_child_name ("no-notifications");
-                    dynamic_icon.set_main_icon_name (get_display_icon_name ());
-                    clear_all_btn.sensitive = false;
-                }
-            });
-
-            monitor.received.connect (on_notification_received);
-
-            nsettings.changed["do-not-disturb"].connect (() => {
-                not_disturb_switch.get_switch ().active = nsettings.do_not_disturb;
+            NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
+                not_disturb_switch.get_switch ().active = NotifySettings.get_instance ().do_not_disturb;
                 dynamic_icon.set_main_icon_name (get_display_icon_name ());
             });
 
@@ -145,17 +117,7 @@ public class Indicator : Wingpanel.Indicator {
             main_box.show_all ();
 
             nlist.clear_all ();
-            var previous_session = session.get_session_notifications ();
-            if (previous_session.length () > 0) {
-                previous_session.@foreach ((notification) => {
-                    if (notification.message_body.strip () != "" && notification.summary.strip () != "") {
-                        var entry = new NotificationEntry (notification);
-                        nlist.add_item (entry);
-
-                        dynamic_icon.set_main_icon_name (get_display_icon_name ());                        
-                    }
-                });
-            }
+            restore_previous_session ();
 
             dynamic_icon.set_main_icon_name (get_display_icon_name ());
         }
@@ -164,18 +126,11 @@ public class Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-        indicator_opened = true;
 
-        nlist.switch_stack (nlist.get_items_length () > 0);
-        if (nlist.get_items_length () > 0) {
-            clear_all_btn.sensitive = true;
-        } else {
-            clear_all_btn.sensitive = false;
-        }
     }
 
     public override void closed () {
-        indicator_opened = false;
+
     }
 
     private void on_notification_received (DBusMessage message, uint32 id) {
@@ -196,7 +151,7 @@ public class Indicator : Wingpanel.Indicator {
 
         if (schema != null && app_settings == null && appid != "") {
             app_settings = new Settings.full (schema, null, CHILD_PATH.printf (appid));
-            app_settings_cache.set (app_name, app_settings);
+            app_settings_cache.set (appid, app_settings);
         }
 
         if (app_settings == null || (app_settings != null && app_settings.get_boolean (REMEMBER_KEY))) {
@@ -207,8 +162,31 @@ public class Indicator : Wingpanel.Indicator {
         dynamic_icon.set_main_icon_name (get_display_icon_name ());        
     }
 
+    private void on_switch_stack (bool show_list) {
+        clear_all_btn.sensitive = show_list;
+        if (show_list) {
+            stack.set_visible_child_name (LIST_ID);
+        } else {
+            stack.set_visible_child_name (NO_NOTIFICATIONS_ID);
+        }
+
+        dynamic_icon.set_main_icon_name (get_display_icon_name ());        
+    }
+
+    private void restore_previous_session () {
+        var previous_session = Session.get_instance ().get_session_notifications ();
+        if (previous_session.length () > 0) {
+            previous_session.@foreach ((notification) => {
+                if (notification.message_body.strip () != "" && notification.summary.strip () != "") {
+                    var entry = new NotificationEntry (notification);
+                    nlist.add_item (entry);                     
+                }
+            });
+        }        
+    }
+
     private string get_display_icon_name () {
-        if (nsettings.do_not_disturb) {
+        if (NotifySettings.get_instance ().do_not_disturb) {
             return "notification-disabled-symbolic";
         } else if (nlist != null && nlist.get_items_length () > 0) {
             return "notification-new-symbolic";
@@ -218,7 +196,7 @@ public class Indicator : Wingpanel.Indicator {
     }
 
     private void show_settings () {
-        this.close ();
+        close ();
 
         var list = new List<string> ();
         list.append ("notifications");

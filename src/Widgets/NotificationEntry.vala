@@ -40,20 +40,20 @@ public class NotificationEntry : Gtk.ListBoxRow {
     }
 
     public NotificationEntry (Notification _notification) {
-        this.notification = _notification;
-        this.entry_summary = notification.summary;
-        this.entry_body = notification.message_body;
+        notification = _notification;
+        entry_summary = notification.summary;
+        entry_body = notification.message_body;
 
-        this.get_style_context ().add_class ("menuitem");
+        get_style_context ().add_class ("menuitem");
 
         notification.time_changed.connect ((timespan) => {
             string label = get_string_from_timespan (timespan);
             time_label.label = label;
 
-            return this.active;
+            return active;
         });
 
-        this.hexpand = true;
+        hexpand = true;
         add_widgets ();
 
         if (notification.data_session) {
@@ -90,8 +90,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
             grid.attach (body_label, 0, 1, 2, 1);
         }
 
-        this.add (grid);
-        this.show_all ();
+        add (grid);
+        show_all ();
     }
 
     /**

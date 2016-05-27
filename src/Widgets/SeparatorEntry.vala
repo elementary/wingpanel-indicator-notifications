@@ -16,10 +16,9 @@
  */
 
  public class SeparatorEntry : Gtk.ListBoxRow {
-
  	public SeparatorEntry () {
- 		this.activatable = this.selectable = false;
- 		this.add (new Wingpanel.Widgets.Separator ());
- 		this.show_all ();
+ 		activatable = selectable = false;
+ 		add (new Wingpanel.Widgets.Separator ());
+ 		show_all ();
  	}
  }
