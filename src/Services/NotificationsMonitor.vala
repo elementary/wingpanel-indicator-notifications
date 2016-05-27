@@ -20,46 +20,33 @@
  * http://bazaar.launchpad.net/~jconti/recent-notifications/gnome3/view/head:/src/recent-notifications.vala
  */
 
-[DBus (name = "org.freedesktop.Notifications")]
-public interface NIface : Object {
-    public signal void notification_closed (uint32 id, uint32 reason);
-    public signal void action_invoked (string action, uint32 id);
-    public abstract uint32 notify (string app_name,
-                                uint32 replaces_id,
-                                string app_icon,
-                                string summary,
-                                string body,
-                                string[] actions,
-                                HashTable<string, Variant> hints,
-                                int32 expire_timeout) throws Error;
-}
-
-[DBus (name = "org.freedesktop.DBus")]
-public interface DBusIface : Object {
-    [DBus (name = "NameHasOwner")]
-    public abstract bool name_has_owner (string name) throws Error;
-
-    [DBus (name = "GetConnectionUnixProcessID")]
-    public abstract uint32 get_connection_unix_process_id (string name) throws Error;
-}
-
 public class NotificationMonitor : Object {
     private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
     private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
     private const string MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
     private const uint32 REASON_DISMISSED = 2;
 
+    private static NotificationMonitor? instance = null;
+
     private DBusConnection connection;
-    public NIface? niface = null;
-    public DBusIface? dbusiface = null;
+    public INotifications? notifications_iface = null;
+    public IDBus? dbus_iface = null;
     private uint32 id_counter = 0;
 
     public signal void received (DBusMessage message, uint32 id);
 
-    public NotificationMonitor () {
+    public static NotificationMonitor get_instance () {
+        if (instance == null) {
+            instance = new NotificationMonitor ();
+        }
+
+        return instance;
+    }
+
+    private NotificationMonitor () {
         try {
             connection = Bus.get_sync (BusType.SESSION);
-            this.add_filter ();  
+            add_filter ();  
         } catch (Error e) {
             error ("%s\n", e.message);
         }
@@ -75,7 +62,7 @@ public class NotificationMonitor : Object {
         message.set_body (body);
         
         try {
-            niface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH); 
+            notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH); 
         } catch (Error e) {
             error ("%s\n", e.message);
         }
@@ -103,10 +90,10 @@ public class NotificationMonitor : Object {
                     current_id = id_counter;
                 }
 
-                if (nsettings.do_not_disturb) {
+                if (NotifySettings.get_instance ().do_not_disturb) {
                     this.received (message, current_id);
                 } else {
-                    niface.notification_closed.connect ((id, reason) => {
+                    notifications_iface.notification_closed.connect ((id, reason) => {
                         if (id == 1) {
                             id_counter = id;
                             current_id = id_counter;
@@ -133,7 +120,7 @@ public class NotificationMonitor : Object {
         hints.insert ("suppress-sound", new Variant.boolean (true));
         string[] actions = {};
         try {
-            return niface.notify ("", 0, "", "", "", actions, hints, 1);
+            return notifications_iface.notify ("", 0, "", "", "", actions, hints, 1);
         } catch (Error e) {
             error ("%s\n", e.message);
         }

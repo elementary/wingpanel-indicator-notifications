@@ -22,8 +22,9 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/SeparatorEntry.vala
   Services/NotificationsMonitor.vala
   Services/Notification.vala
-  Services/NSettings.vala
+  Services/NotifySettings.vala
   Services/Session.vala
+  Services/Interfaces.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   wingpanel-2.0

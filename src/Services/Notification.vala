@@ -59,26 +59,26 @@ public class Notification : Object {
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
 
-        this.data_session = false;
+        data_session = false;
 
-        this.app_name = this.get_string (body, Column.APP_NAME);
-        this.display_name = app_name;
-        this.app_icon = this.get_string (body, Column.APP_ICON);
-        this.summary = this.get_string (body, Column.SUMMARY);
-        this.message_body = this.get_string (body, Column.BODY);
-        this.hints = body.get_child_value (Column.HINTS);
-        this.expire_timeout = this.get_int32 (body, Column.EXPIRE_TIMEOUT);
-        this.replaces_id = this.get_uint32 (body, Column.REPLACES_ID);
-        this.id = _id;
-        this.sender = message.get_sender ();
+        app_name = get_string (body, Column.APP_NAME);
+        display_name = app_name;
+        app_icon = get_string (body, Column.APP_ICON);
+        summary = get_string (body, Column.SUMMARY);
+        message_body = get_string (body, Column.BODY);
+        hints = body.get_child_value (Column.HINTS);
+        expire_timeout = get_int32 (body, Column.EXPIRE_TIMEOUT);
+        replaces_id = get_uint32 (body, Column.REPLACES_ID);
+        id = _id;
+        sender = message.get_sender ();
 
-        this.actions = body.get_child_value (Column.ACTIONS).dup_strv ();
-        this.timestamp = new DateTime.now_local ();
-        this.unix_time = timestamp.to_unix ();
+        actions = body.get_child_value (Column.ACTIONS).dup_strv ();
+        timestamp = new DateTime.now_local ();
+        unix_time = timestamp.to_unix ();
 
-        this.desktop_id = lookup_string (this.hints, DESKTOP_ENTRY_KEY);
+        desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
         if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
-            this.desktop_id += DESKTOP_ID_EXT;
+            desktop_id += DESKTOP_ID_EXT;
         }
 
         appinfo = Utils.get_appinfo_from_app_name (app_name);
@@ -95,26 +95,26 @@ public class Notification : Object {
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
                                 string _summary, string _message_body,
                                 string[] _actions, int64 _unix_time, string _sender) {
-        this.data_session = true;
+        data_session = true;
 
-        this.app_name = _app_name;
-        this.display_name = app_name;
-        this.app_icon = _app_icon;
-        this.summary = _summary;
-        this.message_body = _message_body;
-        this.expire_timeout = -1;
-        this.replaces_id = 0;
-        this.id = _id;
-        this.sender = _sender;
+        app_name = _app_name;
+        display_name = app_name;
+        app_icon = _app_icon;
+        summary = _summary;
+        message_body = _message_body;
+        expire_timeout = -1;
+        replaces_id = 0;
+        id = _id;
+        sender = _sender;
 
         set_properties ();
         setup_pid ();
 
-        this.actions = _actions;
-        this.unix_time = _unix_time;
-        this.timestamp = new DateTime.from_unix_local (unix_time);
+        actions = _actions;
+        unix_time = _unix_time;
+        timestamp = new DateTime.from_unix_local (unix_time);
 
-        this.desktop_id = "";
+        desktop_id = "";
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
@@ -125,40 +125,40 @@ public class Notification : Object {
 
     private void set_properties () {
         if (app_name in OTHER_WHITELIST) {
-            this.display_name = _("Other");
-            this.app_icon = "dialog-information";            
+            display_name = _("Other");
+            app_icon = "dialog-information";            
         }
     }
 
     private void setup_pid () {
-        this.pid_accuired = this.try_get_pid ();
-        nsettings.changed["do-not-disturb"].connect (() => {
+        pid_accuired = try_get_pid ();
+        NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
             if (!pid_accuired) {
-                this.try_get_pid ();
+                try_get_pid ();
             }
         });
     }
 
     private bool try_get_pid () {
-        if (nsettings.do_not_disturb) {
+        if (NotifySettings.get_instance ().do_not_disturb) {
             return false;
         }
 
         try {
-            DBusIface? dbusiface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
-            if (dbusiface.name_has_owner (sender)) {
-                this.pid = dbusiface.get_connection_unix_process_id (sender);
+            IDBus? dbus_iface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
+            if (dbus_iface != null && dbus_iface.name_has_owner (sender)) {
+                pid = dbus_iface.get_connection_unix_process_id (sender);
             }
         } catch (Error e) {
-            error ("%s\n", e.message);
+            warning ("%s\n", e.message);
         }
 
         return true;
     }
 
     public bool run_default_action () {
-        if (DEFAULT_ACTION in actions) {
-            monitor.niface.action_invoked (DEFAULT_ACTION, id);
+        if (DEFAULT_ACTION in actions && NotificationMonitor.get_instance ().notifications_iface != null) {
+            NotificationMonitor.get_instance ().notifications_iface.action_invoked (DEFAULT_ACTION, id);
             return true;
         }
 
@@ -191,6 +191,6 @@ public class Notification : Object {
     }
 
     private bool source_func () {
-        return this.time_changed (timestamp.difference (new DateTime.now_local ()));
+        return time_changed (timestamp.difference (new DateTime.now_local ()));
     }
 }

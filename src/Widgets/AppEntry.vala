@@ -33,11 +33,11 @@ public class AppEntry : Gtk.ListBoxRow {
         margin_end = 6;
 
         var notification = entry.notification;
-        this.app_name = notification.app_name;
-        this.app_window = _app_window;
+        app_name = notification.app_name;
+        app_window = _app_window;
 
         app_notifications = new List<NotificationEntry> ();
-        this.add_notification_entry (entry);
+        add_notification_entry (entry);
 
         appinfo = notification.appinfo;
 
@@ -59,7 +59,7 @@ public class AppEntry : Gtk.ListBoxRow {
         clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn_entry.get_style_context ().add_class ("flat");
         clear_btn_entry.clicked.connect (() => {
-            this.destroy_entry ();
+            destroy_entry ();
         });
 
         string icon = "";
@@ -75,33 +75,33 @@ public class AppEntry : Gtk.ListBoxRow {
         hbox.pack_start (label, false, false, 0);
         hbox.pack_end (clear_btn_entry, false, false, 0);
 
-        this.connect_entry (entry);
+        connect_entry (entry);
 
-        this.add (hbox);
-        this.show_all ();
+        add (hbox);
+        show_all ();
     }
 
     private void connect_entry (NotificationEntry entry) {
         entry.clear.connect (() => {
             if (entry != null) {
-                this.remove_notification_entry (entry);
+                remove_notification_entry (entry);
             }
         });
     }
 
     public unowned List<NotificationEntry> get_notifications () {
-        return this.app_notifications;
+        return app_notifications;
     }
 
     public void add_notification_entry (NotificationEntry entry) {
         app_notifications.prepend (entry);
-        this.connect_entry (entry);
+        connect_entry (entry);
     }
 
     public void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
         if (app_notifications.length () == 0) {
-            this.destroy_entry ();
+            destroy_entry ();
         }
     }
 }
