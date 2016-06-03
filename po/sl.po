@@ -11,8 +11,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2016-05-24 06:32+0000\n"
-"X-Generator: Launchpad (build 18053)\n"
+"X-Launchpad-Export-Date: 2016-06-03 06:22+0000\n"
+"X-Generator: Launchpad (build 18086)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
@@ -73,6 +73,3 @@ msgstr[0] "%ld minut"
 msgstr[1] "%ld minuta"
 msgstr[2] "%ld minuti"
 msgstr[3] "%ld minute"
-
-#~ msgid "Clear"
-#~ msgstr "Počisti"

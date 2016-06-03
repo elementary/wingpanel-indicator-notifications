@@ -10,8 +10,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2016-05-24 06:32+0000\n"
-"X-Generator: Launchpad (build 18053)\n"
+"X-Launchpad-Export-Date: 2016-06-03 06:22+0000\n"
+"X-Generator: Launchpad (build 18086)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
@@ -63,6 +63,3 @@ msgstr[0] "%ld 시간"
 msgid "%ld minute"
 msgid_plural "%ld minutes"
 msgstr[0] "%ld 분"
-
-#~ msgid "Clear"
-#~ msgstr "정리"
