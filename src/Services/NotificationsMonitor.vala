@@ -90,11 +90,11 @@ public class NotificationMonitor : Object {
                     current_id = id_counter;
                 }
 
-				Idle.add (() => {
-					this.received (message, current_id);
-					message = null;
-					return false;
-				});
+                Idle.add (() => {
+                    this.received (message, current_id);
+                    message = null;
+                    return false;
+                });
 
                 return null;
             }
