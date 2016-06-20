@@ -90,24 +90,13 @@ public class NotificationMonitor : Object {
                     current_id = id_counter;
                 }
 
-                if (NotifySettings.get_instance ().do_not_disturb) {
+                Idle.add (() => {
                     this.received (message, current_id);
-                } else {
-                    notifications_iface.notification_closed.connect ((id, reason) => {
-                        if (id == 1) {
-                            id_counter = id;
-                            current_id = id_counter;
-                        }
-
-                        if (reason != REASON_DISMISSED && current_id == id) {
-                            this.received (message, id);
-                            message = null;
-                        }
-                    });
-                }
+                    message = null;
+                    return false;
+                });
 
                 return null;
-
             }
         }
 

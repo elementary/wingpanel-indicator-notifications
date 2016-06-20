@@ -167,7 +167,7 @@ public class NotificationsList : Gtk.ListBox {
         app_entries.remove (app_entry);
 
         app_entry.get_notifications ().@foreach ((notification_entry) => {
-            remove (notification_entry);
+            notification_entry.destroy ();
             items.remove (notification_entry);
         });
 
