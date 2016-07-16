@@ -34,7 +34,7 @@ public class Notification : Object {
     public int64 unix_time;
 
     public string desktop_id;
-    public AppInfo? appinfo = null;
+    public AppInfo? app_info = null;
 
     public signal bool time_changed (TimeSpan span);
 
@@ -54,6 +54,7 @@ public class Notification : Object {
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string[] OTHER_WHITELIST = { "notify-send" };
+    private const string FALLBACK_APP_ID = "gala-other";
     private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -76,17 +77,23 @@ public class Notification : Object {
         timestamp = new DateTime.now_local ();
         unix_time = timestamp.to_unix ();
 
+        app_info = Utils.get_appinfo_from_app_name (app_name);
+
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
         if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
             desktop_id += DESKTOP_ID_EXT;
+
+            if (app_info == null) {
+                app_info = new DesktopAppInfo (desktop_id);
+            }
         }
 
-        appinfo = Utils.get_appinfo_from_app_name (app_name);
-        if (desktop_id != "" && appinfo == null) {
-            appinfo = new DesktopAppInfo (desktop_id);
+        if (app_info == null || (app_info != null && !((DesktopAppInfo)app_info).get_boolean ("X-GNOME-UsesNotifications"))) {
+            desktop_id = FALLBACK_APP_ID + DESKTOP_ID_EXT;
+            display_name = _("Other");
+            app_icon = "dialog-information";              
         }
 
-        set_properties ();
         setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
@@ -107,7 +114,11 @@ public class Notification : Object {
         id = _id;
         sender = _sender;
 
-        set_properties ();
+        if (app_name in OTHER_WHITELIST) {
+            display_name = _("Other");
+            app_icon = "dialog-information";            
+        }
+
         setup_pid ();
 
         actions = _actions;
@@ -120,14 +131,7 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return app_name in OTHER_WHITELIST || appinfo != null;
-    }
-
-    private void set_properties () {
-        if (app_name in OTHER_WHITELIST) {
-            display_name = _("Other");
-            app_icon = "dialog-information";            
-        }
+        return app_name in OTHER_WHITELIST || app_info != null;
     }
 
     private void setup_pid () {

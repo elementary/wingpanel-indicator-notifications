@@ -233,9 +233,9 @@ public class NotificationsList : Gtk.ListBox {
                 ((AppEntry) row).app_window.unminimize (Gtk.get_current_event_time ());
                 ((AppEntry) row).clear_btn_entry.clicked ();
                 close_popover ();
-            } else if (((AppEntry) row).appinfo != null) {
+            } else if (((AppEntry) row).app_info != null) {
                 try {
-                    ((AppEntry) row).appinfo.launch (null, null);
+                    ((AppEntry) row).app_info.launch (null, null);
                 } catch (Error e) {
                     error ("%s\n", e.message);
                 }

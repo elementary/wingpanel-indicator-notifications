@@ -43,6 +43,7 @@ public class Indicator : Wingpanel.Indicator {
         visible = true;
 
         app_settings_cache = new Gee.HashMap<string, Settings> ();
+        Utils.init ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -135,23 +136,17 @@ public class Indicator : Wingpanel.Indicator {
 
     private void on_notification_received (DBusMessage message, uint32 id) {
         var notification = new Notification.from_message (message, id);
-        string app_name = notification.app_name;
-
-        if (!notification.get_is_valid () || app_name in EXCEPTIONS) {
+        if (!notification.get_is_valid () || notification.app_name in EXCEPTIONS) {
             return;
         }
 
-        Settings? app_settings = app_settings_cache.get (app_name);
+        string app_id = notification.desktop_id.replace (Notification.DESKTOP_ID_EXT, "");
+        Settings? app_settings = app_settings_cache.get (app_id);
 
         var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
-        string appid = "";
-        if (notification.appinfo != null) {
-            appid = notification.appinfo.get_id ().replace (Notification.DESKTOP_ID_EXT, "");
-        }
-
-        if (schema != null && app_settings == null && appid != "") {
-            app_settings = new Settings.full (schema, null, CHILD_PATH.printf (appid));
-            app_settings_cache.set (appid, app_settings);
+        if (schema != null && app_settings == null && app_id != "") {
+            app_settings = new Settings.full (schema, null, CHILD_PATH.printf (app_id));
+            app_settings_cache.set (app_id, app_settings);
         }
 
         if (app_settings == null || (app_settings != null && app_settings.get_boolean (REMEMBER_KEY))) {
