@@ -114,7 +114,7 @@ public class NotificationsList : Gtk.ListBox {
 
     private AppEntry add_app_entry (NotificationEntry entry) {
         AppEntry app_entry;
-        bool add = !(entry.notification.app_name in construct_app_names ());
+        bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
         if (add) {
             var window = get_window_from_entry (entry);
             app_entry = new AppEntry (entry, window);
@@ -128,11 +128,11 @@ public class NotificationsList : Gtk.ListBox {
             app_entries.append (app_entry);
             prepend (app_entry);
             insert (entry, 1);
-            table.insert (app_entry.app_name, 0);
+            table.insert (app_entry.desktop_id, 0);
         } else {
-            app_entry = get_app_entry_from_app_name (entry.notification.app_name);
+            app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
             if (app_entry != null) {
-                int insert_pos = table.@get (app_entry.app_name);
+                int insert_pos = table.@get (app_entry.desktop_id);
                 insert (entry, insert_pos + 1);                
             }
         }
@@ -199,10 +199,10 @@ public class NotificationsList : Gtk.ListBox {
         }
     }
 
-    private AppEntry? get_app_entry_from_app_name (string app_name) {
+    private AppEntry? get_app_entry_from_desktop_id (string desktop_id) {
         AppEntry? entry = null;
         app_entries.@foreach ((_entry) => {
-            if (_entry.app_name == app_name) {
+            if (_entry.desktop_id == desktop_id) {
                 entry = _entry;
                 return;
             }
@@ -211,13 +211,13 @@ public class NotificationsList : Gtk.ListBox {
         return entry;
     }
 
-    private string[] construct_app_names () {
-        string[] app_names = {};
+    private string[] construct_desktop_id_list () {
+        string[] desktop_id_list = {};
         app_entries.@foreach ((entry) => {
-             app_names += entry.app_name;
+            desktop_id_list += entry.desktop_id;
         });
 
-        return app_names;
+        return desktop_id_list;
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {

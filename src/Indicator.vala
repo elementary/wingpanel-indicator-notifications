@@ -149,7 +149,7 @@ public class Indicator : Wingpanel.Indicator {
             app_settings_cache.set (app_id, app_settings);
         }
 
-        if (app_settings == null || (app_settings != null && app_settings.get_boolean (REMEMBER_KEY))) {
+        if (app_settings == null || app_settings.get_boolean (REMEMBER_KEY)) {
             var entry = new NotificationEntry (notification);
             nlist.add_item (entry);
         }

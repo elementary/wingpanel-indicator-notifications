@@ -16,7 +16,7 @@
  */
 
 public class AppEntry : Gtk.ListBoxRow {
-    public string app_name;
+    public string desktop_id;
     public Gtk.Button clear_btn_entry;
     public AppInfo? app_info = null;
     public Wnck.Window? app_window;
@@ -33,7 +33,7 @@ public class AppEntry : Gtk.ListBoxRow {
         margin_end = 6;
 
         var notification = entry.notification;
-        app_name = notification.app_name;
+        desktop_id = notification.desktop_id;
         app_window = _app_window;
         app_info = notification.app_info;
 
