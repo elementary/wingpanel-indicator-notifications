@@ -172,10 +172,8 @@ public class Indicator : Wingpanel.Indicator {
         var previous_session = Session.get_instance ().get_session_notifications ();
         if (previous_session.length () > 0) {
             previous_session.@foreach ((notification) => {
-                if (notification.message_body.strip () != "" && notification.summary.strip () != "") {
-                    var entry = new NotificationEntry (notification);
-                    nlist.add_item (entry);                     
-                }
+                var entry = new NotificationEntry (notification);
+                nlist.add_item (entry);                     
             });
         }        
     }

@@ -16,6 +16,8 @@
  */
 
 public class Notification : Object {
+    public static const string DESKTOP_ID_EXT = ".desktop";
+
     public bool data_session;
 
     public string app_name;
@@ -50,11 +52,9 @@ public class Notification : Object {
         COUNT
     }
 
-    public static const string DESKTOP_ID_EXT = ".desktop";
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
-    private const string[] OTHER_WHITELIST = { "notify-send" };
-    private const string FALLBACK_APP_ID = "gala-other";
+    private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
     private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -83,15 +83,12 @@ public class Notification : Object {
         if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
             desktop_id += DESKTOP_ID_EXT;
 
-            if (app_info == null) {
-                app_info = new DesktopAppInfo (desktop_id);
-            }
+            app_info = new DesktopAppInfo (desktop_id);
         }
 
-        if (app_info == null || (app_info != null && !((DesktopAppInfo)app_info).get_boolean ("X-GNOME-UsesNotifications"))) {
-            desktop_id = FALLBACK_APP_ID + DESKTOP_ID_EXT;
-            display_name = _("Other");
-            app_icon = "dialog-information";              
+        if (app_info == null || !((DesktopAppInfo)app_info).get_boolean ("X-GNOME-UsesNotifications")) {
+            desktop_id = FALLBACK_DESKTOP_ID;
+            app_info = new DesktopAppInfo (desktop_id);
         }
 
         setup_pid ();
@@ -114,10 +111,7 @@ public class Notification : Object {
         id = _id;
         sender = _sender;
 
-        if (app_name in OTHER_WHITELIST) {
-            display_name = _("Other");
-            app_icon = "dialog-information";            
-        }
+        app_info = Utils.get_appinfo_from_app_name (app_name);
 
         setup_pid ();
 
@@ -131,7 +125,7 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return app_name in OTHER_WHITELIST || app_info != null;
+        return app_info != null;
     }
 
     private void setup_pid () {
