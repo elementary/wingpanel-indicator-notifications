@@ -86,7 +86,7 @@ public class Notification : Object {
             app_info = new DesktopAppInfo (desktop_id);
         }
 
-        if (app_info == null || !((DesktopAppInfo)app_info).get_boolean ("X-GNOME-UsesNotifications")) {
+        if (app_info == null) {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
