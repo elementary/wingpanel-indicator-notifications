@@ -78,8 +78,12 @@ public class Notification : Object {
         unix_time = timestamp.to_unix ();
 
         app_info = Utils.get_appinfo_from_app_name (app_name);
-
-        desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
+        if (app_info != null) {
+            desktop_id = app_info.get_id ();
+        } else {
+            desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
+        }
+        
         if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
             desktop_id += DESKTOP_ID_EXT;
 
