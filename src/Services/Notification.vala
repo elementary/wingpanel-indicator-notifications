@@ -16,6 +16,8 @@
  */
 
 public class Notification : Object {
+    public static const string DESKTOP_ID_EXT = ".desktop";
+
     public bool data_session;
 
     public string app_name;
@@ -34,7 +36,7 @@ public class Notification : Object {
     public int64 unix_time;
 
     public string desktop_id;
-    public AppInfo? appinfo = null;
+    public AppInfo? app_info = null;
 
     public signal bool time_changed (TimeSpan span);
 
@@ -50,10 +52,9 @@ public class Notification : Object {
         COUNT
     }
 
-    public static const string DESKTOP_ID_EXT = ".desktop";
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
-    private const string[] OTHER_WHITELIST = { "notify-send" };
+    private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
     private bool pid_accuired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -76,17 +77,24 @@ public class Notification : Object {
         timestamp = new DateTime.now_local ();
         unix_time = timestamp.to_unix ();
 
-        desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
+        app_info = Utils.get_appinfo_from_app_name (app_name);
+        if (app_info != null) {
+            desktop_id = app_info.get_id ();
+        } else {
+            desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
+        }
+        
         if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
             desktop_id += DESKTOP_ID_EXT;
+
+            app_info = new DesktopAppInfo (desktop_id);
         }
 
-        appinfo = Utils.get_appinfo_from_app_name (app_name);
-        if (desktop_id != "" && appinfo == null) {
-            appinfo = new DesktopAppInfo (desktop_id);
+        if (app_info == null) {
+            desktop_id = FALLBACK_DESKTOP_ID;
+            app_info = new DesktopAppInfo (desktop_id);
         }
 
-        set_properties ();
         setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
@@ -107,7 +115,8 @@ public class Notification : Object {
         id = _id;
         sender = _sender;
 
-        set_properties ();
+        app_info = Utils.get_appinfo_from_app_name (app_name);
+
         setup_pid ();
 
         actions = _actions;
@@ -120,14 +129,7 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return app_name in OTHER_WHITELIST || appinfo != null;
-    }
-
-    private void set_properties () {
-        if (app_name in OTHER_WHITELIST) {
-            display_name = _("Other");
-            app_icon = "dialog-information";            
-        }
+        return app_info != null;
     }
 
     private void setup_pid () {

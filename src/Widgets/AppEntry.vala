@@ -16,9 +16,9 @@
  */
 
 public class AppEntry : Gtk.ListBoxRow {
-    public string app_name;
+    public string desktop_id;
     public Gtk.Button clear_btn_entry;
-    public AppInfo? appinfo = null;
+    public AppInfo? app_info = null;
     public Wnck.Window? app_window;
 
     public signal void destroy_entry ();
@@ -33,13 +33,12 @@ public class AppEntry : Gtk.ListBoxRow {
         margin_end = 6;
 
         var notification = entry.notification;
-        app_name = notification.app_name;
+        desktop_id = notification.desktop_id;
         app_window = _app_window;
+        app_info = notification.app_info;
 
         app_notifications = new List<NotificationEntry> ();
         add_notification_entry (entry);
-
-        appinfo = notification.appinfo;
 
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
 
@@ -47,8 +46,8 @@ public class AppEntry : Gtk.ListBoxRow {
         char[] utf8 = notification.display_name.to_utf8 ();
         utf8[0] = utf8[0].toupper ();
 
-        if (appinfo != null) {
-            display_name = appinfo.get_name ();
+        if (app_info != null) {
+            display_name = app_info.get_name ();
         } else {
             display_name = string.join ("", utf8);
         }
@@ -63,8 +62,8 @@ public class AppEntry : Gtk.ListBoxRow {
         });
 
         string icon = "";
-        if (notification.app_icon == "" && appinfo != null) {
-            var glib_icon = appinfo.get_icon ();
+        if (notification.app_icon == "" && app_info != null) {
+            var glib_icon = app_info.get_icon ();
             icon = glib_icon.to_string ();
         } else {
             icon = notification.app_icon;
