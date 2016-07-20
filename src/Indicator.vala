@@ -173,9 +173,9 @@ public class Indicator : Wingpanel.Indicator {
 
     private void restore_previous_session () {
         var previous_session = Session.get_instance ().get_session_notifications ();
-        foreach (var notification in previous_session) {
+        previous_session.foreach ((notification) => {
             nlist.add_entry (new NotificationEntry (notification));
-        }       
+        });
     }
 
     private string get_display_icon_name () {

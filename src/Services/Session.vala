@@ -56,8 +56,8 @@ public class Session : GLib.Object {
         key.set_list_separator (';');
     }
 
-    public Gee.ArrayList<Notification> get_session_notifications () {
-        var list = new Gee.ArrayList<Notification> ();
+    public List<Notification> get_session_notifications () {
+        var list = new List<Notification> ();
         try {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
@@ -70,7 +70,7 @@ public class Session : GLib.Object {
                                                             key.get_string (group, DESKTOP_ID_KEY),
                                                             key.get_int64 (group, UNIX_TIME_KEY),
                                                             key.get_string (group, SENDER_KEY));
-                list.add (notification);
+                list.append (notification);
             }
         } catch (KeyFileError e) {
             warning (e.message);
