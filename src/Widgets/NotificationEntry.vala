@@ -85,6 +85,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
         add (grid);
         show_all ();
+        
         if (notification.data_session) {
             notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
         }

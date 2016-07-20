@@ -95,7 +95,7 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     private AppEntry? add_app_entry (NotificationEntry entry) {
-        AppEntry? app_entry;
+        AppEntry? app_entry = null;
         bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
         if (add) {
             app_entry = new AppEntry (entry);
@@ -106,9 +106,10 @@ public class NotificationsList : Gtk.ListBox {
             table.insert (app_entry.app_info.get_id (), 0);
         } else {
             app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
-            app_entry.add_notification_entry (entry);
-
+            
             if (app_entry != null) {
+                app_entry.add_notification_entry (entry);
+
                 int insert_pos = table.get (app_entry.app_info.get_id ());
                 insert (entry, insert_pos + 1);                
             }
