@@ -106,7 +106,7 @@ public class NotificationsList : Gtk.ListBox {
             table.insert (app_entry.app_info.get_id (), 0);
         } else {
             app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
-            
+
             if (app_entry != null) {
                 app_entry.add_notification_entry (entry);
 
@@ -157,9 +157,9 @@ public class NotificationsList : Gtk.ListBox {
 
     private string[] construct_desktop_id_list () {
         string[] desktop_id_list = {};
-        foreach (var app_entry in app_entries) {
+        app_entries.foreach ((app_entry) => {
             desktop_id_list += app_entry.app_info.get_id ();
-        }
+        });
 
         return desktop_id_list;
     }
