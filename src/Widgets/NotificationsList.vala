@@ -18,12 +18,10 @@
 public class NotificationsList : Gtk.ListBox {
     public signal void switch_stack (bool show_list);
     public signal void close_popover ();
+
     private List<AppEntry> app_entries;
-    private List<NotificationEntry> items;
     private HashTable<string, int> table;
     private int counter = 0;
-
-    private static Wnck.Screen screen;
 
     public NotificationsList () {
         margin_top = 2;
@@ -32,57 +30,41 @@ public class NotificationsList : Gtk.ListBox {
         selection_mode = Gtk.SelectionMode.NONE;
         row_activated.connect (on_row_activated);
 
-        items = new List<NotificationEntry> ();
         app_entries = new List<AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
-        screen = Wnck.Screen.get_default ();
-
         vexpand = true;
         show_all ();
+
+        monitor_active_window ();
     }
 
-    public void add_item (NotificationEntry entry) {
+    public void add_entry (NotificationEntry entry) {
         var app_entry = add_app_entry (entry);
+        if (app_entry == null) {
+            return;
+        }
 
-        items.prepend (entry);
         switch_stack (true);
 
-        app_entry.add_notification_entry (entry);
-        resort_from_app_entry (app_entry);
+        app_entry.clear.connect (clear_app_entry);
 
-        entry.clear.connect (() => {
-            destroy_notification_entry (entry);
-        });
-
-        app_entry.destroy_entry.connect (() => {
-            destroy_app_entry (app_entry);
-        });
-
-        counter = counter + 2;
+        counter += 2;
 
         Session.get_instance ().add_notification (entry.notification);
-        entry.show_all ();
 
         update_separators ();
         show_all ();
     }
 
 
-    public uint get_items_length () {
-        return items.length ();
+    public uint get_entries_length () {
+        return app_entries.length ();
     }
 
     public void clear_all () {
-        items.@foreach ((item) => {
-            items.remove (item);
-            remove (item);
-            item.active = false;
-        });
-
-        app_entries.@foreach ((entry) => {
-            app_entries.remove (entry);
-            remove (entry);
+        app_entries.foreach ((app_entry) => {
+            app_entry.clear ();
         });
 
         counter = 0;
@@ -112,27 +94,22 @@ public class NotificationsList : Gtk.ListBox {
         show_all ();
     }
 
-    private AppEntry add_app_entry (NotificationEntry entry) {
-        AppEntry app_entry;
+    private AppEntry? add_app_entry (NotificationEntry entry) {
+        AppEntry? app_entry;
         bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
         if (add) {
-            var window = get_window_from_entry (entry);
-            app_entry = new AppEntry (entry, window);
-
-            screen.active_window_changed.connect (() => {
-                if (screen.get_active_window () == app_entry.app_window) {
-                    app_entry.clear_btn_entry.clicked ();
-                }
-            });
+            app_entry = new AppEntry (entry);
 
             app_entries.append (app_entry);
             prepend (app_entry);
             insert (entry, 1);
-            table.insert (app_entry.desktop_id, 0);
+            table.insert (app_entry.app_info.get_id (), 0);
         } else {
             app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
+            app_entry.add_notification_entry (entry);
+
             if (app_entry != null) {
-                int insert_pos = table.@get (app_entry.desktop_id);
+                int insert_pos = table.get (app_entry.app_info.get_id ());
                 insert (entry, insert_pos + 1);                
             }
         }
@@ -140,118 +117,94 @@ public class NotificationsList : Gtk.ListBox {
         return app_entry;
     }
 
-    private Wnck.Window? get_window_from_entry (NotificationEntry entry) {
-        Wnck.Window? window = null;
-        screen.get_windows ().@foreach ((_window) => {
-            if (_window.get_pid () == entry.notification.pid) {
-                window = _window;
-                return;
-            }
+    private void monitor_active_window () {
+        var screen = Wnck.Screen.get_default ();
+        screen.active_window_changed.connect (() => {
+            app_entries.foreach ((app_entry) => {
+                if (screen.get_active_window () == app_entry.get_app_window ()) {
+                    app_entry.clear ();
+                }
+            });
         });
-
-        return window;
     }
 
-    private async void destroy_notification_entry (NotificationEntry entry) {
-        entry.destroy ();
-        items.remove (entry);
-        entry.active = false;
-
-        Session.get_instance ().remove_notification (entry.notification);
-        if (items.length () == 0) {
-            clear_all ();
-        }
-    }
-
-    private void destroy_app_entry (AppEntry app_entry) {
+    private void clear_app_entry (AppEntry app_entry) {
         app_entries.remove (app_entry);
 
-        app_entry.get_notifications ().@foreach ((notification_entry) => {
-            notification_entry.destroy ();
-            items.remove (notification_entry);
+        app_entry.app_notifications.foreach ((notification_entry) => {
+            app_entry.remove_notification_entry.begin (notification_entry);
         });
 
-        Idle.add (() => {
-            if (app_entry != null) {
-                app_entry.destroy ();
-            }
-
-            return false;
-        });
-
-        if (items.length () == 0) {
-            clear_all ();
-        }
-
+        app_entry.destroy ();
         update_separators ();
-    }
 
-    private void resort_from_app_entry (AppEntry app_entry) {
-        if (get_row_at_index (0) != app_entry) {
-            remove (app_entry);
-            prepend (app_entry);
-            int counter = 1;
-            app_entry.get_notifications ().@foreach ((notification_entry) => {
-                remove (notification_entry);
-                add_item (notification_entry);
-                counter++;
-            });
+        if (get_entries_length () == 0) {
+            clear_all ();
         }
     }
 
     private AppEntry? get_app_entry_from_desktop_id (string desktop_id) {
-        AppEntry? entry = null;
-        app_entries.@foreach ((_entry) => {
-            if (_entry.desktop_id == desktop_id) {
-                entry = _entry;
-                return;
+        AppEntry? app_entry = null;
+        app_entries.foreach ((_app_entry) => {
+            if (_app_entry.app_info.get_id () == desktop_id && app_entry == null) {
+                app_entry = _app_entry;
             }
         });
 
-        return entry;
+        return app_entry;
     }
 
     private string[] construct_desktop_id_list () {
         string[] desktop_id_list = {};
-        app_entries.@foreach ((entry) => {
-            desktop_id_list += entry.desktop_id;
-        });
+        foreach (var app_entry in app_entries) {
+            desktop_id_list += app_entry.app_info.get_id ();
+        }
 
         return desktop_id_list;
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
-        if (row.get_path ().get_object_type () == typeof (AppEntry)) {
-            if (((AppEntry) row).app_window == null) {
-                var window = get_window_from_entry (((AppEntry) row).get_notifications ().nth_data (0));
-                if (window != null) {
-                    ((AppEntry) row).app_window = window;
-                }
+        bool close = true;
+
+        if (row is AppEntry) {
+            var app_entry = (AppEntry)row;
+            close = focus_notification_app (app_entry.get_app_window (),
+                                            app_entry.app_info);
+
+            app_entry.clear ();
+        } else if (row is NotificationEntry) {
+            var notification_entry = (NotificationEntry)row;
+
+            if (!notification_entry.notification.run_default_action ()) {
+                close = focus_notification_app (notification_entry.notification.get_app_window (),
+                                                notification_entry.notification.app_info);
             }
 
-            if (((AppEntry) row).app_window != null) {
-                ((AppEntry) row).app_window.unminimize (Gtk.get_current_event_time ());
-                ((AppEntry) row).clear_btn_entry.clicked ();
-                close_popover ();
-            } else if (((AppEntry) row).app_info != null) {
-                try {
-                    ((AppEntry) row).app_info.launch (null, null);
-                } catch (Error e) {
-                    error ("%s\n", e.message);
-                }
-
-                ((AppEntry) row).clear_btn_entry.clicked ();
-                close_popover ();
-            }
+            notification_entry.clear ();
         } else {
-            if (((NotificationEntry) row).notification.run_default_action ()) {
-                ((NotificationEntry) row).active = false;
-                close_popover ();
-            }
+            close = false;
+        }
 
-            ((NotificationEntry) row).clear ();
+        if (close) {
+            close_popover ();
         }
 
         update_separators ();
+    }
+
+    private bool focus_notification_app (Wnck.Window? app_window, AppInfo? app_info) {
+        if (app_window != null) {
+            app_window.unminimize (Gtk.get_current_event_time ());
+            return true;
+        } else if (app_info != null) {
+            try {
+                app_info.launch (null, null);
+                return true;
+            } catch (Error e) {
+                warning ("%s\n", e.message);
+            }            
+        }
+
+        return false;
     }
 }

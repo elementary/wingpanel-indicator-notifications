@@ -54,14 +54,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         });
 
         hexpand = true;
-        add_widgets ();
-
-        if (notification.data_session) {
-            notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
-        }
-    }
-
-    private void add_widgets () {
+        
         var grid = new Gtk.Grid ();
         grid.margin_start = 40;
         grid.margin_end = 6;
@@ -92,6 +85,9 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
         add (grid);
         show_all ();
+        if (notification.data_session) {
+            notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
+        }
     }
 
     /**

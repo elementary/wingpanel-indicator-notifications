@@ -25,14 +25,14 @@ public class Session : GLib.Object {
     private const string SESSION_FILE_NAME = ".notifications.session";
     private static Session? instance = null;
 
-    private static File? session_file = null;
-    private static string full_path;
+    private File session_file = null;
     
     private const string APP_NAME_KEY = "AppName";
     private const string APP_ICON_KEY = "AppIcon";
     private const string SUMMARY_KEY = "Summary";
     private const string BODY_KEY = "Body";
     private const string ACTIONS_KEY = "Actions";
+    private const string DESKTOP_ID_KEY = "DesktopID";
     private const string UNIX_TIME_KEY = "UnixTime";
     private const string SENDER_KEY = "Sender";
 
@@ -47,30 +47,30 @@ public class Session : GLib.Object {
     }
 
     private Session () {
-        full_path = Path.build_filename (Environment.get_user_cache_dir (), SESSION_FILE_NAME);
-        session_file = File.new_for_path (full_path);
-        if (!session_file.query_exists ())
+        session_file = File.new_for_path (Path.build_filename (Environment.get_user_cache_dir (), SESSION_FILE_NAME));
+        if (!session_file.query_exists ()) {
             create_session_file ();
+        }
 
         key = new KeyFile ();
-        key.set_list_separator (',');
+        key.set_list_separator (';');
     }
 
-    public List<Notification> get_session_notifications () {
-        var list = new List<Notification> ();
-        var _key = new KeyFile ();
+    public Gee.ArrayList<Notification> get_session_notifications () {
+        var list = new Gee.ArrayList<Notification> ();
         try {
-            _key.load_from_file (full_path, KeyFileFlags.NONE);
-            foreach (unowned string group in _key.get_groups ()) {
+            key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
+            foreach (unowned string group in key.get_groups ()) {
                 var notification = new Notification.from_data ((uint32)int.parse (group),
-                                                            _key.get_string (group, APP_NAME_KEY),
-                                                            _key.get_string (group, APP_ICON_KEY),
-                                                            _key.get_string (group, SUMMARY_KEY),
-                                                            _key.get_string (group, BODY_KEY),
-                                                            _key.get_string_list (group, ACTIONS_KEY),
-                                                            _key.get_int64 (group, UNIX_TIME_KEY),
-                                                            _key.get_string (group, SENDER_KEY));
-                list.append (notification);
+                                                            key.get_string (group, APP_NAME_KEY),
+                                                            key.get_string (group, APP_ICON_KEY),
+                                                            key.get_string (group, SUMMARY_KEY),
+                                                            key.get_string (group, BODY_KEY),
+                                                            key.get_string_list (group, ACTIONS_KEY),
+                                                            key.get_string (group, DESKTOP_ID_KEY),
+                                                            key.get_int64 (group, UNIX_TIME_KEY),
+                                                            key.get_string (group, SENDER_KEY));
+                list.add (notification);
             }
         } catch (KeyFileError e) {
             warning (e.message);
@@ -88,6 +88,7 @@ public class Session : GLib.Object {
         key.set_string (id, SUMMARY_KEY, notification.summary);
         key.set_string (id, BODY_KEY, notification.message_body);
         key.set_string_list (id, ACTIONS_KEY, notification.actions);
+        key.set_string (id, DESKTOP_ID_KEY, notification.desktop_id);
         key.set_int64 (id, UNIX_TIME_KEY, notification.unix_time);
         key.set_string (id, SENDER_KEY, notification.sender);
 
@@ -106,7 +107,6 @@ public class Session : GLib.Object {
 
     public void clear () {
         try {
-            key = new KeyFile ();
             FileUtils.set_contents (session_file.get_path (), "");
         } catch (FileError e) {
             warning (e.message);
@@ -122,9 +122,6 @@ public class Session : GLib.Object {
     }
 
     private void write_contents () {
-        if (session_file == null)
-            create_session_file ();
-
         try {
             FileUtils.set_contents (session_file.get_path (), key.to_data ());
         } catch (FileError e) {

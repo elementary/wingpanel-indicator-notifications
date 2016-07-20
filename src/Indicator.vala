@@ -117,7 +117,6 @@ public class Indicator : Wingpanel.Indicator {
             main_box.pack_end (clear_all_btn, false, false, 0);
             main_box.show_all ();
 
-            nlist.clear_all ();
             restore_previous_session ();
 
             dynamic_icon.set_main_icon_name (get_display_icon_name ());
@@ -155,7 +154,7 @@ public class Indicator : Wingpanel.Indicator {
 
         if (app_settings == null || app_settings.get_boolean (REMEMBER_KEY)) {
             var entry = new NotificationEntry (notification);
-            nlist.add_item (entry);
+            nlist.add_entry (entry);
         }
 
         dynamic_icon.set_main_icon_name (get_display_icon_name ());        
@@ -174,18 +173,15 @@ public class Indicator : Wingpanel.Indicator {
 
     private void restore_previous_session () {
         var previous_session = Session.get_instance ().get_session_notifications ();
-        if (previous_session.length () > 0) {
-            previous_session.@foreach ((notification) => {
-                var entry = new NotificationEntry (notification);
-                nlist.add_item (entry);                     
-            });
-        }        
+        foreach (var notification in previous_session) {
+            nlist.add_entry (new NotificationEntry (notification));
+        }       
     }
 
     private string get_display_icon_name () {
         if (NotifySettings.get_instance ().do_not_disturb) {
             return "notification-disabled-symbolic";
-        } else if (nlist != null && nlist.get_items_length () > 0) {
+        } else if (nlist != null && nlist.get_entries_length () > 0) {
             return "notification-new-symbolic";
         }
         
