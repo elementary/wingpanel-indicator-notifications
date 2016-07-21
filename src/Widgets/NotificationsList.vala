@@ -40,7 +40,7 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     public void add_entry (NotificationEntry entry) {
-        var app_entry = add_app_entry (entry);
+        var app_entry = add_entry_internal (entry);
         if (app_entry == null) {
             return;
         }
@@ -75,6 +75,17 @@ public class NotificationsList : Gtk.ListBox {
         show_all ();
     }
 
+    private void resort_app_entry (AppEntry app_entry) {
+        if (get_row_at_index (0) != app_entry) {
+            remove (app_entry);
+            prepend (app_entry);
+            app_entry.app_notifications.foreach ((notification_entry) => {
+                remove (notification_entry);
+                insert (notification_entry, 1);
+            });
+        }
+    }
+
     private void update_separators () {
         if (get_children ().length () > 0) {
             foreach (var child in get_children ()) {
@@ -94,7 +105,7 @@ public class NotificationsList : Gtk.ListBox {
         show_all ();
     }
 
-    private AppEntry? add_app_entry (NotificationEntry entry) {
+    private AppEntry? add_entry_internal (NotificationEntry entry) {
         AppEntry? app_entry = null;
         bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
         if (add) {
@@ -108,6 +119,7 @@ public class NotificationsList : Gtk.ListBox {
             app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
 
             if (app_entry != null) {
+                resort_app_entry (app_entry);
                 app_entry.add_notification_entry (entry);
 
                 int insert_pos = table.get (app_entry.app_info.get_id ());
