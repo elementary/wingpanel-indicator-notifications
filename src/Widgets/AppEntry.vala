@@ -16,49 +16,32 @@
  */
 
 public class AppEntry : Gtk.ListBoxRow {
-    public string desktop_id;
-    public Gtk.Button clear_btn_entry;
-    public AppInfo? app_info = null;
-    public Wnck.Window? app_window;
+    public signal void clear ();
 
-    public signal void destroy_entry ();
+    public AppInfo app_info;
+    public List<NotificationEntry> app_notifications;
 
-    private List<NotificationEntry> app_notifications;
-    private string display_name;
-
-    public AppEntry (NotificationEntry entry, Wnck.Window? _app_window) {
+    public AppEntry (NotificationEntry entry) {
         margin_bottom = 3;
         margin_top = 3;
         margin_start = 12;
         margin_end = 6;
 
-        var notification = entry.notification;
-        desktop_id = notification.desktop_id;
-        app_window = _app_window;
-        app_info = notification.app_info;
-
         app_notifications = new List<NotificationEntry> ();
         add_notification_entry (entry);
 
+        var notification = entry.notification;
+        app_info = notification.app_info;
+
         var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
 
-        /* Capitalize the first letter */
-        char[] utf8 = notification.display_name.to_utf8 ();
-        utf8[0] = utf8[0].toupper ();
-
-        if (app_info != null) {
-            display_name = app_info.get_name ();
-        } else {
-            display_name = string.join ("", utf8);
-        }
-
-        var label = new Gtk.Label (display_name);
+        var label = new Gtk.Label (app_info.get_name ());
         label.get_style_context ().add_class ("h3");
 
-        clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn_entry.get_style_context ().add_class ("flat");
         clear_btn_entry.clicked.connect (() => {
-            destroy_entry ();
+            clear ();
         });
 
         string icon = "";
@@ -74,33 +57,32 @@ public class AppEntry : Gtk.ListBoxRow {
         hbox.pack_start (label, false, false, 0);
         hbox.pack_end (clear_btn_entry, false, false, 0);
 
-        connect_entry (entry);
-
         add (hbox);
         show_all ();
     }
 
-    private void connect_entry (NotificationEntry entry) {
-        entry.clear.connect (() => {
-            if (entry != null) {
-                remove_notification_entry (entry);
-            }
-        });
-    }
+    public Wnck.Window? get_app_window () {
+        if (app_notifications.length () == 0) {
+            return null;
+        }
 
-    public unowned List<NotificationEntry> get_notifications () {
-        return app_notifications;
+        var entry = app_notifications.first ().data;
+        return entry.notification.get_app_window ();
     }
 
     public void add_notification_entry (NotificationEntry entry) {
         app_notifications.prepend (entry);
-        connect_entry (entry);
+        entry.clear.connect (remove_notification_entry);
     }
 
-    public void remove_notification_entry (NotificationEntry entry) {
+    public async void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
+        entry.active = false;
+        entry.destroy ();
+
+        Session.get_instance ().remove_notification (entry.notification);
         if (app_notifications.length () == 0) {
-            destroy_entry ();
+            clear ();
         }
     }
 }

@@ -21,7 +21,6 @@ public class Notification : Object {
     public bool data_session;
 
     public string app_name;
-    public string display_name;
     public string summary;
     public string message_body;
     public string app_icon;
@@ -63,7 +62,6 @@ public class Notification : Object {
         data_session = false;
 
         app_name = get_string (body, Column.APP_NAME);
-        display_name = app_name;
         app_icon = get_string (body, Column.APP_ICON);
         summary = get_string (body, Column.SUMMARY);
         message_body = get_string (body, Column.BODY);
@@ -102,11 +100,10 @@ public class Notification : Object {
 
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
                                 string _summary, string _message_body,
-                                string[] _actions, int64 _unix_time, string _sender) {
+                                string[] _actions, string _desktop_id, int64 _unix_time, string _sender) {
         data_session = true;
 
         app_name = _app_name;
-        display_name = app_name;
         app_icon = _app_icon;
         summary = _summary;
         message_body = _message_body;
@@ -115,21 +112,43 @@ public class Notification : Object {
         id = _id;
         sender = _sender;
 
-        app_info = Utils.get_appinfo_from_app_name (app_name);
-
-        setup_pid ();
-
         actions = _actions;
         unix_time = _unix_time;
         timestamp = new DateTime.from_unix_local (unix_time);
 
-        desktop_id = "";
+        desktop_id = _desktop_id;
+        app_info = new DesktopAppInfo (desktop_id);
+
+        setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
     public bool get_is_valid () {
         return app_info != null;
+    }
+
+    public bool run_default_action () {
+        if (DEFAULT_ACTION in actions && NotificationMonitor.get_instance ().notifications_iface != null) {
+            NotificationMonitor.get_instance ().notifications_iface.action_invoked (DEFAULT_ACTION, id);
+            return true;
+        }
+
+        return false;
+    }
+
+    public Wnck.Window? get_app_window () {
+        Wnck.Window? window = null;
+        if (pid_accuired) {
+            Wnck.Screen.get_default ().get_windows ().foreach ((_window) => {
+                if (_window.get_pid () == pid && window == null) {
+                    window = _window;
+                    return;
+                }
+            });     
+        }
+
+        return window;        
     }
 
     private void setup_pid () {
@@ -156,15 +175,6 @@ public class Notification : Object {
         }
 
         return true;
-    }
-
-    public bool run_default_action () {
-        if (DEFAULT_ACTION in actions && NotificationMonitor.get_instance ().notifications_iface != null) {
-            NotificationMonitor.get_instance ().notifications_iface.action_invoked (DEFAULT_ACTION, id);
-            return true;
-        }
-
-        return false;
     }
 
     private string get_string (Variant tuple, int column) {
