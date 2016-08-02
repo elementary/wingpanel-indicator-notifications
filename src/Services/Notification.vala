@@ -52,6 +52,7 @@ public class Notification : Object {
     }
 
     private const string DEFAULT_ACTION = "default";
+    private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
     private bool pid_accuired;
@@ -125,7 +126,7 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return app_info != null;
+        return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null;
     }
 
     public bool run_default_action () {

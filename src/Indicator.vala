@@ -16,7 +16,7 @@
  */
 
 public class Indicator : Wingpanel.Indicator {
-    private const string[] EXCEPTIONS = { "wingpanel-indicator-sound", "indicator-sound", "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
+    private const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
     private const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
     private const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
     private const string REMEMBER_KEY = "remember";
