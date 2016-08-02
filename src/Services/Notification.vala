@@ -54,7 +54,7 @@ public class Notification : Object {
     private const string DEFAULT_ACTION = "default";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
-    private bool pid_accuired;
+    private bool pid_acquired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
@@ -139,7 +139,7 @@ public class Notification : Object {
 
     public Wnck.Window? get_app_window () {
         Wnck.Window? window = null;
-        if (pid_accuired) {
+        if (pid_acquired) {
             Wnck.Screen.get_default ().get_windows ().foreach ((_window) => {
                 if (_window.get_pid () == pid && window == null) {
                     window = _window;
@@ -152,9 +152,9 @@ public class Notification : Object {
     }
 
     private void setup_pid () {
-        pid_accuired = try_get_pid ();
+        pid_acquired = try_get_pid ();
         NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
-            if (!pid_accuired) {
+            if (!pid_acquired) {
                 try_get_pid ();
             }
         });
