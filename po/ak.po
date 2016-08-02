@@ -1,65 +1,73 @@
+# Akan translation for wingpanel-indicator-notifications
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
+# This file is distributed under the same license as the wingpanel-indicator-notifications package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: wingpanel-indicator-notifications\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2016-05-23 18:42-0500\n"
-"PO-Revision-Date: 2016-08-02 01:47+0000\n"
-"Last-Translator: BALLOON a.k.a. Fu-sen. (Keiichi SHIGA) <Unknown>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2016-08-01 22:03+0000\n"
+"Last-Translator: laberba <karabutaworld@gmail.com>\n"
+"Language-Team: Akan <ak@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2016-08-02 06:04+0000\n"
 "X-Generator: Launchpad (build 18169)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
-msgstr "通知インジケーター"
+msgstr "Kɔkɔbɔ ahyɛnsodeɛ"
 
 #: ../src/Indicator.vala:50
 msgid "The notifications indicator"
-msgstr "通知インジケーター"
+msgstr "Kɔkɔbɔ ahyɛnsodeɛ no"
 
 #: ../src/Indicator.vala:85
 msgid "No Notifications"
-msgstr "通知はありません"
+msgstr "Kɔkɔbɔ Biara Nni Hɔ"
 
 #: ../src/Indicator.vala:100
 msgid "Do Not Disturb"
-msgstr "通知を一時的にミュート"
+msgstr "Nha me"
 
 #: ../src/Indicator.vala:106
 msgid "Clear All Notifications"
-msgstr "すべての通知をクリア"
+msgstr "Yi Kɔkɔbɔ No Nyinaa"
 
 #: ../src/Indicator.vala:112
 msgid "Notifications Settings…"
-msgstr "通知の設定..."
+msgstr "Kɔkɔbɔ Ho Nhyehyeɛ"
 
 #: ../src/Widgets/NotificationsList.vala:47
 msgid "Other"
-msgstr "その他"
+msgstr "Foforɔ"
 
 #: ../src/Widgets/NotificationEntry.vala:75
 msgid "now"
-msgstr "今すぐ"
+msgstr "sesei"
 
 #: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
-msgstr "今すぐ"
+msgstr "Sesei"
 
 #: ../src/Widgets/NotificationEntry.vala:129
 msgid "%ld day"
 msgid_plural "%ld days"
-msgstr[0] "%ld日"
+msgstr[0] "%ld da"
+msgstr[1] "%ld nna"
 
 #: ../src/Widgets/NotificationEntry.vala:130
 msgid "%ld hour"
 msgid_plural "%ld hours"
-msgstr[0] "%ld時"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/Widgets/NotificationEntry.vala:131
 msgid "%ld minute"
 msgid_plural "%ld minutes"
-msgstr[0] "%ld分"
+msgstr[0] ""
+msgstr[1] ""
