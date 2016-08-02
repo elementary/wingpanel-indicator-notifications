@@ -119,7 +119,7 @@ public class Indicator : Wingpanel.Indicator {
 
             restore_previous_session ();
 
-            dynamic_icon.set_main_icon_name (get_display_icon_name ());
+            on_switch_stack (nlist.get_entries_length () > 0);
         }
 
         return main_box;
