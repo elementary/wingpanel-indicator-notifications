@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-23 18:42-0500\n"
-"PO-Revision-Date: 2016-08-02 01:47+0000\n"
-"Last-Translator: BALLOON a.k.a. Fu-sen. (Keiichi SHIGA) <Unknown>\n"
+"PO-Revision-Date: 2016-09-23 05:09+0000\n"
+"Last-Translator: Ryo Nakano <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2016-08-22 05:54+0000\n"
-"X-Generator: Launchpad (build 18176)\n"
+"X-Launchpad-Export-Date: 2016-09-23 06:47+0000\n"
+"X-Generator: Launchpad (build 18204)\n"
 
 #: ../src/Indicator.vala:49
 msgid "Notifications indicator"
@@ -43,23 +43,23 @@ msgstr "その他"
 
 #: ../src/Widgets/NotificationEntry.vala:75
 msgid "now"
-msgstr "今すぐ"
+msgstr "たった今"
 
 #: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
-msgstr "今すぐ"
+msgstr "たった今"
 
 #: ../src/Widgets/NotificationEntry.vala:129
 msgid "%ld day"
 msgid_plural "%ld days"
-msgstr[0] "%ld日"
+msgstr[0] "%ld日前"
 
 #: ../src/Widgets/NotificationEntry.vala:130
 msgid "%ld hour"
 msgid_plural "%ld hours"
-msgstr[0] "%ld時"
+msgstr[0] "%ld時間前"
 
 #: ../src/Widgets/NotificationEntry.vala:131
 msgid "%ld minute"
 msgid_plural "%ld minutes"
-msgstr[0] "%ld分"
+msgstr[0] "%ld分前"
