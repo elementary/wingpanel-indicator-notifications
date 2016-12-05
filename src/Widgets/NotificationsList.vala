@@ -106,6 +106,11 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     private AppEntry? add_entry_internal (NotificationEntry entry) {
+        if (entry.notification.app_info == null ||
+            entry.notification.app_info.get_id () == null) {
+            return null;
+        }
+
         AppEntry? app_entry = null;
         bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
         if (add) {
