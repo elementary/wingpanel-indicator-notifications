@@ -102,7 +102,10 @@ public class Indicator : Wingpanel.Indicator {
 
             nlist.close_popover.connect (() => close ());
             nlist.switch_stack.connect (on_switch_stack);
-            NotificationMonitor.get_instance ().received.connect (on_notification_received);
+
+            var monitor = NotificationMonitor.get_instance ();
+            monitor.received.connect (on_notification_received);
+            monitor.notification_closed.connect (on_notification_closed);
 
             NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
                 not_disturb_switch.get_switch ().active = NotifySettings.get_instance ().do_not_disturb;
@@ -169,6 +172,17 @@ public class Indicator : Wingpanel.Indicator {
         }
 
         dynamic_icon.set_main_icon_name (get_display_icon_name ());        
+    }
+
+    private void on_notification_closed (uint32 id) {
+        foreach (var app_entry in nlist.get_entries ()) {
+            foreach (var item in app_entry.app_notifications) {
+                if (item.notification.id == id) {
+                    item.notification.close ();
+                    return;
+                }
+            }
+        }
     }
 
     private void restore_previous_session () {
