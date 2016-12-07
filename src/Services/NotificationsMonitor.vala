@@ -112,7 +112,6 @@ public class NotificationMonitor : Object {
                     warning (e.message);
                 }
 
-
                 awaiting_reply = null;
             } else if (message.get_message_type () == DBusMessageType.ERROR) {
                 awaiting_reply = null;
