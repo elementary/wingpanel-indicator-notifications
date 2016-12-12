@@ -37,6 +37,7 @@ public class Notification : Object {
     public string desktop_id;
     public AppInfo? app_info = null;
 
+    public signal void closed ();
     public signal bool time_changed (TimeSpan span);
 
     private enum Column {
@@ -127,6 +128,10 @@ public class Notification : Object {
 
     public bool get_is_valid () {
         return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null;
+    }
+
+    public void close () {
+        closed ();
     }
 
     public bool run_default_action () {

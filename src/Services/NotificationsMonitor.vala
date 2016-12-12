@@ -23,17 +23,18 @@
 public class NotificationMonitor : Object {
     private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
     private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
-    private const string MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications',member='Notify'";
+    private const string METHOD_CALL_MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications'";
+    private const string METHOD_RETURN_MATCH_STRING = "eavesdrop='true',type='method_return'";
+    private const string ERROR_MATCH_STRING = "eavesdrop='true',type='error'";
     private const uint32 REASON_DISMISSED = 2;
 
     private static NotificationMonitor? instance = null;
 
     private DBusConnection connection;
-    public INotifications? notifications_iface = null;
-    public IDBus? dbus_iface = null;
-    private uint32 id_counter = 0;
+    private DBusMessage? awaiting_reply = null;
 
-    public signal void received (DBusMessage message, uint32 id);
+    public signal void notification_received (DBusMessage message, uint32 id);
+    public signal void notification_closed (uint32 id);
 
     public static NotificationMonitor get_instance () {
         if (instance == null) {
@@ -43,75 +44,98 @@ public class NotificationMonitor : Object {
         return instance;
     }
 
+    public INotifications? notifications_iface = null;
+
     private NotificationMonitor () {
         try {
             connection = Bus.get_sync (BusType.SESSION);
-            add_filter ();  
+            add_rule (ERROR_MATCH_STRING);
+            add_rule (METHOD_CALL_MATCH_STRING);
+            add_rule (METHOD_RETURN_MATCH_STRING);
+            connection.add_filter (message_filter);
         } catch (Error e) {
             error ("%s\n", e.message);
         }
+
+        try {
+            notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH); 
+        } catch (Error e) {
+            error ("%s\n", e.message);
+        }        
     }
 
-    private void add_filter () {
+    private void add_rule (string rule) {
         var message = new DBusMessage.method_call ("org.freedesktop.DBus",
                                                 "/org/freedesktop/DBus",
                                                 "org.freedesktop.DBus",
                                                 "AddMatch");
 
-        var body = new Variant.parsed ("(%s,)", MATCH_STRING);
+        var body = new Variant.parsed ("(%s,)", rule);
         message.set_body (body);
         
-        try {
-            notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH); 
-        } catch (Error e) {
-            error ("%s\n", e.message);
-        }
-
-        id_counter = get_current_notification_id ();
         try {
             connection.send_message (message, DBusSendMessageFlags.NONE, null);
         } catch (Error e) {
             error ("%s\n", e.message);
         }
-
-        connection.add_filter (message_filter);
     }
 
     private DBusMessage message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
-        if (incoming) {
-            if ((message.get_message_type () == DBusMessageType.METHOD_CALL) &&
-                (message.get_interface () == NOTIFY_IFACE) &&
-                (message.get_member () == "Notify")) {
-                uint32 replaces_id = message.get_body ().get_child_value (1).get_uint32 ();
-                uint32 current_id = replaces_id; 
-
-                if (replaces_id == 0) {
-                    id_counter++;
-                    current_id = id_counter;
+        if (incoming && message.get_interface () == NOTIFY_IFACE && message.get_message_type () == DBusMessageType.METHOD_CALL) {
+            if (message.get_member () == "Notify") {
+                try {
+                    awaiting_reply = message.copy ();
+                } catch (Error e) {
+                    warning (e.message);
+                }
+            } else if (message.get_member () == "CloseNotification") {
+                var body = message.get_body ();
+                if (body.n_children () != 1) {
+                    return message;
                 }
 
+                var child = body.get_child_value (0);
+                if (!child.is_of_type (VariantType.UINT32)) {
+                    return message;
+                }
+
+                uint32 id = child.get_uint32 ();
                 Idle.add (() => {
-                    this.received (message, current_id);
-                    message = null;
+                    notification_closed (id);
                     return false;
                 });
+            }
 
-                return null;
+            return null;            
+        } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {            
+            if (message.get_message_type () == DBusMessageType.METHOD_RETURN) {
+                var body = message.get_body ();
+                if (body.n_children () != 1) {
+                    return message;
+                }
+
+                var child = body.get_child_value (0);
+                if (!child.is_of_type (VariantType.UINT32)) {
+                    return message;
+                }
+
+                uint32 id = child.get_uint32 ();
+                try {
+                    var copy = awaiting_reply.copy ();
+                    Idle.add (() => {
+                        notification_received (copy, id);
+                        return false;
+                    });
+                } catch (Error e) {
+                    warning (e.message);
+                }
+
+                awaiting_reply = null;
+            } else if (message.get_message_type () == DBusMessageType.ERROR) {
+                awaiting_reply = null;
             }
         }
 
         return message;
     }
-
-    /* Check what's the current notification id */
-    private uint32 get_current_notification_id () {
-        var hints = new HashTable<string, Variant> (str_hash, str_equal);
-        hints.insert ("suppress-sound", new Variant.boolean (true));
-        string[] actions = {};
-        try {
-            return notifications_iface.notify ("", 0, "", "", "", actions, hints, 1);
-        } catch (Error e) {
-            error ("%s\n", e.message);
-        }
-    } 
 }

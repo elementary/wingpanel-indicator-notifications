@@ -58,6 +58,10 @@ public class NotificationsList : Gtk.ListBox {
     }
 
 
+    public unowned List<AppEntry> get_entries () {
+        return app_entries;
+    }
+
     public uint get_entries_length () {
         return app_entries.length ();
     }

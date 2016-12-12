@@ -53,6 +53,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
             return active;
         });
 
+        notification.closed.connect (() => clear ());
+
         hexpand = true;
         
         var grid = new Gtk.Grid ();
