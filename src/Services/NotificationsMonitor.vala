@@ -89,19 +89,37 @@ public class NotificationMonitor : Object {
                     warning (e.message);
                 }
             } else if (message.get_member () == "CloseNotification") {
-                uint32 id = message.get_body ().get_child_value (0).get_uint32 ();
+                var body = message.get_body ();
+                if (body.n_children () != 1) {
+                    return message;
+                }
+
+                var child = body.get_child_value (0);
+                if (!child.is_of_type (VariantType.UINT32)) {
+                    return message;
+                }
+
+                uint32 id = child.get_uint32 ();
                 Idle.add (() => {
                     notification_closed (id);
                     return false;
                 });
             }
 
-            message = null;
             return null;            
         } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {            
             if (message.get_message_type () == DBusMessageType.METHOD_RETURN) {
-                uint32 id = message.get_body ().get_child_value (0).get_uint32 ();
+                var body = message.get_body ();
+                if (body.n_children () != 1) {
+                    return message;
+                }
 
+                var child = body.get_child_value (0);
+                if (!child.is_of_type (VariantType.UINT32)) {
+                    return message;
+                }
+
+                uint32 id = child.get_uint32 ();
                 try {
                     var copy = awaiting_reply.copy ();
                     Idle.add (() => {
