@@ -104,7 +104,7 @@ public class Indicator : Wingpanel.Indicator {
             nlist.switch_stack.connect (on_switch_stack);
 
             var monitor = NotificationMonitor.get_instance ();
-            monitor.received.connect (on_notification_received);
+            monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
 
             NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {

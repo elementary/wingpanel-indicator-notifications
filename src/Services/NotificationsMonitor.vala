@@ -33,7 +33,7 @@ public class NotificationMonitor : Object {
     private DBusConnection connection;
     private DBusMessage? awaiting_reply = null;
 
-    public signal void received (DBusMessage message, uint32 id);
+    public signal void notification_received (DBusMessage message, uint32 id);
     public signal void notification_closed (uint32 id);
 
     public static NotificationMonitor get_instance () {
@@ -105,7 +105,7 @@ public class NotificationMonitor : Object {
                 try {
                     var copy = awaiting_reply.copy ();
                     Idle.add (() => {
-                        received (copy, id);
+                        notification_received (copy, id);
                         return false;
                     });
                 } catch (Error e) {
