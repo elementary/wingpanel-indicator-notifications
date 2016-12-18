@@ -16,7 +16,7 @@
  */
 
 public class NotifySettings : Granite.Services.Settings {
-    public static const string DO_NOT_DISTURB_KEY = "do-not-disturb";
+    public const string DO_NOT_DISTURB_KEY = "do-not-disturb";
     public static NotifySettings? instance = null;
 
     public bool do_not_disturb { get; set; }

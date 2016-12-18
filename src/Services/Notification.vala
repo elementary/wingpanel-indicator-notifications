@@ -16,7 +16,7 @@
  */
 
 public class Notification : Object {
-    public static const string DESKTOP_ID_EXT = ".desktop";
+    public const string DESKTOP_ID_EXT = ".desktop";
 
     public bool data_session;
 
