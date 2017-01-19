@@ -127,7 +127,7 @@ public class Notification : Object {
     }
 
     public bool get_is_valid () {
-        return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null;
+        return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null && !hints.lookup("transient", "b");
     }
 
     public void close () {

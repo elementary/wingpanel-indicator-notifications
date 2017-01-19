@@ -40,10 +40,6 @@ public class NotificationsList : Gtk.ListBox {
     }
 
     public void add_entry (NotificationEntry entry) {
-        if(entry.notification.hints.lookup("transient", "b")){
-            return;
-        }
-
         var app_entry = add_entry_internal (entry);
         if (app_entry == null) {
             return;
