@@ -56,7 +56,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
         notification.closed.connect (() => clear ());
 
         hexpand = true;
-        
+
         var grid = new Gtk.Grid ();
         grid.margin_start = 40;
         grid.margin_end = 6;
@@ -87,7 +87,7 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
         add (grid);
         show_all ();
-        
+
         if (notification.data_session) {
             notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
         }
@@ -126,8 +126,8 @@ public class NotificationEntry : Gtk.ListBoxRow {
 
     // This won't be used but we need it to be included in the translation template.
     private void translations () {
-        ngettext ("%ld day", "%ld days", 0);
-        ngettext ("%ld hour", "%ld hours", 0);
-        ngettext ("%ld minute", "%ld minutes", 0);
+        ngettext ("%lu day", "%lu days", 0);
+        ngettext ("%lu hour", "%lu hours", 0);
+        ngettext ("%lu minute", "%lu minutes", 0);
     }
 }
