@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-18 15:06+0100\n"
+"POT-Creation-Date: 2017-02-15 11:49-0200\n"
 "PO-Revision-Date: 2015-06-21 23:23+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,8 +10,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2016-12-19 05:46+0000\n"
-"X-Generator: Launchpad (build 18298)\n"
+"X-Launchpad-Export-Date: 2017-02-16 07:07+0000\n"
+"X-Generator: Launchpad (build 18326)\n"
 
 #: ../src/Widgets/NotificationEntry.vala:71
 msgid "now"
@@ -22,20 +22,20 @@ msgid "Now"
 msgstr ""
 
 #: ../src/Widgets/NotificationEntry.vala:129
-msgid "%ld day"
-msgid_plural "%ld days"
+msgid "%lu day"
+msgid_plural "%lu days"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/Widgets/NotificationEntry.vala:130
-msgid "%ld hour"
-msgid_plural "%ld hours"
+msgid "%lu hour"
+msgid_plural "%lu hours"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ../src/Widgets/NotificationEntry.vala:131
-msgid "%ld minute"
-msgid_plural "%ld minutes"
+msgid "%lu minute"
+msgid_plural "%lu minutes"
 msgstr[0] ""
 msgstr[1] ""
 

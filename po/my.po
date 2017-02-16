@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-12-18 15:06+0100\n"
+"POT-Creation-Date: 2017-02-15 11:49-0200\n"
 "PO-Revision-Date: 2016-06-24 05:38+0000\n"
 "Last-Translator: Bone Pyae Sone <bone.burma@gmail.com>\n"
 "Language-Team: Burmese <my@li.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2016-12-19 05:46+0000\n"
-"X-Generator: Launchpad (build 18298)\n"
+"X-Launchpad-Export-Date: 2017-02-16 07:07+0000\n"
+"X-Generator: Launchpad (build 18326)\n"
 
 #: ../src/Widgets/NotificationEntry.vala:71
 msgid "now"
@@ -27,19 +27,22 @@ msgid "Now"
 msgstr "ယခုလတ်တလော"
 
 #: ../src/Widgets/NotificationEntry.vala:129
-msgid "%ld day"
-msgid_plural "%ld days"
-msgstr[0] "%ld ရက်"
+msgid "%lu day"
+msgid_plural "%lu days"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/Widgets/NotificationEntry.vala:130
-msgid "%ld hour"
-msgid_plural "%ld hours"
-msgstr[0] "%ld နာရီ"
+msgid "%lu hour"
+msgid_plural "%lu hours"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/Widgets/NotificationEntry.vala:131
-msgid "%ld minute"
-msgid_plural "%ld minutes"
-msgstr[0] "%ld မိနစ်"
+msgid "%lu minute"
+msgid_plural "%lu minutes"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/Indicator.vala:40
 msgid "Notifications indicator"
