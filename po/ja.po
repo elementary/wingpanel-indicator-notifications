@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-15 11:49-0200\n"
-"PO-Revision-Date: 2016-10-08 04:56+0000\n"
-"Last-Translator: Masayuki Sugahara <brindflontia@gmail.com>\n"
+"PO-Revision-Date: 2017-02-16 12:32+0000\n"
+"Last-Translator: Jun Takeda <takeda.jun@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2017-02-16 07:07+0000\n"
+"X-Launchpad-Export-Date: 2017-02-17 06:07+0000\n"
 "X-Generator: Launchpad (build 18326)\n"
 
 #: ../src/Widgets/NotificationEntry.vala:71
@@ -24,20 +24,17 @@ msgstr "たった今"
 #: ../src/Widgets/NotificationEntry.vala:129
 msgid "%lu day"
 msgid_plural "%lu days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu 日"
 
 #: ../src/Widgets/NotificationEntry.vala:130
 msgid "%lu hour"
 msgid_plural "%lu hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu 時間"
 
 #: ../src/Widgets/NotificationEntry.vala:131
 msgid "%lu minute"
 msgid_plural "%lu minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu 分"
 
 #: ../src/Indicator.vala:40
 msgid "Notifications indicator"
