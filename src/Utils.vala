@@ -70,7 +70,7 @@ public class Utils : Object {
 
        return (app_name.down () == token
            || token_executable == app_executable
-           || args[0] == token
+           || (args.length > 0 && args[0] == token)
            || app_display_name.down ().contains (token));
     }
 }
