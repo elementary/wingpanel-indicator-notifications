@@ -29,7 +29,7 @@ msgid "%lu day"
 msgid_plural "%lu days"
 msgstr[0] "%lu zi"
 msgstr[1] "%lu zile"
-msgstr[2] "%lu zile"
+msgstr[2] "%lu de zile"
 
 #: ../src/Widgets/NotificationEntry.vala:130
 msgid "%lu hour"
@@ -67,4 +67,4 @@ msgstr "Șterge toate notificările"
 
 #: ../src/Indicator.vala:100
 msgid "Notifications Settings…"
-msgstr "Setările notificărilor..."
+msgstr "Setările notificărilor…"
