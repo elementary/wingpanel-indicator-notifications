@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Utils : Object {
+public class Notifications.Utils : Object {
     private static Gee.HashMap<string, AppInfo> app_info_cache;
 
     public static void init () {

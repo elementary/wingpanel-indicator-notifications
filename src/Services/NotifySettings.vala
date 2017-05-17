@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotifySettings : Granite.Services.Settings {
+public class Notifications.NotifySettings : Granite.Services.Settings {
     public const string DO_NOT_DISTURB_KEY = "do-not-disturb";
     public static NotifySettings? instance = null;
 

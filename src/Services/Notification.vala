@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notification : Object {
+public class Notifications.Notification : Object {
     public const string DESKTOP_ID_EXT = ".desktop";
 
     public bool data_session;

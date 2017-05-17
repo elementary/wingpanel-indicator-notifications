@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- public class SeparatorEntry : Gtk.ListBoxRow {
+ public class Notifications.SeparatorEntry : Gtk.ListBoxRow {
  	public SeparatorEntry () {
  		activatable = selectable = false;
  		add (new Wingpanel.Widgets.Separator ());

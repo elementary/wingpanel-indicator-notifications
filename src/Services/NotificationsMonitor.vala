@@ -20,7 +20,7 @@
  * http://bazaar.launchpad.net/~jconti/recent-notifications/gnome3/view/head:/src/recent-notifications.vala
  */
 
-public class NotificationMonitor : Object {
+public class Notifications.NotificationMonitor : Object {
     private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
     private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
     private const string METHOD_CALL_MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications'";
