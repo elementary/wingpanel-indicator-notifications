@@ -21,7 +21,7 @@
  * and restore them in the next session.
  *
  */
-public class Session : GLib.Object {
+public class Notifications.Session : GLib.Object {
     private const string SESSION_FILE_NAME = ".notifications.session";
     private static Session? instance = null;
 

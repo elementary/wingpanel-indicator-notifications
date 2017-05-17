@@ -16,7 +16,7 @@
  */
 
 [DBus (name = "org.freedesktop.Notifications")]
-public interface INotifications : Object {
+public interface Notifications.INotifications : Object {
     public signal void notification_closed (uint32 id, uint32 reason);
     public signal void action_invoked (string action, uint32 id);
     public abstract uint32 notify (string app_name,
@@ -30,7 +30,7 @@ public interface INotifications : Object {
 }
 
 [DBus (name = "org.freedesktop.DBus")]
-public interface IDBus : Object {
+public interface Notifications.IDBus : Object {
     [DBus (name = "NameHasOwner")]
     public abstract bool name_has_owner (string name) throws Error;
 
