@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotificationEntry : Gtk.ListBoxRow {
+public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
     public Notification notification;

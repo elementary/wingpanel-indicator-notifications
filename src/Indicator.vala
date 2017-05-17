@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Indicator : Wingpanel.Indicator {
+public class Notifications.Indicator : Wingpanel.Indicator {
     private const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
     private const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
     private const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
@@ -224,6 +224,6 @@ public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorMan
         return null;
     }
 
-    var indicator = new Indicator ();
+    var indicator = new Notifications.Indicator ();
     return indicator;
 }

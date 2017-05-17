@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class NotificationsList : Gtk.ListBox {
+public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void switch_stack (bool show_list);
     public signal void close_popover ();
 
