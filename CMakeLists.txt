@@ -22,6 +22,7 @@ include (GNUInstallDirs)
 set (DATADIR "${CMAKE_INSTALL_FULL_LIBDIR}/wingpanel")
 set (PKGDATADIR "${DATADIR}")
 set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}")
+set (VERSION "2.0.1")
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # Configure file
