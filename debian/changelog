@@ -1,3 +1,9 @@
+wingpanel-indicator-notifications (2.0.1) xenial; urgency=medium
+
+  * New upstream release.
+
+ -- Cody Garver <cody@elementary.io>  Sun, 21 May 2017 17:09:29 -0500
+
 wingpanel-indicator-notifications (2.0) xenial; urgency=medium
 
   * New upstream release.
