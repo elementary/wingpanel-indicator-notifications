@@ -63,4 +63,4 @@ msgstr "Limpar todas as notificações"
 
 #: ../src/Indicator.vala:100
 msgid "Notifications Settings…"
-msgstr "Definições de notificações..."
+msgstr "Definições de notificações…"
