@@ -70,4 +70,4 @@ msgstr "Počisti vsa obvestila"
 
 #: ../src/Indicator.vala:100
 msgid "Notifications Settings…"
-msgstr "Nastavitve obveščanja..."
+msgstr "Nastavitve obveščanja…"
