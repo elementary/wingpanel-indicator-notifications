@@ -62,6 +62,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid.margin_end = 6;
 
         var title_label = new Gtk.Label ("<b>" + fix_markup (entry_summary) + "</b>");
+        title_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+        title_label.max_width_chars = 32;
         ((Gtk.Misc) title_label).xalign = 0.0f;
         title_label.hexpand = true;
         title_label.use_markup = true;
