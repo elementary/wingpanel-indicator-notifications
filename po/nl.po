@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-15 11:49-0200\n"
-"PO-Revision-Date: 2017-05-12 15:26+0000\n"
+"PO-Revision-Date: 2017-06-01 20:53+0000\n"
 "Last-Translator: Dieter Debast <dieter_debast@hotmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel"
 "/wingpanel-indicator-notifications/nl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.13-dev\n"
+"X-Generator: Weblate 2.14\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: ../src/Widgets/NotificationEntry.vala:71
@@ -26,20 +26,20 @@ msgstr "Nu"
 #: ../src/Widgets/NotificationEntry.vala:129
 msgid "%lu day"
 msgid_plural "%lu days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu dag"
+msgstr[1] "%lu dagen"
 
 #: ../src/Widgets/NotificationEntry.vala:130
 msgid "%lu hour"
 msgid_plural "%lu hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu uur"
+msgstr[1] "%lu uren"
 
 #: ../src/Widgets/NotificationEntry.vala:131
 msgid "%lu minute"
 msgid_plural "%lu minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu minuut"
+msgstr[1] "%lu minuten"
 
 #: ../src/Indicator.vala:40
 msgid "Notifications indicator"
