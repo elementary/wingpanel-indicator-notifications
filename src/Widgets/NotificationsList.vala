@@ -216,7 +216,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private bool focus_notification_app (Wnck.Window? app_window, AppInfo? app_info) {
         if (app_window != null) {
-            app_window.unminimize (Gtk.get_current_event_time ());
+            app_window.activate (Gtk.get_current_event_time ());
             return true;
         } else if (app_info != null) {
             try {
