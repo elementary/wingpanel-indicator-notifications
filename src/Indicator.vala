@@ -45,7 +45,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         .notification-icon.new {
-            animation: none;
+            animation: new 500ms cubic-bezier(0.4, 0.0, 0.2, 1);
             -gtk-icon-source: -gtk-icontheme("notification-new-symbolic");
         }
 
@@ -66,6 +66,20 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             80% { -gtk-icon-source: -gtk-icontheme("notification-disabled-80-symbolic"); opacity: 0.52; }
             90% { -gtk-icon-source: -gtk-icontheme("notification-disabled-90-symbolic"); opacity: 0.46; }
             100% { -gtk-icon-source: -gtk-icontheme("notification-disabled-symbolic"); }
+        }
+
+        @keyframes new {
+            0% { -gtk-icon-source: -gtk-icontheme("notification-symbolic"); }
+            10% { -gtk-icon-source: -gtk-icontheme("notification-new-10-symbolic"); }
+            20% { -gtk-icon-source: -gtk-icontheme("notification-new-20-symbolic"); }
+            30% { -gtk-icon-source: -gtk-icontheme("notification-new-30-symbolic"); }
+            40% { -gtk-icon-source: -gtk-icontheme("notification-new-40-symbolic"); }
+            50% { -gtk-icon-source: -gtk-icontheme("notification-new-50-symbolic"); }
+            60% { -gtk-icon-source: -gtk-icontheme("notification-new-60-symbolic"); }
+            70% { -gtk-icon-source: -gtk-icontheme("notification-new-70-symbolic"); }
+            80% { -gtk-icon-source: -gtk-icontheme("notification-new-80-symbolic"); }
+            90% { -gtk-icon-source: -gtk-icontheme("notification-new-90-symbolic"); }
+            100% { -gtk-icon-source: -gtk-icontheme("notification-new-symbolic"); }
         }
     """;
 
