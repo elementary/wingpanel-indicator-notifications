@@ -26,7 +26,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private const string LIST_ID = "list";
     private const string NO_NOTIFICATIONS_ID = "no-notifications";
 
-    private Wingpanel.Widgets.OverlayIcon? dynamic_icon = null;
+    private Gtk.Image? dynamic_icon = null;
     private Gtk.Box? main_box = null;
     private Wingpanel.Widgets.Button clear_all_btn;
     private Gtk.Stack stack;
@@ -48,7 +48,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null)
-            dynamic_icon = new Wingpanel.Widgets.OverlayIcon (get_display_icon_name ());
+            dynamic_icon = new Gtk.Image ();
+            dynamic_icon.get_style_context ().add_class ("notification-icon");
+            set_display_icon_name ();
 
         dynamic_icon.button_press_event.connect ((e) => {
             if (e.button == Gdk.BUTTON_MIDDLE) {
@@ -109,7 +111,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
                 not_disturb_switch.get_switch ().active = NotifySettings.get_instance ().do_not_disturb;
-                dynamic_icon.set_main_icon_name (get_display_icon_name ());
+                set_display_icon_name ();
             });
 
             main_box.add (not_disturb_switch);
@@ -160,7 +162,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             nlist.add_entry (entry);
         }
 
-        dynamic_icon.set_main_icon_name (get_display_icon_name ());        
+        set_display_icon_name ();        
     }
 
     private void on_switch_stack (bool show_list) {
@@ -171,7 +173,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             stack.set_visible_child_name (NO_NOTIFICATIONS_ID);
         }
 
-        dynamic_icon.set_main_icon_name (get_display_icon_name ());        
+        set_display_icon_name ();
     }
 
     private void on_notification_closed (uint32 id) {
@@ -192,14 +194,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         });
     }
 
-    private string get_display_icon_name () {
+    private void set_display_icon_name () {
         if (NotifySettings.get_instance ().do_not_disturb) {
-            return "notification-disabled-symbolic";
+            dynamic_icon.get_style_context ().add_class ("disabled");
         } else if (nlist != null && nlist.get_entries_length () > 0) {
-            return "notification-new-symbolic";
+            dynamic_icon.get_style_context ().add_class ("new");
+        } else {
+            dynamic_icon.get_style_context ().remove_class ("disabled");
+            dynamic_icon.get_style_context ().remove_class ("new");
         }
-        
-        return "notification-symbolic";
     }
 
     private void show_settings () {
