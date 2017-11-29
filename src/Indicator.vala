@@ -40,6 +40,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             background-image: -gtk-icontheme("notification-symbolic");
             background-position: center center;
             background-repeat: no-repeat;
+            transition: none;
         }
 
         .notification-icon.new {
@@ -47,7 +48,14 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         .notification-icon.disabled {
+            animation: disabled 150ms ease-in-out;
             background-image: -gtk-icontheme("notification-disabled-symbolic");
+        }
+
+        @keyframes disabled {
+            0% { background-image: -gtk-icontheme("notification-disabled-0-symbolic"); }
+            50% { background-image: -gtk-icontheme("notification-disabled-50-symbolic"); }
+            100% { background-image: -gtk-icontheme("notification-disabled-100-symbolic"); }
         }
     """;
 
