@@ -51,15 +51,22 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         .notification-icon.disabled {
-            animation: disabled 130ms ease-in-out;
-            -gtk-icon-transform: none;
+            animation: disabled 160ms cubic-bezier(0.4, 0.0, 0.2, 1);
             -gtk-icon-source: -gtk-icontheme("notification-disabled-symbolic");
         }
 
         @keyframes disabled {
-            0% { -gtk-icon-source: -gtk-icontheme("notification-disabled-0-symbolic"); }
-            50% { -gtk-icon-source: -gtk-icontheme("notification-disabled-50-symbolic"); }
-            100% { -gtk-icon-source: -gtk-icontheme("notification-disabled-100-symbolic"); }
+            0% { -gtk-icon-source: -gtk-icontheme("notification-symbolic"); }
+            10% { -gtk-icon-source: -gtk-icontheme("notification-disabled-10-symbolic"); opacity: 0.94; }
+            20% { -gtk-icon-source: -gtk-icontheme("notification-disabled-20-symbolic"); opacity: 0.78; }
+            30% { -gtk-icon-source: -gtk-icontheme("notification-disabled-30-symbolic"); opacity: 0.82; }
+            40% { -gtk-icon-source: -gtk-icontheme("notification-disabled-40-symbolic"); opacity: 0.76; }
+            50% { -gtk-icon-source: -gtk-icontheme("notification-disabled-50-symbolic"); opacity: 0.70; }
+            60% { -gtk-icon-source: -gtk-icontheme("notification-disabled-60-symbolic"); opacity: 0.64; }
+            70% { -gtk-icon-source: -gtk-icontheme("notification-disabled-70-symbolic"); opacity: 0.58; }
+            80% { -gtk-icon-source: -gtk-icontheme("notification-disabled-80-symbolic"); opacity: 0.52; }
+            90% { -gtk-icon-source: -gtk-icontheme("notification-disabled-90-symbolic"); opacity: 0.46; }
+            100% { -gtk-icon-source: -gtk-icontheme("notification-disabled-symbolic"); }
         }
     """;
 
@@ -234,13 +241,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void set_display_icon_name () {
+        var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (NotifySettings.get_instance ().do_not_disturb) {
-            dynamic_icon.get_style_context ().add_class ("disabled");
+            dynamic_icon_style_context.add_class ("disabled");
         } else if (nlist != null && nlist.get_entries_length () > 0) {
-            dynamic_icon.get_style_context ().add_class ("new");
+            dynamic_icon_style_context.remove_class ("disabled");
+            dynamic_icon_style_context.add_class ("new");
         } else {
-            dynamic_icon.get_style_context ().remove_class ("disabled");
-            dynamic_icon.get_style_context ().remove_class ("new");
+            dynamic_icon_style_context.remove_class ("disabled");
+            dynamic_icon_style_context.remove_class ("new");
         }
     }
 
