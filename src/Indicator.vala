@@ -35,6 +35,22 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private Gee.HashMap<string, Settings> app_settings_cache;
 
+    private const string ICON_CSS = """
+        .notification-icon {
+            background-image: -gtk-icontheme("notification-symbolic");
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        .notification-icon.new {
+            background-image: -gtk-icontheme("notification-new-symbolic");
+        }
+
+        .notification-icon.disabled {
+            background-image: -gtk-icontheme("notification-disabled-symbolic");
+        }
+    """;
+
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES,
                 display_name: _("Notifications indicator"),
@@ -47,10 +63,20 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     public override Gtk.Widget get_display_widget () {
-        if (dynamic_icon == null)
+        if (dynamic_icon == null) {
             dynamic_icon = new Gtk.Image ();
             dynamic_icon.get_style_context ().add_class ("notification-icon");
-            set_display_icon_name ();
+
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (ICON_CSS, ICON_CSS.length);
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (Error e) {
+                critical (e.message);
+            }
+        }
+
+        set_display_icon_name ();
 
         dynamic_icon.button_press_event.connect ((e) => {
             if (e.button == Gdk.BUTTON_MIDDLE) {
