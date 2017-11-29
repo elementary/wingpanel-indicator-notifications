@@ -39,7 +39,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         .notification-icon {
             animation: none;
             min-width: 24px;
-	        opacity: 1;
+            opacity: 1;
             transition: none;
             -gtk-icon-source: -gtk-icontheme("notification-symbolic");
         }
