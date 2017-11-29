@@ -38,7 +38,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private const string ICON_CSS = """
         .notification-icon {
             animation: none;
-            min-height: 24px;
             min-width: 24px;
 	        opacity: 1;
             transition: none;
