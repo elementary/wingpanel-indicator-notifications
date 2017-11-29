@@ -26,7 +26,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private const string LIST_ID = "list";
     private const string NO_NOTIFICATIONS_ID = "no-notifications";
 
-    private Gtk.Image? dynamic_icon = null;
+    private Gtk.Spinner? dynamic_icon = null;
     private Gtk.Box? main_box = null;
     private Wingpanel.Widgets.Button clear_all_btn;
     private Gtk.Stack stack;
@@ -37,25 +37,29 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private const string ICON_CSS = """
         .notification-icon {
-            background-image: -gtk-icontheme("notification-symbolic");
-            background-position: center center;
-            background-repeat: no-repeat;
+            animation: none;
+            min-height: 24px;
+            min-width: 24px;
+	        opacity: 1;
             transition: none;
+            -gtk-icon-source: -gtk-icontheme("notification-symbolic");
         }
 
         .notification-icon.new {
-            background-image: -gtk-icontheme("notification-new-symbolic");
+            animation: none;
+            -gtk-icon-source: -gtk-icontheme("notification-new-symbolic");
         }
 
         .notification-icon.disabled {
-            animation: disabled 150ms ease-in-out;
-            background-image: -gtk-icontheme("notification-disabled-symbolic");
+            animation: disabled 130ms ease-in-out;
+            -gtk-icon-transform: none;
+            -gtk-icon-source: -gtk-icontheme("notification-disabled-symbolic");
         }
 
         @keyframes disabled {
-            0% { background-image: -gtk-icontheme("notification-disabled-0-symbolic"); }
-            50% { background-image: -gtk-icontheme("notification-disabled-50-symbolic"); }
-            100% { background-image: -gtk-icontheme("notification-disabled-100-symbolic"); }
+            0% { -gtk-icon-source: -gtk-icontheme("notification-disabled-0-symbolic"); }
+            50% { -gtk-icon-source: -gtk-icontheme("notification-disabled-50-symbolic"); }
+            100% { -gtk-icon-source: -gtk-icontheme("notification-disabled-100-symbolic"); }
         }
     """;
 
@@ -72,7 +76,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
-            dynamic_icon = new Gtk.Image ();
+            dynamic_icon = new Gtk.Spinner ();
+            dynamic_icon.active = true;
             dynamic_icon.get_style_context ().add_class ("notification-icon");
 
             var provider = new Gtk.CssProvider ();
