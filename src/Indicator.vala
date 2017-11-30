@@ -35,54 +35,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private Gee.HashMap<string, Settings> app_settings_cache;
 
-    private const string ICON_CSS = """
-        .notification-icon {
-            animation: none;
-            min-width: 24px;
-            opacity: 1;
-            transition: none;
-            -gtk-icon-source: -gtk-icontheme("notification-symbolic");
-        }
-
-        .notification-icon.new {
-            animation: new 500ms cubic-bezier(0.4, 0.0, 0.2, 1);
-            -gtk-icon-source: -gtk-icontheme("notification-new-symbolic");
-        }
-
-        .notification-icon.disabled {
-            animation: disabled 160ms cubic-bezier(0.4, 0.0, 0.2, 1);
-            -gtk-icon-source: -gtk-icontheme("notification-disabled-symbolic");
-        }
-
-        @keyframes disabled {
-            0% { -gtk-icon-source: -gtk-icontheme("notification-symbolic"); }
-            10% { -gtk-icon-source: -gtk-icontheme("notification-disabled-10-symbolic"); opacity: 0.94; }
-            20% { -gtk-icon-source: -gtk-icontheme("notification-disabled-20-symbolic"); opacity: 0.78; }
-            30% { -gtk-icon-source: -gtk-icontheme("notification-disabled-30-symbolic"); opacity: 0.82; }
-            40% { -gtk-icon-source: -gtk-icontheme("notification-disabled-40-symbolic"); opacity: 0.76; }
-            50% { -gtk-icon-source: -gtk-icontheme("notification-disabled-50-symbolic"); opacity: 0.70; }
-            60% { -gtk-icon-source: -gtk-icontheme("notification-disabled-60-symbolic"); opacity: 0.64; }
-            70% { -gtk-icon-source: -gtk-icontheme("notification-disabled-70-symbolic"); opacity: 0.58; }
-            80% { -gtk-icon-source: -gtk-icontheme("notification-disabled-80-symbolic"); opacity: 0.52; }
-            90% { -gtk-icon-source: -gtk-icontheme("notification-disabled-90-symbolic"); opacity: 0.46; }
-            100% { -gtk-icon-source: -gtk-icontheme("notification-disabled-symbolic"); }
-        }
-
-        @keyframes new {
-            0% { -gtk-icon-source: -gtk-icontheme("notification-symbolic"); }
-            10% { -gtk-icon-source: -gtk-icontheme("notification-new-10-symbolic"); }
-            20% { -gtk-icon-source: -gtk-icontheme("notification-new-20-symbolic"); }
-            30% { -gtk-icon-source: -gtk-icontheme("notification-new-30-symbolic"); }
-            40% { -gtk-icon-source: -gtk-icontheme("notification-new-40-symbolic"); }
-            50% { -gtk-icon-source: -gtk-icontheme("notification-new-50-symbolic"); }
-            60% { -gtk-icon-source: -gtk-icontheme("notification-new-60-symbolic"); }
-            70% { -gtk-icon-source: -gtk-icontheme("notification-new-70-symbolic"); }
-            80% { -gtk-icon-source: -gtk-icontheme("notification-new-80-symbolic"); }
-            90% { -gtk-icon-source: -gtk-icontheme("notification-new-90-symbolic"); }
-            100% { -gtk-icon-source: -gtk-icontheme("notification-new-symbolic"); }
-        }
-    """;
-
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES,
                 display_name: _("Notifications indicator"),
@@ -101,12 +53,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon.get_style_context ().add_class ("notification-icon");
 
             var provider = new Gtk.CssProvider ();
-            try {
-                provider.load_from_data (ICON_CSS, ICON_CSS.length);
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } catch (Error e) {
-                critical (e.message);
-            }
+            provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
 
         set_display_icon_name ();
