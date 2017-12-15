@@ -1,0 +1,11 @@
+Indicator.vala
+Utils.vala
+Widgets/NotificationsList.vala
+Widgets/NotificationEntry.vala
+Widgets/AppEntry.vala
+Widgets/SeparatorEntry.vala
+Services/NotificationsMonitor.vala
+Services/Notification.vala
+Services/NotifySettings.vala
+Services/Session.vala
+Services/Interfaces.vala
