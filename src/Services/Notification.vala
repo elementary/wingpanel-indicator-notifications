@@ -38,7 +38,7 @@ public class Notifications.Notification : Object {
     public AppInfo? app_info = null;
 
     public signal void closed ();
-    public signal bool time_changed (TimeSpan span);
+    public signal bool time_changed (DateTime span);
 
     private enum Column {
         APP_NAME = 0,
@@ -210,6 +210,6 @@ public class Notifications.Notification : Object {
     }
 
     private bool source_func () {
-        return time_changed (timestamp.difference (new DateTime.now_local ()));
+        return time_changed (timestamp);
     }
 }
