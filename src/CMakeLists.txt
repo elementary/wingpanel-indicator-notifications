@@ -29,7 +29,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
 PACKAGES
   wingpanel-2.0
   gio-2.0
-  granite
+  granite>=0.5
   libwnck-3.0
 )
 
