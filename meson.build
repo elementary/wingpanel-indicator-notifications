@@ -1,9 +1,10 @@
 project('notifications', 'vala', 'c')
 
+gettext_name = meson.project_name() + '-indicator'
 i18n = import('i18n')
 
 add_global_arguments(
-    '-DGETTEXT_PACKAGE="' + meson.project_name() + '-indicator"',
+    '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
     '-DWNCK_I_KNOW_THIS_IS_UNSTABLE',
     language:'c'
 )
