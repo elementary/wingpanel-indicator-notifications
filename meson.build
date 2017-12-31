@@ -8,17 +8,6 @@ add_global_arguments(
     language:'c'
 )
 
-configuration_data = configuration_data()
-configuration_data.set('DATADIR', get_option('libdir') + '/wingpanel')
-configuration_data.set('PKGDATADIR', get_option('libdir') + '/wingpanel')
-configuration_data.set('GETTEXT_PACKAGE', meson.project_name() + '-indicator')
-
-config_file = configure_file(
-    input: 'config.vala.cmake',
-    output: 'config.vala',
-    configuration: configuration_data
-)
-
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
@@ -32,7 +21,6 @@ shared_module(
     'src/Services/NotifySettings.vala',
     'src/Services/Session.vala',
     'src/Services/Interfaces.vala',
-    config_file,
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
