@@ -31,14 +31,14 @@ public class Notifications.Notification : Object {
     public uint32 replaces_id;
     public uint32 id;
     public uint32 pid = 0;
-    public DateTime timestamp;
+    public GLib.DateTime timestamp;
     public int64 unix_time;
 
     public string desktop_id;
     public AppInfo? app_info = null;
 
     public signal void closed ();
-    public signal bool time_changed (DateTime span);
+    public signal bool time_changed (GLib.DateTime span);
 
     private enum Column {
         APP_NAME = 0,
@@ -74,7 +74,7 @@ public class Notifications.Notification : Object {
         sender = message.get_sender ();
 
         actions = body.get_child_value (Column.ACTIONS).dup_strv ();
-        timestamp = new DateTime.now_local ();
+        timestamp = new GLib.DateTime.now_local ();
         unix_time = timestamp.to_unix ();
 
         app_info = Utils.get_appinfo_from_app_name (app_name);
@@ -116,7 +116,7 @@ public class Notifications.Notification : Object {
 
         actions = _actions;
         unix_time = _unix_time;
-        timestamp = new DateTime.from_unix_local (unix_time);
+        timestamp = new GLib.DateTime.from_unix_local (unix_time);
 
         desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
