@@ -80,7 +80,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
-            scrolled.add_with_viewport (nlist);
+            scrolled.add (nlist);
 
             stack.add_named (scrolled, LIST_ID);
             stack.add_named (no_notifications_label, NO_NOTIFICATIONS_ID);
