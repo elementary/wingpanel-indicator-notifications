@@ -3,63 +3,65 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-15 11:49-0200\n"
-"PO-Revision-Date: 2015-06-21 23:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2017-12-20 20:37+0000\n"
+"Last-Translator: Marcio <marcio.pelegrini@gmail.com>\n"
+"Language-Team: French (Canada) "
+"<https://weblate.elementary.io/projects/wingpanel/wingpanel-indicator-"
+"notifications/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
 #: ../src/Widgets/NotificationEntry.vala:71
 msgid "now"
-msgstr ""
+msgstr "maintenant"
 
 #: ../src/Widgets/NotificationEntry.vala:123
 msgid "Now"
-msgstr ""
+msgstr "Maintenant"
 
 #: ../src/Widgets/NotificationEntry.vala:129
 msgid "%lu day"
 msgid_plural "%lu days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu jour"
+msgstr[1] "%lu jours"
 
 #: ../src/Widgets/NotificationEntry.vala:130
 msgid "%lu hour"
 msgid_plural "%lu hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu heure"
+msgstr[1] "%lu heures"
 
 #: ../src/Widgets/NotificationEntry.vala:131
 msgid "%lu minute"
 msgid_plural "%lu minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%lu minute"
+msgstr[1] "%lu minutes"
 
 #: ../src/Indicator.vala:40
 msgid "Notifications indicator"
-msgstr ""
+msgstr "Indicateur de notifications"
 
 #: ../src/Indicator.vala:41
 msgid "The notifications indicator"
-msgstr ""
+msgstr "L'indicateur de notifications"
 
 #: ../src/Indicator.vala:73
 msgid "No Notifications"
-msgstr ""
+msgstr "Aucune notification"
 
 #: ../src/Indicator.vala:88
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "Ne pas déranger"
 
 #: ../src/Indicator.vala:94
 msgid "Clear All Notifications"
-msgstr ""
+msgstr "Effacer toutes les notifications"
 
 #: ../src/Indicator.vala:100
 msgid "Notifications Settings…"
-msgstr ""
+msgstr "Paramètres des notifications…"
