@@ -46,9 +46,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         get_style_context ().add_class ("menuitem");
 
-        notification.time_changed.connect ((timespan) => {
-            string label = get_string_from_timespan (timespan);
-            time_label.label = label;
+        notification.time_changed.connect ((timestamp) => {
+            time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
 
             return active;
         });
@@ -91,7 +90,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         show_all ();
 
         if (notification.data_session) {
-            notification.time_changed (notification.timestamp.difference (new DateTime.now_local ()));
+            notification.time_changed (notification.timestamp);
         }
     }
 
@@ -109,27 +108,5 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         return text;
-    }
-
-    private string get_string_from_timespan (TimeSpan timespan) {
-        if (-timespan >= GLib.TimeSpan.DAY) {
-            ulong days = (ulong)(-timespan/GLib.TimeSpan.DAY);
-            return dngettext (Config.GETTEXT_PACKAGE, "%lu day", "%lu days", days).printf (days);
-        } else if (-timespan >= TimeSpan.HOUR) {
-            ulong hours = (ulong)(-timespan/GLib.TimeSpan.HOUR);
-            return dngettext (Config.GETTEXT_PACKAGE, "%lu hour", "%lu hours", hours).printf (hours);
-        } else if (-timespan >= GLib.TimeSpan.MINUTE) {
-            ulong minutes = (ulong)(-timespan/GLib.TimeSpan.MINUTE);
-            return dngettext (Config.GETTEXT_PACKAGE, "%lu minute", "%lu minutes", minutes).printf (minutes);
-        } else {
-            return _("Now");
-        }
-    }
-
-    // This won't be used but we need it to be included in the translation template.
-    private void translations () {
-        ngettext ("%lu day", "%lu days", 0);
-        ngettext ("%lu hour", "%lu hours", 0);
-        ngettext ("%lu minute", "%lu minutes", 0);
     }
 }
