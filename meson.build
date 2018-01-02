@@ -9,6 +9,12 @@ add_global_arguments(
     language:'c'
 )
 
+asresources = gnome.compile_resources(
+    'as-resources', 'data/io.elementary.wingpanel.notifications.gresource.xml',
+    source_dir: 'data',
+    c_name: 'as'
+)
+
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
@@ -22,6 +28,7 @@ shared_module(
     'src/Services/NotifySettings.vala',
     'src/Services/Session.vala',
     'src/Services/Interfaces.vala',
+    asresources,
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
@@ -31,7 +38,7 @@ shared_module(
         dependency('wingpanel-2.0')
     ],
     install: true,
-    install_dir : get_option('libdir') + '/wingpanel'
+    install_dir : wingpanel_dep.get_pkgconfig_variable('indicatorsdir')
 )
 
 subdir('po')
