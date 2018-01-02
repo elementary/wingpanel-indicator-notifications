@@ -32,7 +32,10 @@ PACKAGES
   libwnck-3.0
 )
 
-add_library (${CMAKE_PROJECT_NAME} MODULE ${VALA_C})
+include (GResource)
+glib_compile_resources (GLIB_RESOURCES_CSS SOURCE ../data/io.elementary.wingpanel.notifications.gresource.xml)
+
+add_library (${CMAKE_PROJECT_NAME} MODULE ${VALA_C} ${GLIB_RESOURCES_CSS})
 target_link_libraries (${CMAKE_PROJECT_NAME} ${DEPS_LIBRARIES})
 
 # Installation
