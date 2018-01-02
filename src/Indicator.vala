@@ -54,7 +54,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
 
         set_display_icon_name ();
