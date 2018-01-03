@@ -1,6 +1,7 @@
 project('notifications', 'vala', 'c')
 
 gettext_name = meson.project_name() + '-indicator'
+gnome = import('gnome')
 i18n = import('i18n')
 
 add_global_arguments(
