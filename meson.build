@@ -3,6 +3,7 @@ project('notifications', 'vala', 'c')
 gettext_name = meson.project_name() + '-indicator'
 gnome = import('gnome')
 i18n = import('i18n')
+wingpanel_dep = dependency('wingpanel-2.0')
 
 add_global_arguments(
     '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
@@ -36,7 +37,7 @@ shared_module(
         dependency('granite'),
         dependency('gtk+-3.0'),
         dependency('libwnck-3.0'),
-        dependency('wingpanel-2.0')
+        wingpanel_dep
     ],
     install: true,
     install_dir : wingpanel_dep.get_pkgconfig_variable('indicatorsdir')
