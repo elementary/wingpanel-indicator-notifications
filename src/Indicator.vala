@@ -43,7 +43,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         visible = true;
 
         app_settings_cache = new Gee.HashMap<string, Settings> ();
-        Utils.init ();
     }
 
     public override Gtk.Widget get_display_widget () {
