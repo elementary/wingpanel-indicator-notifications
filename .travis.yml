@@ -4,7 +4,7 @@ services:
  - docker
 
 env:
- - DEPENDENCY_PACKAGES="libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-2.0-dev libwnck-3-dev libbamf-3-dev meson valac"
+ - DEPENDENCY_PACKAGES="libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-2.0-dev libwnck-3-dev libbamf3-dev meson valac"
 
 install:
  - docker pull elementary/docker:loki
