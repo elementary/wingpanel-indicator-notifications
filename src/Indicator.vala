@@ -28,7 +28,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private Gtk.Spinner? dynamic_icon = null;
     private Gtk.Box? main_box = null;
-    private Wingpanel.Widgets.Button clear_all_btn;
+    private Gtk.ModelButton clear_all_btn;
     private Gtk.Stack stack;
 
     private NotificationsList nlist;
@@ -99,13 +99,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 NotifySettings.get_instance ().do_not_disturb = not_disturb_switch.get_switch ().active;
             });
 
-            clear_all_btn = new Wingpanel.Widgets.Button (_("Clear All Notifications"));
+            clear_all_btn = new Gtk.ModelButton ();
+            clear_all_btn.text = _("Clear All Notifications");
             clear_all_btn.clicked.connect (() => {
                 nlist.clear_all ();
                 Session.get_instance ().clear ();
             });
 
-            var settings_btn = new Wingpanel.Widgets.Button (_("Notifications Settings…"));
+            var settings_btn = new Gtk.ModelButton ();
+            settings_btn.text = _("Notifications Settings…");
             settings_btn.clicked.connect (show_settings);
 
             nlist.close_popover.connect (() => close ());
