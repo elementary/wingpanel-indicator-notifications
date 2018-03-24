@@ -20,7 +20,6 @@ asresources = gnome.compile_resources(
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
-    'src/Utils.vala',
     'src/Widgets/NotificationsList.vala',
     'src/Widgets/NotificationEntry.vala',
     'src/Widgets/AppEntry.vala',
@@ -37,6 +36,7 @@ shared_module(
         dependency('granite'),
         dependency('gtk+-3.0'),
         dependency('libwnck-3.0'),
+        dependency('libbamf3'),
         wingpanel_dep
     ],
     install: true,

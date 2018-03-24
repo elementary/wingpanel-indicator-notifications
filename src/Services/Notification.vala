@@ -34,7 +34,16 @@ public class Notifications.Notification : Object {
     public GLib.DateTime timestamp;
     public int64 unix_time;
 
-    public string desktop_id;
+    public string desktop_id {
+        get {
+            if (app_info != null) {
+                return app_info.get_id ();
+            }
+
+            return "";
+        }   
+    }
+
     public AppInfo? app_info = null;
 
     public signal void closed ();
@@ -56,7 +65,12 @@ public class Notifications.Notification : Object {
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
-    private bool pid_acquired;
+
+    private static DesktopAppInfo? fallback_info;
+
+    static construct {
+        fallback_info = new DesktopAppInfo (FALLBACK_DESKTOP_ID);
+    }
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
@@ -77,25 +91,18 @@ public class Notifications.Notification : Object {
         timestamp = new GLib.DateTime.now_local ();
         unix_time = timestamp.to_unix ();
 
-        app_info = Utils.get_appinfo_from_app_name (app_name);
-        if (app_info != null) {
-            desktop_id = app_info.get_id ();
-        } else {
-            desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
-        }
-        
-        if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
-            desktop_id += DESKTOP_ID_EXT;
-
-            app_info = new DesktopAppInfo (desktop_id);
-        }
-
-        if (app_info == null) {
-            desktop_id = FALLBACK_DESKTOP_ID;
-            app_info = new DesktopAppInfo (desktop_id);
-        }
-
         setup_pid ();
+
+        string? _desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
+        if (_desktop_id != null && _desktop_id != "") {
+            if (!_desktop_id.has_suffix (DESKTOP_ID_EXT)) {
+                _desktop_id += DESKTOP_ID_EXT;        
+            }
+            
+            app_info = new DesktopAppInfo (_desktop_id);
+        } else {
+            app_info = get_appinfo ();
+        }
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
@@ -118,10 +125,9 @@ public class Notifications.Notification : Object {
         unix_time = _unix_time;
         timestamp = new GLib.DateTime.from_unix_local (unix_time);
 
-        desktop_id = _desktop_id;
-        app_info = new DesktopAppInfo (desktop_id);
-
         setup_pid ();
+
+        app_info = new DesktopAppInfo (_desktop_id);
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
@@ -146,32 +152,55 @@ public class Notifications.Notification : Object {
 
     public Wnck.Window? get_app_window () {
         Wnck.Window? window = null;
-        if (pid_acquired) {
-            Wnck.Screen.get_default ().get_windows ().foreach ((_window) => {
-                if (_window.get_pid () == pid && window == null) {
-                    window = _window;
-                    return;
-                }
-            });     
-        }
+        Wnck.Screen.get_default ().get_windows ().foreach ((_window) => {
+            if (_window.get_pid () == pid && window == null) {
+                window = _window;
+                return;
+            }
+        });
 
         return window;        
     }
 
-    private void setup_pid () {
-        pid_acquired = try_get_pid ();
-        NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
-            if (!pid_acquired) {
-                try_get_pid ();
-            }
-        });
-    }
+    private AppInfo get_appinfo () {
+        var matcher = Bamf.Matcher.get_default ();
 
-    private bool try_get_pid () {
-        if (NotifySettings.get_instance ().do_not_disturb) {
-            return false;
+        Bamf.Application? app = null;
+
+        List<weak Bamf.Application> apps = matcher.get_applications ();
+        for (int i = 0; i < apps.length (); i++) {
+            weak Bamf.Application _app = apps.nth_data (i);
+            if (get_application_owns_pid (_app, pid)) {
+                app = _app;
+                break;
+            }
         }
 
+        if (app == null) {
+            return fallback_info;
+        }
+
+        var desktop_app = new DesktopAppInfo.from_filename (app.get_desktop_file ());
+        if (desktop_app == null) {
+            return fallback_info;
+        }
+
+        return desktop_app;
+    }
+
+    private static bool get_application_owns_pid (Bamf.Application app, uint32 pid) {
+        List<weak Bamf.Window> windows = app.get_windows ();
+        for (int i = 0; i < windows.length (); i++) {
+            weak Bamf.Window win = windows.nth_data (i);
+            if (win.get_pid () == pid) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void setup_pid () {
         try {
             IDBus? dbus_iface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
             if (dbus_iface != null && dbus_iface.name_has_owner (sender)) {
@@ -180,8 +209,6 @@ public class Notifications.Notification : Object {
         } catch (Error e) {
             warning ("%s\n", e.message);
         }
-
-        return true;
     }
 
     private string get_string (Variant tuple, int column) {

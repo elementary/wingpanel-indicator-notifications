@@ -1,7 +1,7 @@
 find_package (PkgConfig)
 
 # Add all your dependencies to the list below
-pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0 libwnck-3.0)
+pkg_check_modules (DEPS REQUIRED wingpanel-2.0 granite gio-2.0 gdk-pixbuf-2.0 libwnck-3.0 libbamf3)
 
 add_definitions (${DEPS_CFLAGS})
 add_definitions (-DWNCK_I_KNOW_THIS_IS_UNSTABLE)
@@ -15,7 +15,6 @@ include (ValaPrecompile)
 # Add all your vala files and requires packages to the List below to include them in the build
 vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Indicator.vala
-  Utils.vala
   Widgets/NotificationsList.vala
   Widgets/NotificationEntry.vala
   Widgets/AppEntry.vala
@@ -30,6 +29,7 @@ PACKAGES
   gio-2.0
   granite>=0.5
   libwnck-3.0
+  libbamf3
 )
 
 include (GResource)
