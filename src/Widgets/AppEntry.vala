@@ -1,17 +1,17 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright (c) 2015-2018 elementary LLC. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Library General Public License as published by
+ * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 2.1 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Library General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public License
+ * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -33,13 +33,11 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         var notification = entry.notification;
         app_info = notification.app_info;
 
-        var hbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
-
         var label = new Gtk.Label (app_info.get_name ());
-        label.get_style_context ().add_class ("h3");
+        label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        clear_btn_entry.get_style_context ().add_class ("flat");
+        clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
         clear_btn_entry.clicked.connect (() => {
             clear ();
         });
@@ -53,11 +51,15 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
 
         var image = new Gtk.Image.from_icon_name (icon, Gtk.IconSize.LARGE_TOOLBAR);
-        hbox.pack_start (image, false, false, 0);
-        hbox.pack_start (label, false, false, 0);
-        hbox.pack_end (clear_btn_entry, false, false, 0);
+        image.pixel_size = 24;
 
-        add (hbox);
+        var grid = new Gtk.Grid ();
+        grid.column_spacing = 12;
+        grid.add (image);
+        grid.add (label);
+        grid.add (clear_btn_entry);
+
+        add (grid);
         show_all ();
     }
 
