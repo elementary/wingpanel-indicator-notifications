@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:49-0200\n"
+"POT-Creation-Date: 2018-03-28 16:12-0700\n"
 "PO-Revision-Date: 2017-03-17 14:24+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,52 +14,48 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-19 06:49+0000\n"
 "X-Generator: Launchpad (build 18332)\n"
 
-#: ../src/Widgets/NotificationEntry.vala:71
-msgid "now"
-msgstr "nu"
-
-#: ../src/Widgets/NotificationEntry.vala:123
-msgid "Now"
-msgstr "Nu"
-
-#: ../src/Widgets/NotificationEntry.vala:129
-msgid "%lu day"
-msgid_plural "%lu days"
-msgstr[0] "%lu dag"
-msgstr[1] "%lu dage"
-
-#: ../src/Widgets/NotificationEntry.vala:130
-msgid "%lu hour"
-msgid_plural "%lu hours"
-msgstr[0] "%lu time"
-msgstr[1] "%lu timer"
-
-#: ../src/Widgets/NotificationEntry.vala:131
-msgid "%lu minute"
-msgid_plural "%lu minutes"
-msgstr[0] "%lu minut"
-msgstr[1] "%lu minutter"
-
-#: ../src/Indicator.vala:40
+#: src/Indicator.vala:40
 msgid "Notifications indicator"
 msgstr "Notifikationsindikator"
 
-#: ../src/Indicator.vala:41
+#: src/Indicator.vala:41
 msgid "The notifications indicator"
 msgstr "Notifikationsindikatoren"
 
-#: ../src/Indicator.vala:73
+#: src/Indicator.vala:82
 msgid "No Notifications"
 msgstr "Ingen notifikationer"
 
-#: ../src/Indicator.vala:88
+#: src/Indicator.vala:97
 msgid "Do Not Disturb"
 msgstr "Forstyr ikke"
 
-#: ../src/Indicator.vala:94
+#: src/Indicator.vala:104
 msgid "Clear All Notifications"
 msgstr "Ryd alle notifikationer"
 
-#: ../src/Indicator.vala:100
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "Notifikationsindstillinger…"
+
+#: src/Widgets/NotificationEntry.vala:72
+msgid "now"
+msgstr "nu"
+
+#~ msgid "Now"
+#~ msgstr "Nu"
+
+#~ msgid "%lu day"
+#~ msgid_plural "%lu days"
+#~ msgstr[0] "%lu dag"
+#~ msgstr[1] "%lu dage"
+
+#~ msgid "%lu hour"
+#~ msgid_plural "%lu hours"
+#~ msgstr[0] "%lu time"
+#~ msgstr[1] "%lu timer"
+
+#~ msgid "%lu minute"
+#~ msgid_plural "%lu minutes"
+#~ msgstr[0] "%lu minut"
+#~ msgstr[1] "%lu minutter"

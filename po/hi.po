@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:49-0200\n"
+"POT-Creation-Date: 2018-03-28 16:12-0700\n"
 "PO-Revision-Date: 2018-03-20 00:14+0000\n"
 "Last-Translator: Anand Kumar <anand@anandkumar.net>\n"
-"Language-Team: Hindi <https://weblate.elementary.io/projects/wingpanel"
-"/wingpanel-indicator-notifications/hi/>\n"
+"Language-Team: Hindi <https://weblate.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/hi/>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,52 +15,48 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: ../src/Widgets/NotificationEntry.vala:71
-msgid "now"
-msgstr "अभी"
-
-#: ../src/Widgets/NotificationEntry.vala:123
-msgid "Now"
-msgstr "अभी"
-
-#: ../src/Widgets/NotificationEntry.vala:129
-msgid "%lu day"
-msgid_plural "%lu days"
-msgstr[0] "%lu दिन"
-msgstr[1] ""
-
-#: ../src/Widgets/NotificationEntry.vala:130
-msgid "%lu hour"
-msgid_plural "%lu hours"
-msgstr[0] "%lu घंटा"
-msgstr[1] "%lu घंटे"
-
-#: ../src/Widgets/NotificationEntry.vala:131
-msgid "%lu minute"
-msgid_plural "%lu minutes"
-msgstr[0] "%lu मिनट"
-msgstr[1] "%lu मिनट"
-
-#: ../src/Indicator.vala:40
+#: src/Indicator.vala:40
 msgid "Notifications indicator"
 msgstr "सुचना सूचक"
 
-#: ../src/Indicator.vala:41
+#: src/Indicator.vala:41
 msgid "The notifications indicator"
 msgstr "सूचना सूचक"
 
-#: ../src/Indicator.vala:73
+#: src/Indicator.vala:82
 msgid "No Notifications"
 msgstr "कोई सुचना नहीं"
 
-#: ../src/Indicator.vala:88
+#: src/Indicator.vala:97
 msgid "Do Not Disturb"
 msgstr "परेशान न करें"
 
-#: ../src/Indicator.vala:94
+#: src/Indicator.vala:104
 msgid "Clear All Notifications"
 msgstr "सभी सूचनाएं हटायें"
 
-#: ../src/Indicator.vala:100
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "सूचना सेटिंग्स…"
+
+#: src/Widgets/NotificationEntry.vala:72
+msgid "now"
+msgstr "अभी"
+
+#~ msgid "Now"
+#~ msgstr "अभी"
+
+#~ msgid "%lu day"
+#~ msgid_plural "%lu days"
+#~ msgstr[0] "%lu दिन"
+#~ msgstr[1] ""
+
+#~ msgid "%lu hour"
+#~ msgid_plural "%lu hours"
+#~ msgstr[0] "%lu घंटा"
+#~ msgstr[1] "%lu घंटे"
+
+#~ msgid "%lu minute"
+#~ msgid_plural "%lu minutes"
+#~ msgstr[0] "%lu मिनट"
+#~ msgstr[1] "%lu मिनट"
