@@ -2,69 +2,65 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 11:49-0200\n"
+"POT-Creation-Date: 2018-03-28 16:12-0700\n"
 "PO-Revision-Date: 2017-04-26 15:40+0000\n"
 "Last-Translator: Володимир Білошицький <volbilnexus@gmail.com>\n"
-"Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel"
-"/wingpanel-indicator-notifications/uk/>\n"
+"Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.13-dev\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: ../src/Widgets/NotificationEntry.vala:71
-msgid "now"
-msgstr "зараз"
-
-#: ../src/Widgets/NotificationEntry.vala:123
-msgid "Now"
-msgstr "Зараз"
-
-#: ../src/Widgets/NotificationEntry.vala:129
-msgid "%lu day"
-msgid_plural "%lu days"
-msgstr[0] "%lu день"
-msgstr[1] "%lu дні"
-msgstr[2] "%lu днів"
-
-#: ../src/Widgets/NotificationEntry.vala:130
-msgid "%lu hour"
-msgid_plural "%lu hours"
-msgstr[0] "%lu година"
-msgstr[1] "%lu години"
-msgstr[2] "%lu годин"
-
-#: ../src/Widgets/NotificationEntry.vala:131
-msgid "%lu minute"
-msgid_plural "%lu minutes"
-msgstr[0] "%lu хвилина"
-msgstr[1] "%lu хвилини"
-msgstr[2] "%lu хвилин"
-
-#: ../src/Indicator.vala:40
+#: src/Indicator.vala:40
 msgid "Notifications indicator"
 msgstr "Індикатор сповіщеннь"
 
-#: ../src/Indicator.vala:41
+#: src/Indicator.vala:41
 msgid "The notifications indicator"
 msgstr "Індикатор сповіщеннь"
 
-#: ../src/Indicator.vala:73
+#: src/Indicator.vala:82
 msgid "No Notifications"
 msgstr "Немає сповіщень"
 
-#: ../src/Indicator.vala:88
+#: src/Indicator.vala:97
 msgid "Do Not Disturb"
 msgstr "Не турбувати"
 
-#: ../src/Indicator.vala:94
+#: src/Indicator.vala:104
 msgid "Clear All Notifications"
 msgstr "Очистити всі сповіщення"
 
-#: ../src/Indicator.vala:100
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "Налаштування сповіщень…"
+
+#: src/Widgets/NotificationEntry.vala:72
+msgid "now"
+msgstr "зараз"
+
+#~ msgid "Now"
+#~ msgstr "Зараз"
+
+#~ msgid "%lu day"
+#~ msgid_plural "%lu days"
+#~ msgstr[0] "%lu день"
+#~ msgstr[1] "%lu дні"
+#~ msgstr[2] "%lu днів"
+
+#~ msgid "%lu hour"
+#~ msgid_plural "%lu hours"
+#~ msgstr[0] "%lu година"
+#~ msgstr[1] "%lu години"
+#~ msgstr[2] "%lu годин"
+
+#~ msgid "%lu minute"
+#~ msgid_plural "%lu minutes"
+#~ msgstr[0] "%lu хвилина"
+#~ msgstr[1] "%lu хвилини"
+#~ msgstr[2] "%lu хвилин"
