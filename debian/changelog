@@ -1,3 +1,9 @@
+wingpanel-indicator-notifications (2.0.4) UNRELEASED; urgency=medium
+
+  * Pre-release version bump.
+
+ -- Daniel <daniel@elementary.io>  Thu, 29 Mar 2018 10:49:43 -0700
+
 wingpanel-indicator-notifications (2.0.3) xenial; urgency=medium
 
   * New upstream release.
