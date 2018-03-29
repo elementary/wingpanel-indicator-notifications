@@ -34,6 +34,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         app_info = notification.app_info;
 
         var label = new Gtk.Label (app_info.get_name ());
+        label.hexpand = true;
+        label.xalign = 0;
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
