@@ -38,7 +38,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
     construct {
         hexpand = true;
-        get_style_context ().add_class ("menuitem");
+        get_style_context ().add_class (Gtk.STYLE_CLASS_MENUITEM);
 
         var title_label = new Gtk.Label ("<b>" + fix_markup (notification.summary) + "</b>");
         title_label.hexpand = true;
