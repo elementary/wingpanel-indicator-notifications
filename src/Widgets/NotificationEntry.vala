@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright (c) 2015-2018 elementary LLC. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -17,18 +17,15 @@
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
-
-    public Notification notification;
-
-    private Gtk.Label time_label;
-
-    private string entry_summary;
-    private string entry_body;
-
     public bool active = true;
+    public Notification notification { get; construct; }
 
-    static Regex entity_regex;
-    static Regex tag_regex;
+    private static Regex entity_regex;
+    private static Regex tag_regex;
+
+    public NotificationEntry (Notification notification) {
+        Object (notification: notification);
+    }
 
     static construct {
         try {
@@ -39,50 +36,36 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
     }
 
-    public NotificationEntry (Notification _notification) {
-        notification = _notification;
-        entry_summary = notification.summary;
-        entry_body = notification.message_body;
-
-        get_style_context ().add_class ("menuitem");
-
-        notification.time_changed.connect ((timestamp) => {
-            time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
-
-            return active;
-        });
-
-        notification.closed.connect (() => clear ());
-
+    construct {
         hexpand = true;
+        get_style_context ().add_class (Gtk.STYLE_CLASS_MENUITEM);
+
+        var title_label = new Gtk.Label ("<b>" + fix_markup (notification.summary) + "</b>");
+        title_label.hexpand = true;
+        title_label.max_width_chars = 32;
+        title_label.use_markup = true;
+        title_label.wrap = true;
+        title_label.wrap_mode = Pango.WrapMode.WORD;
+        title_label.xalign = 0;
+
+        var time_label = new Gtk.Label (_("now"));
 
         var grid = new Gtk.Grid ();
         grid.margin_start = 40;
         grid.margin_end = 6;
-
-        var title_label = new Gtk.Label ("<b>" + fix_markup (entry_summary) + "</b>");
-        title_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-        title_label.max_width_chars = 32;
-        ((Gtk.Misc) title_label).xalign = 0.0f;
-        title_label.hexpand = true;
-        title_label.use_markup = true;
-        title_label.set_line_wrap (true);
-        title_label.wrap_mode = Pango.WrapMode.WORD;
-
-        time_label = new Gtk.Label (_("now"));
-
         grid.attach (title_label, 0, 0, 1, 1);
         grid.attach (time_label, 1, 0, 1, 1);
 
+        var entry_body = notification.message_body;
         if (entry_body != "") {
             var body_label = new Gtk.Label (fix_markup (entry_body));
-            ((Gtk.Misc) body_label).xalign = 0.0f;
+            body_label.xalign = 0;
             body_label.margin_bottom = 6;
             body_label.margin_end = 3;
-            body_label.use_markup = true;
-            body_label.set_line_wrap (true);
-            body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             body_label.max_width_chars = 32;
+            body_label.use_markup = true;
+            body_label.wrap = true;
+            body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             grid.attach (body_label, 0, 1, 2, 1);
         }
 
@@ -92,6 +75,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         if (notification.data_session) {
             notification.time_changed (notification.timestamp);
         }
+
+        notification.time_changed.connect ((timestamp) => {
+            time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
+
+            return active;
+        });
+
+        notification.closed.connect (() => clear ());
     }
 
     /**
