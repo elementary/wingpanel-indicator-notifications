@@ -20,7 +20,6 @@ asresources = gnome.compile_resources(
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
-    'src/Utils.vala',
     'src/Widgets/NotificationsList.vala',
     'src/Widgets/NotificationEntry.vala',
     'src/Widgets/AppEntry.vala',
