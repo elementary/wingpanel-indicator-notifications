@@ -41,37 +41,39 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 description:_("The notifications indicator"));
 
         visible = true;
-
-        app_settings_cache = new Gee.HashMap<string, Settings> ();
     }
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
+            nlist = new NotificationsList ();
+            restore_previous_session ();
+
             dynamic_icon = new Gtk.Spinner ();
             dynamic_icon.active = true;
             dynamic_icon.get_style_context ().add_class ("notification-icon");
+            dynamic_icon.button_press_event.connect ((e) => {
+                if (e.button == Gdk.BUTTON_MIDDLE) {
+                    NotifySettings.get_instance ().do_not_disturb = !NotifySettings.get_instance ().do_not_disturb;
+                    return Gdk.EVENT_STOP;
+                }
+    
+                return Gdk.EVENT_PROPAGATE;
+            });    
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
             dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            set_display_icon_name ();            
         }
-
-        set_display_icon_name ();
-
-        dynamic_icon.button_press_event.connect ((e) => {
-            if (e.button == Gdk.BUTTON_MIDDLE) {
-                NotifySettings.get_instance ().do_not_disturb = !NotifySettings.get_instance ().do_not_disturb;
-                return Gdk.EVENT_STOP;
-            }
-
-            return Gdk.EVENT_PROPAGATE;
-        });
 
         return dynamic_icon;
     }
 
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
+            app_settings_cache = new Gee.HashMap<string, Settings> ();
+
             main_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             main_box.set_size_request (BOX_WIDTH, -1);
 
@@ -83,8 +85,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             no_notifications_label.sensitive = false;
             no_notifications_label.margin_top = no_notifications_label.margin_bottom = 24;
             no_notifications_label.margin_start = no_notifications_label.margin_end = 12;
-
-            nlist = new NotificationsList ();
 
             var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
@@ -129,8 +129,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             main_box.pack_end (settings_btn, false, false, 0);
             main_box.pack_end (clear_all_btn, false, false, 0);
             main_box.show_all ();
-
-            restore_previous_session ();
 
             on_switch_stack (nlist.get_entries_length () > 0);
         }
