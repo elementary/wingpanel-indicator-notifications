@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-28 16:12-0700\n"
-"PO-Revision-Date: 2017-12-20 00:11+0000\n"
-"Last-Translator: Ryo Nakano <rmfmada3q@gmail.com>\n"
-"Language-Team: Japanese <https://weblate.elementary.io/projects/wingpanel/"
-"wingpanel-indicator-notifications/ja/>\n"
+"PO-Revision-Date: 2018-05-14 00:04+0000\n"
+"Last-Translator: Ryo Nakano <ryonakaknock@gmail.com>\n"
+"Language-Team: Japanese <https://weblate.elementary.io/projects/wingpanel"
+"/wingpanel-indicator-notifications/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +29,7 @@ msgstr "通知はありません"
 
 #: src/Indicator.vala:97
 msgid "Do Not Disturb"
-msgstr "おやすみモード"
+msgstr "非通知モード"
 
 #: src/Indicator.vala:104
 msgid "Clear All Notifications"
