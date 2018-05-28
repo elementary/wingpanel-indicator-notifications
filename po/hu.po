@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-28 16:12-0700\n"
-"PO-Revision-Date: 2018-05-28 17:18+0000\n"
-"Last-Translator: Majer Tamás <mtamas@disroot.org>\n"
+"PO-Revision-Date: 2018-05-28 17:19+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Hungarian <https://weblate.elementary.io/projects/wingpanel"
 "/wingpanel-indicator-notifications/hu/>\n"
 "Language: hu\n"
@@ -25,11 +25,11 @@ msgstr "Értesítések indikátor"
 
 #: src/Indicator.vala:82
 msgid "No Notifications"
-msgstr ""
+msgstr "Nincsenek értesítések"
 
 #: src/Indicator.vala:97
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "Ne zavarj"
 
 #: src/Indicator.vala:104
 msgid "Clear All Notifications"
