@@ -1,5 +1,4 @@
 src/Indicator.vala
-src/Utils.vala
 src/Widgets/NotificationsList.vala
 src/Widgets/NotificationEntry.vala
 src/Widgets/AppEntry.vala

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-28 16:12-0700\n"
+"POT-Creation-Date: 2018-06-27 09:51-0700\n"
 "PO-Revision-Date: 2017-05-05 11:16+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
@@ -23,23 +23,23 @@ msgstr "Varslingsindikator"
 msgid "The notifications indicator"
 msgstr "Varslingsindikatoren"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:83
 msgid "No Notifications"
 msgstr "Ingen varsler"
 
-#: src/Indicator.vala:97
+#: src/Indicator.vala:96
 msgid "Do Not Disturb"
 msgstr "Ikke forstyrr"
 
-#: src/Indicator.vala:104
+#: src/Indicator.vala:103
 msgid "Clear All Notifications"
 msgstr "Fjern alle varsler"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:110
 msgid "Notifications Settings…"
 msgstr "Innstillinger for varsler…"
 
-#: src/Widgets/NotificationEntry.vala:72
+#: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "nå"
 

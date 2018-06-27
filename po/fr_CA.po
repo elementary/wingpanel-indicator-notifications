@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-28 16:12-0700\n"
+"POT-Creation-Date: 2018-06-27 09:51-0700\n"
 "PO-Revision-Date: 2017-12-20 20:37+0000\n"
 "Last-Translator: Marcio <marcio.pelegrini@gmail.com>\n"
 "Language-Team: French (Canada) <https://weblate.elementary.io/projects/"
@@ -23,23 +23,23 @@ msgstr "Indicateur de notifications"
 msgid "The notifications indicator"
 msgstr "L'indicateur de notifications"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:83
 msgid "No Notifications"
 msgstr "Aucune notification"
 
-#: src/Indicator.vala:97
+#: src/Indicator.vala:96
 msgid "Do Not Disturb"
 msgstr "Ne pas déranger"
 
-#: src/Indicator.vala:104
+#: src/Indicator.vala:103
 msgid "Clear All Notifications"
 msgstr "Effacer toutes les notifications"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:110
 msgid "Notifications Settings…"
 msgstr "Paramètres des notifications…"
 
-#: src/Widgets/NotificationEntry.vala:72
+#: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "maintenant"
 

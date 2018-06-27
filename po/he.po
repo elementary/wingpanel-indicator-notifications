@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-28 16:12-0700\n"
+"POT-Creation-Date: 2018-06-27 09:51-0700\n"
 "PO-Revision-Date: 2017-04-20 15:20+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -23,23 +23,23 @@ msgstr "מחוון התרעות"
 msgid "The notifications indicator"
 msgstr "מחוון ההתרעות"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:83
 msgid "No Notifications"
 msgstr "אין התרעות"
 
-#: src/Indicator.vala:97
+#: src/Indicator.vala:96
 msgid "Do Not Disturb"
 msgstr "לא להפריע"
 
-#: src/Indicator.vala:104
+#: src/Indicator.vala:103
 msgid "Clear All Notifications"
 msgstr "פינוי כל ההתרעות"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:110
 msgid "Notifications Settings…"
 msgstr "הגדרות ההתרעות…"
 
-#: src/Widgets/NotificationEntry.vala:72
+#: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "כעת"
 
