@@ -30,6 +30,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gtk.Box? main_box = null;
     private Gtk.ModelButton clear_all_btn;
     private Gtk.Stack stack;
+    private Wingpanel.Widgets.Switch not_disturb_switch;
 
     private NotificationsList nlist;
 
@@ -64,7 +65,19 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
             dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            set_display_icon_name ();            
+            var monitor = NotificationMonitor.get_instance ();
+            monitor.notification_received.connect (on_notification_received);
+            monitor.notification_closed.connect (on_notification_closed);
+
+            NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
+                if (not_disturb_switch != null) {
+                    not_disturb_switch.get_switch ().active = NotifySettings.get_instance ().do_not_disturb;
+                }
+
+                set_display_icon_name ();
+            });
+
+            set_display_icon_name ();
         }
 
         return dynamic_icon;
@@ -93,7 +106,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             stack.add_named (scrolled, LIST_ID);
             stack.add_named (no_notifications_label, NO_NOTIFICATIONS_ID);
 
-            var not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), NotifySettings.get_instance ().do_not_disturb);
+            not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), NotifySettings.get_instance ().do_not_disturb);
             not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
             not_disturb_switch.get_switch ().notify["active"].connect (() => {
                 NotifySettings.get_instance ().do_not_disturb = not_disturb_switch.get_switch ().active;
@@ -112,15 +125,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             nlist.close_popover.connect (() => close ());
             nlist.switch_stack.connect (on_switch_stack);
-
-            var monitor = NotificationMonitor.get_instance ();
-            monitor.notification_received.connect (on_notification_received);
-            monitor.notification_closed.connect (on_notification_closed);
-
-            NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
-                not_disturb_switch.get_switch ().active = NotifySettings.get_instance ().do_not_disturb;
-                set_display_icon_name ();
-            });
 
             main_box.add (not_disturb_switch);
             main_box.add (new Wingpanel.Widgets.Separator ());
