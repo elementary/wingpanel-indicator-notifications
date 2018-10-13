@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-27 09:51-0700\n"
+"POT-Creation-Date: 2018-10-13 14:43-0700\n"
 "PO-Revision-Date: 2017-07-06 15:06+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: \n"
@@ -14,27 +14,27 @@ msgstr ""
 "X-Generator: Poedit 2.0.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:40
+#: src/Indicator.vala:41
 msgid "Notifications indicator"
 msgstr "Indikator notifikasi"
 
-#: src/Indicator.vala:41
+#: src/Indicator.vala:42
 msgid "The notifications indicator"
 msgstr "Indikator notifikasi"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:96
 msgid "No Notifications"
 msgstr "Tak Ada Notifikasi"
 
-#: src/Indicator.vala:96
+#: src/Indicator.vala:109
 msgid "Do Not Disturb"
 msgstr "Jangan Ganggu"
 
-#: src/Indicator.vala:103
+#: src/Indicator.vala:116
 msgid "Clear All Notifications"
 msgstr "Bersihkan Semua Notifikasi"
 
-#: src/Indicator.vala:110
+#: src/Indicator.vala:123
 msgid "Notifications Settings…"
 msgstr "Pengaturan Notifikasi…"
 

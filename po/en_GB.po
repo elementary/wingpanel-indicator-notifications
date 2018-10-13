@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-27 09:51-0700\n"
+"POT-Creation-Date: 2018-10-13 14:43-0700\n"
 "PO-Revision-Date: 2018-04-29 15:09+0000\n"
 "Last-Translator: Ciaran Ainsworth <cda@whistlingkappa.com>\n"
 "Language-Team: English (United Kingdom) <https://weblate.elementary.io/"
@@ -15,27 +15,27 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:40
+#: src/Indicator.vala:41
 msgid "Notifications indicator"
 msgstr "Notifications indicator"
 
-#: src/Indicator.vala:41
+#: src/Indicator.vala:42
 msgid "The notifications indicator"
 msgstr "The notifications indicator"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:96
 msgid "No Notifications"
 msgstr "No Notifications"
 
-#: src/Indicator.vala:96
+#: src/Indicator.vala:109
 msgid "Do Not Disturb"
 msgstr "Do Not Disturb"
 
-#: src/Indicator.vala:103
+#: src/Indicator.vala:116
 msgid "Clear All Notifications"
 msgstr "Clear All Notifications"
 
-#: src/Indicator.vala:110
+#: src/Indicator.vala:123
 msgid "Notifications Settings…"
 msgstr "Notifications Settings…"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-27 09:51-0700\n"
+"POT-Creation-Date: 2018-10-13 14:43-0700\n"
 "PO-Revision-Date: 2017-05-03 14:17+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,27 +15,27 @@ msgstr ""
 "X-Generator: Weblate 2.13-dev\n"
 "X-Launchpad-Export-Date: 2017-04-05 07:46+0000\n"
 
-#: src/Indicator.vala:40
+#: src/Indicator.vala:41
 msgid "Notifications indicator"
 msgstr "Indicador de notificacions"
 
-#: src/Indicator.vala:41
+#: src/Indicator.vala:42
 msgid "The notifications indicator"
 msgstr "L'indicador de notificacions"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:96
 msgid "No Notifications"
 msgstr "No hi ha notificacions"
 
-#: src/Indicator.vala:96
+#: src/Indicator.vala:109
 msgid "Do Not Disturb"
 msgstr "No m'emprenyis"
 
-#: src/Indicator.vala:103
+#: src/Indicator.vala:116
 msgid "Clear All Notifications"
 msgstr "Neteja totes les notificacions"
 
-#: src/Indicator.vala:110
+#: src/Indicator.vala:123
 msgid "Notifications Settings…"
 msgstr "Paràmetres de les notificacions…"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-27 09:51-0700\n"
+"POT-Creation-Date: 2018-10-13 14:43-0700\n"
 "PO-Revision-Date: 2018-03-20 00:14+0000\n"
 "Last-Translator: Anand Kumar <anand@anandkumar.net>\n"
 "Language-Team: Hindi <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,27 +15,27 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:40
+#: src/Indicator.vala:41
 msgid "Notifications indicator"
 msgstr "सुचना सूचक"
 
-#: src/Indicator.vala:41
+#: src/Indicator.vala:42
 msgid "The notifications indicator"
 msgstr "सूचना सूचक"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:96
 msgid "No Notifications"
 msgstr "कोई सुचना नहीं"
 
-#: src/Indicator.vala:96
+#: src/Indicator.vala:109
 msgid "Do Not Disturb"
 msgstr "परेशान न करें"
 
-#: src/Indicator.vala:103
+#: src/Indicator.vala:116
 msgid "Clear All Notifications"
 msgstr "सभी सूचनाएं हटायें"
 
-#: src/Indicator.vala:110
+#: src/Indicator.vala:123
 msgid "Notifications Settings…"
 msgstr "सूचना सेटिंग्स…"
 
