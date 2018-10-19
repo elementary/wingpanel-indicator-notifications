@@ -7,7 +7,6 @@
 
 You'll need the following dependencies:
 
-* libdbus-glib-1-dev
 * libgdk-pixbuf2.0-dev
 * libglib2.0-dev
 * libgranite-dev
