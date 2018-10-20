@@ -3,28 +3,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-13 14:43-0700\n"
-"PO-Revision-Date: 2016-07-16 08:50+0000\n"
-"Last-Translator: Mikael Nyberg <mikanybe@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2018-10-24 15:05+0000\n"
+"Last-Translator: Fredrik B <frbo9002@gmail.com>\n"
+"Language-Team: Swedish <https://weblate.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
 #: src/Indicator.vala:41
 msgid "Notifications indicator"
-msgstr "Notisindikator"
+msgstr "Notifikationsindikator"
 
 #: src/Indicator.vala:42
 msgid "The notifications indicator"
-msgstr "Notisindikatorn"
+msgstr "Notifikationsindikatorn"
 
 #: src/Indicator.vala:96
 msgid "No Notifications"
-msgstr "Inga notiser"
+msgstr "Inga notifikationer"
 
 #: src/Indicator.vala:109
 msgid "Do Not Disturb"
@@ -32,11 +33,11 @@ msgstr "Stör ej"
 
 #: src/Indicator.vala:116
 msgid "Clear All Notifications"
-msgstr "Rensa alla notiser"
+msgstr "Rensa alla notifikationer"
 
 #: src/Indicator.vala:123
 msgid "Notifications Settings…"
-msgstr "Notisinställningar…"
+msgstr "Notifikationsinställningar…"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
