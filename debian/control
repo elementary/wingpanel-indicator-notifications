@@ -5,7 +5,6 @@ Maintainer: elementary LLC <builds@elementary.io>
 Build-Depends: debhelper (>= 10.5.1),
                gettext,
                gobject-introspection,
-               libdbus-glib-1-dev,
                libgdk-pixbuf2.0-dev,
                libglib2.0-dev,
                libgranite-dev,
