@@ -36,6 +36,18 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private Gee.HashMap<string, Settings> app_settings_cache;
 
+    private static File log_file;
+
+    static construct {
+        //  log_file = File.new_for_path ("")
+    }
+
+    private static void log_to_file (string message) {
+        string current;
+        FileUtils.get_contents ("/tmp/wingpanel.log", out current);
+        FileUtils.set_contents ("/tmp/wingpanel.log", current + message);
+    }
+
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES,
                 display_name: _("Notifications indicator"),
@@ -85,6 +97,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
+            log_to_file ("Initializing popover widget\n");
             app_settings_cache = new Gee.HashMap<string, Settings> ();
 
             main_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -159,6 +172,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             app_id = "gala-other";
         }
 
+        log_to_file ("Notification received from %s (%s): %s\n".printf (app_id, notification.desktop_id, notification.summary));
+
         Settings? app_settings = app_settings_cache.get (app_id);
 
         var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
@@ -176,6 +191,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void on_switch_stack (bool show_list) {
+        log_to_file ("Stack name switched\n");
         clear_all_btn.sensitive = show_list;
         if (show_list) {
             stack.set_visible_child_name (LIST_ID);
@@ -200,11 +216,16 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private void restore_previous_session () {
         var previous_session = Session.get_instance ().get_session_notifications ();
         previous_session.foreach ((notification) => {
+            log_to_file ("Notification restored from previous session from %s: %s\n".printf (notification.desktop_id, notification.summary));
             nlist.add_entry (new NotificationEntry (notification));
         });
     }
 
     private void set_display_icon_name () {
+        log_to_file ("Setting display icon name: notification list length: %u, DnD: %s\n".printf (
+            nlist.get_entries_length (),
+            NotifySettings.get_instance ().do_not_disturb.to_string ()));
+
         var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (NotifySettings.get_instance ().do_not_disturb) {
             dynamic_icon_style_context.add_class ("disabled");
