@@ -47,6 +47,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
             nlist = new NotificationsList ();
+            // this is needed initially to always update the state of the indicator
+            nlist.switch_stack.connect (set_display_icon_name);
+
             restore_previous_session ();
 
             dynamic_icon = new Gtk.Spinner ();
@@ -182,8 +185,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         } else {
             stack.set_visible_child_name (NO_NOTIFICATIONS_ID);
         }
-
-        set_display_icon_name ();
     }
 
     private void on_notification_closed (uint32 id) {
