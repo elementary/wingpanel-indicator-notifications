@@ -3,16 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-13 14:43-0700\n"
-"PO-Revision-Date: 2017-02-18 14:09+0000\n"
-"Last-Translator: İbrahim Ethem Göl <Unknown>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2018-10-29 16:38+0000\n"
+"Last-Translator: Sinan Decron <intenfinitia@gmail.com>\n"
+"Language-Team: Turkish <https://weblate.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
 #: src/Indicator.vala:41
 msgid "Notifications indicator"
@@ -36,7 +37,7 @@ msgstr "Tüm Bildirimleri Temizle"
 
 #: src/Indicator.vala:123
 msgid "Notifications Settings…"
-msgstr "Bildirim Seçenekleri..."
+msgstr "Bildirim Seçenekleri…"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
