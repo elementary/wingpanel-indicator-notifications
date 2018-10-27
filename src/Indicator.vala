@@ -15,6 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+private static void log_to_file (string message) {
+    string path = Path.build_filename (Environment.get_home_dir (), "wingpanel.log");
+    if (!FileUtils.test (path, FileTest.EXISTS)) {
+        var f = File.new_for_path (path);
+        f.create (FileCreateFlags.NONE);
+    }
+
+    string current = "";
+    string now = new DateTime.now_local ().format ("%F:%H:%M:%S");
+    FileUtils.get_contents (path, out current);
+    FileUtils.set_contents (path, "%s %s: %s".printf (current, now, message));
+}
+
 public class Notifications.Indicator : Wingpanel.Indicator {
     private const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
     private const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
@@ -37,16 +50,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gee.HashMap<string, Settings> app_settings_cache;
 
     private static File log_file;
-
-    static construct {
-        //  log_file = File.new_for_path ("")
-    }
-
-    private static void log_to_file (string message) {
-        string current;
-        FileUtils.get_contents ("/tmp/wingpanel.log", out current);
-        FileUtils.set_contents ("/tmp/wingpanel.log", current + message);
-    }
 
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES,
@@ -222,9 +225,20 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void set_display_icon_name () {
-        log_to_file ("Setting display icon name: notification list length: %u, DnD: %s\n".printf (
+        log_to_file ("Setting display icon name: notification list length: %u, DnD: %s, notification list:\n".printf (
             nlist.get_entries_length (),
             NotifySettings.get_instance ().do_not_disturb.to_string ()));
+
+        if (nlist.get_entries ().length () == 0) {
+            log_to_file ("No notifications\n");
+        }
+
+        foreach (var app_entry in nlist.get_entries ()) {
+            foreach (var entry in app_entry.app_notifications) {
+                var notification = entry.notification;
+                log_to_file ("%s (app name: \"%s\"): %s\n".printf (notification.desktop_id, notification.app_name, notification.summary));
+            }
+        }
 
         var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (NotifySettings.get_instance ().do_not_disturb) {
@@ -251,6 +265,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
 public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
     debug ("Activating Notifications Indicator");
+    log_to_file ("\n -- New indicator session --\n");
 
     if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
         return null;
