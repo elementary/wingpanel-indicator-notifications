@@ -157,7 +157,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-
+        stack.set_visible_child_name (LIST_ID);
     }
 
     public override void closed () {

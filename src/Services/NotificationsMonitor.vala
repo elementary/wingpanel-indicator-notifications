@@ -83,12 +83,14 @@ public class Notifications.NotificationMonitor : Object {
     private DBusMessage message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
         if (incoming && message.get_interface () == NOTIFY_IFACE && message.get_message_type () == DBusMessageType.METHOD_CALL) {
             if (message.get_member () == "Notify") {
+                log_to_file ("Notify called, awaiting server reply.\n");
                 try {
                     awaiting_reply = message.copy ();
                 } catch (Error e) {
                     warning (e.message);
                 }
             } else if (message.get_member () == "CloseNotification") {
+                log_to_file ("CloseNotification called\n");
                 var body = message.get_body ();
                 if (body.n_children () != 1) {
                     return message;
@@ -109,6 +111,7 @@ public class Notifications.NotificationMonitor : Object {
             return null;            
         } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {            
             if (message.get_message_type () == DBusMessageType.METHOD_RETURN) {
+                log_to_file ("Got server reply.\n");
                 var body = message.get_body ();
                 if (body.n_children () != 1) {
                     return message;
