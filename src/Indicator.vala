@@ -209,6 +209,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         foreach (var app_entry in nlist.get_entries ()) {
             foreach (var item in app_entry.app_notifications) {
                 if (item.notification.id == id) {
+                    var notification = item.notification;
+                    log_to_file ("Removing notification: %s (app name: \"%s\"): %s\n".printf (notification.desktop_id, notification.app_name, notification.summary));
                     item.notification.close ();
                     return;
                 }
