@@ -3,42 +3,43 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-13 14:43-0700\n"
-"PO-Revision-Date: 2015-06-21 23:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2018-11-04 22:27+0000\n"
+"Last-Translator: Elvis Mujanović <elvis.mujanovic@gmail.com>\n"
+"Language-Team: Bosnian <https://weblate.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/bs/>\n"
+"Language: bs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
 #: src/Indicator.vala:41
 msgid "Notifications indicator"
-msgstr ""
+msgstr "Indikator obavijesti"
 
 #: src/Indicator.vala:42
 msgid "The notifications indicator"
-msgstr ""
+msgstr "Indikator obavijesti"
 
 #: src/Indicator.vala:96
 msgid "No Notifications"
-msgstr ""
+msgstr "Nema obavijesti"
 
 #: src/Indicator.vala:109
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "Ne smetaj"
 
 #: src/Indicator.vala:116
 msgid "Clear All Notifications"
-msgstr ""
+msgstr "Izbriši sve obavijesti"
 
 #: src/Indicator.vala:123
 msgid "Notifications Settings…"
-msgstr ""
+msgstr "Podešavanja obavijesti…"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
-msgstr ""
+msgstr "sada"
