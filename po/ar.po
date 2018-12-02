@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-13 14:43-0700\n"
 "PO-Revision-Date: 2018-12-02 05:38+0000\n"
-"Last-Translator: Yassine MRABET <yassine.mrabet@gmail.com>\n"
+"Last-Translator: Mohelm97 <mohelm97@gmail.com>\n"
 "Language-Team: Arabic <https://weblate.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ar/>\n"
 "Language: ar\n"
@@ -38,7 +38,7 @@ msgstr "مسح كل التنبيهات"
 
 #: src/Indicator.vala:123
 msgid "Notifications Settings…"
-msgstr "إعدادات التنبيهات"
+msgstr "إعدادات التنبيهات…"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
