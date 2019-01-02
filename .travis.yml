@@ -4,7 +4,7 @@ services:
  - docker
 
 env:
- - DEPENDENCY_PACKAGES="libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-2.0-dev libwnck-3-dev meson valac"
+ - DEPENDENCY_PACKAGES="gettext libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-2.0-dev libwnck-3-dev meson valac"
 
 install:
  - docker run -v "$PWD":/tmp/build-dir elementary/docker:juno-unstable /bin/sh -c "apt-get update && apt-get -y install $DEPENDENCY_PACKAGES && cd /tmp/build-dir && meson build --prefix=/usr && ninja -C build"
