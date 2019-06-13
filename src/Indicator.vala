@@ -110,7 +110,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             stack.add_named (no_notifications_label, NO_NOTIFICATIONS_ID);
 
             not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), NotifySettings.get_instance ().do_not_disturb);
-            not_disturb_switch.get_label ().get_style_context ().add_class ("h4");
+            not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
             not_disturb_switch.get_switch ().notify["active"].connect (() => {
                 NotifySettings.get_instance ().do_not_disturb = not_disturb_switch.get_switch ().active;
             });
