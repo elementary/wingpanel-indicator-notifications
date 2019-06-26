@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
+"POT-Creation-Date: 2019-06-26 22:47+0200\n"
 "PO-Revision-Date: 2016-04-30 11:17+0000\n"
 "Last-Translator: Rockworld <sumoisrock@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,19 +22,19 @@ msgstr "ตัวบ่งชี้การแจ้งเหตุ"
 msgid "The notifications indicator"
 msgstr "ตัวบ่งชี้การแจ้งเหตุ"
 
-#: src/Indicator.vala:96
+#: src/Indicator.vala:99
 msgid "No Notifications"
 msgstr "ไม่มีการแจ้งเหตุ"
 
-#: src/Indicator.vala:109
+#: src/Indicator.vala:112
 msgid "Do Not Disturb"
 msgstr "ห้ามรบกวน"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:119
 msgid "Clear All Notifications"
 msgstr "ล้างการแจ้งเหตุทั้งหมด"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:126
 msgid "Notifications Settings…"
 msgstr "ค่าตั้งการแจ้งเหตุ..."
 
