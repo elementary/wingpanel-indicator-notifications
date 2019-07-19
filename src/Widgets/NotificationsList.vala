@@ -39,6 +39,19 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         monitor_active_window ();
     }
 
+    construct {
+        var placeholder = new Gtk.Label (_("No Notifications"));
+        placeholder.margin_top = placeholder.margin_bottom = 24;
+        placeholder.margin_start = placeholder.margin_end = 12;
+        placeholder.show ();
+
+        unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
+        placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
+        placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+
+        set_placeholder (placeholder);
+    }
+
     public void add_entry (NotificationEntry entry) {
         var app_entry = add_entry_internal (entry);
         if (app_entry == null) {
