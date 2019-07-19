@@ -97,10 +97,12 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             stack.hexpand = true;
 
             var no_notifications_label = new Gtk.Label (_("No Notifications"));
-            no_notifications_label.get_style_context ().add_class ("h2");
-            no_notifications_label.sensitive = false;
             no_notifications_label.margin_top = no_notifications_label.margin_bottom = 24;
             no_notifications_label.margin_start = no_notifications_label.margin_end = 12;
+
+            unowned Gtk.StyleContext placeholder_style_context = no_notifications_label.get_style_context ();
+            placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
+            placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
             var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
