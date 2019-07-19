@@ -23,8 +23,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private const uint16 BOX_WIDTH = 300;
     private const uint16 BOX_HEIGHT = 400;
-    private const string LIST_ID = "list";
-    private const string NO_NOTIFICATIONS_ID = "no-notifications";
 
     private Gtk.Spinner? dynamic_icon = null;
     private Gtk.Box? main_box = null;
