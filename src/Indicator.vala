@@ -23,13 +23,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private const uint16 BOX_WIDTH = 300;
     private const uint16 BOX_HEIGHT = 400;
-    private const string LIST_ID = "list";
-    private const string NO_NOTIFICATIONS_ID = "no-notifications";
 
     private Gtk.Spinner? dynamic_icon = null;
     private Gtk.Box? main_box = null;
     private Gtk.ModelButton clear_all_btn;
-    private Gtk.Stack stack;
     private Wingpanel.Widgets.Switch not_disturb_switch;
 
     private NotificationsList nlist;
@@ -93,9 +90,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             main_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             main_box.set_size_request (BOX_WIDTH, -1);
 
-            stack = new Gtk.Stack ();
-            stack.hexpand = true;
-
             var no_notifications_label = new Gtk.Label (_("No Notifications"));
             no_notifications_label.get_style_context ().add_class ("h2");
             no_notifications_label.sensitive = false;
@@ -105,9 +99,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var scrolled = new Wingpanel.Widgets.AutomaticScrollBox (null, null);
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
             scrolled.add (nlist);
-
-            stack.add_named (scrolled, LIST_ID);
-            stack.add_named (no_notifications_label, NO_NOTIFICATIONS_ID);
 
             not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), NotifySettings.get_instance ().do_not_disturb);
             not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
@@ -127,17 +118,17 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             settings_btn.clicked.connect (show_settings);
 
             nlist.close_popover.connect (() => close ());
-            nlist.switch_stack.connect (on_switch_stack);
+            nlist.switch_stack.connect (update_clear_all_sensitivity);
 
             main_box.add (not_disturb_switch);
             main_box.add (new Wingpanel.Widgets.Separator ());
-            main_box.add (stack);
+            main_box.add (scrolled);
             main_box.add (new Wingpanel.Widgets.Separator ());
             main_box.pack_end (settings_btn, false, false, 0);
             main_box.pack_end (clear_all_btn, false, false, 0);
             main_box.show_all ();
 
-            on_switch_stack (nlist.get_entries_length () > 0);
+            update_clear_all_sensitivity (nlist.get_entries_length () > 0);
         }
 
         return main_box;
@@ -178,13 +169,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         set_display_icon_name ();        
     }
 
-    private void on_switch_stack (bool show_list) {
+    private void update_clear_all_sensitivity (bool show_list) {
         clear_all_btn.sensitive = show_list;
-        if (show_list) {
-            stack.set_visible_child_name (LIST_ID);
-        } else {
-            stack.set_visible_child_name (NO_NOTIFICATIONS_ID);
-        }
     }
 
     private void on_notification_closed (uint32 id) {
