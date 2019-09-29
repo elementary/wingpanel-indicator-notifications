@@ -1,0 +1,22 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    container:
+      image: elementary/docker:unstable
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: |
+        apt update
+        apt install -y gettext libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-2.0-dev libwnck-3-dev meson valac
+    - name: Build
+      run: |
+        meson build
+        ninja -C build
