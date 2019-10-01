@@ -16,9 +16,9 @@
  */
 
  public class Notifications.SeparatorEntry : Gtk.ListBoxRow {
- 	public SeparatorEntry () {
- 		activatable = selectable = false;
- 		add (new Wingpanel.Widgets.Separator ());
- 		show_all ();
- 	}
- }
+    public SeparatorEntry () {
+        activatable = selectable = false;
+        add (new Wingpanel.Widgets.Separator ());
+        show_all ();
+    }
+}
