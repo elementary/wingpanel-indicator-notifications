@@ -26,7 +26,7 @@ public class Notifications.Session : GLib.Object {
     private static Session? instance = null;
 
     private File session_file = null;
-    
+
     private const string APP_NAME_KEY = "AppName";
     private const string APP_ICON_KEY = "AppIcon";
     private const string SUMMARY_KEY = "Summary";

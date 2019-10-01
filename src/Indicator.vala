@@ -57,9 +57,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                     NotifySettings.get_instance ().do_not_disturb = !NotifySettings.get_instance ().do_not_disturb;
                     return Gdk.EVENT_STOP;
                 }
-    
+
                 return Gdk.EVENT_PROPAGATE;
-            });    
+            });
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
@@ -166,7 +166,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             nlist.add_entry (entry);
         }
 
-        set_display_icon_name ();        
+        set_display_icon_name ();
     }
 
     private void update_clear_all_sensitivity (bool show_list) {

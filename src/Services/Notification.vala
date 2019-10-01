@@ -121,7 +121,7 @@ public class Notifications.Notification : Object {
     }
 
     public bool get_is_valid () {
-        var transient = hints.lookup_value("transient", VariantType.BOOLEAN);
+        var transient = hints.lookup_value ("transient", VariantType.BOOLEAN);
         return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null && (transient == null || !transient.get_boolean ());
     }
 
@@ -146,10 +146,10 @@ public class Notifications.Notification : Object {
                     window = _window;
                     return;
                 }
-            });     
+            });
         }
 
-        return window;        
+        return window;
     }
 
     private void setup_pid () {

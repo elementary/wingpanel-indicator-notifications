@@ -145,7 +145,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 app_entry.add_notification_entry (entry);
 
                 int insert_pos = table.get (app_entry.app_info.get_id ());
-                insert (entry, insert_pos + 1);                
+                insert (entry, insert_pos + 1);
             }
         }
 
@@ -237,7 +237,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 return true;
             } catch (Error e) {
                 warning ("%s\n", e.message);
-            }            
+            }
         }
 
         return false;
