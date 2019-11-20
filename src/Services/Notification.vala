@@ -154,7 +154,7 @@ public class Notifications.Notification : Object {
 
     private void setup_pid () {
         pid_acquired = try_get_pid ();
-        NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
+        Indicator.notify_settings.changed["do-not-disturb"].connect (() => {
             if (!pid_acquired) {
                 try_get_pid ();
             }
@@ -162,7 +162,7 @@ public class Notifications.Notification : Object {
     }
 
     private bool try_get_pid () {
-        if (NotifySettings.get_instance ().do_not_disturb) {
+        if (Indicator.notify_settings.get_boolean ("do-not-disturb")) {
             return false;
         }
 
