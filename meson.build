@@ -35,7 +35,6 @@ shared_module(
     'src/Widgets/SeparatorEntry.vala',
     'src/Services/NotificationsMonitor.vala',
     'src/Services/Notification.vala',
-    'src/Services/NotifySettings.vala',
     'src/Services/Session.vala',
     'src/Services/Interfaces.vala',
     asresources,

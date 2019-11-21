@@ -30,12 +30,18 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private Gee.HashMap<string, Settings> app_settings_cache;
 
+    public static GLib.Settings notify_settings;
+
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES,
                 display_name: _("Notifications indicator"),
                 description:_("The notifications indicator"));
 
         visible = true;
+    }
+
+    static construct {
+        notify_settings = new GLib.Settings ("org.pantheon.desktop.gala.notifications");
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -62,18 +68,14 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             dynamic_icon.button_press_event.connect ((e) => {
                 if (e.button == Gdk.BUTTON_MIDDLE) {
-                    NotifySettings.get_instance ().do_not_disturb = !NotifySettings.get_instance ().do_not_disturb;
+                    notify_settings.set_boolean ("do-not-disturb", !notify_settings.get_boolean ("do-not-disturb"));
                     return Gdk.EVENT_STOP;
                 }
 
                 return Gdk.EVENT_PROPAGATE;
             });
 
-            NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
-                if (not_disturb_switch != null) {
-                    not_disturb_switch.get_switch ().active = NotifySettings.get_instance ().do_not_disturb;
-                }
-
+            notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
             });
 
@@ -93,11 +95,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             scrolled.propagate_natural_height = true;
             scrolled.add (nlist);
 
-            not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"), NotifySettings.get_instance ().do_not_disturb);
+            not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"));
             not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
-            not_disturb_switch.get_switch ().notify["active"].connect (() => {
-                NotifySettings.get_instance ().do_not_disturb = not_disturb_switch.get_switch ().active;
-            });
 
             clear_all_btn = new Gtk.ModelButton ();
             clear_all_btn.text = _("Clear All Notifications");
@@ -115,6 +114,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             main_box.add (clear_all_btn);
             main_box.add (settings_btn);
             main_box.show_all ();
+
+            notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             nlist.close_popover.connect (() => close ());
             nlist.switch_stack.connect (update_clear_all_sensitivity);
@@ -191,7 +192,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void set_display_icon_name () {
         var dynamic_icon_style_context = dynamic_icon.get_style_context ();
-        if (NotifySettings.get_instance ().do_not_disturb) {
+        if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
         } else if (nlist != null && nlist.get_entries_length () > 0) {
             dynamic_icon_style_context.remove_class ("disabled");
