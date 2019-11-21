@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 22:47+0200\n"
+"POT-Creation-Date: 2019-11-21 08:02+0000\n"
 "PO-Revision-Date: 2016-08-01 22:03+0000\n"
 "Last-Translator: aberba <karabutaworld@gmail.com>\n"
 "Language-Team: Akan <ak@li.org>\n"
@@ -19,29 +19,29 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 "X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:41
+#: src/Indicator.vala:35
 msgid "Notifications indicator"
 msgstr "Kɔkɔbɔ ahyɛnsodeɛ"
 
-#: src/Indicator.vala:42
+#: src/Indicator.vala:36
 msgid "The notifications indicator"
 msgstr "Kɔkɔbɔ ahyɛnsodeɛ no"
 
-#: src/Indicator.vala:99
-msgid "No Notifications"
-msgstr "Kɔkɔbɔ Biara Nni Hɔ"
-
-#: src/Indicator.vala:112
+#: src/Indicator.vala:96
 msgid "Do Not Disturb"
 msgstr "Nha me"
 
-#: src/Indicator.vala:119
+#: src/Indicator.vala:103
 msgid "Clear All Notifications"
 msgstr "Yi Kɔkɔbɔ No Nyinaa"
 
-#: src/Indicator.vala:126
+#: src/Indicator.vala:106
 msgid "Notifications Settings…"
 msgstr "Kɔkɔbɔ Ho Nhyehyeɛ"
+
+#: src/Widgets/NotificationsList.vala:43
+msgid "No Notifications"
+msgstr "Kɔkɔbɔ Biara Nni Hɔ"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
