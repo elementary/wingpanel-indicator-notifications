@@ -192,7 +192,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void set_display_icon_name () {
         var dynamic_icon_style_context = dynamic_icon.get_style_context ();
-        if (Indicator.notify_settings.get_boolean ("do-not-disturb")) {
+        if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
         } else if (nlist != null && nlist.get_entries_length () > 0) {
             dynamic_icon_style_context.remove_class ("disabled");
