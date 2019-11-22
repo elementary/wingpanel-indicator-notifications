@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 22:47+0200\n"
+"POT-Creation-Date: 2019-11-21 08:02+0000\n"
 "PO-Revision-Date: 2017-03-31 17:46+0000\n"
 "Last-Translator: Kristjan Vool <tictac7x@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,29 +14,29 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-04-05 07:46+0000\n"
 "X-Generator: Launchpad (build 18335)\n"
 
-#: src/Indicator.vala:41
+#: src/Indicator.vala:35
 msgid "Notifications indicator"
 msgstr "Märguannete indikaator"
 
-#: src/Indicator.vala:42
+#: src/Indicator.vala:36
 msgid "The notifications indicator"
 msgstr "Märguannete indikaator"
 
-#: src/Indicator.vala:99
-msgid "No Notifications"
-msgstr "Märguandeid pole"
-
-#: src/Indicator.vala:112
+#: src/Indicator.vala:96
 msgid "Do Not Disturb"
 msgstr "Märguannete keelamine"
 
-#: src/Indicator.vala:119
+#: src/Indicator.vala:103
 msgid "Clear All Notifications"
 msgstr "Kõikide märguannete puhastamine"
 
-#: src/Indicator.vala:126
+#: src/Indicator.vala:106
 msgid "Notifications Settings…"
 msgstr "Märguannete seaded…"
+
+#: src/Widgets/NotificationsList.vala:43
+msgid "No Notifications"
+msgstr "Märguandeid pole"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015-2018 elementary LLC. (https://elementary.io)
+ * Copyright 2015-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,10 +18,15 @@
 public class Notifications.AppEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
-    public AppInfo app_info;
+    public NotificationEntry entry { get; construct; }
+    public AppInfo? app_info = null;
     public List<NotificationEntry> app_notifications;
 
     public AppEntry (NotificationEntry entry) {
+        Object (entry: entry);
+    }
+
+    construct {
         margin_bottom = 3;
         margin_top = 3;
         margin_start = 12;
@@ -44,16 +49,14 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             clear ();
         });
 
-        string icon = "";
-        if (notification.app_icon == "" && app_info != null) {
-            var glib_icon = app_info.get_icon ();
-            icon = glib_icon.to_string ();
-        } else {
-            icon = notification.app_icon;
-        }
-
-        var image = new Gtk.Image.from_icon_name (icon, Gtk.IconSize.LARGE_TOOLBAR);
+        var image = new Gtk.Image ();
         image.pixel_size = 24;
+
+        if (notification.app_icon == "" && app_info != null) {
+            image.gicon = app_info.get_icon ();
+        } else {
+            image.icon_name = notification.app_icon;
+        }
 
         var grid = new Gtk.Grid ();
         grid.column_spacing = 12;
