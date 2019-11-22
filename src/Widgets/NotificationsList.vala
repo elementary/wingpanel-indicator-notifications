@@ -35,8 +35,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         vexpand = true;
         show_all ();
-
-        monitor_active_window ();
     }
 
     construct {
@@ -152,17 +150,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         return app_entry;
     }
 
-    private void monitor_active_window () {
-        var screen = Wnck.Screen.get_default ();
-        screen.active_window_changed.connect (() => {
-            app_entries.foreach ((app_entry) => {
-                if (screen.get_active_window () == app_entry.get_app_window ()) {
-                    app_entry.clear ();
-                }
-            });
-        });
-    }
-
     private void clear_app_entry (AppEntry app_entry) {
         app_entries.remove (app_entry);
 
@@ -203,19 +190,12 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         if (row is AppEntry) {
             var app_entry = (AppEntry)row;
-            close = focus_notification_app (app_entry.get_app_window (),
-                                            app_entry.app_info);
-
             app_entry.clear ();
+
         } else if (row is NotificationEntry) {
             var notification_entry = (NotificationEntry)row;
-
-            if (!notification_entry.notification.run_default_action ()) {
-                close = focus_notification_app (notification_entry.notification.get_app_window (),
-                                                notification_entry.notification.app_info);
-            }
-
             notification_entry.clear ();
+
         } else {
             close = false;
         }
@@ -225,21 +205,5 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         }
 
         update_separators ();
-    }
-
-    private bool focus_notification_app (Wnck.Window? app_window, AppInfo? app_info) {
-        if (app_window != null) {
-            app_window.activate (Gtk.get_current_event_time ());
-            return true;
-        } else if (app_info != null) {
-            try {
-                app_info.launch (null, null);
-                return true;
-            } catch (Error e) {
-                warning ("%s\n", e.message);
-            }
-        }
-
-        return false;
     }
 }
