@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-21 08:02+0000\n"
+"POT-Creation-Date: 2019-12-18 22:44+0000\n"
 "PO-Revision-Date: 2018-12-02 05:38+0000\n"
 "Last-Translator: Yassine MRABET <yassine.mrabet@gmail.com>\n"
 "Language-Team: Arabic <https://weblate.elementary.io/projects/wingpanel/"
@@ -16,27 +16,27 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:35
+#: src/Indicator.vala:37
 msgid "Notifications indicator"
 msgstr "مؤشر التنبيهات"
 
-#: src/Indicator.vala:36
+#: src/Indicator.vala:38
 msgid "The notifications indicator"
 msgstr "مؤشر التنبيهات"
 
-#: src/Indicator.vala:96
+#: src/Indicator.vala:98
 msgid "Do Not Disturb"
 msgstr "عدم الإزعاج"
 
-#: src/Indicator.vala:103
+#: src/Indicator.vala:102
 msgid "Clear All Notifications"
 msgstr "مسح كل التنبيهات"
 
-#: src/Indicator.vala:106
+#: src/Indicator.vala:105
 msgid "Notifications Settings…"
 msgstr "إعدادات التنبيهات…"
 
-#: src/Widgets/NotificationsList.vala:43
+#: src/Widgets/NotificationsList.vala:41
 msgid "No Notifications"
 msgstr "لا تنبيهات"
 
