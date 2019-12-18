@@ -43,7 +43,6 @@ shared_module(
         dependency('gobject-2.0'),
         dependency('granite'),
         dependency('gtk+-3.0'),
-        dependency('libwnck-3.0'),
         wingpanel_dep
     ],
     install: true,

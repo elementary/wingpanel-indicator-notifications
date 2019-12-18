@@ -68,15 +68,6 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         show_all ();
     }
 
-    public Wnck.Window? get_app_window () {
-        if (app_notifications.length () == 0) {
-            return null;
-        }
-
-        var entry = app_notifications.first ().data;
-        return entry.notification.get_app_window ();
-    }
-
     public void add_notification_entry (NotificationEntry entry) {
         app_notifications.prepend (entry);
         entry.clear.connect (remove_notification_entry);

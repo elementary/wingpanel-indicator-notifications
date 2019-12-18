@@ -6,6 +6,11 @@
   <name>Notifications Indicator</name>
   <summary>See missed notifications in the panel</summary>
   <releases>
+    <release version="2.2.0" date="2019-12-18" urgency="medium">
+      <description>
+        <p>Fix issues with disappearing notifications</p>
+      </description>
+    </release>
     <release version="2.1.3" date="2019-11-25" urgency="medium">
       <description>
         <p>Fix a minor visual inconsistency</p>

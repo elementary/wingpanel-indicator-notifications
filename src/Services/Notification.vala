@@ -138,20 +138,6 @@ public class Notifications.Notification : Object {
         return false;
     }
 
-    public Wnck.Window? get_app_window () {
-        Wnck.Window? window = null;
-        if (pid_acquired) {
-            Wnck.Screen.get_default ().get_windows ().foreach ((_window) => {
-                if (_window.get_pid () == pid && window == null) {
-                    window = _window;
-                    return;
-                }
-            });
-        }
-
-        return window;
-    }
-
     private void setup_pid () {
         pid_acquired = try_get_pid ();
         Indicator.notify_settings.changed["do-not-disturb"].connect (() => {
