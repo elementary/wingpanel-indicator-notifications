@@ -46,6 +46,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
+            dynamic_icon = new Gtk.Spinner ();
+            dynamic_icon.active = true;
+
             nlist = new NotificationsList ();
             // this is needed initially to always update the state of the indicator
             nlist.switch_stack.connect (set_display_icon_name);
@@ -54,9 +57,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
-
-            dynamic_icon = new Gtk.Spinner ();
-            dynamic_icon.active = true;
 
             unowned Gtk.StyleContext dynamic_icon_style_context = dynamic_icon.get_style_context ();
             dynamic_icon_style_context.add_class ("notification-icon");
