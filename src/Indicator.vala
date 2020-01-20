@@ -41,7 +41,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     static construct {
-        notify_settings = new GLib.Settings ("org.pantheon.desktop.gala.notifications");
+        if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", false) != null) {
+            notify_settings = new GLib.Settings ("io.elementary.notifications");
+         } else {
+            notify_settings = new GLib.Settings ("org.pantheon.desktop.gala.notifications");
+        }
     }
 
     public override Gtk.Widget get_display_widget () {
