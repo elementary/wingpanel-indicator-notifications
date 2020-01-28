@@ -40,6 +40,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         visible = true;
     }
 
+    construct {
+        app_settings_cache = new Gee.HashMap<string, Settings> ();
+    }
+
     static construct {
         if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", false) != null) {
             notify_settings = new GLib.Settings ("io.elementary.notifications");
@@ -91,8 +95,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
-            app_settings_cache = new Gee.HashMap<string, Settings> ();
-
             var scrolled = new Gtk.ScrolledWindow (null, null);
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
             scrolled.max_content_height = 500;
