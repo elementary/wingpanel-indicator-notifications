@@ -131,7 +131,7 @@ public class Notifications.Notification : Object {
 
     public bool run_default_action () {
         if (DEFAULT_ACTION in actions && NotificationMonitor.get_instance ().notifications_iface != null) {
-            NotificationMonitor.get_instance ().notifications_iface.action_invoked (DEFAULT_ACTION, id);
+            NotificationMonitor.get_instance ().notifications_iface.action_invoked (id, DEFAULT_ACTION);
             return true;
         }
 
