@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-18 22:44+0000\n"
-"PO-Revision-Date: 2020-03-01 14:09+0000\n"
+"PO-Revision-Date: 2020-03-26 22:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/he/>\n"
@@ -21,19 +21,19 @@ msgstr ""
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
-msgstr ""
+msgstr "מחוון התראות"
 
 #: data/notifications.appdata.xml.in:7
 msgid "See missed notifications in the panel"
-msgstr ""
+msgstr "הצגת התרעות שהוחמצו בלוח"
 
 #: data/notifications.appdata.xml.in:11
 msgid "Fix issues with disappearing notifications"
-msgstr ""
+msgstr "תוקנו תקלות עם התראות שנעלמו"
 
 #: data/notifications.appdata.xml.in:16
 msgid "Fix a minor visual inconsistency"
-msgstr ""
+msgstr "תוקנו בעיות תאימות חזותיות קלות"
 
 #: data/notifications.appdata.xml.in:17
 msgid "Updated translations"
