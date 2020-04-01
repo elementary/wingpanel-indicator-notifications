@@ -1,3 +1,22 @@
+wingpanel-indicator-notifications (2.1.4) bionic; urgency=medium
+
+  * Release 2.1.4 (#105)
+  * Update translation files
+  * Update translation files
+  * Update translation template
+  * Update notifications.appdata.xml.in
+  * D-Bus: Fix the ActionInvoked parameters (#103)
+  * Indicator: Initialize app_settings_cache in all cases (#99)
+  * Indicator: fix the state restoration (#95)
+  * Indicator: bind DnD to new setting if available (#97)
+  * Update README.md
+  * Update translation files
+  * Update translation files
+  * Update translation template
+  * Remove Wnck (#92)
+
+ -- elementary LLC <builds@elementary.io>  Wed, 01 Apr 2020 23:53:55 +0000
+
 wingpanel-indicator-notifications (2.1.3) bionic; urgency=medium
 
   * Release 2.1.3 (#88)
