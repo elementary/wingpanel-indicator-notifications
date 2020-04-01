@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2017-04-19 21:36+0000\n"
 "Last-Translator: gogogogi <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <https://l10n.elementary.io/projects/wingpanel/"
@@ -24,15 +24,15 @@ msgstr "Indikator obavijesti"
 msgid "The notifications indicator"
 msgstr "Indikator obavijesti"
 
-#: src/Indicator.vala:98
+#: src/Indicator.vala:104
 msgid "Do Not Disturb"
 msgstr "Ne ometaj"
 
-#: src/Indicator.vala:102
+#: src/Indicator.vala:108
 msgid "Clear All Notifications"
 msgstr "Obriši sve obavijesti"
 
-#: src/Indicator.vala:105
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "Postavke obavijesti…"
 

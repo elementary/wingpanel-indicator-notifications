@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2019-12-27 11:19+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
@@ -31,14 +31,14 @@ msgstr "पॅनेलमधील गमावलेल्या सूचन�
 msgid "Fix issues with disappearing notifications"
 msgstr "अदृश्य होणार्‍या सूचनांशी संबंधित समस्यांचे निराकरण करा"
 
-#: data/notifications.appdata.xml.in:16
-msgid "Fix a minor visual inconsistency"
-msgstr "किरकोळ व्हिज्युअल विसंगतीशी संबंधित समस्येचे निराकरण करा"
-
-#: data/notifications.appdata.xml.in:17
+#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:18
 msgid "Updated translations"
 msgstr "अद्ययावत भाषांतर"
 
-#: data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:17
+msgid "Fix a minor visual inconsistency"
+msgstr "किरकोळ व्हिज्युअल विसंगतीशी संबंधित समस्येचे निराकरण करा"
+
+#: data/notifications.appdata.xml.in:27
 msgid "elementary, Inc."
 msgstr "एलिमेंटरी, Inc."

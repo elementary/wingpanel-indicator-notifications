@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2020-02-23 00:08+0000\n"
 "Last-Translator: gkkulik <g.kulik@o2.pl>\n"
 "Language-Team: Silesian <https://l10n.elementary.io/projects/wingpanel/"
@@ -32,14 +32,14 @@ msgstr "Ôbejzdrzij niywidziane powiadōmiynia na panelu"
 msgid "Fix issues with disappearing notifications"
 msgstr "Sprawić problymy ze powiadōmiyniami, co znikajōm"
 
-#: data/notifications.appdata.xml.in:16
-msgid "Fix a minor visual inconsistency"
-msgstr "Sprawić mało niykōnsekwyncyjo we wyglōńdzie"
-
-#: data/notifications.appdata.xml.in:17
+#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:18
 msgid "Updated translations"
 msgstr "Zaktualizowane przekłady"
 
-#: data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:17
+msgid "Fix a minor visual inconsistency"
+msgstr "Sprawić mało niykōnsekwyncyjo we wyglōńdzie"
+
+#: data/notifications.appdata.xml.in:27
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

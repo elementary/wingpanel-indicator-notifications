@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2018-10-29 16:38+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://weblate.elementary.io/projects/wingpanel/"
@@ -23,15 +23,15 @@ msgstr "通知インジケーター"
 msgid "The notifications indicator"
 msgstr "通知インジケーター"
 
-#: src/Indicator.vala:98
+#: src/Indicator.vala:104
 msgid "Do Not Disturb"
 msgstr "非通知モード"
 
-#: src/Indicator.vala:102
+#: src/Indicator.vala:108
 msgid "Clear All Notifications"
 msgstr "すべての通知を消去"
 
-#: src/Indicator.vala:105
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "通知の設定…"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2019-12-22 11:32+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
@@ -31,14 +31,14 @@ msgstr "見逃した通知をパネルで確認します"
 msgid "Fix issues with disappearing notifications"
 msgstr "通知が消える問題を修正"
 
-#: data/notifications.appdata.xml.in:16
-msgid "Fix a minor visual inconsistency"
-msgstr "視覚的な非一貫性を微修正"
-
-#: data/notifications.appdata.xml.in:17
+#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:18
 msgid "Updated translations"
 msgstr "翻訳の更新"
 
-#: data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:17
+msgid "Fix a minor visual inconsistency"
+msgstr "視覚的な非一貫性を微修正"
+
+#: data/notifications.appdata.xml.in:27
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
