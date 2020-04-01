@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2017-07-06 15:06+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: \n"
@@ -22,15 +22,15 @@ msgstr "Indikator notifikasi"
 msgid "The notifications indicator"
 msgstr "Indikator notifikasi"
 
-#: src/Indicator.vala:98
+#: src/Indicator.vala:104
 msgid "Do Not Disturb"
 msgstr "Jangan Ganggu"
 
-#: src/Indicator.vala:102
+#: src/Indicator.vala:108
 msgid "Clear All Notifications"
 msgstr "Bersihkan Semua Notifikasi"
 
-#: src/Indicator.vala:105
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "Pengaturan Notifikasi…"
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 22:44+0000\n"
+"POT-Creation-Date: 2020-04-01 21:45+0000\n"
 "PO-Revision-Date: 2020-02-23 00:08+0000\n"
 "Last-Translator: gkkulik <g.kulik@o2.pl>\n"
 "Language-Team: Silesian <https://l10n.elementary.io/projects/wingpanel/"
@@ -22,15 +22,15 @@ msgstr "Skaźnik powiadōmiyń"
 msgid "The notifications indicator"
 msgstr "Skaźnik powiadōmiyń"
 
-#: src/Indicator.vala:98
+#: src/Indicator.vala:104
 msgid "Do Not Disturb"
 msgstr "Niy szterować"
 
-#: src/Indicator.vala:102
+#: src/Indicator.vala:108
 msgid "Clear All Notifications"
 msgstr "Wysnoż powiadōmiynia"
 
-#: src/Indicator.vala:105
+#: src/Indicator.vala:111
 msgid "Notifications Settings…"
 msgstr "Sztelōnki powiadōmiyń…"
 
