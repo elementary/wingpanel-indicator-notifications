@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright 2015-2020 elementary, Inc (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -23,21 +23,10 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     private HashTable<string, int> table;
     private int counter = 0;
 
-    public NotificationsList () {
-        margin_top = 2;
-
-        activate_on_single_click = true;
-        selection_mode = Gtk.SelectionMode.NONE;
-        row_activated.connect (on_row_activated);
-
+    construct {
         app_entries = new List<AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
-        vexpand = true;
-        show_all ();
-    }
-
-    construct {
         var placeholder = new Gtk.Label (_("No Notifications"));
         placeholder.margin_top = placeholder.margin_bottom = 24;
         placeholder.margin_start = placeholder.margin_end = 12;
@@ -47,7 +36,14 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
         placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
+        activate_on_single_click = true;
+        margin_top = 2;
+        selection_mode = Gtk.SelectionMode.NONE;
+        vexpand = true;
         set_placeholder (placeholder);
+        show_all ();
+
+        row_activated.connect (on_row_activated);
     }
 
     public void add_entry (NotificationEntry entry) {
