@@ -19,7 +19,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void switch_stack (bool show_list);
     public signal void close_popover ();
 
-    public unowned List<AppEntry> app_entries { get; private set; }
+    public GLib.List<AppEntry> app_entries { get; private set; }
 
     private HashTable<string, int> table;
     private int counter = 0;
