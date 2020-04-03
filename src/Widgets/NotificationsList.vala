@@ -19,7 +19,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void switch_stack (bool show_list);
     public signal void close_popover ();
 
-    private List<AppEntry> app_entries;
+    public unowned List<AppEntry> app_entries { get; private set; }
+
     private HashTable<string, int> table;
     private int counter = 0;
 
@@ -68,15 +69,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         show_all ();
     }
 
-
-    public unowned List<AppEntry> get_entries () {
-        return app_entries;
-    }
-
-    public uint get_entries_length () {
-        return app_entries.length ();
-    }
-
     public void clear_all () {
         app_entries.foreach ((app_entry) => {
             app_entry.clear ();
@@ -109,7 +101,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 }
             }
 
-            foreach (var app_entry in app_entries) {
+            foreach (unowned AppEntry app_entry in app_entries) {
                 if (app_entry.get_index () != 0 && get_children ().nth_data (1) != app_entry) {
                     var row = new SeparatorEntry ();
                     insert (row, app_entry.get_index ());
@@ -160,7 +152,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         app_entry.destroy ();
         update_separators ();
 
-        if (get_entries_length () == 0) {
+        if (app_entries.length () == 0) {
             clear_all ();
         }
     }

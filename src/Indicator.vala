@@ -133,7 +133,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             settings_btn.clicked.connect (show_settings);
 
-            update_clear_all_sensitivity (nlist.get_entries_length () > 0);
+            update_clear_all_sensitivity (nlist.app_entries.length () > 0);
         }
 
         return main_box;
@@ -179,7 +179,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void on_notification_closed (uint32 id) {
-        foreach (var app_entry in nlist.get_entries ()) {
+        foreach (unowned AppEntry app_entry in nlist.app_entries) {
             foreach (var item in app_entry.app_notifications) {
                 if (item.notification.id == id) {
                     item.notification.close ();
@@ -200,7 +200,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
-        } else if (nlist != null && nlist.get_entries_length () > 0) {
+        } else if (nlist != null && nlist.app_entries.length () > 0) {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.add_class ("new");
         } else {
