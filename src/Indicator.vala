@@ -45,9 +45,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     static construct {
-        if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", false) != null) {
+        if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", true) != null) {
+            debug ("Using io.elementary.notifications server");
             notify_settings = new GLib.Settings ("io.elementary.notifications");
         } else {
+            debug ("Using notifications in gala");
             notify_settings = new GLib.Settings ("org.pantheon.desktop.gala.notifications");
         }
     }
