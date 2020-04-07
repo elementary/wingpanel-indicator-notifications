@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright 2015-2020 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -45,9 +45,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     static construct {
-        if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", false) != null) {
+        if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", true) != null) {
+            debug ("Using io.elementary.notifications server");
             notify_settings = new GLib.Settings ("io.elementary.notifications");
         } else {
+            debug ("Using notifications in gala");
             notify_settings = new GLib.Settings ("org.pantheon.desktop.gala.notifications");
         }
     }
@@ -61,7 +63,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             // this is needed initially to always update the state of the indicator
             nlist.switch_stack.connect (set_display_icon_name);
 
-            restore_previous_session ();
+            var previous_session = Session.get_instance ().get_session_notifications ();
+            previous_session.foreach ((notification) => {
+                nlist.add_entry (new NotificationEntry (notification));
+            });
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
@@ -187,13 +192,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 }
             }
         }
-    }
-
-    private void restore_previous_session () {
-        var previous_session = Session.get_instance ().get_session_notifications ();
-        previous_session.foreach ((notification) => {
-            nlist.add_entry (new NotificationEntry (notification));
-        });
     }
 
     private void set_display_icon_name () {
