@@ -74,7 +74,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 string[] lines = body.split ("\n");
                 string stripped_body = lines[0] + "\n";
                 for (int i = 1; i < lines.length; i++) {
-                    stripped_body += lines[i].strip () + "";
+                    stripped_body += lines[i].strip () + " ";
                 }
 
                 body_label.label = stripped_body.strip ();
