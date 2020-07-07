@@ -98,8 +98,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         margin = 12;
-        margin_bottom = 6;
-        margin_top = 6;
+        margin_top = 0;
         add (grid);
         get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
         get_style_context ().add_class (Granite.STYLE_CLASS_ROUNDED);
