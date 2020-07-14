@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 21:45+0000\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2016-04-30 11:17+0000\n"
 "Last-Translator: Rockworld <sumoisrock@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,33 +14,31 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 "X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:37
-msgid "Notifications indicator"
-msgstr "ตัวบ่งชี้การแจ้งเหตุ"
-
-#: src/Indicator.vala:38
-msgid "The notifications indicator"
-msgstr "ตัวบ่งชี้การแจ้งเหตุ"
-
-#: src/Indicator.vala:104
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "ห้ามรบกวน"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "ล้างการแจ้งเหตุทั้งหมด"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "ค่าตั้งการแจ้งเหตุ..."
 
-#: src/Widgets/NotificationsList.vala:41
+#: src/Widgets/NotificationsList.vala:30
 msgid "No Notifications"
 msgstr "ไม่มีการแจ้งเหตุ"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "ตอนนี้"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "ตัวบ่งชี้การแจ้งเหตุ"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "ตัวบ่งชี้การแจ้งเหตุ"
 
 #~ msgid "Now"
 #~ msgstr "ตอนนี้"

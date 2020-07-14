@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 21:45+0000\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2017-04-18 07:39+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,33 +15,31 @@ msgstr ""
 "X-Generator: Weblate 2.13-dev\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:37
-msgid "Notifications indicator"
-msgstr "알림 표시기"
-
-#: src/Indicator.vala:38
-msgid "The notifications indicator"
-msgstr "알림 표시기"
-
-#: src/Indicator.vala:104
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "방해 금지 모드"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "모든 알림 정리"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "알림 설정…"
 
-#: src/Widgets/NotificationsList.vala:41
+#: src/Widgets/NotificationsList.vala:30
 msgid "No Notifications"
 msgstr "알림 없음"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "현재"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "알림 표시기"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "알림 표시기"
 
 #~ msgid "Now"
 #~ msgstr "현재"

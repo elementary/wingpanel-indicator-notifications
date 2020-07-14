@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 21:45+0000\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2017-04-29 09:02+0000\n"
 "Last-Translator: Kirill Romanov <djaler1@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
@@ -16,33 +16,31 @@ msgstr ""
 "X-Generator: Weblate 2.13-dev\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:37
-msgid "Notifications indicator"
-msgstr "Индикатор уведомлений"
-
-#: src/Indicator.vala:38
-msgid "The notifications indicator"
-msgstr "Индикатор уведомлений"
-
-#: src/Indicator.vala:104
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Не беспокоить"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Очистить все уведомления"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Параметры уведомлений…"
 
-#: src/Widgets/NotificationsList.vala:41
+#: src/Widgets/NotificationsList.vala:30
 msgid "No Notifications"
 msgstr "Уведомлений нет"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "сейчас"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Индикатор уведомлений"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "Индикатор уведомлений"
 
 #~ msgid "Now"
 #~ msgstr "Сейчас"
