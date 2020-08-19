@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 21:45+0000\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2019-01-11 00:07+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,33 +15,31 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:37
-msgid "Notifications indicator"
-msgstr "Indicador de notificações"
-
-#: src/Indicator.vala:38
-msgid "The notifications indicator"
-msgstr "O indicador de notificações"
-
-#: src/Indicator.vala:104
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Não Incomodar"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Limpar todas as notificações"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Definições de notificações…"
 
-#: src/Widgets/NotificationsList.vala:41
+#: src/Widgets/NotificationsList.vala:30
 msgid "No Notifications"
 msgstr "Sem notificações"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "agora"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Indicador de notificações"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "O indicador de notificações"
 
 #~ msgid "Now"
 #~ msgstr "Agora"

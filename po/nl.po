@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 21:45+0000\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2017-06-01 20:53+0000\n"
 "Last-Translator: Dieter Debast <dieter_debast@hotmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,33 +15,31 @@ msgstr ""
 "X-Generator: Weblate 2.14\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:37
-msgid "Notifications indicator"
-msgstr "Notificatie indicator"
-
-#: src/Indicator.vala:38
-msgid "The notifications indicator"
-msgstr "De notificatie indicator"
-
-#: src/Indicator.vala:104
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Niet Storen"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Verwijder alle notificaties"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Notificatie-instellingen…"
 
-#: src/Widgets/NotificationsList.vala:41
+#: src/Widgets/NotificationsList.vala:30
 msgid "No Notifications"
 msgstr "Geen Notificaties"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "nu"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Notificatie indicator"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "De notificatie indicator"
 
 #~ msgid "Now"
 #~ msgstr "Nu"

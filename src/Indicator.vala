@@ -33,9 +33,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     public static GLib.Settings notify_settings;
 
     public Indicator () {
-        Object (code_name: Wingpanel.Indicator.MESSAGES,
-                display_name: _("Notifications indicator"),
-                description:_("The notifications indicator"));
+        Object (code_name: Wingpanel.Indicator.MESSAGES);
 
         visible = true;
     }
