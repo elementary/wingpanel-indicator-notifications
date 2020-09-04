@@ -37,9 +37,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
         activate_on_single_click = true;
-        margin_top = 2;
         selection_mode = Gtk.SelectionMode.NONE;
-        vexpand = true;
         set_placeholder (placeholder);
         show_all ();
 
@@ -103,24 +101,27 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         }
 
         AppEntry? app_entry = null;
-        bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
-        if (add) {
+        string[] desktop_id_list = {};
+        app_entries.foreach ((_app_entry) => {
+            desktop_id_list += app_entry.app_info.get_id ();
+            if (_app_entry.app_info.get_id () == entry.notification.desktop_id && app_entry == null) {
+                app_entry = _app_entry;
+            }
+        });
+
+        if (!(entry.notification.desktop_id in desktop_id_list)) {
             app_entry = new AppEntry (entry);
 
             app_entries.append (app_entry);
             prepend (app_entry);
             insert (entry, 1);
             table.insert (app_entry.app_info.get_id (), 0);
-        } else {
-            app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
+        } else if (app_entry != null) {
+            resort_app_entry (app_entry);
+            app_entry.add_notification_entry (entry);
 
-            if (app_entry != null) {
-                resort_app_entry (app_entry);
-                app_entry.add_notification_entry (entry);
-
-                int insert_pos = table.get (app_entry.app_info.get_id ());
-                insert (entry, insert_pos + 1);
-            }
+            int insert_pos = table.get (app_entry.app_info.get_id ());
+            insert (entry, insert_pos + 1);
         }
 
         return app_entry;
@@ -138,26 +139,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (get_entries_length () == 0) {
             clear_all ();
         }
-    }
-
-    private AppEntry? get_app_entry_from_desktop_id (string desktop_id) {
-        AppEntry? app_entry = null;
-        app_entries.foreach ((_app_entry) => {
-            if (_app_entry.app_info.get_id () == desktop_id && app_entry == null) {
-                app_entry = _app_entry;
-            }
-        });
-
-        return app_entry;
-    }
-
-    private string[] construct_desktop_id_list () {
-        string[] desktop_id_list = {};
-        app_entries.foreach ((app_entry) => {
-            desktop_id_list += app_entry.app_info.get_id ();
-        });
-
-        return desktop_id_list;
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
