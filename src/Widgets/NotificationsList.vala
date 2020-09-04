@@ -103,8 +103,11 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         AppEntry? app_entry = null;
         string[] desktop_id_list = {};
         app_entries.foreach ((_app_entry) => {
-            desktop_id_list += app_entry.app_info.get_id ();
-            if (_app_entry.app_info.get_id () == entry.notification.desktop_id && app_entry == null) {
+            var app_id = _app_entry.app_info.get_id ();
+
+            desktop_id_list += app_id;
+
+            if (app_id == entry.notification.desktop_id && app_entry == null) {
                 app_entry = _app_entry;
             }
         });
