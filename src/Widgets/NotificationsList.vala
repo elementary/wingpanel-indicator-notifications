@@ -60,7 +60,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         Session.get_instance ().add_notification (entry.notification);
 
-        update_separators ();
         show_all ();
     }
 
@@ -95,25 +94,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 insert (notification_entry, 1);
             });
         }
-    }
-
-    private void update_separators () {
-        if (get_children ().length () > 0) {
-            foreach (var child in get_children ()) {
-                if (child is SeparatorEntry) {
-                    remove (child);
-                }
-            }
-
-            foreach (var app_entry in app_entries) {
-                if (app_entry.get_index () != 0 && get_children ().nth_data (1) != app_entry) {
-                    var row = new SeparatorEntry ();
-                    insert (row, app_entry.get_index ());
-                }
-            }
-        }
-
-        show_all ();
     }
 
     private AppEntry? add_entry_internal (NotificationEntry entry) {
@@ -154,7 +134,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         });
 
         app_entry.destroy ();
-        update_separators ();
 
         if (get_entries_length () == 0) {
             clear_all ();
@@ -199,7 +178,5 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (close) {
             close_popover ();
         }
-
-        update_separators ();
     }
 }

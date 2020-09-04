@@ -27,10 +27,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        margin_bottom = 3;
-        margin_top = 3;
-        margin_start = 12;
-        margin_end = 6;
+        margin = 12;
+        margin_top = 6;
 
         app_notifications = new List<NotificationEntry> ();
         add_notification_entry (entry);
@@ -49,18 +47,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             clear ();
         });
 
-        var image = new Gtk.Image ();
-        image.pixel_size = 24;
-
-        if (notification.app_icon == "" && app_info != null) {
-            image.gicon = app_info.get_icon ();
-        } else {
-            image.icon_name = notification.app_icon;
-        }
-
         var grid = new Gtk.Grid ();
-        grid.column_spacing = 12;
-        grid.add (image);
+        grid.column_spacing = 6;
         grid.add (label);
         grid.add (clear_btn_entry);
 
