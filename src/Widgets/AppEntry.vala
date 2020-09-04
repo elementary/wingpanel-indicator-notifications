@@ -47,18 +47,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             clear ();
         });
 
-        var image = new Gtk.Image ();
-        image.pixel_size = 24;
-
-        if (notification.app_icon == "" && app_info != null) {
-            image.gicon = app_info.get_icon ();
-        } else {
-            image.icon_name = notification.app_icon;
-        }
-
         var grid = new Gtk.Grid ();
         grid.column_spacing = 6;
-        grid.add (image);
         grid.add (label);
         grid.add (clear_btn_entry);
 
