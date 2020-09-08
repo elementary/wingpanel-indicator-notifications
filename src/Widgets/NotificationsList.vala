@@ -58,14 +58,14 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 }
             });
 
-            if (!(entry.notification.desktop_id in desktop_id_list)) {
+            if (app_entry == null) {
                 app_entry = new AppEntry (entry);
 
                 app_entries.append (app_entry);
                 prepend (app_entry);
                 insert (entry, 1);
                 table.insert (app_entry.app_info.get_id (), 0);
-            } else if (app_entry != null) {
+            } else {
                 resort_app_entry (app_entry);
                 app_entry.add_notification_entry (entry);
 
