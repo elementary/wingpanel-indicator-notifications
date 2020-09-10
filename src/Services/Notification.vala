@@ -33,7 +33,6 @@ public class Notifications.Notification : Object {
     public uint32 pid = 0;
     public GLib.DateTime timestamp;
     public int64 unix_time;
-    public bool has_default_action = false;
 
     public string desktop_id;
     public DesktopAppInfo? app_info = null;
