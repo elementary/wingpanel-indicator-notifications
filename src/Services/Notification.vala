@@ -35,7 +35,7 @@ public class Notifications.Notification : Object {
     public int64 unix_time;
 
     public string desktop_id;
-    public AppInfo? app_info = null;
+    public DesktopAppInfo? app_info = null;
 
     public signal void closed ();
     public signal bool time_changed (GLib.DateTime span);
@@ -130,9 +130,21 @@ public class Notifications.Notification : Object {
     }
 
     public bool run_default_action () {
-        if (DEFAULT_ACTION in actions && NotificationMonitor.get_instance ().notifications_iface != null) {
-            NotificationMonitor.get_instance ().notifications_iface.action_invoked (id, DEFAULT_ACTION);
+        if (DEFAULT_ACTION in actions) {
+            app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
+
+            var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
+            if (notifications_iface != null) {
+                notifications_iface.action_invoked (id, DEFAULT_ACTION);
+            }
+
             return true;
+        } else {
+            try {
+                app_info.launch (null, null);
+            } catch (Error e) {
+                critical ("Unable to launch app: %s", e.message);
+            }
         }
 
         return false;
