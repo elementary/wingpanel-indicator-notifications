@@ -16,7 +16,6 @@
  */
 
 public class Notifications.NotificationsList : Gtk.ListBox {
-    public signal void switch_stack (bool show_list);
     public signal void close_popover ();
 
     private List<AppEntry> app_entries;
@@ -78,8 +77,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             return;
         }
 
-        switch_stack (true);
-
         app_entry.clear.connect (clear_app_entry);
 
         counter += 2;
@@ -106,7 +103,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         counter = 0;
 
         Session.get_instance ().clear ();
-        switch_stack (false);
         close_popover ();
         show_all ();
     }
