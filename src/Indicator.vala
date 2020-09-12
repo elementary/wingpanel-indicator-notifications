@@ -58,8 +58,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon.active = true;
 
             nlist = new NotificationsList ();
-            // this is needed initially to always update the state of the indicator
-            nlist.switch_stack.connect (set_display_icon_name);
 
             var previous_session = Session.get_instance ().get_session_notifications ();
             previous_session.foreach ((notification) => {
@@ -89,6 +87,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
             });
+
+            nlist.add.connect (set_display_icon_name);
+            nlist.remove.connect (set_display_icon_name);
 
             set_display_icon_name ();
         }
@@ -127,7 +128,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             nlist.close_popover.connect (() => close ());
-            nlist.switch_stack.connect (update_clear_all_sensitivity);
+            nlist.add.connect (update_clear_all_sensitivity);
+            nlist.remove.connect (update_clear_all_sensitivity);
 
             clear_all_btn.clicked.connect (() => {
                 nlist.clear_all ();
@@ -136,7 +138,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             settings_btn.clicked.connect (show_settings);
 
-            update_clear_all_sensitivity (nlist.get_entries_length () > 0);
+            update_clear_all_sensitivity ();
         }
 
         return main_box;
@@ -177,8 +179,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         set_display_icon_name ();
     }
 
-    private void update_clear_all_sensitivity (bool show_list) {
-        clear_all_btn.sensitive = show_list;
+    private void update_clear_all_sensitivity () {
+        clear_all_btn.sensitive = nlist.get_entries_length () > 0;
     }
 
     private void on_notification_closed (uint32 id) {
