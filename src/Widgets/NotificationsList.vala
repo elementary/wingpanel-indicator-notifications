@@ -140,7 +140,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             app_entry.clear ();
 
         } else if (row is NotificationEntry) {
-            var notification_entry = (NotificationEntry)row;
+            unowned NotificationEntry notification_entry = (NotificationEntry) row;
+            notification_entry.notification.run_default_action ();
             notification_entry.clear ();
 
         } else {
