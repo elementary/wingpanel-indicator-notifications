@@ -145,7 +145,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-
+        update_clear_all_sensitivity ();
     }
 
     public override void closed () {
