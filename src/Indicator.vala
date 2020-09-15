@@ -137,15 +137,13 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             });
 
             settings_btn.clicked.connect (show_settings);
-
-            update_clear_all_sensitivity ();
         }
 
         return main_box;
     }
 
     public override void opened () {
-
+        update_clear_all_sensitivity ();
     }
 
     public override void closed () {
