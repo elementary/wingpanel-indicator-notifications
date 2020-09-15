@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2017-05-05 11:16+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
@@ -15,33 +15,31 @@ msgstr ""
 "X-Generator: Weblate 2.13-dev\n"
 "X-Launchpad-Export-Date: 2017-04-05 07:46+0000\n"
 
-#: src/Indicator.vala:41
-msgid "Notifications indicator"
-msgstr "Varslingsindikator"
-
-#: src/Indicator.vala:42
-msgid "The notifications indicator"
-msgstr "Varslingsindikatoren"
-
-#: src/Indicator.vala:96
-msgid "No Notifications"
-msgstr "Ingen varsler"
-
-#: src/Indicator.vala:109
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Ikke forstyrr"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Fjern alle varsler"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Innstillinger for varsler…"
+
+#: src/Widgets/NotificationsList.vala:30
+msgid "No Notifications"
+msgstr "Ingen varsler"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "nå"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Varslingsindikator"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "Varslingsindikatoren"
 
 #~ msgid "Now"
 #~ msgstr "Nå"

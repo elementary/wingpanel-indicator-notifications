@@ -37,39 +37,71 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        hexpand = true;
-        get_style_context ().add_class (Gtk.STYLE_CLASS_MENUITEM);
+        var app_icon = notification.app_icon;
+        if (app_icon == "") {
+            if (notification.app_info != null) {
+                app_icon = notification.app_info.get_icon ().to_string ();
+            } else {
+                app_icon = "dialog-information";
+            }
+        }
 
-        var title_label = new Gtk.Label ("<b>" + fix_markup (notification.summary) + "</b>");
+        var app_image = new Gtk.Image () {
+            icon_name = app_icon,
+            pixel_size = 48
+        };
+
+        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary)));
+        title_label.ellipsize = Pango.EllipsizeMode.END;
         title_label.hexpand = true;
-        title_label.max_width_chars = 32;
+        title_label.width_chars = 27;
+        title_label.max_width_chars = 27;
         title_label.use_markup = true;
-        title_label.wrap = true;
-        title_label.wrap_mode = Pango.WrapMode.WORD;
         title_label.xalign = 0;
 
         var time_label = new Gtk.Label (_("now"));
+        time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        var grid = new Gtk.Grid ();
-        grid.margin_start = 40;
-        grid.margin_end = 6;
-        grid.attach (title_label, 0, 0, 1, 1);
-        grid.attach (time_label, 1, 0, 1, 1);
+        var grid = new Gtk.Grid () {
+            column_spacing = 6,
+            margin = 6
+        };
+        grid.attach (app_image, 0, 0, 1, 2);
+        grid.attach (title_label, 1, 0);
+        grid.attach (time_label, 2, 0);
 
         var entry_body = notification.message_body;
         if (entry_body != "") {
-            var body_label = new Gtk.Label (fix_markup (entry_body));
-            body_label.xalign = 0;
-            body_label.margin_bottom = 6;
-            body_label.margin_end = 3;
-            body_label.max_width_chars = 32;
+            var body = fix_markup (entry_body);
+
+            var body_label = new Gtk.Label (body);
+            body_label.ellipsize = Pango.EllipsizeMode.END;
+            body_label.lines = 2;
             body_label.use_markup = true;
-            body_label.wrap = true;
+            body_label.valign = Gtk.Align.START;
             body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-            grid.attach (body_label, 0, 1, 2, 1);
+            body_label.wrap = true;
+            body_label.xalign = 0;
+
+            if ("\n" in body) {
+                string[] lines = body.split ("\n");
+                string stripped_body = lines[0] + "\n";
+                for (int i = 1; i < lines.length; i++) {
+                    stripped_body += lines[i].strip () + " ";
+                }
+
+                body_label.label = stripped_body.strip ();
+                body_label.lines = 1;
+            }
+
+            grid.attach (body_label, 1, 1, 2);
         }
 
+        margin = 12;
+        margin_top = 0;
         add (grid);
+        get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
+        get_style_context ().add_class (Granite.STYLE_CLASS_ROUNDED);
         show_all ();
 
         if (notification.data_session) {

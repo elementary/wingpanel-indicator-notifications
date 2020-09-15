@@ -1,5 +1,5 @@
 # Wingpanel Notifications Indicator
-[![l10n](https://l10n.elementary.io/widgets/wingpanel/wingpanel-indicator-notifications/svg-badge.svg)](https://l10n.elementary.io/projects/wingpanel/wingpanel-indicator-notifications)
+[![Translation status](https://l10n.elementary.io/widgets/wingpanel/-/wingpanel-indicator-notifications/svg-badge.svg)](https://l10n.elementary.io/engage/wingpanel/?utm_source=widget)
 
 ![Screenshot](data/screenshot.png?raw=true)
 
@@ -12,7 +12,6 @@ You'll need the following dependencies:
 * libgranite-dev
 * libgtk-3-dev
 * libwingpanel-2.0-dev
-* libwnck-3-dev
 * meson
 * valac
 

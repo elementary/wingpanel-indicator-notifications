@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2017-02-16 07:19+0000\n"
 "Last-Translator: Jiri Grönroos <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,33 +14,31 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 "X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:41
-msgid "Notifications indicator"
-msgstr "Ilmoitusilmaisin"
-
-#: src/Indicator.vala:42
-msgid "The notifications indicator"
-msgstr "Ilmoitusilmaisin"
-
-#: src/Indicator.vala:96
-msgid "No Notifications"
-msgstr "Ei ilmoituksia"
-
-#: src/Indicator.vala:109
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Älä häiritse"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Tyhjennä kaikki ilmoitukset"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Ilmoitusten asetukset…"
+
+#: src/Widgets/NotificationsList.vala:30
+msgid "No Notifications"
+msgstr "Ei ilmoituksia"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "nyt"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Ilmoitusilmaisin"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "Ilmoitusilmaisin"
 
 #~ msgid "Now"
 #~ msgstr "Nyt"

@@ -2,45 +2,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
-"PO-Revision-Date: 2017-03-13 07:11+0000\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
+"PO-Revision-Date: 2019-01-16 00:04+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Chinese (Simplified) <https://weblate.elementary.io/projects/"
+"wingpanel/wingpanel-indicator-notifications/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:41
-msgid "Notifications indicator"
-msgstr "通知指示器"
-
-#: src/Indicator.vala:42
-msgid "The notifications indicator"
-msgstr "通知指示器"
-
-#: src/Indicator.vala:96
-msgid "No Notifications"
-msgstr "暂无通知"
-
-#: src/Indicator.vala:109
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "勿扰模式"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "清除通知"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
-msgstr "通知设置"
+msgstr "通知设置…"
+
+#: src/Widgets/NotificationsList.vala:30
+msgid "No Notifications"
+msgstr "暂无通知"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "现在"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "通知指示器"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "通知指示器"
 
 #~ msgid "Now"
 #~ msgstr "现在"

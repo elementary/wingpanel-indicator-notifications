@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015-2018 elementary LLC. (https://elementary.io)
+ * Copyright 2015-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,14 +18,17 @@
 public class Notifications.AppEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
-    public AppInfo app_info;
+    public NotificationEntry entry { get; construct; }
+    public AppInfo? app_info = null;
     public List<NotificationEntry> app_notifications;
 
     public AppEntry (NotificationEntry entry) {
-        margin_bottom = 3;
-        margin_top = 3;
-        margin_start = 12;
-        margin_end = 6;
+        Object (entry: entry);
+    }
+
+    construct {
+        margin = 12;
+        margin_top = 6;
 
         app_notifications = new List<NotificationEntry> ();
         add_notification_entry (entry);
@@ -44,34 +47,13 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             clear ();
         });
 
-        string icon = "";
-        if (notification.app_icon == "" && app_info != null) {
-            var glib_icon = app_info.get_icon ();
-            icon = glib_icon.to_string ();
-        } else {
-            icon = notification.app_icon;
-        }
-
-        var image = new Gtk.Image.from_icon_name (icon, Gtk.IconSize.LARGE_TOOLBAR);
-        image.pixel_size = 24;
-
         var grid = new Gtk.Grid ();
-        grid.column_spacing = 12;
-        grid.add (image);
+        grid.column_spacing = 6;
         grid.add (label);
         grid.add (clear_btn_entry);
 
         add (grid);
         show_all ();
-    }
-
-    public Wnck.Window? get_app_window () {
-        if (app_notifications.length () == 0) {
-            return null;
-        }
-
-        var entry = app_notifications.first ().data;
-        return entry.notification.get_app_window ();
     }
 
     public void add_notification_entry (NotificationEntry entry) {

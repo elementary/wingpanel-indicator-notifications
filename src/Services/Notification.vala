@@ -35,7 +35,7 @@ public class Notifications.Notification : Object {
     public int64 unix_time;
 
     public string desktop_id;
-    public AppInfo? app_info = null;
+    public DesktopAppInfo? app_info = null;
 
     public signal void closed ();
     public signal bool time_changed (GLib.DateTime span);
@@ -121,7 +121,7 @@ public class Notifications.Notification : Object {
     }
 
     public bool get_is_valid () {
-        var transient = hints.lookup_value("transient", VariantType.BOOLEAN);
+        var transient = hints.lookup_value ("transient", VariantType.BOOLEAN);
         return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null && (transient == null || !transient.get_boolean ());
     }
 
@@ -130,31 +130,29 @@ public class Notifications.Notification : Object {
     }
 
     public bool run_default_action () {
-        if (DEFAULT_ACTION in actions && NotificationMonitor.get_instance ().notifications_iface != null) {
-            NotificationMonitor.get_instance ().notifications_iface.action_invoked (DEFAULT_ACTION, id);
+        if (DEFAULT_ACTION in actions) {
+            app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
+
+            var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
+            if (notifications_iface != null) {
+                notifications_iface.action_invoked (id, DEFAULT_ACTION);
+            }
+
             return true;
+        } else {
+            try {
+                app_info.launch (null, null);
+            } catch (Error e) {
+                critical ("Unable to launch app: %s", e.message);
+            }
         }
 
         return false;
     }
 
-    public Wnck.Window? get_app_window () {
-        Wnck.Window? window = null;
-        if (pid_acquired) {
-            Wnck.Screen.get_default ().get_windows ().foreach ((_window) => {
-                if (_window.get_pid () == pid && window == null) {
-                    window = _window;
-                    return;
-                }
-            });     
-        }
-
-        return window;        
-    }
-
     private void setup_pid () {
         pid_acquired = try_get_pid ();
-        NotifySettings.get_instance ().changed[NotifySettings.DO_NOT_DISTURB_KEY].connect (() => {
+        Indicator.notify_settings.changed["do-not-disturb"].connect (() => {
             if (!pid_acquired) {
                 try_get_pid ();
             }
@@ -162,7 +160,7 @@ public class Notifications.Notification : Object {
     }
 
     private bool try_get_pid () {
-        if (NotifySettings.get_instance ().do_not_disturb) {
+        if (Indicator.notify_settings.get_boolean ("do-not-disturb")) {
             return false;
         }
 

@@ -2,45 +2,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
-"PO-Revision-Date: 2017-02-27 19:36+0000\n"
-"Last-Translator: Corentin Noël <corentin@elementaryos.org>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
+"PO-Revision-Date: 2019-01-14 00:11+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"Language-Team: French <https://weblate.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:41
-msgid "Notifications indicator"
-msgstr "Indicator Notifications"
-
-#: src/Indicator.vala:42
-msgid "The notifications indicator"
-msgstr "L'indicator de notifications"
-
-#: src/Indicator.vala:96
-msgid "No Notifications"
-msgstr "Aucune notification"
-
-#: src/Indicator.vala:109
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Ne pas déranger"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Effacer toutes les notifications"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Paramètres des notifications…"
+
+#: src/Widgets/NotificationsList.vala:30
+msgid "No Notifications"
+msgstr "Aucune notification"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "maintenant"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Indicateur de notifications"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "L'indicateur de notifications"
 
 #~ msgid "Now"
 #~ msgstr "Maintenant"

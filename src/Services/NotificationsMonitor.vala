@@ -58,10 +58,10 @@ public class Notifications.NotificationMonitor : Object {
         }
 
         try {
-            notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH); 
+            notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH);
         } catch (Error e) {
             error ("%s\n", e.message);
-        }        
+        }
     }
 
     private void add_rule (string rule) {
@@ -72,7 +72,7 @@ public class Notifications.NotificationMonitor : Object {
 
         var body = new Variant.parsed ("(%s,)", rule);
         message.set_body (body);
-        
+
         try {
             connection.send_message (message, DBusSendMessageFlags.NONE, null);
         } catch (Error e) {
@@ -80,7 +80,7 @@ public class Notifications.NotificationMonitor : Object {
         }
     }
 
-    private DBusMessage message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
+    private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
         if (incoming && message.get_interface () == NOTIFY_IFACE && message.get_message_type () == DBusMessageType.METHOD_CALL) {
             if (message.get_member () == "Notify") {
                 try {
@@ -106,8 +106,8 @@ public class Notifications.NotificationMonitor : Object {
                 });
             }
 
-            return null;            
-        } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {            
+            return null;
+        } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {
             if (message.get_message_type () == DBusMessageType.METHOD_RETURN) {
                 var body = message.get_body ();
                 if (body.n_children () != 1) {

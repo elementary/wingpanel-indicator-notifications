@@ -18,7 +18,7 @@
 [DBus (name = "org.freedesktop.Notifications")]
 public interface Notifications.INotifications : Object {
     public signal void notification_closed (uint32 id, uint32 reason);
-    public signal void action_invoked (string action, uint32 id);
+    public signal void action_invoked (uint32 id, string action);
     public abstract uint32 notify (string app_name,
                                 uint32 replaces_id,
                                 string app_icon,

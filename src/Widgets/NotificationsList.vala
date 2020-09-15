@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright 2015-2020 elementary, Inc (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -16,36 +16,66 @@
  */
 
 public class Notifications.NotificationsList : Gtk.ListBox {
-    public signal void switch_stack (bool show_list);
     public signal void close_popover ();
 
     private List<AppEntry> app_entries;
     private HashTable<string, int> table;
     private int counter = 0;
 
-    public NotificationsList () {
-        margin_top = 2;
-
-        activate_on_single_click = true;
-        selection_mode = Gtk.SelectionMode.NONE;
-        row_activated.connect (on_row_activated);
-
+    construct {
         app_entries = new List<AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
-        vexpand = true;
+        var placeholder = new Gtk.Label (_("No Notifications"));
+        placeholder.margin_top = placeholder.margin_bottom = 24;
+        placeholder.margin_start = placeholder.margin_end = 12;
+        placeholder.show ();
+
+        unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
+        placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
+        placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+
+        activate_on_single_click = true;
+        selection_mode = Gtk.SelectionMode.NONE;
+        set_placeholder (placeholder);
         show_all ();
 
-        monitor_active_window ();
+        row_activated.connect (on_row_activated);
     }
 
     public void add_entry (NotificationEntry entry) {
-        var app_entry = add_entry_internal (entry);
+        AppEntry? app_entry = null;
+        if (entry.notification.app_info != null && entry.notification.app_info.get_id () != null) {
+            string[] desktop_id_list = {};
+            app_entries.foreach ((_app_entry) => {
+                var app_id = _app_entry.app_info.get_id ();
+
+                desktop_id_list += app_id;
+
+                if (app_id == entry.notification.desktop_id && app_entry == null) {
+                    app_entry = _app_entry;
+                }
+            });
+
+            if (app_entry == null) {
+                app_entry = new AppEntry (entry);
+
+                app_entries.append (app_entry);
+                prepend (app_entry);
+                insert (entry, 1);
+                table.insert (app_entry.app_info.get_id (), 0);
+            } else {
+                resort_app_entry (app_entry);
+                app_entry.add_notification_entry (entry);
+
+                int insert_pos = table.get (app_entry.app_info.get_id ());
+                insert (entry, insert_pos + 1);
+            }
+        }
+
         if (app_entry == null) {
             return;
         }
-
-        switch_stack (true);
 
         app_entry.clear.connect (clear_app_entry);
 
@@ -53,7 +83,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         Session.get_instance ().add_notification (entry.notification);
 
-        update_separators ();
         show_all ();
     }
 
@@ -74,7 +103,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         counter = 0;
 
         Session.get_instance ().clear ();
-        switch_stack (false);
         close_popover ();
         show_all ();
     }
@@ -90,66 +118,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         }
     }
 
-    private void update_separators () {
-        if (get_children ().length () > 0) {
-            foreach (var child in get_children ()) {
-                if (child is SeparatorEntry) {
-                    remove (child);
-                }
-            }
-
-            foreach (var app_entry in app_entries) {
-                if (app_entry.get_index () != 0 && get_children ().nth_data (1) != app_entry) {
-                    var row = new SeparatorEntry ();
-                    insert (row, app_entry.get_index ());
-                }
-            }
-        }
-
-        show_all ();
-    }
-
-    private AppEntry? add_entry_internal (NotificationEntry entry) {
-        if (entry.notification.app_info == null ||
-            entry.notification.app_info.get_id () == null) {
-            return null;
-        }
-
-        AppEntry? app_entry = null;
-        bool add = !(entry.notification.desktop_id in construct_desktop_id_list ());
-        if (add) {
-            app_entry = new AppEntry (entry);
-
-            app_entries.append (app_entry);
-            prepend (app_entry);
-            insert (entry, 1);
-            table.insert (app_entry.app_info.get_id (), 0);
-        } else {
-            app_entry = get_app_entry_from_desktop_id (entry.notification.desktop_id);
-
-            if (app_entry != null) {
-                resort_app_entry (app_entry);
-                app_entry.add_notification_entry (entry);
-
-                int insert_pos = table.get (app_entry.app_info.get_id ());
-                insert (entry, insert_pos + 1);                
-            }
-        }
-
-        return app_entry;
-    }
-
-    private void monitor_active_window () {
-        var screen = Wnck.Screen.get_default ();
-        screen.active_window_changed.connect (() => {
-            app_entries.foreach ((app_entry) => {
-                if (screen.get_active_window () == app_entry.get_app_window ()) {
-                    app_entry.clear ();
-                }
-            });
-        });
-    }
-
     private void clear_app_entry (AppEntry app_entry) {
         app_entries.remove (app_entry);
 
@@ -158,31 +126,10 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         });
 
         app_entry.destroy ();
-        update_separators ();
 
         if (get_entries_length () == 0) {
             clear_all ();
         }
-    }
-
-    private AppEntry? get_app_entry_from_desktop_id (string desktop_id) {
-        AppEntry? app_entry = null;
-        app_entries.foreach ((_app_entry) => {
-            if (_app_entry.app_info.get_id () == desktop_id && app_entry == null) {
-                app_entry = _app_entry;
-            }
-        });
-
-        return app_entry;
-    }
-
-    private string[] construct_desktop_id_list () {
-        string[] desktop_id_list = {};
-        app_entries.foreach ((app_entry) => {
-            desktop_id_list += app_entry.app_info.get_id ();
-        });
-
-        return desktop_id_list;
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
@@ -190,19 +137,13 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         if (row is AppEntry) {
             var app_entry = (AppEntry)row;
-            close = focus_notification_app (app_entry.get_app_window (),
-                                            app_entry.app_info);
-
             app_entry.clear ();
+
         } else if (row is NotificationEntry) {
-            var notification_entry = (NotificationEntry)row;
-
-            if (!notification_entry.notification.run_default_action ()) {
-                close = focus_notification_app (notification_entry.notification.get_app_window (),
-                                                notification_entry.notification.app_info);
-            }
-
+            unowned NotificationEntry notification_entry = (NotificationEntry) row;
+            notification_entry.notification.run_default_action ();
             notification_entry.clear ();
+
         } else {
             close = false;
         }
@@ -210,23 +151,5 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (close) {
             close_popover ();
         }
-
-        update_separators ();
-    }
-
-    private bool focus_notification_app (Wnck.Window? app_window, AppInfo? app_info) {
-        if (app_window != null) {
-            app_window.activate (Gtk.get_current_event_time ());
-            return true;
-        } else if (app_info != null) {
-            try {
-                app_info.launch (null, null);
-                return true;
-            } catch (Error e) {
-                warning ("%s\n", e.message);
-            }            
-        }
-
-        return false;
     }
 }

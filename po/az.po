@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2017-12-20 00:11+0000\n"
 "Last-Translator: Вагиф Кязым <vaqif134@gmail.com>\n"
 "Language-Team: Azerbaijani <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,33 +15,31 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:41
-msgid "Notifications indicator"
-msgstr "Bildiriş indikatoru"
-
-#: src/Indicator.vala:42
-msgid "The notifications indicator"
-msgstr "Bildiriş indikatoru"
-
-#: src/Indicator.vala:96
-msgid "No Notifications"
-msgstr "Bildiriş yoxdur"
-
-#: src/Indicator.vala:109
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Narahat etmə"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Bütün bildirişləri sil"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Bildiriş ayarları…"
+
+#: src/Widgets/NotificationsList.vala:30
+msgid "No Notifications"
+msgstr "Bildiriş yoxdur"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "hal hazırda"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Bildiriş indikatoru"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "Bildiriş indikatoru"
 
 #~ msgid "Now"
 #~ msgstr "Hal hazırda"

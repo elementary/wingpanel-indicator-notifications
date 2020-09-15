@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 14:43-0700\n"
+"POT-Creation-Date: 2020-07-14 15:48+0000\n"
 "PO-Revision-Date: 2018-05-31 08:20+0000\n"
 "Last-Translator: Romanic Ion Nicușor <contact.romanic@gmail.com>\n"
 "Language-Team: Moldovan <https://weblate.elementary.io/projects/wingpanel/"
@@ -19,30 +19,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.18\n"
 
-#: src/Indicator.vala:41
-msgid "Notifications indicator"
-msgstr "Indicator de notificări"
-
-#: src/Indicator.vala:42
-msgid "The notifications indicator"
-msgstr "Indicatorul de notificări"
-
-#: src/Indicator.vala:96
-msgid "No Notifications"
-msgstr "Nicio notificare"
-
-#: src/Indicator.vala:109
+#: src/Indicator.vala:107
 msgid "Do Not Disturb"
 msgstr "Nu deranja"
 
-#: src/Indicator.vala:116
+#: src/Indicator.vala:111
 msgid "Clear All Notifications"
 msgstr "Ștergeți toate notificările"
 
-#: src/Indicator.vala:123
+#: src/Indicator.vala:114
 msgid "Notifications Settings…"
 msgstr "Setări pentru notificări …"
+
+#: src/Widgets/NotificationsList.vala:30
+msgid "No Notifications"
+msgstr "Nicio notificare"
 
 #: src/Widgets/NotificationEntry.vala:51
 msgid "now"
 msgstr "acum"
+
+#~ msgid "Notifications indicator"
+#~ msgstr "Indicator de notificări"
+
+#~ msgid "The notifications indicator"
+#~ msgstr "Indicatorul de notificări"
