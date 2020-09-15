@@ -17,8 +17,8 @@
 
 public class Notifications.Indicator : Wingpanel.Indicator {
     private const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
-    private const string CHILD_SCHEMA_ID = "org.pantheon.desktop.gala.notifications.application";
-    private const string CHILD_PATH = "/org/pantheon/desktop/gala/notifications/applications/%s/";
+    private const string CHILD_SCHEMA_ID = "io.elementary.notifications.applications";
+    private const string CHILD_PATH = "/io/elementary/notifications/applications/%s/";
     private const string REMEMBER_KEY = "remember";
 
     private Gtk.Spinner? dynamic_icon = null;
