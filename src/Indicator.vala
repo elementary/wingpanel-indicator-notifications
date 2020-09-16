@@ -182,7 +182,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void on_notification_closed (uint32 id) {
-        foreach (var app_entry in nlist.get_entries ()) {
+        foreach (var app_entry in nlist.app_entries.values) {
             foreach (var item in app_entry.app_notifications) {
                 if (item.notification.id == id) {
                     item.notification.close ();
