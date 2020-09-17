@@ -59,7 +59,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         title_label.use_markup = true;
         title_label.xalign = 0;
 
-        var time_label = new Gtk.Label (_("now"));
+        var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp));
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
         var grid = new Gtk.Grid () {
