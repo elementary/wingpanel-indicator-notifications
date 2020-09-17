@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:48+0000\n"
+"POT-Creation-Date: 2020-09-17 09:26+0000\n"
 "PO-Revision-Date: 2016-01-11 18:38+0000\n"
 "Last-Translator: Lukáš Papík <stereo839@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,25 +14,24 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 "X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:107
+#: src/Indicator.vala:108
 msgid "Do Not Disturb"
 msgstr "Nerušiť"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:112
 msgid "Clear All Notifications"
 msgstr "Vyčistiť všetke upozornenia"
 
-#: src/Indicator.vala:114
+#: src/Indicator.vala:115
 msgid "Notifications Settings…"
 msgstr "Notifikačné nastavenia"
 
-#: src/Widgets/NotificationsList.vala:30
+#: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
 msgstr "Žiadne upozornenie"
 
-#: src/Widgets/NotificationEntry.vala:51
-msgid "now"
-msgstr "teraz"
+#~ msgid "now"
+#~ msgstr "teraz"
 
 #~ msgid "Notifications indicator"
 #~ msgstr "Notifikačný indikátor"
