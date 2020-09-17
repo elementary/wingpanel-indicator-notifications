@@ -46,8 +46,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (entry.notification.app_info != null && entry.notification.app_info.get_id () != null) {
             AppEntry? app_entry = null;
 
+            unowned string entry_desktop_id = entry.notification.desktop_id;
             foreach (unowned AppEntry _app_entry in app_entries) {
-                if (_app_entry.app_info.get_id () == entry.notification.desktop_id) {
+                if (_app_entry.app_info.get_id () == entry_desktop_id) {
                     app_entry = _app_entry;
                     continue;
                 }
