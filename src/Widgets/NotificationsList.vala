@@ -18,11 +18,13 @@
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
 
+    private Gee.HashMap<uint32, NotificationEntry> notification_entries;
     private List<AppEntry> app_entries;
     private HashTable<string, int> table;
     private int counter = 0;
 
     construct {
+        notification_entries = new Gee.HashMap<uint32, NotificationEntry> ();
         app_entries = new List<AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
@@ -66,10 +68,16 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 table.insert (app_entry.app_info.get_id (), 0);
             } else {
                 resort_app_entry (app_entry);
-                app_entry.add_notification_entry (entry);
 
-                int insert_pos = table.get (app_entry.app_info.get_id ());
-                insert (entry, insert_pos + 1);
+                if (notification_entries[entry.notification.replaces_id] != null) {
+                    notification_entries[entry.notification.replaces_id].replace (entry.notification);
+                } else {
+                    notification_entries[entry.notification.replaces_id] = entry;
+                    app_entry.add_notification_entry (entry);
+
+                    int insert_pos = table.get (app_entry.app_info.get_id ());
+                    insert (entry, insert_pos + 1);
+                }
             }
         }
 
