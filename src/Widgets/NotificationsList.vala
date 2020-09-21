@@ -20,7 +20,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private List<AppEntry> app_entries;
     private HashTable<string, int> table;
-    private int counter = 0;
 
     construct {
         app_entries = new List<AppEntry> ();
@@ -44,18 +43,16 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     public void add_entry (NotificationEntry entry) {
-        AppEntry? app_entry = null;
         if (entry.notification.app_info != null && entry.notification.app_info.get_id () != null) {
-            string[] desktop_id_list = {};
-            app_entries.foreach ((_app_entry) => {
-                var app_id = _app_entry.app_info.get_id ();
+            AppEntry? app_entry = null;
 
-                desktop_id_list += app_id;
-
-                if (app_id == entry.notification.desktop_id && app_entry == null) {
+            unowned string entry_desktop_id = entry.notification.desktop_id;
+            foreach (unowned AppEntry _app_entry in app_entries) {
+                if (_app_entry.app_info.get_id () == entry_desktop_id) {
                     app_entry = _app_entry;
+                    continue;
                 }
-            });
+            }
 
             if (app_entry == null) {
                 app_entry = new AppEntry (entry);
@@ -71,19 +68,13 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 int insert_pos = table.get (app_entry.app_info.get_id ());
                 insert (entry, insert_pos + 1);
             }
+
+            app_entry.clear.connect (clear_app_entry);
+
+            show_all ();
+
+            Session.get_instance ().add_notification (entry.notification);
         }
-
-        if (app_entry == null) {
-            return;
-        }
-
-        app_entry.clear.connect (clear_app_entry);
-
-        counter += 2;
-
-        Session.get_instance ().add_notification (entry.notification);
-
-        show_all ();
     }
 
 
@@ -99,8 +90,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         app_entries.foreach ((app_entry) => {
             app_entry.clear ();
         });
-
-        counter = 0;
 
         Session.get_instance ().clear ();
         close_popover ();
