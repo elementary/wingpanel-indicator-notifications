@@ -125,7 +125,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         carousel.add (new Gtk.Grid ());
         carousel.scroll_to (grid);
 
-        add(carousel);
+        add (carousel);
         show_all ();
 
         if (notification.data_session) {
