@@ -77,6 +77,19 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         }
     }
 
+    public void remove_entry (NotificationEntry entry) {
+        AppEntry? app_entry = null;
+
+        unowned string entry_desktop_id = entry.notification.desktop_id;
+        foreach (unowned AppEntry _app_entry in app_entries) {
+            if (_app_entry.app_info.get_id () == entry_desktop_id) {
+                app_entry = _app_entry;
+                continue;
+            }
+        }
+        app_entry.remove_notification_entry.begin (entry);
+    }
+
 
     public unowned List<AppEntry> get_entries () {
         return app_entries;

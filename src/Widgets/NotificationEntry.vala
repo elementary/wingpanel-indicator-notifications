@@ -19,12 +19,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
     public bool active = true;
     public Notification notification { get; construct; }
+    public NotificationsList nlist { get; construct; }
 
     private static Regex entity_regex;
     private static Regex tag_regex;
 
-    public NotificationEntry (Notification notification) {
-        Object (notification: notification);
+    private Hdy.Carousel carousel;
+
+    public NotificationEntry (Notification notification, NotificationsList nlist) {
+        Object (notification: notification,
+                nlist: nlist
+        );
     }
 
     static construct {
@@ -37,6 +42,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
+        carousel = new Hdy.Carousel () {
+            allow_mouse_drag = true,
+            interactive = true
+        };
+
         var app_icon = notification.app_icon;
         if (app_icon == "") {
             if (notification.app_info != null) {
@@ -48,40 +58,53 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var app_image = new Gtk.Image () {
             icon_name = app_icon,
-            pixel_size = 48
+            pixel_size = 48,
+            margin = 6,
+            margin_right = 0
         };
 
-        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary)));
-        title_label.ellipsize = Pango.EllipsizeMode.END;
-        title_label.hexpand = true;
-        title_label.width_chars = 27;
-        title_label.max_width_chars = 27;
-        title_label.use_markup = true;
-        title_label.xalign = 0;
+        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
+            ellipsize = Pango.EllipsizeMode.END,
+            hexpand = true,
+            width_chars = 27,
+            max_width_chars = 27,
+            use_markup = true,
+            xalign = 0
+        };
 
-        var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp));
+
+        var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
+            margin_right = 6
+        };
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
         var grid = new Gtk.Grid () {
+            hexpand = true,
             column_spacing = 6,
-            margin = 6
+            margin = 12,
+            margin_top = 1,
+            margin_bottom = 11
         };
+
+        grid.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
+        grid.get_style_context ().add_class (Granite.STYLE_CLASS_ROUNDED);
+
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
         grid.attach (time_label, 2, 0);
-
         var entry_body = notification.message_body;
         if (entry_body != "") {
             var body = fix_markup (entry_body);
 
-            var body_label = new Gtk.Label (body);
-            body_label.ellipsize = Pango.EllipsizeMode.END;
-            body_label.lines = 2;
-            body_label.use_markup = true;
-            body_label.valign = Gtk.Align.START;
-            body_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-            body_label.wrap = true;
-            body_label.xalign = 0;
+            var body_label = new Gtk.Label (body) {
+                ellipsize = Pango.EllipsizeMode.END,
+                lines = 2,
+                use_markup = true,
+                valign = Gtk.Align.START,
+                wrap_mode = Pango.WrapMode.WORD_CHAR,
+                wrap = true,
+                xalign = 0
+            };
 
             if ("\n" in body) {
                 string[] lines = body.split ("\n");
@@ -92,16 +115,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
                 body_label.label = stripped_body.strip ();
                 body_label.lines = 1;
+
             }
 
             grid.attach (body_label, 1, 1, 2);
         }
 
-        margin = 12;
-        margin_top = 0;
-        add (grid);
-        get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
-        get_style_context ().add_class (Granite.STYLE_CLASS_ROUNDED);
+        carousel.add (grid);
+        carousel.add (new Gtk.Grid ());
+        carousel.scroll_to (grid);
+
+        add(carousel);
         show_all ();
 
         if (notification.data_session) {
@@ -115,6 +139,13 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         });
 
         notification.closed.connect (() => clear ());
+
+        carousel.page_changed.connect ((index) => {
+            if (index == 1) {
+                nlist.remove_entry (this);
+            }
+        });
+
     }
 
     /**
