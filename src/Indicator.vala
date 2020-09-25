@@ -61,7 +61,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             var previous_session = Session.get_instance ().get_session_notifications ();
             previous_session.foreach ((notification) => {
-                nlist.add_entry (new NotificationEntry (notification, nlist));
+                nlist.add_entry (new NotificationEntry (notification));
             });
 
             var provider = new Gtk.CssProvider ();
@@ -170,7 +170,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         if (app_settings == null || app_settings.get_boolean (REMEMBER_KEY)) {
-            var entry = new NotificationEntry (notification, nlist);
+            var entry = new NotificationEntry (notification);
             nlist.add_entry (entry);
         }
 

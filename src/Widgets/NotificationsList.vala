@@ -69,6 +69,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 insert (entry, insert_pos + 1);
             }
 
+            entry.removeNotificationEntry.connect (remove_entry);
+
             app_entry.clear.connect (clear_app_entry);
 
             show_all ();
@@ -87,7 +89,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 continue;
             }
         }
-        app_entry.remove_notification_entry.begin (entry);
+        if (app_entry != null) {
+            app_entry.remove_notification_entry.begin (entry);
+        }
     }
 
 

@@ -17,19 +17,18 @@
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
+    public signal void removeNotificationEntry (NotificationEntry entry);
+
     public bool active = true;
     public Notification notification { get; construct; }
-    public NotificationsList nlist { get; construct; }
 
     private static Regex entity_regex;
     private static Regex tag_regex;
 
     private Hdy.Carousel carousel;
 
-    public NotificationEntry (Notification notification, NotificationsList nlist) {
-        Object (notification: notification,
-                nlist: nlist
-        );
+    public NotificationEntry (Notification notification) {
+        Object (notification: notification);
     }
 
     static construct {
@@ -142,7 +141,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         carousel.page_changed.connect ((index) => {
             if (index == 1) {
-                nlist.remove_entry (this);
+                removeNotificationEntry (this);
             }
         });
 
