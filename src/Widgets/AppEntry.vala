@@ -41,11 +41,10 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         label.xalign = 0;
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
-        var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
+            tooltip_text = _("Clear all %s notifications".printf (app_info.get_name ()))
+        };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
-        clear_btn_entry.clicked.connect (() => {
-            clear ();
-        });
 
         var grid = new Gtk.Grid ();
         grid.column_spacing = 6;
@@ -54,6 +53,10 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         add (grid);
         show_all ();
+
+        clear_btn_entry.clicked.connect (() => {
+            clear ();
+        });
     }
 
     public void add_notification_entry (NotificationEntry entry) {
