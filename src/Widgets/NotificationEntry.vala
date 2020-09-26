@@ -17,7 +17,7 @@
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
-    public signal void removeNotificationEntry (NotificationEntry entry);
+    public signal void remove_notification_entry ();
 
     public bool active = true;
     public Notification notification { get; construct; }
@@ -85,8 +85,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             margin_bottom = 11
         };
 
-        grid.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
-        grid.get_style_context ().add_class (Granite.STYLE_CLASS_ROUNDED);
+        unowned Gtk.StyleContext grid_context = grid.get_style_context ();
+        grid_context.add_class (Granite.STYLE_CLASS_CARD);
+        grid_context.add_class (Granite.STYLE_CLASS_ROUNDED);
 
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
@@ -141,7 +142,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         carousel.page_changed.connect ((index) => {
             if (index == 1) {
-                removeNotificationEntry (this);
+                remove_notification_entry ();
             }
         });
 

@@ -69,7 +69,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 insert (entry, insert_pos + 1);
             }
 
-            entry.removeNotificationEntry.connect (remove_entry);
+            entry.remove_notification_entry.connect (remove_entry);
 
             app_entry.clear.connect (clear_app_entry);
 
