@@ -121,8 +121,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             grid.attach (body_label, 1, 1, 2);
         }
 
-        carousel.add (grid);
         carousel.add (new Gtk.Grid ());
+        carousel.add (grid);
         carousel.scroll_to (grid);
 
         add (carousel);
@@ -141,7 +141,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         notification.closed.connect (() => clear ());
 
         carousel.page_changed.connect ((index) => {
-            if (index == 1) {
+            if (index == 0) {
                 remove_notification_entry ();
             }
         });
