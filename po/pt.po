@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-17 09:26+0000\n"
+"POT-Creation-Date: 2020-09-28 23:32+0000\n"
 "PO-Revision-Date: 2019-01-11 00:07+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://weblate.elementary.io/projects/wingpanel/"
@@ -27,9 +27,15 @@ msgstr "Limpar todas as notificações"
 msgid "Notifications Settings…"
 msgstr "Definições de notificações…"
 
-#: src/Widgets/NotificationsList.vala:29
+#: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "Sem notificações"
+
+#: src/Widgets/AppEntry.vala:45
+#, fuzzy, c-format
+#| msgid "Clear All Notifications"
+msgid "Clear all %s notifications"
+msgstr "Limpar todas as notificações"
 
 #~ msgid "now"
 #~ msgstr "agora"

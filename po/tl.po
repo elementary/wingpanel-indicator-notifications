@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-17 09:26+0000\n"
+"POT-Creation-Date: 2020-09-28 23:32+0000\n"
 "PO-Revision-Date: 2016-05-24 23:03+0000\n"
 "Last-Translator: yavinfour <anjelo.passionist@gmail.com>\n"
 "Language-Team: Tagalog <tl@li.org>\n"
@@ -31,9 +31,15 @@ msgstr "Tanggalin Lahat ng Notipikasyon"
 msgid "Notifications Settings…"
 msgstr "Pagpipilian para sa Notipikasyon"
 
-#: src/Widgets/NotificationsList.vala:29
+#: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "Walang mga Notipikasyon"
+
+#: src/Widgets/AppEntry.vala:45
+#, fuzzy, c-format
+#| msgid "Clear All Notifications"
+msgid "Clear all %s notifications"
+msgstr "Tanggalin Lahat ng Notipikasyon"
 
 #~ msgid "now"
 #~ msgstr "ngayon"
