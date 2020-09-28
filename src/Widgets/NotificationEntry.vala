@@ -116,41 +116,27 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             grid.attach (body_label, 1, 1, 2);
         }
 
-        var delete_image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
-        delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-        var delete_label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
-            use_markup = true
-        };
-        delete_label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-        var delete_internal_grid = new Gtk.Grid () {
-            halign = Gtk.Align.END,
-            hexpand = true,
-            row_spacing = 3,
-            valign = Gtk.Align.CENTER,
-            vexpand = true
-        };
-        delete_internal_grid.attach (delete_image, 0, 0);
-        delete_internal_grid.attach (delete_label, 0, 1);
-
-        var delete_affordance = new Gtk.Grid () {
+        var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
             margin_top = 1,
             margin_bottom = 11
         };
-        delete_affordance.add (delete_internal_grid);
+        delete_left.get_style_context ().add_class ("left");
 
-        unowned Gtk.StyleContext delete_affordance_context = delete_affordance.get_style_context ();
-        delete_affordance_context.add_class ("delete-affordance");
-        delete_affordance_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        var delete_right = new DeleteAffordance (Gtk.Align.START) {
+            // Have to match with the grid
+            margin_top = 1,
+            margin_bottom = 11
+        };
+        delete_right.get_style_context ().add_class ("right");
 
         var carousel = new Hdy.Carousel () {
             allow_mouse_drag = true,
             interactive = true
         };
-        carousel.add (delete_affordance);
+        carousel.add (delete_left);
         carousel.add (grid);
+        carousel.add (delete_right);
         carousel.scroll_to (grid);
 
         add (carousel);
@@ -169,11 +155,45 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         notification.closed.connect (() => clear ());
 
         carousel.page_changed.connect ((index) => {
-            if (index == 0) {
+            if (index != 1) {
                 remove_notification_entry ();
             }
         });
 
+    }
+
+    private class DeleteAffordance : Gtk.Grid {
+        public Gtk.Align alignment { get; construct; }
+
+        public DeleteAffordance (Gtk.Align alignment) {
+            Object (alignment: alignment);
+        }
+
+        construct {
+            var image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
+            image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
+                use_markup = true
+            };
+            label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var delete_internal_grid = new Gtk.Grid () {
+                halign = alignment,
+                hexpand = true,
+                row_spacing = 3,
+                valign = Gtk.Align.CENTER,
+                vexpand = true
+            };
+            delete_internal_grid.attach (image, 0, 0);
+            delete_internal_grid.attach (label, 0, 1);
+
+            add (delete_internal_grid);
+
+            unowned Gtk.StyleContext context = get_style_context ();
+            context.add_class ("delete-affordance");
+            context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
     }
 
     /**
