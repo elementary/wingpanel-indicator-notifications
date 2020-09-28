@@ -4,7 +4,7 @@
 }
 
 .delete-affordance {
-    background-color: @error_color;
+    background-color: mix(@theme_bg_color, @error_color, 0.3);
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
     padding: 12px;
@@ -12,6 +12,6 @@
 
 .delete-affordance image,
 .delete-affordance label {
-    color: white;
+    color: mix(@theme_fg_color, @error_color, 0.6);
     font-weight: 600;
 }
