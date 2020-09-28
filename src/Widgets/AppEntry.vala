@@ -42,7 +42,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
-            tooltip_text = _("Clear all %s notifications".printf (app_info.get_name ()))
+            tooltip_text = _("Clear all %s notifications").printf (app_info.get_name ())
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
