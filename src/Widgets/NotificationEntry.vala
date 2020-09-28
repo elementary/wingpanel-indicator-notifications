@@ -22,16 +22,18 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public bool active = true;
     public Notification notification { get; construct; }
 
+    private static Gtk.CssProvider provider;
     private static Regex entity_regex;
     private static Regex tag_regex;
-
-    private Hdy.Carousel carousel;
 
     public NotificationEntry (Notification notification) {
         Object (notification: notification);
     }
 
     static construct {
+        provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("io/elementary/wingpanel/notifications/NotificationEntry.css");
+
         try {
             entity_regex = new Regex ("&(?!amp;|quot;|apos;|lt;|gt;)");
             tag_regex = new Regex ("<(?!\\/?[biu]>)");
@@ -41,11 +43,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        carousel = new Hdy.Carousel () {
-            allow_mouse_drag = true,
-            interactive = true
-        };
-
         var app_icon = notification.app_icon;
         if (app_icon == "") {
             if (notification.app_info != null) {
@@ -57,9 +54,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var app_image = new Gtk.Image () {
             icon_name = app_icon,
-            pixel_size = 48,
-            margin = 6,
-            margin_right = 0
+            pixel_size = 48
         };
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
@@ -73,7 +68,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
 
         var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
-            margin_right = 6
+            margin_end = 6
         };
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
@@ -87,7 +82,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         unowned Gtk.StyleContext grid_context = grid.get_style_context ();
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
-        grid_context.add_class (Granite.STYLE_CLASS_ROUNDED);
+        grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
@@ -121,7 +116,40 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             grid.attach (body_label, 1, 1, 2);
         }
 
-        carousel.add (new Gtk.Grid ());
+        var delete_image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
+        delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
+            use_markup = true
+        };
+        delete_label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_internal_grid = new Gtk.Grid () {
+            halign = Gtk.Align.END,
+            hexpand = true,
+            row_spacing = 3,
+            valign = Gtk.Align.CENTER,
+            vexpand = true
+        };
+        delete_internal_grid.attach (delete_image, 0, 0);
+        delete_internal_grid.attach (delete_label, 0, 1);
+
+        var delete_affordance = new Gtk.Grid () {
+            // Have to match with the grid
+            margin_top = 1,
+            margin_bottom = 11
+        };
+        delete_affordance.add (delete_internal_grid);
+
+        unowned Gtk.StyleContext delete_affordance_context = delete_affordance.get_style_context ();
+        delete_affordance_context.add_class ("delete-affordance");
+        delete_affordance_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var carousel = new Hdy.Carousel () {
+            allow_mouse_drag = true,
+            interactive = true
+        };
+        carousel.add (delete_affordance);
         carousel.add (grid);
         carousel.scroll_to (grid);
 
