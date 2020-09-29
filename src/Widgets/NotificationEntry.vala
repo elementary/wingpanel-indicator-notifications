@@ -183,9 +183,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
     public void dismiss () {
         revealer.reveal_child = false;
-        GLib.Timeout.add (revealer.transition_duration, () => {
+        revealer.notify["child-revealed"].connect (() => {
             destroy ();
-            return false;
         });
     }
 
