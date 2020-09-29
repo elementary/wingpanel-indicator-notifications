@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-17 09:26+0000\n"
+"POT-Creation-Date: 2020-09-28 23:32+0000\n"
 "PO-Revision-Date: 2016-06-24 05:38+0000\n"
 "Last-Translator: Bone Pyae Sone <bone.burma@gmail.com>\n"
 "Language-Team: Burmese <my@li.org>\n"
@@ -31,9 +31,15 @@ msgstr "အသိပေးချက်အားလုံး ရှင်းထ�
 msgid "Notifications Settings…"
 msgstr "အသိပေးချက်များအား ပြင်ဆင်ရန်"
 
-#: src/Widgets/NotificationsList.vala:29
+#: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "အသိပေးမှု မရှိသေး"
+
+#: src/Widgets/AppEntry.vala:45
+#, fuzzy, c-format
+#| msgid "Clear All Notifications"
+msgid "Clear all %s notifications"
+msgstr "အသိပေးချက်အားလုံး ရှင်းထုတ်"
 
 #~ msgid "now"
 #~ msgstr "ယခုလတ်တလော"

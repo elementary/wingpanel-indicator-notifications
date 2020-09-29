@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-17 09:26+0000\n"
+"POT-Creation-Date: 2020-09-28 23:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,11 @@ msgstr ""
 msgid "Notifications Settings…"
 msgstr ""
 
-#: src/Widgets/NotificationsList.vala:29
+#: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
+msgstr ""
+
+#: src/Widgets/AppEntry.vala:45
+#, c-format
+msgid "Clear all %s notifications"
 msgstr ""
