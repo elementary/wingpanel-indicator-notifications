@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright 2015-2020 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -16,29 +16,26 @@
  */
 
 public class Notifications.Notification : Object {
-    public const string DESKTOP_ID_EXT = ".desktop";
-
-    public bool data_session;
-
-    public string app_name;
-    public string summary;
-    public string message_body;
-    public string app_icon;
-    public string sender;
-    public string[] actions;
-    public Variant hints;
-    public int32 expire_timeout;
-    public uint32 replaces_id;
-    public uint32 id;
-    public uint32 pid = 0;
-    public GLib.DateTime timestamp;
-    public int64 unix_time;
-
-    public string desktop_id;
-    public DesktopAppInfo? app_info = null;
-
     public signal void closed ();
     public signal bool time_changed (GLib.DateTime span);
+
+    public const string DESKTOP_ID_EXT = ".desktop";
+
+    public bool data_session { get; construct; default = false; }
+    public GLib.DateTime timestamp { get; construct; }
+    public string[] actions { get; construct; }
+    public string app_icon { get; construct; }
+    public string app_name { get; construct; }
+    public string desktop_id { get; construct; }
+    public string message_body { get; construct; }
+    public string sender { get; construct; }
+    public string summary { get; construct; }
+    public uint32 id { get; construct; }
+    public uint32 replaces_id { get; construct; }
+
+    public DesktopAppInfo? app_info { get; private set; default = null; }
+
+    private Variant hints;
 
     private enum Column {
         APP_NAME = 0,
@@ -56,66 +53,55 @@ public class Notifications.Notification : Object {
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
-    private bool pid_acquired;
 
-    public Notification.from_message (DBusMessage message, uint32 _id) {
+    public Notification.from_message (DBusMessage message, uint32 id) {
         var body = message.get_body ();
-
-        data_session = false;
-
-        app_name = get_string (body, Column.APP_NAME);
-        app_icon = get_string (body, Column.APP_ICON);
-        summary = get_string (body, Column.SUMMARY);
-        message_body = get_string (body, Column.BODY);
         hints = body.get_child_value (Column.HINTS);
-        expire_timeout = get_int32 (body, Column.EXPIRE_TIMEOUT);
-        replaces_id = get_uint32 (body, Column.REPLACES_ID);
-        id = _id;
-        sender = message.get_sender ();
 
-        actions = body.get_child_value (Column.ACTIONS).dup_strv ();
-        timestamp = new GLib.DateTime.now_local ();
-        unix_time = timestamp.to_unix ();
-
-        desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
-        if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
-            desktop_id += DESKTOP_ID_EXT;
-
-            app_info = new DesktopAppInfo (desktop_id);
-        }
-
-        if (app_info == null) {
-            desktop_id = FALLBACK_DESKTOP_ID;
-            app_info = new DesktopAppInfo (desktop_id);
-        }
-
-        setup_pid ();
-
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
+        Object (
+            actions: body.get_child_value (Column.ACTIONS).dup_strv (),
+            app_icon: get_string (body, Column.APP_ICON),
+            app_name: get_string (body, Column.APP_NAME),
+            desktop_id: lookup_string (hints, DESKTOP_ENTRY_KEY),
+            id: id,
+            message_body: get_string (body, Column.BODY),
+            replaces_id: get_uint32 (body, Column.REPLACES_ID),
+            sender: message.get_sender (),
+            summary: get_string (body, Column.SUMMARY),
+            timestamp: new GLib.DateTime.now_local ()
+        );
     }
 
-    public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
-                                string _summary, string _message_body,
-                                string[] _actions, string _desktop_id, int64 _unix_time, string _sender) {
-        data_session = true;
+    public Notification.from_data (
+        uint32 id, string app_name, string app_icon,
+        string summary, string message_body, string[] _actions,
+        string desktop_id, int64 unix_time, string sender
+    ) {
+        Object (
+            actions: actions,
+            app_icon: app_icon,
+            app_name: app_name,
+            data_session: true,
+            desktop_id: desktop_id,
+            id: id,
+            message_body: message_body,
+            replaces_id: 0,
+            sender: sender,
+            summary: summary,
+            timestamp: new GLib.DateTime.from_unix_local (unix_time)
+        );
+    }
 
-        app_name = _app_name;
-        app_icon = _app_icon;
-        summary = _summary;
-        message_body = _message_body;
-        expire_timeout = -1;
-        replaces_id = 0;
-        id = _id;
-        sender = _sender;
+    construct {
+        if (desktop_id != "") {
+            // Avoid example.desktop.desktop
+            desktop_id.replace (".desktop", "");
+            desktop_id += DESKTOP_ID_EXT;
+        } else {
+            desktop_id = FALLBACK_DESKTOP_ID;
+        }
 
-        actions = _actions;
-        unix_time = _unix_time;
-        timestamp = new GLib.DateTime.from_unix_local (unix_time);
-
-        desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
-
-        setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
@@ -150,40 +136,9 @@ public class Notifications.Notification : Object {
         return false;
     }
 
-    private void setup_pid () {
-        pid_acquired = try_get_pid ();
-        Indicator.notify_settings.changed["do-not-disturb"].connect (() => {
-            if (!pid_acquired) {
-                try_get_pid ();
-            }
-        });
-    }
-
-    private bool try_get_pid () {
-        if (Indicator.notify_settings.get_boolean ("do-not-disturb")) {
-            return false;
-        }
-
-        try {
-            IDBus? dbus_iface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
-            if (dbus_iface != null && dbus_iface.name_has_owner (sender)) {
-                pid = dbus_iface.get_connection_unix_process_id (sender);
-            }
-        } catch (Error e) {
-            warning ("%s\n", e.message);
-        }
-
-        return true;
-    }
-
     private string get_string (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.dup_string ();
-    }
-
-    private int32 get_int32 (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_int32 ();
     }
 
     private uint32 get_uint32 (Variant tuple, int column) {
