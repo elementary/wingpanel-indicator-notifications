@@ -20,13 +20,13 @@ public class Notifications.Notification : Object {
 
     public bool data_session;
 
+    public bool is_transient = false;
     public string app_name;
     public string summary;
     public string message_body;
     public string app_icon;
     public string sender;
     public string[] actions;
-    public Variant hints;
     public int32 expire_timeout;
     public uint32 replaces_id;
     public uint32 id;
@@ -67,7 +67,7 @@ public class Notifications.Notification : Object {
         app_icon = get_string (body, Column.APP_ICON);
         summary = get_string (body, Column.SUMMARY);
         message_body = get_string (body, Column.BODY);
-        hints = body.get_child_value (Column.HINTS);
+        var hints = body.get_child_value (Column.HINTS);
         expire_timeout = get_int32 (body, Column.EXPIRE_TIMEOUT);
         replaces_id = get_uint32 (body, Column.REPLACES_ID);
         id = _id;
@@ -88,6 +88,9 @@ public class Notifications.Notification : Object {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
+
+        var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
+        is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
 
         setup_pid ();
 
@@ -118,11 +121,6 @@ public class Notifications.Notification : Object {
         setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
-    }
-
-    public bool get_is_valid () {
-        var transient = hints.lookup_value ("transient", VariantType.BOOLEAN);
-        return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null && (transient == null || !transient.get_boolean ());
     }
 
     public void close () {
