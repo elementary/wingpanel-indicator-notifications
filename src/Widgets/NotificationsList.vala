@@ -69,11 +69,28 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 insert (entry, insert_pos + 1);
             }
 
+            entry.remove_notification_entry.connect (remove_entry);
+
             app_entry.clear.connect (clear_app_entry);
 
             show_all ();
 
             Session.get_instance ().add_notification (entry.notification);
+        }
+    }
+
+    public void remove_entry (NotificationEntry entry) {
+        AppEntry? app_entry = null;
+
+        unowned string entry_desktop_id = entry.notification.desktop_id;
+        foreach (unowned AppEntry _app_entry in app_entries) {
+            if (_app_entry.app_info.get_id () == entry_desktop_id) {
+                app_entry = _app_entry;
+                continue;
+            }
+        }
+        if (app_entry != null) {
+            app_entry.remove_notification_entry.begin (entry);
         }
     }
 
