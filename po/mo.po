@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 23:32+0000\n"
+"POT-Creation-Date: 2020-09-29 18:36+0000\n"
 "PO-Revision-Date: 2018-05-31 08:20+0000\n"
 "Last-Translator: Romanic Ion Nicușor <contact.romanic@gmail.com>\n"
 "Language-Team: Moldovan <https://weblate.elementary.io/projects/wingpanel/"
@@ -34,6 +34,10 @@ msgstr "Setări pentru notificări …"
 #: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "Nicio notificare"
+
+#: src/Widgets/NotificationEntry.vala:183
+msgid "Delete"
+msgstr ""
 
 #: src/Widgets/AppEntry.vala:45
 #, fuzzy, c-format

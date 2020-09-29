@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 23:32+0000\n"
+"POT-Creation-Date: 2020-09-29 18:36+0000\n"
 "PO-Revision-Date: 2018-03-08 14:27+0000\n"
 "Last-Translator: Shawn <syst3mfailur3@gmail.com>\n"
 "Language-Team: English (Canada) <https://weblate.elementary.io/projects/"
@@ -30,6 +30,10 @@ msgstr "Notifications Settings…"
 #: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "No Notifications"
+
+#: src/Widgets/NotificationEntry.vala:183
+msgid "Delete"
+msgstr ""
 
 #: src/Widgets/AppEntry.vala:45
 #, fuzzy, c-format

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 23:32+0000\n"
+"POT-Creation-Date: 2020-09-29 18:36+0000\n"
 "PO-Revision-Date: 2018-09-20 00:05+0000\n"
 "Last-Translator: Cleiton Floss <cleitonfloss@gmail.com>\n"
 "Language-Team: Polish <https://weblate.elementary.io/projects/wingpanel/"
@@ -31,6 +31,10 @@ msgstr "Ustawienia powiadomień…"
 #: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "Brak powiadomień"
+
+#: src/Widgets/NotificationEntry.vala:183
+msgid "Delete"
+msgstr ""
 
 #: src/Widgets/AppEntry.vala:45
 #, fuzzy, c-format

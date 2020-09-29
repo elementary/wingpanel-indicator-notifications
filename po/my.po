@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 23:32+0000\n"
+"POT-Creation-Date: 2020-09-29 18:36+0000\n"
 "PO-Revision-Date: 2016-06-24 05:38+0000\n"
 "Last-Translator: Bone Pyae Sone <bone.burma@gmail.com>\n"
 "Language-Team: Burmese <my@li.org>\n"
@@ -34,6 +34,10 @@ msgstr "အသိပေးချက်များအား ပြင်ဆင�
 #: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "အသိပေးမှု မရှိသေး"
+
+#: src/Widgets/NotificationEntry.vala:183
+msgid "Delete"
+msgstr ""
 
 #: src/Widgets/AppEntry.vala:45
 #, fuzzy, c-format

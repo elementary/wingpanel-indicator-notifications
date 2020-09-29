@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-28 23:32+0000\n"
+"POT-Creation-Date: 2020-09-29 18:36+0000\n"
 "PO-Revision-Date: 2017-07-06 15:06+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: \n"
@@ -29,6 +29,10 @@ msgstr "Pengaturan Notifikasi…"
 #: src/Widgets/NotificationsList.vala:28
 msgid "No Notifications"
 msgstr "Tak Ada Notifikasi"
+
+#: src/Widgets/NotificationEntry.vala:183
+msgid "Delete"
+msgstr ""
 
 #: src/Widgets/AppEntry.vala:45
 #, fuzzy, c-format
