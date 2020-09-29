@@ -30,7 +30,6 @@ public class Notifications.Notification : Object {
     public int32 expire_timeout;
     public uint32 replaces_id;
     public uint32 id;
-    public uint32 pid = 0;
     public GLib.DateTime timestamp;
     public int64 unix_time;
 
@@ -56,7 +55,6 @@ public class Notifications.Notification : Object {
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
-    private bool pid_acquired;
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
@@ -89,8 +87,6 @@ public class Notifications.Notification : Object {
             app_info = new DesktopAppInfo (desktop_id);
         }
 
-        setup_pid ();
-
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
@@ -114,8 +110,6 @@ public class Notifications.Notification : Object {
 
         desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
-
-        setup_pid ();
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
@@ -148,32 +142,6 @@ public class Notifications.Notification : Object {
         }
 
         return false;
-    }
-
-    private void setup_pid () {
-        pid_acquired = try_get_pid ();
-        Indicator.notify_settings.changed["do-not-disturb"].connect (() => {
-            if (!pid_acquired) {
-                try_get_pid ();
-            }
-        });
-    }
-
-    private bool try_get_pid () {
-        if (Indicator.notify_settings.get_boolean ("do-not-disturb")) {
-            return false;
-        }
-
-        try {
-            IDBus? dbus_iface = Bus.get_proxy_sync (BusType.SESSION, "org.freedesktop.DBus", "/");
-            if (dbus_iface != null && dbus_iface.name_has_owner (sender)) {
-                pid = dbus_iface.get_connection_unix_process_id (sender);
-            }
-        } catch (Error e) {
-            warning ("%s\n", e.message);
-        }
-
-        return true;
     }
 
     private string get_string (Variant tuple, int column) {
