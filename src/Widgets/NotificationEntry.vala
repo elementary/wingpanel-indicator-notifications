@@ -130,16 +130,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         delete_right.get_style_context ().add_class ("right");
 
-        var carousel = new Hdy.Carousel () {
-            allow_mouse_drag = true,
-            interactive = true
+        var deck = new Hdy.Deck () {
+            can_swipe_back = true,
+            can_swipe_forward = true,
+            transition_type = Hdy.DeckTransitionType.SLIDE
         };
-        carousel.add (delete_left);
-        carousel.add (grid);
-        carousel.add (delete_right);
-        carousel.scroll_to (grid);
+        deck.add (delete_left);
+        deck.add (grid);
+        deck.add (delete_right);
+        deck.visible_child = grid;
 
-        add (carousel);
+        add (deck);
         show_all ();
 
         if (notification.data_session) {
@@ -154,12 +155,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         notification.closed.connect (() => clear ());
 
-        carousel.page_changed.connect ((index) => {
-            if (index != 1) {
+        deck.notify["visible-child"].connect (() => {
+            if (deck.transition_running == false && deck.visible_child != grid) {
                 remove_notification_entry ();
             }
         });
 
+        deck.notify["transition-running"].connect (() => {
+            if (deck.transition_running == false && deck.visible_child != grid) {
+                remove_notification_entry ();
+            }
+        });
     }
 
     private class DeleteAffordance : Gtk.Grid {
