@@ -22,16 +22,18 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public bool active = true;
     public Notification notification { get; construct; }
 
+    private static Gtk.CssProvider provider;
     private static Regex entity_regex;
     private static Regex tag_regex;
-
-    private Hdy.Carousel carousel;
 
     public NotificationEntry (Notification notification) {
         Object (notification: notification);
     }
 
     static construct {
+        provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("io/elementary/wingpanel/notifications/NotificationEntry.css");
+
         try {
             entity_regex = new Regex ("&(?!amp;|quot;|apos;|lt;|gt;)");
             tag_regex = new Regex ("<(?!\\/?[biu]>)");
@@ -41,11 +43,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        carousel = new Hdy.Carousel () {
-            allow_mouse_drag = true,
-            interactive = true
-        };
-
         var app_icon = notification.app_icon;
         if (app_icon == "") {
             if (notification.app_info != null) {
@@ -57,9 +54,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var app_image = new Gtk.Image () {
             icon_name = app_icon,
-            pixel_size = 48,
-            margin = 6,
-            margin_right = 0
+            pixel_size = 48
         };
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
@@ -73,7 +68,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
 
         var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
-            margin_right = 6
+            margin_end = 6
         };
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
@@ -81,13 +76,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             hexpand = true,
             column_spacing = 6,
             margin = 12,
+            // Box shadow is clipped to the margin area
             margin_top = 1,
             margin_bottom = 11
         };
 
         unowned Gtk.StyleContext grid_context = grid.get_style_context ();
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
-        grid_context.add_class (Granite.STYLE_CLASS_ROUNDED);
+        grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
@@ -121,11 +117,31 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             grid.attach (body_label, 1, 1, 2);
         }
 
-        carousel.add (new Gtk.Grid ());
-        carousel.add (grid);
-        carousel.scroll_to (grid);
+        var delete_left = new DeleteAffordance (Gtk.Align.END) {
+            // Have to match with the grid
+            margin_top = 1,
+            margin_bottom = 11
+        };
+        delete_left.get_style_context ().add_class ("left");
 
-        add (carousel);
+        var delete_right = new DeleteAffordance (Gtk.Align.START) {
+            // Have to match with the grid
+            margin_top = 1,
+            margin_bottom = 11
+        };
+        delete_right.get_style_context ().add_class ("right");
+
+        var deck = new Hdy.Deck () {
+            can_swipe_back = true,
+            can_swipe_forward = true,
+            transition_type = Hdy.DeckTransitionType.SLIDE
+        };
+        deck.add (delete_left);
+        deck.add (grid);
+        deck.add (delete_right);
+        deck.visible_child = grid;
+
+        add (deck);
         show_all ();
 
         if (notification.data_session) {
@@ -140,12 +156,51 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         notification.closed.connect (() => clear ());
 
-        carousel.page_changed.connect ((index) => {
-            if (index == 0) {
+        deck.notify["visible-child"].connect (() => {
+            if (deck.transition_running == false && deck.visible_child != grid) {
                 remove_notification_entry ();
             }
         });
 
+        deck.notify["transition-running"].connect (() => {
+            if (deck.transition_running == false && deck.visible_child != grid) {
+                remove_notification_entry ();
+            }
+        });
+    }
+
+    private class DeleteAffordance : Gtk.Grid {
+        public Gtk.Align alignment { get; construct; }
+
+        public DeleteAffordance (Gtk.Align alignment) {
+            Object (alignment: alignment);
+        }
+
+        construct {
+            var image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
+            image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
+                use_markup = true
+            };
+            label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var delete_internal_grid = new Gtk.Grid () {
+                halign = alignment,
+                hexpand = true,
+                row_spacing = 3,
+                valign = Gtk.Align.CENTER,
+                vexpand = true
+            };
+            delete_internal_grid.attach (image, 0, 0);
+            delete_internal_grid.attach (label, 0, 1);
+
+            add (delete_internal_grid);
+
+            unowned Gtk.StyleContext context = get_style_context ();
+            context.add_class ("delete-affordance");
+            context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
     }
 
     /**
