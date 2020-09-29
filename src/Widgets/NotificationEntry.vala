@@ -76,6 +76,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             hexpand = true,
             column_spacing = 6,
             margin = 12,
+            // Box shadow is clipped to the margin area
             margin_top = 1,
             margin_bottom = 11
         };
