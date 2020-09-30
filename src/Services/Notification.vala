@@ -86,8 +86,6 @@ public class Notifications.Notification : Object {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
-
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
@@ -110,7 +108,9 @@ public class Notifications.Notification : Object {
 
         desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
+    }
 
+    construct {
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
