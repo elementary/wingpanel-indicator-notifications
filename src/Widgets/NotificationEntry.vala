@@ -17,7 +17,6 @@
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
-    public signal void remove_notification_entry ();
 
     public bool active = true;
     public Notification notification { get; construct; }
@@ -168,13 +167,13 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         deck.notify["visible-child"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != grid) {
-                remove_notification_entry ();
+                clear ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != grid) {
-                remove_notification_entry ();
+                clear ();
             }
         });
     }
