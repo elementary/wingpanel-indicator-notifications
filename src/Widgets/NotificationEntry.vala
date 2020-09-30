@@ -17,10 +17,11 @@
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
-    public signal void remove_notification_entry ();
 
     public bool active = true;
     public Notification notification { get; construct; }
+
+    private Gtk.Revealer revealer;
 
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
@@ -141,7 +142,15 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         deck.add (delete_right);
         deck.visible_child = grid;
 
-        add (deck);
+        revealer = new Gtk.Revealer () {
+            reveal_child = true,
+            transition_duration = 200,
+            transition_type = Gtk.RevealerTransitionType.SLIDE_UP
+        };
+        revealer.add (deck);
+
+        add (revealer);
+
         show_all ();
 
         if (notification.data_session) {
@@ -158,15 +167,24 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         deck.notify["visible-child"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != grid) {
-                remove_notification_entry ();
+                clear ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != grid) {
-                remove_notification_entry ();
+                clear ();
             }
         });
+    }
+
+    public void dismiss () {
+        revealer.notify["child-revealed"].connect (() => {
+            if (!revealer.child_revealed) {
+                destroy ();
+            }
+        });
+        revealer.reveal_child = false;
     }
 
     private class DeleteAffordance : Gtk.Grid {
