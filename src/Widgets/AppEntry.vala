@@ -67,7 +67,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public async void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
         entry.active = false;
-        entry.destroy ();
+        entry.dismiss ();
 
         Session.get_instance ().remove_notification (entry.notification);
         if (app_notifications.length () == 0) {
