@@ -168,14 +168,12 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         deck.notify["visible-child"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != grid) {
-                dismiss ();
                 remove_notification_entry ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != grid) {
-                dismiss ();
                 remove_notification_entry ();
             }
         });
