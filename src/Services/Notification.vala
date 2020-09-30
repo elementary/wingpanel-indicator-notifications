@@ -88,8 +88,6 @@ public class Notifications.Notification : Object {
         }
 
         setup_pid ();
-
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
@@ -113,7 +111,9 @@ public class Notifications.Notification : Object {
         app_info = new DesktopAppInfo (desktop_id);
 
         setup_pid ();
+    }
 
+    construct {
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
