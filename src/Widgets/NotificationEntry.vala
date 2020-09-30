@@ -180,7 +180,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
     public void dismiss () {
         revealer.notify["child-revealed"].connect (() => {
-            if (revealer.child_revealed == false) {
+            if (!revealer.child_revealed) {
                 destroy ();
             }
         });
