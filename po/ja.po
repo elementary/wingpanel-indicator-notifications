@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-29 18:36+0000\n"
-"PO-Revision-Date: 2018-10-29 16:38+0000\n"
+"PO-Revision-Date: 2020-09-30 22:56+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
-"Language-Team: Japanese <https://weblate.elementary.io/projects/wingpanel/"
+"Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -33,13 +33,12 @@ msgstr "通知はありません"
 
 #: src/Widgets/NotificationEntry.vala:183
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: src/Widgets/AppEntry.vala:45
-#, fuzzy, c-format
-#| msgid "Clear All Notifications"
+#, c-format
 msgid "Clear all %s notifications"
-msgstr "すべての通知を消去"
+msgstr "%s の通知をすべて消去"
 
 #~ msgid "now"
 #~ msgstr "たった今"
