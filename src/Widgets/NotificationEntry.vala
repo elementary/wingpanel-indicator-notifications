@@ -144,7 +144,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         revealer = new Gtk.Revealer () {
             reveal_child = true,
-            transition_duration = 195,
+            transition_duration = 200,
             transition_type = Gtk.RevealerTransitionType.SLIDE_UP
         };
         revealer.add (deck);
@@ -179,10 +179,12 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     public void dismiss () {
-        revealer.reveal_child = false;
         revealer.notify["child-revealed"].connect (() => {
-            destroy ();
+            if (revealer.child_revealed == false) {
+                destroy ();
+            }
         });
+        revealer.reveal_child = false;
     }
 
     private class DeleteAffordance : Gtk.Grid {
