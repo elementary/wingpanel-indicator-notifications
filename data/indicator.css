@@ -38,7 +38,7 @@
 @keyframes notification-disabled {
     0% { -gtk-icon-source: -gtk-icontheme("notification-symbolic"); }
     10% { -gtk-icon-source: -gtk-icontheme("notification-disabled-10-symbolic"); opacity: 0.94; }
-    20% { -gtk-icon-source: -gtk-icontheme("notification-disabled-20-symbolic"); opacity: 0.78; }
+    20% { -gtk-icon-source: -gtk-icontheme("notification-disabled-20-symbolic"); opacity: 0.88; }
     30% { -gtk-icon-source: -gtk-icontheme("notification-disabled-30-symbolic"); opacity: 0.82; }
     40% { -gtk-icon-source: -gtk-icontheme("notification-disabled-40-symbolic"); opacity: 0.76; }
     50% { -gtk-icon-source: -gtk-icontheme("notification-disabled-50-symbolic"); opacity: 0.70; }
