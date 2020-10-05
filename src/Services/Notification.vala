@@ -32,7 +32,6 @@ public class Notifications.Notification : Object {
     public uint32 id;
     public uint32 pid = 0;
     public GLib.DateTime timestamp;
-    public int64 unix_time;
 
     public string desktop_id;
     public DesktopAppInfo? app_info = null;
@@ -75,7 +74,6 @@ public class Notifications.Notification : Object {
 
         actions = body.get_child_value (Column.ACTIONS).dup_strv ();
         timestamp = new GLib.DateTime.now_local ();
-        unix_time = timestamp.to_unix ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
         if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
@@ -110,8 +108,7 @@ public class Notifications.Notification : Object {
         sender = _sender;
 
         actions = _actions;
-        unix_time = _unix_time;
-        timestamp = new GLib.DateTime.from_unix_local (unix_time);
+        timestamp = new GLib.DateTime.from_unix_local (_unix_time);
 
         desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
