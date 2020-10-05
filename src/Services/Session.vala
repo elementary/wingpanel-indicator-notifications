@@ -89,7 +89,7 @@ public class Notifications.Session : GLib.Object {
         key.set_string (id, BODY_KEY, notification.message_body);
         key.set_string_list (id, ACTIONS_KEY, notification.actions);
         key.set_string (id, DESKTOP_ID_KEY, notification.desktop_id);
-        key.set_int64 (id, UNIX_TIME_KEY, notification.unix_time);
+        key.set_int64 (id, UNIX_TIME_KEY, notification.timestamp.to_unix ());
         key.set_string (id, SENDER_KEY, notification.sender);
 
         write_contents ();
