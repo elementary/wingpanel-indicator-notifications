@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-29 18:36+0000\n"
-"PO-Revision-Date: 2018-10-27 21:41+0000\n"
+"PO-Revision-Date: 2020-10-11 18:14+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
-"Language-Team: Marathi <https://weblate.elementary.io/projects/wingpanel/"
+"Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/mr/>\n"
 "Language: mr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -33,13 +33,12 @@ msgstr "सूचना उपलब्ध नाहीत"
 
 #: src/Widgets/NotificationEntry.vala:183
 msgid "Delete"
-msgstr ""
+msgstr "हटवा"
 
 #: src/Widgets/AppEntry.vala:45
-#, fuzzy, c-format
-#| msgid "Clear All Notifications"
+#, c-format
 msgid "Clear all %s notifications"
-msgstr "सर्व सूचना पूसा"
+msgstr "सर्व %s सूचना साफ करा"
 
 #~ msgid "now"
 #~ msgstr "सध्या"
