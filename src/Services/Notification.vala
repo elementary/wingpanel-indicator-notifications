@@ -84,6 +84,9 @@ public class Notifications.Notification : Object {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
+
+        var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
+        is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
     }
 
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
