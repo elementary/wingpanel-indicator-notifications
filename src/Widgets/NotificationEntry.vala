@@ -86,9 +86,43 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
         grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+        var delete_box = new DeleteAffordanceButton (Gtk.Align.CENTER);
+        delete_box.get_style_context ().add_class ("neutral");
+
+        delete_box.clicked.connect (() => {
+            clear ();
+        });
+
+        var delete_revealer = new Gtk.Revealer () {
+            transition_duration = 200,
+            transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+        };
+        delete_revealer.add (delete_box);
+
+        var delete_revealer_eventbox = new Gtk.EventBox () {
+            margin_start = margin_end = 6,
+            hexpand = true
+        };
+        delete_revealer_eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                       Gdk.EventMask.LEAVE_NOTIFY_MASK;
+
+        delete_revealer_eventbox.enter_notify_event.connect ((event) => {
+            delete_revealer.set_reveal_child (true);
+	        return false;
+        });
+
+        delete_revealer_eventbox.leave_notify_event.connect ((event) => {
+             delete_revealer.set_reveal_child (false);
+	        return false;
+        });
+
+        delete_revealer_eventbox.add (delete_revealer);
+
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
         grid.attach (time_label, 2, 0);
+        grid.attach (delete_revealer_eventbox, 3, 0);
+
         var entry_body = notification.message_body;
         if (entry_body != "") {
             var body = fix_markup (entry_body);
@@ -191,6 +225,40 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         public Gtk.Align alignment { get; construct; }
 
         public DeleteAffordance (Gtk.Align alignment) {
+            Object (alignment: alignment);
+        }
+
+        construct {
+            var image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
+            image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
+                use_markup = true
+            };
+            label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var delete_internal_grid = new Gtk.Grid () {
+                halign = alignment,
+                hexpand = true,
+                row_spacing = 3,
+                valign = Gtk.Align.CENTER,
+                vexpand = true
+            };
+            delete_internal_grid.attach (image, 0, 0);
+            delete_internal_grid.attach (label, 0, 1);
+
+            add (delete_internal_grid);
+
+            unowned Gtk.StyleContext context = get_style_context ();
+            context.add_class ("delete-affordance");
+            context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
+    }
+
+    private class DeleteAffordanceButton : Gtk.Button {
+        public Gtk.Align alignment { get; construct; }
+
+        public DeleteAffordanceButton (Gtk.Align alignment) {
             Object (alignment: alignment);
         }
 

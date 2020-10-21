@@ -18,6 +18,14 @@
     border-bottom-left-radius: 6px;
 }
 
+.delete-affordance.neutral {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    padding: 6px;
+}
+
 .delete-affordance image,
 .delete-affordance label {
     color: mix(@theme_fg_color, @error_color, 0.6);
