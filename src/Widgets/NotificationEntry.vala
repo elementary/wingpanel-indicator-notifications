@@ -55,7 +55,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var app_image = new Gtk.Image () {
             icon_name = app_icon,
-            pixel_size = 48
+            pixel_size = 48,
+            valign = Gtk.Align.START
         };
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
@@ -69,7 +70,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
 
         var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
-            margin_end = 6
+            margin_end = 6,
+            halign = Gtk.Align.END
         };
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
@@ -87,7 +89,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
         grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var delete_box = new DeleteAffordanceButton ();
+        var delete_box = new DeleteAffordanceButton (Gtk.Align.START) {
+            // Have to match with the grid
+            margin_end = 1,
+            margin_start = 11
+        };
 
         delete_box.clicked.connect (() => {
             clear ();
@@ -256,6 +262,12 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     private class DeleteAffordanceButton : Gtk.Button {
+        public Gtk.Align alignment { get; construct; }
+
+        public DeleteAffordanceButton (Gtk.Align alignment) {
+            Object (alignment: alignment);
+        }
+
         construct {
             var image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
             image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -265,7 +277,13 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             };
             label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            var delete_internal_grid = new Gtk.Grid ();
+            var delete_internal_grid = new Gtk.Grid () {
+                halign = alignment,
+                hexpand = true,
+                row_spacing = 3,
+                valign = Gtk.Align.CENTER,
+                vexpand = true
+            };
             delete_internal_grid.attach (image, 0, 0);
             delete_internal_grid.attach (label, 1, 0);
 
