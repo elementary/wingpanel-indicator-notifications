@@ -21,7 +21,6 @@ public class Notifications.Notification : Object {
 
     public const string DESKTOP_ID_EXT = ".desktop";
 
-    public bool data_session { get; construct; default = false; }
     public GLib.DateTime timestamp { get; construct; }
     public string[] actions { get; construct; }
     public string app_icon { get; construct; }
@@ -81,7 +80,6 @@ public class Notifications.Notification : Object {
             actions: actions,
             app_icon: app_icon,
             app_name: app_name,
-            data_session: true,
             desktop_id: desktop_id,
             id: id,
             message_body: message_body,
@@ -100,8 +98,9 @@ public class Notifications.Notification : Object {
         } else {
             desktop_id = FALLBACK_DESKTOP_ID;
         }
-
         app_info = new DesktopAppInfo (desktop_id);
+
+        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
     public bool get_is_valid () {
@@ -152,5 +151,9 @@ public class Notifications.Notification : Object {
         }
 
         return child.dup_string ();
+    }
+
+    private bool source_func () {
+        return time_changed (timestamp);
     }
 }
