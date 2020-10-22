@@ -96,10 +96,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         show_all ();
 
-        if (notification.data_session) {
-            notification.time_changed (notification.timestamp);
-        }
-
         notification.closed.connect (() => clear ());
 
         deck.notify["visible-child"].connect (() => {
