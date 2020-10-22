@@ -193,10 +193,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         show_all ();
 
-        if (notification.data_session) {
-            notification.time_changed (notification.timestamp);
-        }
-
         notification.time_changed.connect ((timestamp) => {
             time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
 
