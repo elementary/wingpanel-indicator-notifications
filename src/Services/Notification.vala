@@ -18,8 +18,6 @@
 public class Notifications.Notification : Object {
     public const string DESKTOP_ID_EXT = ".desktop";
 
-    public bool data_session;
-
     public string app_name;
     public string summary;
     public string message_body;
@@ -58,8 +56,6 @@ public class Notifications.Notification : Object {
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
 
-        data_session = false;
-
         app_name = get_string (body, Column.APP_NAME);
         app_icon = get_string (body, Column.APP_ICON);
         summary = get_string (body, Column.SUMMARY);
@@ -89,7 +85,6 @@ public class Notifications.Notification : Object {
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
                                 string _summary, string _message_body,
                                 string[] _actions, string _desktop_id, int64 _unix_time, string _sender) {
-        data_session = true;
 
         app_name = _app_name;
         app_icon = _app_icon;
