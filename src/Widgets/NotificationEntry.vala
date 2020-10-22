@@ -88,7 +88,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
         grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+        var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         delete_image.get_style_context ().add_class ("close-image");
         delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
