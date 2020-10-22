@@ -18,16 +18,24 @@
     border-bottom-left-radius: 6px;
 }
 
-.delete-affordance.neutral {
+.delete-affordance image,
+.delete-affordance label {
+    color: mix(@theme_fg_color, @error_color, 0.6);
+    font-weight: 600;
+}
+
+.delete-affordance-button {
+    background-color: mix(@theme_bg_color, @STRAWBERRY_500, 0.3);
+    box-shadow: none;
+    padding: 6px;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
-    padding: 6px;
 }
 
-.delete-affordance image,
-.delete-affordance label {
+.delete-affordance-button image,
+.delete-affordance-button label {
     color: mix(@theme_fg_color, @error_color, 0.6);
     font-weight: 600;
 }
