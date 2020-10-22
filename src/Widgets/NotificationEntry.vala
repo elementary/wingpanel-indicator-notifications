@@ -56,7 +56,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var app_image = new Gtk.Image () {
             icon_name = app_icon,
             pixel_size = 48,
-            valign = Gtk.Align.START
+            valign = Gtk.Align.CENTER
         };
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
@@ -78,10 +78,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var grid = new Gtk.Grid () {
             hexpand = true,
             column_spacing = 6,
-            row_homogeneous = true,
             margin = 12,
             // Box shadow is clipped to the margin area
-            margin_top = 1,
+            margin_top = 14,
             margin_bottom = 11
         };
 
@@ -89,11 +88,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
         grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var delete_box = new DeleteAffordanceButton (Gtk.Align.START) {
-            // Have to match with the grid
-            margin_end = 1,
-            margin_start = 11
+        var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+        delete_image.get_style_context ().add_class ("close-image");
+        delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_box = new Gtk.Button () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
+            image = delete_image
         };
+        delete_box.get_style_context ().add_class ("close");
+        delete_box.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         delete_box.clicked.connect (() => {
             clear ();
@@ -107,9 +112,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         delete_revealer.add (delete_box);
 
         grid.attach (app_image, 0, 0, 1, 2);
-        grid.attach (title_label, 1, 0, 1, 1);
-        grid.attach (time_label, 2, 0, 1, 1);
-        grid.attach (delete_revealer, 2, 1, 1, 1);
+        grid.attach (title_label, 1, 0);
+        grid.attach (time_label, 2, 0);
 
         var entry_body = notification.message_body;
         if (entry_body != "") {
@@ -142,14 +146,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
-            margin_top = 1,
+            margin_top = 14,
             margin_bottom = 11
         };
         delete_left.get_style_context ().add_class ("left");
 
         var delete_right = new DeleteAffordance (Gtk.Align.START) {
             // Have to match with the grid
-            margin_top = 1,
+            margin_top = 14,
             margin_bottom = 11
         };
         delete_right.get_style_context ().add_class ("right");
@@ -171,23 +175,25 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         revealer.add (deck);
 
+        var overlay = new Gtk.Overlay ();
+        overlay.add (revealer);
+        overlay.add_overlay (delete_revealer);
+
         var eventbox = new Gtk.EventBox ();
         eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
                            Gdk.EventMask.LEAVE_NOTIFY_MASK;
 
         eventbox.enter_notify_event.connect ((event) => {
             delete_revealer.set_reveal_child (true);
-            delete_revealer.no_show_all = false;
             return false;
         });
 
         eventbox.leave_notify_event.connect ((event) => {
             delete_revealer.set_reveal_child (false);
-            delete_revealer.no_show_all = true;
             return false;
         });
 
-        eventbox.add (revealer);
+        eventbox.add (overlay);
 
         add (eventbox);
 
@@ -253,40 +259,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
             unowned Gtk.StyleContext context = get_style_context ();
             context.add_class ("delete-affordance");
-            context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        }
-    }
-
-    private class DeleteAffordanceButton : Gtk.Button {
-        public Gtk.Align alignment { get; construct; }
-
-        public DeleteAffordanceButton (Gtk.Align alignment) {
-            Object (alignment: alignment);
-        }
-
-        construct {
-            var image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
-            image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-            var label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
-                use_markup = true
-            };
-            label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-            var delete_internal_grid = new Gtk.Grid () {
-                halign = alignment,
-                hexpand = true,
-                row_spacing = 3,
-                valign = Gtk.Align.CENTER,
-                vexpand = true
-            };
-            delete_internal_grid.attach (image, 0, 0);
-            delete_internal_grid.attach (label, 1, 0);
-
-            add (delete_internal_grid);
-
-            unowned Gtk.StyleContext context = get_style_context ();
-            context.add_class ("delete-affordance-button");
             context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
     }
