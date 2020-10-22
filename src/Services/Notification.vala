@@ -102,8 +102,6 @@ public class Notifications.Notification : Object {
         }
 
         app_info = new DesktopAppInfo (desktop_id);
-
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
     }
 
     public bool get_is_valid () {
@@ -154,9 +152,5 @@ public class Notifications.Notification : Object {
         }
 
         return child.dup_string ();
-    }
-
-    private bool source_func () {
-        return time_changed (timestamp);
     }
 }
