@@ -84,14 +84,14 @@ public class Notifications.Notification : Object {
 
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
                                 string _summary, string _message_body,
-                                string[] _actions, string _desktop_id, int64 _unix_time, string _sender) {
+                                string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender) {
 
         app_name = _app_name;
         app_icon = _app_icon;
         summary = _summary;
         message_body = _message_body;
         expire_timeout = -1;
-        replaces_id = 0;
+        replaces_id = (uint32) _replaces_id;
         id = _id;
         sender = _sender;
 
