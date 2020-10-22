@@ -25,7 +25,6 @@ public class Notifications.Notification : Object {
     public string sender;
     public string[] actions;
     public Variant hints;
-    public int32 expire_timeout;
     public uint32 replaces_id;
     public uint32 id;
     public GLib.DateTime timestamp;
@@ -61,7 +60,6 @@ public class Notifications.Notification : Object {
         summary = get_string (body, Column.SUMMARY);
         message_body = get_string (body, Column.BODY);
         hints = body.get_child_value (Column.HINTS);
-        expire_timeout = get_int32 (body, Column.EXPIRE_TIMEOUT);
         replaces_id = get_uint32 (body, Column.REPLACES_ID);
         id = _id;
         sender = message.get_sender ();
@@ -90,7 +88,6 @@ public class Notifications.Notification : Object {
         app_icon = _app_icon;
         summary = _summary;
         message_body = _message_body;
-        expire_timeout = -1;
         replaces_id = 0;
         id = _id;
         sender = _sender;
@@ -139,11 +136,6 @@ public class Notifications.Notification : Object {
     private string get_string (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.dup_string ();
-    }
-
-    private int32 get_int32 (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_int32 ();
     }
 
     private uint32 get_uint32 (Variant tuple, int column) {
