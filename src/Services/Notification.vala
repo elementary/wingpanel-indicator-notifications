@@ -55,7 +55,7 @@ public class Notifications.Notification : Object {
 
     public Notification.from_message (DBusMessage message, uint32 id) {
         var body = message.get_body ();
-        var hints = body.get_child_value (Column.HINTS);
+        hints = body.get_child_value (Column.HINTS);
 
         Object (
             actions: body.get_child_value (Column.ACTIONS).dup_strv (),
