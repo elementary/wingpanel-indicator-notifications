@@ -55,7 +55,7 @@ public class Notifications.Notification : Object {
 
     public Notification.from_message (DBusMessage message, uint32 id) {
         var body = message.get_body ();
-        hints = body.get_child_value (Column.HINTS);
+        var hints = body.get_child_value (Column.HINTS);
 
         Object (
             actions: body.get_child_value (Column.ACTIONS).dup_strv (),
@@ -74,7 +74,7 @@ public class Notifications.Notification : Object {
     public Notification.from_data (
         uint32 id, string app_name, string app_icon,
         string summary, string message_body, string[] _actions,
-        string desktop_id, int64 unix_time, string sender
+        string desktop_id, int64 unix_time, uint64 replaces_id, string sender
     ) {
         Object (
             actions: actions,
@@ -83,7 +83,7 @@ public class Notifications.Notification : Object {
             desktop_id: desktop_id,
             id: id,
             message_body: message_body,
-            replaces_id: 0,
+            replaces_id: (uint32) replaces_id,
             sender: sender,
             summary: summary,
             timestamp: new GLib.DateTime.from_unix_local (unix_time)
@@ -98,6 +98,7 @@ public class Notifications.Notification : Object {
         } else {
             desktop_id = FALLBACK_DESKTOP_ID;
         }
+
         app_info = new DesktopAppInfo (desktop_id);
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
