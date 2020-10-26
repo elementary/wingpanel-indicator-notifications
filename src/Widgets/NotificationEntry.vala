@@ -55,8 +55,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var app_image = new Gtk.Image () {
             icon_name = app_icon,
-            pixel_size = 48,
-            valign = Gtk.Align.CENTER
+            pixel_size = 48
         };
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
@@ -70,8 +69,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
 
         var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
-            margin_end = 6,
-            halign = Gtk.Align.END
+            margin_end = 6
         };
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
@@ -91,20 +89,20 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var delete_box = new Gtk.Button () {
+        var delete_button = new Gtk.Button () {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
             image = delete_image
         };
-        delete_box.get_style_context ().add_class ("close");
-        delete_box.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        delete_button.get_style_context ().add_class ("close");
+        delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
             transition_type = Gtk.RevealerTransitionType.CROSSFADE
         };
-        delete_revealer.add (delete_box);
+        delete_revealer.add (delete_button);
 
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
@@ -184,7 +182,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         show_all ();
 
-        delete_box.clicked.connect (() => {
+        delete_button.clicked.connect (() => {
             clear ();
         });
 
