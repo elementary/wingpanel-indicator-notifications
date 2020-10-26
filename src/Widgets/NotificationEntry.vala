@@ -205,13 +205,13 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         notification.closed.connect (() => clear ());
 
         deck.notify["visible-child"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != grid) {
+            if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != grid) {
+            if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
             }
         });
