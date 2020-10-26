@@ -73,7 +73,7 @@ public class Notifications.Notification : Object {
 
     public Notification.from_data (
         uint32 id, string app_name, string app_icon,
-        string summary, string message_body, string[] _actions,
+        string summary, string message_body, string[] actions,
         string desktop_id, int64 unix_time, uint64 replaces_id, string sender
     ) {
         Object (
