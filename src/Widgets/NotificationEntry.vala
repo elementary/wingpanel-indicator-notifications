@@ -185,7 +185,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         eventbox.enter_notify_event.connect ((event) => {
             delete_revealer.reveal_child = true;
-            return false;
+            return Gdk.EVENT_STOP;
         });
 
         eventbox.leave_notify_event.connect ((event) => {
