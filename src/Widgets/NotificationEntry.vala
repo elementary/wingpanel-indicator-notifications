@@ -107,7 +107,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var delete_revealer = new Gtk.Revealer () {
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
-            transition_type = Gtk.RevealerTransitionType.SLIDE_UP
+            transition_type = Gtk.RevealerTransitionType.CROSSFADE
         };
         delete_revealer.add (delete_box);
 
