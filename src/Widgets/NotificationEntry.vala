@@ -89,7 +89,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        delete_image.get_style_context ().add_class ("close-image");
         delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_box = new Gtk.Button () {
@@ -99,10 +98,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         delete_box.get_style_context ().add_class ("close");
         delete_box.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-        delete_box.clicked.connect (() => {
-            clear ();
-        });
 
         var delete_revealer = new Gtk.Revealer () {
             reveal_child = false,
@@ -158,15 +153,19 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         delete_right.get_style_context ().add_class ("right");
 
+        var overlay = new Gtk.Overlay ();
+        overlay.add (grid);
+        overlay.add_overlay (delete_revealer);
+
         var deck = new Hdy.Deck () {
             can_swipe_back = true,
             can_swipe_forward = true,
             transition_type = Hdy.DeckTransitionType.SLIDE
         };
         deck.add (delete_left);
-        deck.add (grid);
+        deck.add (overlay);
         deck.add (delete_right);
-        deck.visible_child = grid;
+        deck.visible_child = overlay;
 
         revealer = new Gtk.Revealer () {
             reveal_child = true,
@@ -175,13 +174,19 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         revealer.add (deck);
 
-        var overlay = new Gtk.Overlay ();
-        overlay.add (revealer);
-        overlay.add_overlay (delete_revealer);
-
         var eventbox = new Gtk.EventBox ();
         eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
                            Gdk.EventMask.LEAVE_NOTIFY_MASK;
+
+        eventbox.add (revealer);
+
+        add (eventbox);
+
+        show_all ();
+
+        delete_box.clicked.connect (() => {
+            clear ();
+        });
 
         eventbox.enter_notify_event.connect ((event) => {
             delete_revealer.reveal_child = true;
@@ -190,14 +195,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         eventbox.leave_notify_event.connect ((event) => {
             delete_revealer.set_reveal_child (false);
-            return false;
+            return Gdk.EVENT_STOP;
         });
-
-        eventbox.add (overlay);
-
-        add (eventbox);
-
-        show_all ();
 
         notification.time_changed.connect ((timestamp) => {
             time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
