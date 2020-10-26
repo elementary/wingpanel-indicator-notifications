@@ -78,7 +78,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             column_spacing = 6,
             margin = 12,
             // Box shadow is clipped to the margin area
-            margin_top = 1,
+            margin_top = 14,
             margin_bottom = 11
         };
 
@@ -86,9 +86,28 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
         grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+        var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_button = new Gtk.Button () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
+            image = delete_image
+        };
+        delete_button.get_style_context ().add_class ("close");
+        delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_revealer = new Gtk.Revealer () {
+            reveal_child = false,
+            transition_duration = Granite.TRANSITION_DURATION_CLOSE,
+            transition_type = Gtk.RevealerTransitionType.CROSSFADE
+        };
+        delete_revealer.add (delete_button);
+
         grid.attach (app_image, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
         grid.attach (time_label, 2, 0);
+
         var entry_body = notification.message_body;
         if (entry_body != "") {
             var body = fix_markup (entry_body);
@@ -120,17 +139,21 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
-            margin_top = 1,
+            margin_top = 14,
             margin_bottom = 11
         };
         delete_left.get_style_context ().add_class ("left");
 
         var delete_right = new DeleteAffordance (Gtk.Align.START) {
             // Have to match with the grid
-            margin_top = 1,
+            margin_top = 14,
             margin_bottom = 11
         };
         delete_right.get_style_context ().add_class ("right");
+
+        var overlay = new Gtk.Overlay ();
+        overlay.add (grid);
+        overlay.add_overlay (delete_revealer);
 
         var deck = new Hdy.Deck () {
             can_swipe_back = true,
@@ -138,9 +161,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             transition_type = Hdy.DeckTransitionType.SLIDE
         };
         deck.add (delete_left);
-        deck.add (grid);
+        deck.add (overlay);
         deck.add (delete_right);
-        deck.visible_child = grid;
+        deck.visible_child = overlay;
 
         revealer = new Gtk.Revealer () {
             reveal_child = true,
@@ -149,9 +172,29 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         revealer.add (deck);
 
-        add (revealer);
+        var eventbox = new Gtk.EventBox ();
+        eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                           Gdk.EventMask.LEAVE_NOTIFY_MASK;
+
+        eventbox.add (revealer);
+
+        add (eventbox);
 
         show_all ();
+
+        delete_button.clicked.connect (() => {
+            clear ();
+        });
+
+        eventbox.enter_notify_event.connect ((event) => {
+            delete_revealer.reveal_child = true;
+            return Gdk.EVENT_STOP;
+        });
+
+        eventbox.leave_notify_event.connect ((event) => {
+            delete_revealer.reveal_child = false;
+            return Gdk.EVENT_STOP;
+        });
 
         notification.time_changed.connect ((timestamp) => {
             time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
@@ -162,13 +205,13 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         notification.closed.connect (() => clear ());
 
         deck.notify["visible-child"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != grid) {
+            if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != grid) {
+            if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
             }
         });
