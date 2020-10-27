@@ -28,6 +28,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
     construct {
         margin = 12;
+        margin_bottom = 3;
         margin_top = 6;
 
         app_notifications = new List<NotificationEntry> ();

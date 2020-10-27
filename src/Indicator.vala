@@ -152,14 +152,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void on_notification_received (DBusMessage message, uint32 id) {
         var notification = new Notification.from_message (message, id);
-        if (!notification.get_is_valid () || notification.app_name in EXCEPTIONS) {
+        if (notification.is_transient || notification.app_name in EXCEPTIONS) {
             return;
         }
 
         string app_id = notification.desktop_id.replace (Notification.DESKTOP_ID_EXT, "");
-        if (!((DesktopAppInfo)notification.app_info).get_boolean ("X-GNOME-UsesNotifications")) {
-            app_id = "gala-other";
-        }
 
         Settings? app_settings = app_settings_cache.get (app_id);
 
