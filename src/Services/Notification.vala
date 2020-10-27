@@ -74,7 +74,7 @@ public class Notifications.Notification : Object {
             app_info = new DesktopAppInfo (desktop_id);
         }
 
-        if (app_info == null) {
+        if (app_info == null || !app_info.get_boolean ("X-GNOME-UsesNotifications")) {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
