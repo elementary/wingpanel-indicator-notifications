@@ -78,8 +78,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             column_spacing = 6,
             margin = 12,
             // Box shadow is clipped to the margin area
-            margin_top = 14,
-            margin_bottom = 11
+            margin_top = 9,
+            margin_bottom = 9
         };
 
         unowned Gtk.StyleContext grid_context = grid.get_style_context ();
@@ -139,15 +139,15 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
-            margin_top = 14,
-            margin_bottom = 11
+            margin_top = 9,
+            margin_bottom = 9
         };
         delete_left.get_style_context ().add_class ("left");
 
         var delete_right = new DeleteAffordance (Gtk.Align.START) {
             // Have to match with the grid
-            margin_top = 14,
-            margin_bottom = 11
+            margin_top = 9,
+            margin_bottom = 9
         };
         delete_right.get_style_context ().add_class ("right");
 
