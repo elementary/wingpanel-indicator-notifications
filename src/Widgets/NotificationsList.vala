@@ -42,11 +42,11 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         row_activated.connect (on_row_activated);
     }
 
-    public void add_entry (NotificationEntry entry) {
-        if (entry.notification.app_info != null && entry.notification.app_info.get_id () != null) {
+    public void add_entry (Notification notification) {
+        if (notification.app_info != null && notification.app_info.get_id () != null) {
             AppEntry? app_entry = null;
 
-            unowned string entry_desktop_id = entry.notification.desktop_id;
+            unowned string entry_desktop_id = notification.desktop_id;
             foreach (unowned AppEntry _app_entry in app_entries) {
                 if (_app_entry.app_info.get_id () == entry_desktop_id) {
                     app_entry = _app_entry;
@@ -54,6 +54,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 }
             }
 
+            var entry = new NotificationEntry (notification);
             if (app_entry == null) {
                 app_entry = new AppEntry (entry);
 
@@ -73,7 +74,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
             show_all ();
 
-            Session.get_instance ().add_notification (entry.notification);
+            Session.get_instance ().add_notification (notification);
         }
     }
 
