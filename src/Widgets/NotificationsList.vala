@@ -67,9 +67,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     [CCode (instance_pos = -1)]
     private void header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? before) {
-        var row_id = ((NotificationEntry) row).notification.desktop_id;
+        unowned string row_id = ((NotificationEntry) row).notification.desktop_id;
         if (before != null) {
-            var before_id = ((NotificationEntry) before).notification.desktop_id;
+            unowned string before_id = ((NotificationEntry) before).notification.desktop_id;
             if (row_id == before_id) {
                 row.set_header (null);
             } else {
@@ -82,8 +82,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     [CCode (instance_pos = -1)]
     private int sort_func (Gtk.ListBoxRow row1, Gtk.ListBoxRow row2) {
-        var notification1 = ((NotificationEntry) row1).notification;
-        var notification2 = ((NotificationEntry) row2).notification;
+        unowned NotificationEntry notification1 = ((NotificationEntry) row1).notification;
+        unowned NotificationEntry notification2 = ((NotificationEntry) row2).notification;
 
         if (notification1.desktop_id != notification2.desktop_id) {
             foreach (unowned NotificationEntry entry in app_entries[notification2.desktop_id].app_notifications) {
