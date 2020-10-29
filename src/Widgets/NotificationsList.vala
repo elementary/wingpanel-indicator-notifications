@@ -85,9 +85,11 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         unowned Notification notification2 = ((NotificationEntry) row2).notification;
 
         if (notification1.desktop_id != notification2.desktop_id) {
-            foreach (unowned NotificationEntry entry in app_entries[notification2.desktop_id].app_notifications) {
-                if (entry.notification.timestamp.compare (notification1.timestamp) == 1) {
-                    return 1;
+            foreach (unowned NotificationEntry row2_entry in app_entries[notification2.desktop_id].app_notifications) {
+                foreach (unowned NotificationEntry row1_entry in app_entries[notification2.desktop_id].app_notifications) {
+                    if (row2_entry.notification.timestamp.compare (row1_entry.notification.timestamp) == 1) {
+                        return 1;
+                    }
                 }
             }
 
