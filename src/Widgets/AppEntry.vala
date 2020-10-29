@@ -19,6 +19,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
     public NotificationEntry entry { get; construct; }
+    public string app_id { get; private set; default = "other"; }
     public AppInfo? app_info = null;
     public List<NotificationEntry> app_notifications;
 
@@ -37,13 +38,19 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         var notification = entry.notification;
         app_info = notification.app_info;
 
-        var label = new Gtk.Label (app_info.get_name ());
+        string name = _("Other");
+        if (app_info != null) {
+            app_id = app_info.get_id ();
+            name = app_info.get_name ();
+        }
+
+        var label = new Gtk.Label (name);
         label.hexpand = true;
         label.xalign = 0;
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
-            tooltip_text = _("Clear all %s notifications").printf (app_info.get_name ())
+            tooltip_text = _("Clear all %s notifications").printf (name)
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
