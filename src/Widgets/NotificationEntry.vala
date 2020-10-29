@@ -18,10 +18,10 @@
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
-    public bool active = true;
     public Notification notification { get; construct; }
 
     private Gtk.Revealer revealer;
+    private uint timeout_id;
 
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
@@ -196,10 +196,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             return Gdk.EVENT_STOP;
         });
 
-        notification.time_changed.connect ((timestamp) => {
-            time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
-
-            return active;
+        timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
+            time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
+            return true;
         });
 
         notification.closed.connect (() => clear ());
@@ -218,7 +217,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     public void dismiss () {
-        notification.stop_timeout ();
+        Source.remove (timeout_id);
 
         revealer.notify["child-revealed"].connect (() => {
             if (!revealer.child_revealed) {

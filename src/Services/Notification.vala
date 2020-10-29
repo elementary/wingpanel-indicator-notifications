@@ -33,7 +33,6 @@ public class Notifications.Notification : Object {
     public DesktopAppInfo? app_info = null;
 
     public signal void closed ();
-    public signal bool time_changed (GLib.DateTime span);
 
     private enum Column {
         APP_NAME = 0,
@@ -46,8 +45,6 @@ public class Notifications.Notification : Object {
         EXPIRE_TIMEOUT,
         COUNT
     }
-
-    private uint timeout_id;
 
     private const string DEFAULT_ACTION = "default";
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
@@ -104,18 +101,8 @@ public class Notifications.Notification : Object {
         app_info = new DesktopAppInfo (desktop_id);
     }
 
-    construct {
-        timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
-            return time_changed (timestamp);
-        });
-    }
-
     public void close () {
         closed ();
-    }
-
-    public void stop_timeout () {
-        Source.remove (timeout_id);
     }
 
     public bool run_default_action () {
