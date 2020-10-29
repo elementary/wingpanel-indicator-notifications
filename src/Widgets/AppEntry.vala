@@ -19,7 +19,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
     public NotificationEntry entry { get; construct; }
-    public string app_id { get; private set; default = "other"; }
+    public string app_id { get; private set; }
     public AppInfo? app_info = null;
     public List<NotificationEntry> app_notifications;
 
@@ -38,10 +38,13 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         var notification = entry.notification;
         app_info = notification.app_info;
 
-        string name = _("Other");
+        string name;
         if (app_info != null) {
             app_id = app_info.get_id ();
             name = app_info.get_name ();
+        } else {
+            app_id = "other";
+            name = _("Other");
         }
 
         var label = new Gtk.Label (name);
