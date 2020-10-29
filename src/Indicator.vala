@@ -174,11 +174,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void update_clear_all_sensitivity () {
-        clear_all_btn.sensitive = nlist.get_entries_length () > 0;
+        clear_all_btn.sensitive = nlist.app_entries.size > 0;
     }
 
     private void on_notification_closed (uint32 id) {
-        foreach (var app_entry in nlist.get_entries ()) {
+        foreach (var app_entry in nlist.app_entries.values) {
             foreach (var item in app_entry.app_notifications) {
                 if (item.notification.id == id) {
                     item.notification.close ();
@@ -192,7 +192,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
-        } else if (nlist != null && nlist.get_entries_length () > 0) {
+        } else if (nlist != null && nlist.app_entries.size > 0) {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.add_class ("new");
         } else {
