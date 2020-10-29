@@ -18,11 +18,12 @@
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
 
-    private List<AppEntry> app_entries;
+    public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
+
     private HashTable<string, int> table;
 
     construct {
-        app_entries = new List<AppEntry> ();
+        app_entries = new Gee.HashMap<string, AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
         var placeholder = new Gtk.Label (_("No Notifications"));
@@ -46,19 +47,15 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (notification.app_info != null && notification.app_info.get_id () != null) {
             AppEntry? app_entry = null;
 
-            unowned string entry_desktop_id = notification.desktop_id;
-            foreach (unowned AppEntry _app_entry in app_entries) {
-                if (_app_entry.app_id == entry_desktop_id) {
-                    app_entry = _app_entry;
-                    continue;
-                }
+            if (app_entries[notification.desktop_id] != null) {
+                app_entry = app_entries[notification.desktop_id];
             }
 
             var entry = new NotificationEntry (notification);
             if (app_entry == null) {
                 app_entry = new AppEntry (entry);
+                app_entries[notification.desktop_id] = app_entry;
 
-                app_entries.append (app_entry);
                 prepend (app_entry);
                 insert (entry, 1);
                 table.insert (app_entry.app_id, 0);
@@ -78,18 +75,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         }
     }
 
-    public unowned List<AppEntry> get_entries () {
-        return app_entries;
-    }
-
-    public uint get_entries_length () {
-        return app_entries.length ();
-    }
-
     public void clear_all () {
-        app_entries.foreach ((app_entry) => {
-            app_entry.clear ();
-        });
+        app_entries.clear ();
 
         Session.get_instance ().clear ();
         close_popover ();
@@ -108,7 +95,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     private void clear_app_entry (AppEntry app_entry) {
-        app_entries.remove (app_entry);
+        app_entries.unset (app_entry.app_id);
 
         app_entry.app_notifications.foreach ((notification_entry) => {
             app_entry.remove_notification_entry.begin (notification_entry);
@@ -116,7 +103,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         app_entry.destroy ();
 
-        if (get_entries_length () == 0) {
+        if (app_entries.size == 0) {
             clear_all ();
         }
     }
