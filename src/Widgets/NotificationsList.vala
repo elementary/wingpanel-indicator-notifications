@@ -34,9 +34,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
-        // set_header_func (header_func);
         set_placeholder (placeholder);
         set_sort_func (sort_func);
+        // set_header_func (header_func);
         show_all ();
 
         row_activated.connect (on_row_activated);
@@ -59,7 +59,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
             show_all ();
             invalidate_sort ();
-            invalidate_headers ();
 
             Session.get_instance ().add_notification (notification);
         }
@@ -82,8 +81,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     [CCode (instance_pos = -1)]
     private int sort_func (Gtk.ListBoxRow row1, Gtk.ListBoxRow row2) {
-        unowned NotificationEntry notification1 = ((NotificationEntry) row1).notification;
-        unowned NotificationEntry notification2 = ((NotificationEntry) row2).notification;
+        unowned Notification notification1 = ((NotificationEntry) row1).notification;
+        unowned Notification notification2 = ((NotificationEntry) row2).notification;
 
         if (notification1.desktop_id != notification2.desktop_id) {
             foreach (unowned NotificationEntry entry in app_entries[notification2.desktop_id].app_notifications) {
