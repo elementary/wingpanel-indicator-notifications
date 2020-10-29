@@ -47,6 +47,8 @@ public class Notifications.Notification : Object {
         COUNT
     }
 
+    private uint timeout_id;
+
     private const string DEFAULT_ACTION = "default";
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
@@ -103,11 +105,17 @@ public class Notifications.Notification : Object {
     }
 
     construct {
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
+        timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
+            return time_changed (timestamp);
+        });
     }
 
     public void close () {
         closed ();
+    }
+
+    public void stop_timeout () {
+        Source.remove (timeout_id);
     }
 
     public bool run_default_action () {
@@ -149,9 +157,5 @@ public class Notifications.Notification : Object {
         }
 
         return child.dup_string ();
-    }
-
-    private bool source_func () {
-        return time_changed (timestamp);
     }
 }
