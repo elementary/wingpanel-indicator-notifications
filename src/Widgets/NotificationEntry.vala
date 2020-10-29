@@ -218,6 +218,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     public void dismiss () {
+        notification.stop_timeout ();
+
         revealer.notify["child-revealed"].connect (() => {
             if (!revealer.child_revealed) {
                 destroy ();
