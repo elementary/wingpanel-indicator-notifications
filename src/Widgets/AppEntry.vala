@@ -66,6 +66,10 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         show_all ();
 
         clear_btn_entry.clicked.connect (() => {
+            app_notifications.foreach ((notification_entry) => {
+                 remove_notification_entry.begin (notification_entry);
+            });
+
             clear ();
         });
     }
@@ -75,7 +79,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         entry.clear.connect (remove_notification_entry);
     }
 
-    public async void remove_notification_entry (NotificationEntry entry) {
+    private async void remove_notification_entry (NotificationEntry entry) {
         app_notifications.remove (entry);
         entry.dismiss ();
 
