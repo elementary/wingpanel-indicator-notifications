@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 21:45+0000\n"
+"POT-Creation-Date: 2020-10-29 17:02+0000\n"
 "PO-Revision-Date: 2020-03-19 20:09+0000\n"
 "Last-Translator: Ciarán Ainsworth <ciaranainsworth@posteo.net>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
@@ -27,18 +27,18 @@ msgstr "Notifications Indicator"
 msgid "See missed notifications in the panel"
 msgstr "See missed notifications in the panel"
 
-#: data/notifications.appdata.xml.in:11
+#: data/notifications.appdata.xml.in:12
 msgid "Fix issues with disappearing notifications"
 msgstr "Fix issues with disappearing notifications"
 
-#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:18
+#: data/notifications.appdata.xml.in:13 data/notifications.appdata.xml.in:19
 msgid "Updated translations"
 msgstr "Updated translations"
 
-#: data/notifications.appdata.xml.in:17
+#: data/notifications.appdata.xml.in:18
 msgid "Fix a minor visual inconsistency"
 msgstr "Fix a minor visual inconsistency"
 
-#: data/notifications.appdata.xml.in:27
+#: data/notifications.appdata.xml.in:28
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

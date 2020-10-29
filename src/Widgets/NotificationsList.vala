@@ -48,7 +48,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
             unowned string entry_desktop_id = notification.desktop_id;
             foreach (unowned AppEntry _app_entry in app_entries) {
-                if (_app_entry.app_info.get_id () == entry_desktop_id) {
+                if (_app_entry.app_id == entry_desktop_id) {
                     app_entry = _app_entry;
                     continue;
                 }
@@ -61,12 +61,12 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 app_entries.append (app_entry);
                 prepend (app_entry);
                 insert (entry, 1);
-                table.insert (app_entry.app_info.get_id (), 0);
+                table.insert (app_entry.app_id, 0);
             } else {
                 resort_app_entry (app_entry);
                 app_entry.add_notification_entry (entry);
 
-                int insert_pos = table.get (app_entry.app_info.get_id ());
+                int insert_pos = table.get (app_entry.app_id);
                 insert (entry, insert_pos + 1);
             }
 

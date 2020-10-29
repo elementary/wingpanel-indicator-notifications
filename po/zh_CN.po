@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 18:36+0000\n"
+"POT-Creation-Date: 2020-10-29 17:02+0000\n"
 "PO-Revision-Date: 2020-10-24 05:15+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
@@ -31,11 +31,15 @@ msgstr "通知设置…"
 msgid "No Notifications"
 msgstr "暂无通知"
 
-#: src/Widgets/NotificationEntry.vala:183
+#: src/Widgets/NotificationEntry.vala:242
 msgid "Delete"
 msgstr "删除"
 
-#: src/Widgets/AppEntry.vala:45
+#: src/Widgets/AppEntry.vala:47
+msgid "Other"
+msgstr ""
+
+#: src/Widgets/AppEntry.vala:56
 #, c-format
 msgid "Clear all %s notifications"
 msgstr "清除所有 %s 通知"

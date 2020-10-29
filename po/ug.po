@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 18:36+0000\n"
+"POT-Creation-Date: 2020-10-29 17:02+0000\n"
 "PO-Revision-Date: 2016-12-10 13:02+0000\n"
 "Last-Translator: ablimet <Unknown>\n"
 "Language-Team: Uyghur <ug@li.org>\n"
@@ -35,11 +35,15 @@ msgstr "ئۇقتۇرۇش تەڭشەكلىرى...."
 msgid "No Notifications"
 msgstr "ئۇقتۇرۇش يوق"
 
-#: src/Widgets/NotificationEntry.vala:183
+#: src/Widgets/NotificationEntry.vala:242
 msgid "Delete"
 msgstr ""
 
-#: src/Widgets/AppEntry.vala:45
+#: src/Widgets/AppEntry.vala:47
+msgid "Other"
+msgstr ""
+
+#: src/Widgets/AppEntry.vala:56
 #, fuzzy, c-format
 #| msgid "Clear All Notifications"
 msgid "Clear all %s notifications"

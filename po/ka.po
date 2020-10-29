@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 18:36+0000\n"
+"POT-Creation-Date: 2020-10-29 17:02+0000\n"
 "PO-Revision-Date: 2015-11-16 23:33+0000\n"
 "Last-Translator: Beqa Arabuli <arabulibeqa@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,15 @@ msgstr "შეტყობინებების პარამეტრე�
 msgid "No Notifications"
 msgstr "შეტყობინებები არაა"
 
-#: src/Widgets/NotificationEntry.vala:183
+#: src/Widgets/NotificationEntry.vala:242
 msgid "Delete"
 msgstr ""
 
-#: src/Widgets/AppEntry.vala:45
+#: src/Widgets/AppEntry.vala:47
+msgid "Other"
+msgstr ""
+
+#: src/Widgets/AppEntry.vala:56
 #, fuzzy, c-format
 #| msgid "Clear All Notifications"
 msgid "Clear all %s notifications"
