@@ -147,8 +147,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     public override void closed () {
-        // We sort the list after closing to avoid sorting during removals
-        nlist.invalidate_sort ();
     }
 
     private void on_notification_received (DBusMessage message, uint32 id) {
