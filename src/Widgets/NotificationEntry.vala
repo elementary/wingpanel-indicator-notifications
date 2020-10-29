@@ -45,6 +45,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
     construct {
         var app_icon = notification.app_icon;
+        if (app_icon == "") {
+                app_icon = "dialog-information";
+        }
 
         var app_image = new Gtk.Image () {
             icon_name = app_icon,

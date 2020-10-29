@@ -76,12 +76,8 @@ public class Notifications.Notification : Object {
         }
 
         app_icon = get_string (body, Column.APP_ICON);
-        if (app_icon == "") {
-            if (app_info != null) {
-                app_icon = app_info.get_icon ().to_string ();
-            } else {
-                app_icon = "dialog-information";
-            }
+        if (app_icon == "" && app_info != null) {
+            app_icon = app_info.get_icon ().to_string ();
         }
 
         if (app_info == null || !app_info.get_boolean ("X-GNOME-UsesNotifications")) {
