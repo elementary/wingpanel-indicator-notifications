@@ -21,6 +21,7 @@ public class Notifications.Notification : Object {
 
     public const string DESKTOP_ID_EXT = ".desktop";
 
+    public bool is_transient { get; construct; default = false; }
     public GLib.DateTime timestamp { get; construct; }
     public string[] actions { get; construct; }
     public string app_icon { get; construct; }
@@ -33,8 +34,6 @@ public class Notifications.Notification : Object {
     public uint32 replaces_id { get; construct; }
 
     public DesktopAppInfo? app_info { get; private set; default = null; }
-
-    private Variant hints;
 
     private enum Column {
         APP_NAME = 0,
@@ -55,7 +54,8 @@ public class Notifications.Notification : Object {
 
     public Notification.from_message (DBusMessage message, uint32 id) {
         var body = message.get_body ();
-        hints = body.get_child_value (Column.HINTS);
+        var hints = body.get_child_value (Column.HINTS);
+        var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
 
         Object (
             actions: body.get_child_value (Column.ACTIONS).dup_strv (),
@@ -63,6 +63,7 @@ public class Notifications.Notification : Object {
             app_name: get_string (body, Column.APP_NAME),
             desktop_id: lookup_string (hints, DESKTOP_ENTRY_KEY),
             id: id,
+            is_transient: hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ()),
             message_body: get_string (body, Column.BODY),
             replaces_id: get_uint32 (body, Column.REPLACES_ID),
             sender: message.get_sender (),
@@ -102,11 +103,6 @@ public class Notifications.Notification : Object {
         app_info = new DesktopAppInfo (desktop_id);
 
         Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
-    }
-
-    public bool get_is_valid () {
-        var transient = hints.lookup_value ("transient", VariantType.BOOLEAN);
-        return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null && (transient == null || !transient.get_boolean ());
     }
 
     public void close () {

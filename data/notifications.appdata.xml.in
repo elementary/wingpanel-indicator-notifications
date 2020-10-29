@@ -5,6 +5,7 @@
   <extends>io.elementary.wingpanel</extends>
   <name>Notifications Indicator</name>
   <summary>See missed notifications in the panel</summary>
+  <icon type="stock">preferences-system-notifications</icon>
   <releases>
     <release version="2.1.4" date="2020-04-01" urgency="medium">
       <description>
