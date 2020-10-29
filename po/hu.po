@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 18:36+0000\n"
+"POT-Creation-Date: 2020-10-29 17:02+0000\n"
 "PO-Revision-Date: 2018-05-28 17:20+0000\n"
 "Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Hungarian <https://weblate.elementary.io/projects/wingpanel/"
@@ -31,11 +31,15 @@ msgstr "Értesítés beállítások…"
 msgid "No Notifications"
 msgstr "Nincsenek értesítések"
 
-#: src/Widgets/NotificationEntry.vala:183
+#: src/Widgets/NotificationEntry.vala:242
 msgid "Delete"
 msgstr ""
 
-#: src/Widgets/AppEntry.vala:45
+#: src/Widgets/AppEntry.vala:47
+msgid "Other"
+msgstr ""
+
+#: src/Widgets/AppEntry.vala:56
 #, fuzzy, c-format
 #| msgid "Clear All Notifications"
 msgid "Clear all %s notifications"
