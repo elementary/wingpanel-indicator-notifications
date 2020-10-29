@@ -36,7 +36,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
         set_sort_func (sort_func);
-        // set_header_func (header_func);
+        set_header_func (header_func);
         show_all ();
 
         row_activated.connect (on_row_activated);
