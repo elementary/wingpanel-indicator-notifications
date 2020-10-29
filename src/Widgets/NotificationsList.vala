@@ -43,7 +43,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     public void add_entry (Notification notification) {
-        if (notification.app_info != null && notification.app_info.get_id () != null) {
+        if (notification.desktop_id != null) {
             var entry = new NotificationEntry (notification);
 
             if (app_entries[notification.desktop_id] != null) {
