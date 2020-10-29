@@ -70,8 +70,10 @@ public class Notifications.Notification : Object {
         timestamp = new GLib.DateTime.now_local ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
-        if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
-            desktop_id += DESKTOP_ID_EXT;
+        if (desktop_id != null && desktop_id != "") {
+            if (!desktop_id.has_suffix (DESKTOP_ID_EXT)) {
+                desktop_id += DESKTOP_ID_EXT;
+            }
 
             app_info = new DesktopAppInfo (desktop_id);
         }
