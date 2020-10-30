@@ -81,9 +81,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             return true;
         });
 
-        Session.get_instance ().clear ();
         close_popover ();
-        show_all ();
     }
 
     private void resort_app_entry (AppEntry app_entry) {
@@ -107,7 +105,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         app_entry.destroy ();
 
         if (app_entries.size == 0) {
-            clear_all ();
+            Session.get_instance ().clear ();
         }
     }
 
