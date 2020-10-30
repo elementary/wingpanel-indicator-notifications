@@ -198,7 +198,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
             time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
-            return true;
+            return GLib.Source.CONTINUE;
         });
 
         notification.closed.connect (() => clear ());
