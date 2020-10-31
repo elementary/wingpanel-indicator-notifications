@@ -58,7 +58,6 @@ public class Notifications.Notification : Object {
         var body = message.get_body ();
 
         app_name = get_string (body, Column.APP_NAME);
-        app_icon = get_string (body, Column.APP_ICON);
         summary = get_string (body, Column.SUMMARY);
         message_body = get_string (body, Column.BODY);
         var hints = body.get_child_value (Column.HINTS);
@@ -76,6 +75,11 @@ public class Notifications.Notification : Object {
             }
 
             app_info = new DesktopAppInfo (desktop_id);
+        }
+
+        app_icon = get_string (body, Column.APP_ICON);
+        if (app_icon == "" && app_info != null) {
+            app_icon = app_info.get_icon ().to_string ();
         }
 
         if (app_info == null || !app_info.get_boolean ("X-GNOME-UsesNotifications")) {
