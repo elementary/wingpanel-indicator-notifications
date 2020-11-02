@@ -17,14 +17,13 @@
 
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
+    public signal void clear_app (string app_id);
+    public signal void remove_notification (Notification notification);
 
-    public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
-
-    private HashTable<string, int> table;
+    private GLib.GenericArray<Notifications.AppEntry> apps;
 
     construct {
-        app_entries = new Gee.HashMap<string, AppEntry> ();
-        table = new HashTable<string, int> (str_hash, str_equal);
+        apps = new GLib.GenericArray<Notifications.AppEntry> ();
 
         var placeholder = new Gtk.Label (_("No Notifications"));
         placeholder.margin_top = placeholder.margin_bottom = 24;
@@ -38,95 +37,58 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
+        set_header_func (header_func);
         show_all ();
 
         row_activated.connect (on_row_activated);
     }
 
-    public void add_entry (Notification notification) {
-        if (notification.app_info != null && notification.app_info.get_id () != null) {
-            AppEntry? app_entry = null;
-
-            if (app_entries[notification.desktop_id] != null) {
-                app_entry = app_entries[notification.desktop_id];
-            }
-
-            var entry = new NotificationEntry (notification);
-            if (app_entry == null) {
-                app_entry = new AppEntry (entry);
-                app_entries[notification.desktop_id] = app_entry;
-
-                prepend (app_entry);
-                insert (entry, 1);
-                table.insert (app_entry.app_id, 0);
-            } else {
-                resort_app_entry (app_entry);
-                app_entry.add_notification_entry (entry);
-
-                int insert_pos = table.get (app_entry.app_id);
-                insert (entry, insert_pos + 1);
-            }
-
-            app_entry.clear.connect (clear_app_entry);
-
-            show_all ();
-
-            Session.get_instance ().add_notification (notification);
-        }
+    public NotificationsList (GLib.ListModel list_model) {
+        bind_model (list_model, create_notification);
     }
 
-    public void clear_all () {
-        app_entries.values.foreach ((app_entry) => {
-            clear_app_entry (app_entry);
-            return true;
+    private Gtk.Widget create_notification (GLib.Object object) {
+        unowned Notification notification = (Notifications.Notification) object;
+        var notification_entry = new NotificationEntry (notification);
+        notification_entry.removed.connect (() => {
+            remove_notification (notification);
         });
 
-        close_popover ();
+        notification_entry.show_all ();
+        return notification_entry;
     }
 
-    private void resort_app_entry (AppEntry app_entry) {
-        if (get_row_at_index (0) != app_entry) {
-            remove (app_entry);
-            prepend (app_entry);
-            app_entry.app_notifications.foreach ((notification_entry) => {
-                remove (notification_entry);
-                insert (notification_entry, 1);
-            });
+    private void header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? before) {
+        unowned NotificationEntry row_entry = (NotificationEntry) row;
+        unowned NotificationEntry? before_entry = (NotificationEntry) before;
+        unowned string row_app_id = row_entry.notification.desktop_id;
+        if (before == null || row_app_id != before_entry.notification.desktop_id) {
+            for (uint i = 0; i < apps.length; i++) {
+                unowned AppEntry app = apps.get (i);
+                if (app.app_id == row_app_id) {
+                    row.set_header (app);
+                    return;
+                }
+            }
+
+            var app_entry = new AppEntry (row_entry.notification.app_info);
+            app_entry.show_all ();
+            app_entry.clear.connect (() => { remove_app (app_entry); });
+            row.set_header (app_entry);
+        } else {
+            row.set_header (null);
         }
     }
 
-    private void clear_app_entry (AppEntry app_entry) {
-        app_entries.unset (app_entry.app_id);
-
-        app_entry.app_notifications.foreach ((notification_entry) => {
-            app_entry.remove_notification_entry.begin (notification_entry);
-        });
-
-        app_entry.destroy ();
-
-        if (app_entries.size == 0) {
-            Session.get_instance ().clear ();
-        }
+    private void remove_app (AppEntry entry) {
+        clear_app (entry.app_id);
+        apps.remove_fast (entry);
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
-        bool close = true;
-
-        if (row is AppEntry) {
-            var app_entry = (AppEntry)row;
-            app_entry.clear ();
-
-        } else if (row is NotificationEntry) {
-            unowned NotificationEntry notification_entry = (NotificationEntry) row;
-            notification_entry.notification.run_default_action ();
-            notification_entry.clear ();
-
-        } else {
-            close = false;
-        }
-
-        if (close) {
-            close_popover ();
-        }
+        unowned NotificationEntry notification_entry = (NotificationEntry) row;
+        notification_entry.notification.run_default_action ();
+        notification_entry.dismiss ();
+        close_popover ();
     }
 }

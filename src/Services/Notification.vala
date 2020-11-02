@@ -143,6 +143,10 @@ public class Notifications.Notification : Object {
         return false;
     }
 
+    public static int compare (Notification self, Notification other) {
+        return self.timestamp.compare (other.timestamp);
+    }
+
     private string get_string (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.dup_string ();
