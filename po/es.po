@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-29 17:02+0000\n"
-"PO-Revision-Date: 2020-10-08 14:14+0000\n"
+"PO-Revision-Date: 2020-11-03 10:15+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/es/>\n"
@@ -37,7 +37,7 @@ msgstr "Eliminar"
 
 #: src/Widgets/AppEntry.vala:47
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: src/Widgets/AppEntry.vala:56
 #, c-format
