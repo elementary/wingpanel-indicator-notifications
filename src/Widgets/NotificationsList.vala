@@ -58,7 +58,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             int insert_pos = table.get (app_entry.app_id);
             insert (entry, insert_pos + 1);
         } else {
-            app_entry = new AppEntry (notification.app_info);
+            var app_entry = new AppEntry (notification.app_info);
             app_entry.add_notification_entry (entry);
             app_entry.add_notification_entry (entry);
             app_entry.clear.connect (clear_app_entry);
