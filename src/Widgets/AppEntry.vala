@@ -18,13 +18,12 @@
 public class Notifications.AppEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
-    public NotificationEntry entry { get; construct; }
     public string app_id { get; private set; }
-    public AppInfo? app_info = null;
+    public AppInfo? app_info { get; construct; default = null; }
     public List<NotificationEntry> app_notifications;
 
-    public AppEntry (NotificationEntry entry) {
-        Object (entry: entry);
+    public AppEntry (AppInfo? app_info) {
+        Object (app_info: app_info);
     }
 
     construct {
@@ -33,12 +32,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         margin_top = 6;
 
         app_notifications = new List<NotificationEntry> ();
-        add_notification_entry (entry);
 
-        var notification = entry.notification;
-        app_info = notification.app_info;
-
-        string name;
+        unowned string name;
         if (app_info != null) {
             app_id = app_info.get_id ();
             name = app_info.get_name ();
@@ -47,9 +42,10 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             name = _("Other");
         }
 
-        var label = new Gtk.Label (name);
-        label.hexpand = true;
-        label.xalign = 0;
+        var label = new Gtk.Label (name) {
+            hexpand = true,
+            xalign = 0
+        };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
@@ -57,8 +53,9 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
-        var grid = new Gtk.Grid ();
-        grid.column_spacing = 6;
+        var grid = new Gtk.Grid () {
+            column_spacing = 6
+        };
         grid.add (label);
         grid.add (clear_btn_entry);
 

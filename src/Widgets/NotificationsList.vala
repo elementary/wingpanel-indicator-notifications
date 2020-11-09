@@ -26,10 +26,13 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         app_entries = new Gee.HashMap<string, AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
-        var placeholder = new Gtk.Label (_("No Notifications"));
-        placeholder.margin_top = placeholder.margin_bottom = 24;
-        placeholder.margin_start = placeholder.margin_end = 12;
-        placeholder.show ();
+        var placeholder = new Gtk.Label (_("No Notifications")) {
+            margin_top = 24,
+            margin_bottom = 24,
+            margin_start = 12,
+            margin_end = 12,
+            visible = true
+        };
 
         unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
@@ -55,7 +58,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             int insert_pos = table.get (app_entry.app_id);
             insert (entry, insert_pos + 1);
         } else {
-            var app_entry = new AppEntry (entry);
+            var app_entry = new AppEntry (notification.app_info);
+            app_entry.add_notification_entry (entry);
             app_entry.clear.connect (clear_app_entry);
 
             app_entries[notification.desktop_id] = app_entry;
