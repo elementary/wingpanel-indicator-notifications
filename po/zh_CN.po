@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-29 17:02+0000\n"
-"PO-Revision-Date: 2020-10-24 05:15+0000\n"
+"PO-Revision-Date: 2020-11-12 02:15+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/zh_Hans/>\n"
@@ -37,7 +37,7 @@ msgstr "删除"
 
 #: src/Widgets/AppEntry.vala:47
 msgid "Other"
-msgstr ""
+msgstr "其它"
 
 #: src/Widgets/AppEntry.vala:56
 #, c-format
