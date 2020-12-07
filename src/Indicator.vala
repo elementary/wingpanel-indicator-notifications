@@ -178,6 +178,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private void update_clear_all_sensitivity () {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
 
+        /* Since update_clear_all_sensitivity() is called on
+        each popover remove, we can update our tooltip on
+        each popover remove here. */
         update_tooltip ();
     }
 
@@ -186,11 +189,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             foreach (var item in app_entry.app_notifications) {
                 if (item.notification.id == id) {
                     item.notification.close ();
+
                     return;
                 }
             }
         }
-        update_tooltip ();
     }
 
     private void set_display_icon_name () {
