@@ -214,7 +214,21 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void update_tooltip () {
-        dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({Middle-click to enable Do Not Disturb}, _("Test"));
+        int number_of_notifications = 0;
+        int number_of_apps = 0;
+
+        switch (number_of_notifications) {
+            case 0:
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("No new notifications"));
+                break;
+            case 1:
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("1 new notification from 1 app"));
+                break;
+            default:
+                /* Anything else */
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%i new notifications from %i app".printf(number_of_notifications, number_of_apps)));
+                break;
+        }
     }
 }
 
