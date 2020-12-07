@@ -227,11 +227,11 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("No new notifications"));
                 break;
             case 1:
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("1 new notification from 1 app"));
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("1 new notification"));
                 break;
             default:
                 /* Anything else */
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%u new notifications from %i apps".printf(number_of_notifications, nlist.app_entries.size)));
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({"MiddleButton"}, _("%u new notifications from %i apps".printf(number_of_notifications, nlist.app_entries.size)));
                 break;
         }
     }
