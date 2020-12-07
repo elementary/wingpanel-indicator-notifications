@@ -188,6 +188,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 }
             }
         }
+        update_tooltip ();
     }
 
     private void set_display_icon_name () {
