@@ -214,33 +214,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void update_tooltip () {
-        /* NOTE: To get the number of notifications,
-        I've counted the number of rows in nlist, which
-        corresponds to the number of notifications with
-        their corresponding groups, i.e.
-
-        AppCenter
-        15 updates are available for your system
-
-        Other
-        Some random notification from an app
-        Another random notification from another app
-
-        This corresponds to 5 entries in total (3 notifications
-        and 2 groupings). To get the number of notifications,
-        we take the total number of entries - number of groupings.
-
-        There could be cleaner ways of doing this, but I'm sticking
-        with this for now.
-        */
-
-        int number_of_notifications = 0;
-
-        nlist.get_children ().foreach ((widget) => {
-            number_of_notifications++;
-        });
-
-        number_of_notifications -= nlist.app_entries.size;
+        uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
 
         switch (number_of_notifications) {
             case 0:
@@ -251,7 +225,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 break;
             default:
                 /* Anything else */
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%i new notifications from %i apps".printf(number_of_notifications, nlist.app_entries.size)));
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%u new notifications from %i apps".printf(number_of_notifications, nlist.app_entries.size)));
                 break;
         }
     }
