@@ -92,6 +92,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             nlist.remove.connect (set_display_icon_name);
 
             set_display_icon_name ();
+            update_tooltip ();
         }
 
         return dynamic_icon;
@@ -171,6 +172,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         set_display_icon_name ();
+        update_tooltip ();
     }
 
     private void update_clear_all_sensitivity () {
@@ -209,6 +211,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         } catch (Error e) {
             warning ("Failed to open notifications settings: %s", e.message);
         }
+    }
+
+    private void update_tooltip () {
+        dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({Middle-click to enable Do Not Disturb}, _("Test"));
     }
 }
 
