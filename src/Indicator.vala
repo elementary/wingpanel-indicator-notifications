@@ -177,6 +177,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void update_clear_all_sensitivity () {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
+
+        update_tooltip ();
     }
 
     private void on_notification_closed (uint32 id) {
