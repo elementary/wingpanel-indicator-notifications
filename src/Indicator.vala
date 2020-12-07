@@ -32,6 +32,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public static GLib.Settings notify_settings;
 
+    private int number_of_notifications = 0;
+    private int number_of_apps = 0;
+
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.MESSAGES);
 
@@ -226,7 +229,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 break;
             default:
                 /* Anything else */
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%i new notifications from %i app".printf(number_of_notifications, number_of_apps)));
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%i new notifications from %i apps".printf(number_of_notifications, number_of_apps)));
                 break;
         }
     }
