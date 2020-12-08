@@ -207,6 +207,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.remove_class ("new");
         }
+        update_tooltip ();
     }
 
     private void show_settings () {
@@ -221,6 +222,13 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void update_tooltip () {
         uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
+        string accel_label;
+
+        if (notify_settings.get_boolean ("do-not-disturb")) {
+            accel_label = """<span weight="600" size="smaller" alpha="75%">Middle-click to disable Do Not Disturb</span>""";
+        } else {
+            accel_label = """<span weight="600" size="smaller" alpha="75%">Middle-click to enable Do Not Disturb</span>""";
+        }
 
         switch (number_of_notifications) {
             case 0:
@@ -231,7 +239,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 break;
             default:
                 /* Anything else */
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%u notifications from %i %s".printf (number_of_notifications, nlist.app_entries.size, ngettext ("app", "apps", nlist.app_entries.size))));
+                dynamic_icon.tooltip_markup = _("%u notifications from %i %s\n%s".printf (number_of_notifications, nlist.app_entries.size, ngettext ("app", "apps", nlist.app_entries.size), accel_label));
                 break;
         }
     }
