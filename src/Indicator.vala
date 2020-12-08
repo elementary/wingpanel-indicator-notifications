@@ -222,15 +222,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private void update_tooltip () {
         uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
 
-        uint accel_key;
-        Gdk.ModifierType accel_mods;
-
-        Granite.mouse_accelerator_parse ("<Button1>a", out accel_key, out accel_mods);
-
-        debug ("Keyval debug: %u".printf(accel_key));
-        debug ("Keyval debug: %u".printf(accel_mods));
-        debug ("Keyval debug: %u".printf(Gdk.ModifierType.BUTTON3_MASK));
-
         switch (number_of_notifications) {
             case 0:
                 dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("No notifications"));
@@ -240,7 +231,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 break;
             default:
                 /* Anything else */
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({"<Button3>"}, _("%u notifications from %i %s".printf (number_of_notifications, nlist.app_entries.size, ngettext ("app", "apps", nlist.app_entries.size))));
+                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("%u notifications from %i %s".printf (number_of_notifications, nlist.app_entries.size, ngettext ("app", "apps", nlist.app_entries.size))));
                 break;
         }
     }
