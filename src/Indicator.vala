@@ -92,7 +92,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             nlist.remove.connect (set_display_icon_name);
 
             set_display_icon_name ();
-            update_tooltip ();
         }
 
         return dynamic_icon;
@@ -172,16 +171,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         set_display_icon_name ();
-        update_tooltip ();
     }
 
     private void update_clear_all_sensitivity () {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
-
-        /* Since update_clear_all_sensitivity() is called when
-        each notification bubble is removed, we can update
-        our tooltip here. */
-        update_tooltip ();
     }
 
     private void on_notification_closed (uint32 id) {
@@ -189,7 +182,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             foreach (var item in app_entry.app_notifications) {
                 if (item.notification.id == id) {
                     item.notification.close ();
-
                     return;
                 }
             }
