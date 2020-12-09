@@ -178,9 +178,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private void update_clear_all_sensitivity () {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
 
-        /* Since update_clear_all_sensitivity() is called on
-        each popover remove, we can update our tooltip on
-        each popover remove here. */
+        /* Since update_clear_all_sensitivity() is called when
+        each notification bubble is removed, we can update
+        our tooltip here. */
         update_tooltip ();
     }
 
@@ -222,26 +222,32 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void update_tooltip () {
         uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
+
+        string description;
         string accel_label;
 
         if (notify_settings.get_boolean ("do-not-disturb")) {
-            accel_label = """<span weight="600" size="smaller" alpha="75%">Middle-click to disable Do Not Disturb</span>""";
+            accel_label = _("Middle-click to disable Do Not Disturb");
         } else {
-            accel_label = """<span weight="600" size="smaller" alpha="75%">Middle-click to enable Do Not Disturb</span>""";
+            accel_label = _("Middle-click to enable Do Not Disturb");
         }
+
+        accel_label = """<span weight="600" size="smaller" alpha="75%">%s</span>""".printf (accel_label);
 
         switch (number_of_notifications) {
             case 0:
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("No notifications"));
+                description = _("No notifications");
                 break;
             case 1:
-                dynamic_icon.tooltip_markup = Granite.markup_accel_tooltip ({}, _("1 notification"));
+                description = _("1 notification");
                 break;
             default:
                 /* Anything else */
-                dynamic_icon.tooltip_markup = _("%u notifications from %i %s\n%s".printf (number_of_notifications, nlist.app_entries.size, ngettext ("app", "apps", nlist.app_entries.size), accel_label));
+                description = _("%u notifications from %i %s".printf (number_of_notifications, nlist.app_entries.size, ngettext ("app", "apps", nlist.app_entries.size)));
                 break;
         }
+
+        dynamic_icon.tooltip_markup = "%s\n%s".printf (description, accel_label);
     }
 }
 
