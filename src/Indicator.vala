@@ -225,7 +225,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             accel_label = _("Middle-click to enable Do Not Disturb");
         }
 
-        accel_label = """<span weight="600" size="smaller" alpha="75%">%s</span>""".printf (accel_label);
+        accel_label = Granite.TOOLTIP_SECONDARY_TEXT_MARKUP.printf (accel_label);
 
         switch (number_of_notifications) {
             case 0:
