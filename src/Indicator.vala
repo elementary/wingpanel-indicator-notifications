@@ -199,6 +199,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.remove_class ("new");
         }
+        update_tooltip ();
     }
 
     private void show_settings () {
@@ -209,6 +210,41 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         } catch (Error e) {
             warning ("Failed to open notifications settings: %s", e.message);
         }
+    }
+
+    private void update_tooltip () {
+        uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
+        int number_of_apps = nlist.app_entries.size;
+
+        string description;
+        string accel_label;
+
+        if (notify_settings.get_boolean ("do-not-disturb")) {
+            accel_label = _("Middle-click to disable Do Not Disturb");
+        } else {
+            accel_label = _("Middle-click to enable Do Not Disturb");
+        }
+
+        accel_label = Granite.TOOLTIP_SECONDARY_TEXT_MARKUP.printf (accel_label);
+
+        switch (number_of_notifications) {
+            case 0:
+                description = _("No notifications");
+                break;
+            case 1:
+                description = _("1 notification");
+                break;
+            default:
+                /// TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
+                /// e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
+                description = _("%s from %s").printf (
+                    dngettext ("notifications-indicator", "%u notification", "%u notifications", number_of_notifications).printf (number_of_notifications),
+                    dngettext ("notifications-indicator", "%i app", "%i apps", number_of_apps).printf (number_of_apps)
+                );
+                break;
+        }
+
+        dynamic_icon.tooltip_markup = "%s\n%s".printf (description, accel_label);
     }
 }
 
