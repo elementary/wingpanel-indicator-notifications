@@ -132,8 +132,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             nlist.remove.connect (update_clear_all_sensitivity);
 
             clear_all_btn.clicked.connect (() => {
-                nlist.clear_all ();
-                Session.get_instance ().clear ();
+                nlist.clear_all (); // This clears the session file as well
             });
 
             settings_btn.clicked.connect (show_settings);
@@ -199,6 +198,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.remove_class ("new");
         }
+
         update_tooltip ();
     }
 
@@ -213,7 +213,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void update_tooltip () {
-        uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
+        uint number_of_notifications = Session.get_instance ().get_n_notifications ();
         int number_of_apps = nlist.app_entries.size;
 
         string description;

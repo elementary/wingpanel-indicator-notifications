@@ -53,14 +53,23 @@ public class Notifications.Session : GLib.Object {
             create_session_file ();
         }
 
+        // Default separator is ';'
         key = new KeyFile ();
-        key.set_list_separator (';');
+
+        try {
+            key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
+
+        } catch (KeyFileError e) {
+            warning (e.message);
+        } catch (FileError e) {
+            warning (e.message);
+        }
     }
 
     public List<Notification> get_session_notifications () {
         var list = new List<Notification> ();
+
         try {
-            key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
                 var notification = new Notification.from_data ((uint32)int.parse (group),
                                                             key.get_string (group, APP_NAME_KEY),
@@ -76,11 +85,13 @@ public class Notifications.Session : GLib.Object {
             }
         } catch (KeyFileError e) {
             warning (e.message);
-        } catch (FileError e) {
-            warning (e.message);
         }
 
         return list;
+    }
+
+    public uint get_n_notifications () {
+        return key.get_groups ().length;
     }
 
     public void add_notification (Notification notification) {
@@ -108,13 +119,6 @@ public class Notifications.Session : GLib.Object {
         write_contents ();
     }
 
-    public void clear () {
-        try {
-            FileUtils.set_contents (session_file.get_path (), "");
-        } catch (FileError e) {
-            warning (e.message);
-        }
-    }
 
     private void create_session_file () {
         try {
@@ -124,11 +128,35 @@ public class Notifications.Session : GLib.Object {
         }
     }
 
+    public void clear () {
+        key = new KeyFile ();
+        write_contents ();
+    }
+
+    //This can get called multiple times in quick succesion. Wait until not called for 150 ms before writing file.
+    uint write_contents_timeout_id = 0;
+    bool can_write_contents = false;
     private void write_contents () {
-        try {
-            FileUtils.set_contents (session_file.get_path (), key.to_data ());
-        } catch (FileError e) {
-            warning (e.message);
+        if (write_contents_timeout_id > 0) {
+            can_write_contents = false;
+            return;
         }
+
+        write_contents_timeout_id = Timeout.add (150, () => {
+            if (can_write_contents) {
+                try {
+                    FileUtils.set_contents (session_file.get_path (), key.to_data ());
+                } catch (FileError e) {
+                    warning (e.message);
+                } finally {
+                    can_write_contents = false;
+                    write_contents_timeout_id = 0;
+                }
+                return Source.REMOVE;
+            } else {
+                can_write_contents = true;
+                return Source.CONTINUE;
+            }
+        });
     }
 }
