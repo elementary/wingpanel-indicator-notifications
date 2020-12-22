@@ -134,8 +134,8 @@ public class Notifications.Session : GLib.Object {
     }
 
     //This can get called multiple times in quick succesion. Wait until not called for 150 ms before writing file.
-    uint write_contents_timeout_id = 0;
-    bool can_write_contents = false;
+    private uint write_contents_timeout_id = 0;
+    private bool can_write_contents = false;
     private void write_contents () {
         if (write_contents_timeout_id > 0) {
             can_write_contents = false;
