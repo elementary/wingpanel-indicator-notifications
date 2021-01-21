@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-29 17:02+0000\n"
-"PO-Revision-Date: 2017-05-05 11:16+0000\n"
+"PO-Revision-Date: 2021-01-21 20:13+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/nb/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.13-dev\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-04-05 07:46+0000\n"
 
 #: src/Indicator.vala:108
@@ -33,17 +33,17 @@ msgstr "Ingen varsler"
 
 #: src/Widgets/NotificationEntry.vala:242
 msgid "Delete"
-msgstr ""
+msgstr "Slett"
 
 #: src/Widgets/AppEntry.vala:47
+#, fuzzy
 msgid "Other"
-msgstr ""
+msgstr "Annet"
 
 #: src/Widgets/AppEntry.vala:56
-#, fuzzy, c-format
-#| msgid "Clear All Notifications"
+#, c-format
 msgid "Clear all %s notifications"
-msgstr "Fjern alle varsler"
+msgstr "Fjern alle %s merknader"
 
 #~ msgid "now"
 #~ msgstr "nå"
