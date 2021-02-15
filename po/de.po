@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-10-29 17:02+0000\n"
-"PO-Revision-Date: 2020-10-27 16:25+0000\n"
+"PO-Revision-Date: 2021-02-15 16:37+0000\n"
 "Last-Translator: Uwe S <saabisto@gmx.de>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -37,7 +37,7 @@ msgstr "Löschen"
 
 #: src/Widgets/AppEntry.vala:47
 msgid "Other"
-msgstr ""
+msgstr "Andere"
 
 #: src/Widgets/AppEntry.vala:56
 #, c-format
