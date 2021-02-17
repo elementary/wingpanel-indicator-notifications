@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2021-01-21 20:13+0000\n"
+"PO-Revision-Date: 2021-02-17 14:18+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/nb/>\n"
@@ -29,11 +29,11 @@ msgstr "Innstillinger for varsler…"
 
 #: src/Indicator.vala:223
 msgid "Middle-click to disable Do Not Disturb"
-msgstr ""
+msgstr "Midt-klikk for å skru av «Ikke-forstyrr»"
 
 #: src/Indicator.vala:225
 msgid "Middle-click to enable Do Not Disturb"
-msgstr ""
+msgstr "Midt-klikk for å skru på «Ikke-forstyrr»"
 
 #: src/Indicator.vala:232
 #, fuzzy
@@ -52,22 +52,21 @@ msgstr "Ingen varsler"
 #: src/Indicator.vala:240
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s fra %s"
 
 #: src/Indicator.vala:241
-#, fuzzy, c-format
-#| msgid "No Notifications"
+#, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "Ingen varsler"
-msgstr[1] "Ingen varsler"
+msgstr[0] "%u merknad"
+msgstr[1] "%u merknader"
 
 #: src/Indicator.vala:242
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i program"
+msgstr[1] "%i programmer"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
