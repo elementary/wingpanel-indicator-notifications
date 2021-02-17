@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2020-10-31 06:14+0000\n"
+"PO-Revision-Date: 2021-02-17 14:18+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ja/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -29,43 +29,38 @@ msgstr "通知の設定…"
 
 #: src/Indicator.vala:223
 msgid "Middle-click to disable Do Not Disturb"
-msgstr ""
+msgstr "非通知モードを無効にするには中クリックしてください"
 
 #: src/Indicator.vala:225
 msgid "Middle-click to enable Do Not Disturb"
-msgstr ""
+msgstr "非通知モードを有効にするには中クリックしてください"
 
 #: src/Indicator.vala:232
-#, fuzzy
-#| msgid "No Notifications"
 msgid "No notifications"
 msgstr "通知はありません"
 
 #: src/Indicator.vala:235
-#, fuzzy
-#| msgid "No Notifications"
 msgid "1 notification"
-msgstr "通知はありません"
+msgstr "1件の通知"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
 #: src/Indicator.vala:240
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%2$sから%1$s"
 
 #: src/Indicator.vala:241
-#, fuzzy, c-format
-#| msgid "No Notifications"
+#, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "通知はありません"
+msgstr[0] "%u件の通知"
 
 #: src/Indicator.vala:242
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
+msgstr[0] "%i個のアプリ"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
