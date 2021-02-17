@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2021-02-17 14:18+0000\n"
+"PO-Revision-Date: 2021-02-18 01:30+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/nb/>\n"
@@ -36,16 +36,12 @@ msgid "Middle-click to enable Do Not Disturb"
 msgstr "Midt-klikk for å skru på «Ikke-forstyrr»"
 
 #: src/Indicator.vala:232
-#, fuzzy
-#| msgid "No Notifications"
 msgid "No notifications"
-msgstr "Ingen varsler"
+msgstr "Ingen merknader"
 
 #: src/Indicator.vala:235
-#, fuzzy
-#| msgid "No Notifications"
 msgid "1 notification"
-msgstr "Ingen varsler"
+msgstr "1 merknad"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
