@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2020-11-03 10:15+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2021-02-19 01:23+0000\n"
+"Last-Translator: Corentin Noël <corentin@elementary.io>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/fr/>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -29,45 +29,40 @@ msgstr "Paramètres des notifications…"
 
 #: src/Indicator.vala:223
 msgid "Middle-click to disable Do Not Disturb"
-msgstr ""
+msgstr "Clic central pour désactiver le mode « Ne pas déranger »"
 
 #: src/Indicator.vala:225
 msgid "Middle-click to enable Do Not Disturb"
-msgstr ""
+msgstr "Clic central pour activer le mode « Ne pas déranger »"
 
 #: src/Indicator.vala:232
-#, fuzzy
-#| msgid "No Notifications"
 msgid "No notifications"
 msgstr "Aucune notification"
 
 #: src/Indicator.vala:235
-#, fuzzy
-#| msgid "No Notifications"
 msgid "1 notification"
-msgstr "Aucune notification"
+msgstr "1 notification"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
 #: src/Indicator.vala:240
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s de %s"
 
 #: src/Indicator.vala:241
-#, fuzzy, c-format
-#| msgid "No Notifications"
+#, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "Aucune notification"
-msgstr[1] "Aucune notification"
+msgstr[0] "%u notification"
+msgstr[1] "%u notifications"
 
 #: src/Indicator.vala:242
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i application"
+msgstr[1] "%i applications"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
