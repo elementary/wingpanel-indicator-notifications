@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2021-02-15 16:37+0000\n"
+"PO-Revision-Date: 2021-02-19 01:23+0000\n"
 "Last-Translator: Uwe S <saabisto@gmx.de>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/de/>\n"
@@ -29,45 +29,40 @@ msgstr "Benachrichtigungseinstellungen …"
 
 #: src/Indicator.vala:223
 msgid "Middle-click to disable Do Not Disturb"
-msgstr ""
+msgstr "»Nicht stören« mit Mittelklick ausschalten"
 
 #: src/Indicator.vala:225
 msgid "Middle-click to enable Do Not Disturb"
-msgstr ""
+msgstr "»Nicht stören« mit Mittelklick einschalten"
 
 #: src/Indicator.vala:232
-#, fuzzy
-#| msgid "No Notifications"
 msgid "No notifications"
 msgstr "Keine Benachrichtigungen"
 
 #: src/Indicator.vala:235
-#, fuzzy
-#| msgid "No Notifications"
 msgid "1 notification"
-msgstr "Keine Benachrichtigungen"
+msgstr "1 Benachrichtigung"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
 #: src/Indicator.vala:240
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s von %s"
 
 #: src/Indicator.vala:241
-#, fuzzy, c-format
-#| msgid "No Notifications"
+#, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "Keine Benachrichtigungen"
-msgstr[1] "Keine Benachrichtigungen"
+msgstr[0] "%u Benachrichtigung"
+msgstr[1] "%u Benachrichtigungen"
 
 #: src/Indicator.vala:242
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i Anwendung"
+msgstr[1] "%i Anwendungen"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
