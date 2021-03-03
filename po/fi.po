@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2021-02-09 14:06+0000\n"
+"PO-Revision-Date: 2021-03-04 03:25+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/fi/>\n"
@@ -30,44 +30,42 @@ msgstr "Ilmoitusten asetukset…"
 #: src/Indicator.vala:223
 msgid "Middle-click to disable Do Not Disturb"
 msgstr ""
+"Poista käytöstä Älä häiritse -tila hiiren keskimmäisen painikkeen "
+"napsautuksella"
 
 #: src/Indicator.vala:225
 msgid "Middle-click to enable Do Not Disturb"
 msgstr ""
+"Ota käyttöön Älä häiritse -tila hiiren keskimmäisen painikkeen napsautuksella"
 
 #: src/Indicator.vala:232
-#, fuzzy
-#| msgid "No Notifications"
 msgid "No notifications"
 msgstr "Ei ilmoituksia"
 
 #: src/Indicator.vala:235
-#, fuzzy
-#| msgid "No Notifications"
 msgid "1 notification"
-msgstr "Ei ilmoituksia"
+msgstr "1 ilmoitus"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
 #: src/Indicator.vala:240
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s %s"
 
 #: src/Indicator.vala:241
-#, fuzzy, c-format
-#| msgid "No Notifications"
+#, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "Ei ilmoituksia"
-msgstr[1] "Ei ilmoituksia"
+msgstr[0] "%u ilmoitus"
+msgstr[1] "%u ilmoitusta"
 
 #: src/Indicator.vala:242
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i sovellukselta"
+msgstr[1] "%i sovellukselta"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
