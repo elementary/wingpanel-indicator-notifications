@@ -24,7 +24,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gtk.Spinner? dynamic_icon = null;
     private Gtk.Grid? main_box = null;
     private Gtk.ModelButton clear_all_btn;
-    private Wingpanel.Widgets.Switch not_disturb_switch;
+    private Granite.SwitchModelButton not_disturb_switch;
 
     private NotificationsList nlist;
 
@@ -105,7 +105,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             scrolled.propagate_natural_height = true;
             scrolled.add (nlist);
 
-            not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"));
+            not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
             not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
             clear_all_btn = new Gtk.ModelButton ();
