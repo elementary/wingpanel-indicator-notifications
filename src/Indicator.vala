@@ -118,9 +118,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             main_box.orientation = Gtk.Orientation.VERTICAL;
             main_box.width_request = 300;
             main_box.add (not_disturb_switch);
-            main_box.add (new Wingpanel.Widgets.Separator ());
+            main_box.add (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
             main_box.add (scrolled);
-            main_box.add (new Wingpanel.Widgets.Separator ());
+            main_box.add (new Gtk.Separator (Gtk.Orientation.HORIZONTAL));
             main_box.add (clear_all_btn);
             main_box.add (settings_btn);
             main_box.show_all ();
