@@ -99,6 +99,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
+            not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
+            not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+
             var dnd_switch_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_top = 3,
                 margin_bottom = 3
@@ -109,9 +112,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             scrolled.max_content_height = 500;
             scrolled.propagate_natural_height = true;
             scrolled.add (nlist);
-
-            not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
-            not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
             var clear_all_btn_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_top = 3,
