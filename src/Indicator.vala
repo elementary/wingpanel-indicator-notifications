@@ -248,8 +248,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 /// TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
                 /// e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
                 description = _("%s from %s").printf (
-                    dngettext ("notifications-indicator", "%u notification", "%u notifications", number_of_notifications).printf (number_of_notifications),
-                    dngettext ("notifications-indicator", "%i app", "%i apps", number_of_apps).printf (number_of_apps)
+                    dngettext (GETTEXT_PACKAGE, "%u notification", "%u notifications", number_of_notifications).printf (number_of_notifications),
+                    dngettext (GETTEXT_PACKAGE, "%i app", "%i apps", number_of_apps).printf (number_of_apps)
                 );
                 break;
         }
