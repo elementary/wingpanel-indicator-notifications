@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 01:18+0000\n"
-"PO-Revision-Date: 2021-03-12 20:18+0000\n"
+"PO-Revision-Date: 2021-03-14 16:45+0000\n"
 "Last-Translator: Leonardo <leonardo@elementary.io>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/pt_BR/>\n"
@@ -25,7 +25,7 @@ msgstr "Limpar todas as notificações"
 
 #: src/Indicator.vala:115
 msgid "Notifications Settings…"
-msgstr "Configurações de Notificações…"
+msgstr "Configurações de notificações…"
 
 #: src/Indicator.vala:223
 msgid "Middle-click to disable Do Not Disturb"
