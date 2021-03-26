@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-29 17:02+0000\n"
+"POT-Creation-Date: 2021-02-17 01:18+0000\n"
 "PO-Revision-Date: 2016-05-01 01:47+0000\n"
 "Last-Translator: Indrit Bashkimi <indrit.bashkimi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,61 @@ msgstr "Pastro të gjitha njoftimet"
 msgid "Notifications Settings…"
 msgstr "Parametrat e njoftimeve…"
 
-#: src/Widgets/NotificationsList.vala:28
+#: src/Indicator.vala:223
+msgid "Middle-click to disable Do Not Disturb"
+msgstr ""
+
+#: src/Indicator.vala:225
+msgid "Middle-click to enable Do Not Disturb"
+msgstr ""
+
+#: src/Indicator.vala:232
+#, fuzzy
+#| msgid "No Notifications"
+msgid "No notifications"
+msgstr "S'ka njoftime"
+
+#: src/Indicator.vala:235
+#, fuzzy
+#| msgid "No Notifications"
+msgid "1 notification"
+msgstr "S'ka njoftime"
+
+#. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
+#. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
+#: src/Indicator.vala:240
+#, c-format
+msgid "%s from %s"
+msgstr ""
+
+#: src/Indicator.vala:241
+#, fuzzy, c-format
+#| msgid "No Notifications"
+msgid "%u notification"
+msgid_plural "%u notifications"
+msgstr[0] "S'ka njoftime"
+msgstr[1] "S'ka njoftime"
+
+#: src/Indicator.vala:242
+#, c-format
+msgid "%i app"
+msgid_plural "%i apps"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
 msgstr "S'ka njoftime"
 
-#: src/Widgets/NotificationEntry.vala:242
+#: src/Widgets/NotificationEntry.vala:237
 msgid "Delete"
 msgstr ""
 
-#: src/Widgets/AppEntry.vala:47
+#: src/Widgets/AppEntry.vala:42
 msgid "Other"
 msgstr ""
 
-#: src/Widgets/AppEntry.vala:56
+#: src/Widgets/AppEntry.vala:52
 #, fuzzy, c-format
 #| msgid "Clear All Notifications"
 msgid "Clear all %s notifications"
