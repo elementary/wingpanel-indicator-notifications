@@ -50,7 +50,11 @@ public class Notifications.Session : GLib.Object {
     private Session () {
         session_file = File.new_for_path (Path.build_filename (Environment.get_user_cache_dir (), SESSION_FILE_NAME));
         if (!session_file.query_exists ()) {
-            create_session_file ();
+            try {
+                session_file.create (FileCreateFlags.REPLACE_DESTINATION);
+            } catch (Error e) {
+                warning (e.message);
+            }
         }
 
         // Default separator is ';'
@@ -58,7 +62,6 @@ public class Notifications.Session : GLib.Object {
 
         try {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
-
         } catch (KeyFileError e) {
             warning (e.message);
         } catch (FileError e) {
@@ -117,15 +120,6 @@ public class Notifications.Session : GLib.Object {
         }
 
         write_contents ();
-    }
-
-
-    private void create_session_file () {
-        try {
-            session_file.create (FileCreateFlags.REPLACE_DESTINATION);
-        } catch (Error e) {
-            warning (e.message);
-        }
     }
 
     public void clear () {
