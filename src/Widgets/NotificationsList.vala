@@ -80,10 +80,12 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     public void clear_all () {
-        app_entries.values.foreach ((app_entry) => {
-            clear_app_entry (app_entry);
-            return true;
-        });
+        var iter = app_entries.map_iterator ();
+        while (iter.next ()) {
+            var entry = iter.get_value ();
+            iter.unset ();
+            clear_app_entry (entry);
+        }
 
         close_popover ();
     }
@@ -100,11 +102,11 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     private void clear_app_entry (AppEntry app_entry) {
+        app_entry.clear.disconnect (clear_app_entry);
+
         app_entries.unset (app_entry.app_id);
 
-        app_entry.app_notifications.foreach ((notification_entry) => {
-            app_entry.remove_notification_entry.begin (notification_entry);
-        });
+        app_entry.clear_all_notification_entries ();
 
         app_entry.destroy ();
 
