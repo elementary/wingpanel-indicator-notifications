@@ -24,7 +24,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gtk.Spinner? dynamic_icon = null;
     private Gtk.Grid? main_box = null;
     private Gtk.ModelButton clear_all_btn;
-    private Wingpanel.Widgets.Switch not_disturb_switch;
+    private Granite.SwitchModelButton not_disturb_switch;
 
     private NotificationsList nlist;
 
@@ -99,14 +99,24 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
+            not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
+            not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+
+            var dnd_switch_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
+                margin_top = 3,
+                margin_bottom = 3
+            };
+
             var scrolled = new Gtk.ScrolledWindow (null, null);
             scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
             scrolled.max_content_height = 500;
             scrolled.propagate_natural_height = true;
             scrolled.add (nlist);
 
-            not_disturb_switch = new Wingpanel.Widgets.Switch (_("Do Not Disturb"));
-            not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+            var clear_all_btn_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
+                margin_top = 3,
+                margin_bottom = 3
+            };
 
             clear_all_btn = new Gtk.ModelButton ();
             clear_all_btn.text = _("Clear All Notifications");
@@ -118,9 +128,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             main_box.orientation = Gtk.Orientation.VERTICAL;
             main_box.width_request = 300;
             main_box.add (not_disturb_switch);
-            main_box.add (new Wingpanel.Widgets.Separator ());
+            main_box.add (dnd_switch_separator);
             main_box.add (scrolled);
-            main_box.add (new Wingpanel.Widgets.Separator ());
+            main_box.add (clear_all_btn_separator);
             main_box.add (clear_all_btn);
             main_box.add (settings_btn);
             main_box.show_all ();
@@ -199,6 +209,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.remove_class ("new");
         }
+        update_tooltip ();
     }
 
     private void show_settings () {
@@ -209,6 +220,41 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         } catch (Error e) {
             warning ("Failed to open notifications settings: %s", e.message);
         }
+    }
+
+    private void update_tooltip () {
+        uint number_of_notifications = Session.get_instance ().get_session_notifications ().length ();
+        int number_of_apps = nlist.app_entries.size;
+
+        string description;
+        string accel_label;
+
+        if (notify_settings.get_boolean ("do-not-disturb")) {
+            accel_label = _("Middle-click to disable Do Not Disturb");
+        } else {
+            accel_label = _("Middle-click to enable Do Not Disturb");
+        }
+
+        accel_label = Granite.TOOLTIP_SECONDARY_TEXT_MARKUP.printf (accel_label);
+
+        switch (number_of_notifications) {
+            case 0:
+                description = _("No notifications");
+                break;
+            case 1:
+                description = _("1 notification");
+                break;
+            default:
+                /// TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
+                /// e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
+                description = _("%s from %s").printf (
+                    dngettext (GETTEXT_PACKAGE, "%u notification", "%u notifications", number_of_notifications).printf (number_of_notifications),
+                    dngettext (GETTEXT_PACKAGE, "%i app", "%i apps", number_of_apps).printf (number_of_apps)
+                );
+                break;
+        }
+
+        dynamic_icon.tooltip_markup = "%s\n%s".printf (description, accel_label);
     }
 }
 

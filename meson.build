@@ -23,8 +23,16 @@ asresources = gnome.compile_resources(
     c_name: 'as'
 )
 
-wingpanel_dep = dependency('wingpanel-2.0')
+wingpanel_dep = dependency('wingpanel')
 wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
+
+config_data = configuration_data()
+config_data.set('GETTEXT_PACKAGE', meson.project_name())
+config_vala = configure_file(
+    input: 'src/Config.vala.in',
+    output: '@BASENAME@',
+    configuration: config_data
+)
 
 shared_module(
     meson.project_name(),
@@ -37,10 +45,11 @@ shared_module(
     'src/Services/Session.vala',
     'src/Services/Interfaces.vala',
     asresources,
+    config_vala,
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('granite'),
+        dependency('granite', version: '>=6.0.0'),
         dependency('gtk+-3.0'),
         dependency('libhandy-1'),
         wingpanel_dep
