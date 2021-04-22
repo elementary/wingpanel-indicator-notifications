@@ -19,18 +19,22 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
 
     private Gee.HashMap<uint32, NotificationEntry> notification_entries;
-    private List<AppEntry> app_entries;
+    public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
+
     private HashTable<string, int> table;
 
     construct {
-        app_entries = new List<AppEntry> ();
+        app_entries = new Gee.HashMap<string, AppEntry> ();
         notification_entries = new Gee.HashMap<uint32, NotificationEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
-        var placeholder = new Gtk.Label (_("No Notifications"));
-        placeholder.margin_top = placeholder.margin_bottom = 24;
-        placeholder.margin_start = placeholder.margin_end = 12;
-        placeholder.show ();
+        var placeholder = new Gtk.Label (_("No Notifications")) {
+            margin_top = 24,
+            margin_bottom = 24,
+            margin_start = 12,
+            margin_end = 12,
+            visible = true
+        };
 
         unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
@@ -44,63 +48,49 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         row_activated.connect (on_row_activated);
     }
 
-    public void add_entry (NotificationEntry entry) {
-        if (entry.notification.app_info != null && entry.notification.app_info.get_id () != null) {
-            AppEntry? app_entry = null;
+    public void add_entry (Notification notification) {
+        var entry = new NotificationEntry (notification);
 
-            unowned string entry_desktop_id = entry.notification.desktop_id;
-            foreach (unowned AppEntry _app_entry in app_entries) {
-                if (_app_entry.app_info.get_id () == entry_desktop_id) {
-                    app_entry = _app_entry;
-                    continue;
-                }
-            }
+        if (app_entries[notification.desktop_id] != null) {
+            var app_entry = app_entries[notification.desktop_id];
 
-            if (app_entry == null) {
-                app_entry = new AppEntry (entry);
+            resort_app_entry (app_entry);
 
-                app_entries.append (app_entry);
-                prepend (app_entry);
-                insert (entry, 1);
-                table.insert (app_entry.app_info.get_id (), 0);
+            if (notification_entries[notification.replaces_id] != null) {
+                notification_entries[notification.replaces_id].replace (notification);
             } else {
-                resort_app_entry (app_entry);
+                notification_entries[notification.replaces_id] = entry;
+                app_entry.add_notification_entry (entry);
 
-                if (notification_entries[entry.notification.replaces_id] != null) {
-                    notification_entries[entry.notification.replaces_id].replace (entry.notification);
-                } else {
-                    notification_entries[entry.notification.replaces_id] = entry;
-                    app_entry.add_notification_entry (entry);
-
-                    int insert_pos = table.get (app_entry.app_info.get_id ());
-                    insert (entry, insert_pos + 1);
-                }
+                int insert_pos = table.get (app_entry.app_id);
+                insert (entry, insert_pos + 1);
             }
-
+        } else {
+            var app_entry = new AppEntry (notification.app_info);
+            app_entry.add_notification_entry (entry);
             app_entry.clear.connect (clear_app_entry);
 
-            show_all ();
+            app_entries[notification.desktop_id] = app_entry;
 
-            Session.get_instance ().add_notification (entry.notification);
+            prepend (app_entry);
+            insert (entry, 1);
+            table.insert (app_entry.app_id, 0);
         }
-    }
 
-    public unowned List<AppEntry> get_entries () {
-        return app_entries;
-    }
+        show_all ();
 
-    public uint get_entries_length () {
-        return app_entries.length ();
+        Session.get_instance ().add_notification (notification);
     }
 
     public void clear_all () {
-        app_entries.foreach ((app_entry) => {
-            app_entry.clear ();
-        });
+        var iter = app_entries.map_iterator ();
+        while (iter.next ()) {
+            var entry = iter.get_value ();
+            iter.unset ();
+            clear_app_entry (entry);
+        }
 
-        Session.get_instance ().clear ();
         close_popover ();
-        show_all ();
     }
 
     private void resort_app_entry (AppEntry app_entry) {
@@ -115,16 +105,16 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     private void clear_app_entry (AppEntry app_entry) {
-        app_entries.remove (app_entry);
+        app_entry.clear.disconnect (clear_app_entry);
 
-        app_entry.app_notifications.foreach ((notification_entry) => {
-            app_entry.remove_notification_entry.begin (notification_entry);
-        });
+        app_entries.unset (app_entry.app_id);
+
+        app_entry.clear_all_notification_entries ();
 
         app_entry.destroy ();
 
-        if (get_entries_length () == 0) {
-            clear_all ();
+        if (app_entries.size == 0) {
+            Session.get_instance ().clear ();
         }
     }
 

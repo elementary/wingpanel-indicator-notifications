@@ -18,14 +18,13 @@
 public class Notifications.Notification : Object {
     public const string DESKTOP_ID_EXT = ".desktop";
 
+    public bool is_transient = false;
     public string app_name;
     public string summary;
     public string message_body;
     public string app_icon;
     public string sender;
     public string[] actions;
-    public Variant hints;
-    public int32 expire_timeout;
     public uint32 replaces_id;
     public uint32 id;
     public GLib.DateTime timestamp;
@@ -34,7 +33,6 @@ public class Notifications.Notification : Object {
     public DesktopAppInfo? app_info = null;
 
     public signal void closed ();
-    public signal bool time_changed (GLib.DateTime span);
 
     private enum Column {
         APP_NAME = 0,
@@ -57,11 +55,9 @@ public class Notifications.Notification : Object {
         var body = message.get_body ();
 
         app_name = get_string (body, Column.APP_NAME);
-        app_icon = get_string (body, Column.APP_ICON);
         summary = get_string (body, Column.SUMMARY);
         message_body = get_string (body, Column.BODY);
-        hints = body.get_child_value (Column.HINTS);
-        expire_timeout = get_int32 (body, Column.EXPIRE_TIMEOUT);
+        var hints = body.get_child_value (Column.HINTS);
         replaces_id = get_uint32 (body, Column.REPLACES_ID);
         id = _id;
         sender = message.get_sender ();
@@ -70,16 +66,26 @@ public class Notifications.Notification : Object {
         timestamp = new GLib.DateTime.now_local ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
-        if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
-            desktop_id += DESKTOP_ID_EXT;
+        if (desktop_id != null && desktop_id != "") {
+            if (!desktop_id.has_suffix (DESKTOP_ID_EXT)) {
+                desktop_id += DESKTOP_ID_EXT;
+            }
 
             app_info = new DesktopAppInfo (desktop_id);
         }
 
-        if (app_info == null) {
+        app_icon = get_string (body, Column.APP_ICON);
+        if (app_icon == "" && app_info != null) {
+            app_icon = app_info.get_icon ().to_string ();
+        }
+
+        if (app_info == null || !app_info.get_boolean ("X-GNOME-UsesNotifications")) {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
+
+        var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
+        is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
     }
 
     public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
@@ -90,7 +96,6 @@ public class Notifications.Notification : Object {
         app_icon = _app_icon;
         summary = _summary;
         message_body = _message_body;
-        expire_timeout = -1;
         replaces_id = (uint32) _replaces_id;
         id = _id;
         sender = _sender;
@@ -100,15 +105,6 @@ public class Notifications.Notification : Object {
 
         desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
-    }
-
-    construct {
-        Timeout.add_seconds_full (Priority.DEFAULT, 60, source_func);
-    }
-
-    public bool get_is_valid () {
-        var transient = hints.lookup_value ("transient", VariantType.BOOLEAN);
-        return app_info != null && hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) == null && (transient == null || !transient.get_boolean ());
     }
 
     public void close () {
@@ -141,11 +137,6 @@ public class Notifications.Notification : Object {
         return child.dup_string ();
     }
 
-    private int32 get_int32 (Variant tuple, int column) {
-        var child = tuple.get_child_value (column);
-        return child.get_int32 ();
-    }
-
     private uint32 get_uint32 (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.get_uint32 ();
@@ -159,9 +150,5 @@ public class Notifications.Notification : Object {
         }
 
         return child.dup_string ();
-    }
-
-    private bool source_func () {
-        return time_changed (timestamp);
     }
 }

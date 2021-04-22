@@ -18,11 +18,11 @@
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
-    public bool active = true;
     public Notification notification { get; construct; }
 
     private Gtk.Revealer revealer;
     private Gtk.Stack content_area;
+    private uint timeout_id;
 
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
@@ -50,8 +50,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         content_area = new Gtk.Stack () {
             margin = 12,
             // Box shadow is clipped to the margin area
-            margin_top = 1,
-            margin_bottom = 11,
+            margin_top = 9,
+            margin_bottom = 9,
             transition_type = Gtk.StackTransitionType.SLIDE_DOWN,
             vhomogeneous = false
         };
@@ -61,19 +61,41 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         style_context.add_class (Granite.STYLE_CLASS_CARD);
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+        var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_button = new Gtk.Button () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
+            image = delete_image
+        };
+        delete_button.get_style_context ().add_class ("close");
+        delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var delete_revealer = new Gtk.Revealer () {
+            reveal_child = false,
+            transition_duration = Granite.TRANSITION_DURATION_CLOSE,
+            transition_type = Gtk.RevealerTransitionType.CROSSFADE
+        };
+        delete_revealer.add (delete_button);
+
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
-            margin_top = 1,
-            margin_bottom = 11
+            margin_top = 9,
+            margin_bottom = 9
         };
         delete_left.get_style_context ().add_class ("left");
 
         var delete_right = new DeleteAffordance (Gtk.Align.START) {
             // Have to match with the grid
-            margin_top = 1,
-            margin_bottom = 11
+            margin_top = 9,
+            margin_bottom = 9
         };
         delete_right.get_style_context ().add_class ("right");
+
+        var overlay = new Gtk.Overlay ();
+        overlay.add (content_area);
+        overlay.add_overlay (delete_revealer);
 
         var deck = new Hdy.Deck () {
             can_swipe_back = true,
@@ -81,9 +103,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             transition_type = Hdy.DeckTransitionType.SLIDE
         };
         deck.add (delete_left);
-        deck.add (content_area);
+        deck.add (overlay);
         deck.add (delete_right);
-        deck.visible_child = content_area;
+        deck.visible_child = overlay;
 
         revealer = new Gtk.Revealer () {
             reveal_child = true,
@@ -92,26 +114,34 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         revealer.add (deck);
 
-        add (revealer);
+        var eventbox = new Gtk.EventBox ();
+        eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                           Gdk.EventMask.LEAVE_NOTIFY_MASK;
+
+        eventbox.add (revealer);
+
+        add (eventbox);
 
         show_all ();
 
         notification.closed.connect (() => clear ());
 
         deck.notify["visible-child"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != content_area) {
+            if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != content_area) {
+            if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
             }
         });
     }
 
     public void dismiss () {
+        Source.remove (timeout_id);
+
         revealer.notify["child-revealed"].connect (() => {
             if (!revealer.child_revealed) {
                 destroy ();
@@ -198,10 +228,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
                 attach (body_label, 1, 1, 2);
             }
-
-            notification.time_changed.connect ((timestamp) => {
-                time_label.label = Granite.DateTime.get_relative_datetime (timestamp);
-            });
         }
 
         /**

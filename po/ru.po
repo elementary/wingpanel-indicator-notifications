@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-29 18:36+0000\n"
-"PO-Revision-Date: 2017-04-29 09:02+0000\n"
-"Last-Translator: Kirill Romanov <djaler1@gmail.com>\n"
+"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"PO-Revision-Date: 2021-03-05 00:17+0000\n"
+"Last-Translator: DartDeaDia <jorydit@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ru/>\n"
 "Language: ru\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.13-dev\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -28,19 +28,61 @@ msgstr "Очистить все уведомления"
 msgid "Notifications Settings…"
 msgstr "Параметры уведомлений…"
 
-#: src/Widgets/NotificationsList.vala:28
+#: src/Indicator.vala:223
+msgid "Middle-click to disable Do Not Disturb"
+msgstr "Нажмите средней кнопкой мыши, чтобы отключить режим «Не беспокоить»"
+
+#: src/Indicator.vala:225
+msgid "Middle-click to enable Do Not Disturb"
+msgstr "Нажмите средней кнопкой мыши, чтобы включить режим «Не беспокоить»"
+
+#: src/Indicator.vala:232
+msgid "No notifications"
+msgstr "Уведомлений нет"
+
+#: src/Indicator.vala:235
+msgid "1 notification"
+msgstr "1 уведомление"
+
+#. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
+#. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
+#: src/Indicator.vala:240
+#, c-format
+msgid "%s from %s"
+msgstr "%s от %s"
+
+#: src/Indicator.vala:241
+#, c-format
+msgid "%u notification"
+msgid_plural "%u notifications"
+msgstr[0] "%u уведомление"
+msgstr[1] "%u уведомлений"
+msgstr[2] "%u уведомления"
+
+#: src/Indicator.vala:242
+#, c-format
+msgid "%i app"
+msgid_plural "%i apps"
+msgstr[0] "%i приложение"
+msgstr[1] "%i приложений"
+msgstr[2] "%i приложений"
+
+#: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
 msgstr "Уведомлений нет"
 
-#: src/Widgets/NotificationEntry.vala:183
+#: src/Widgets/NotificationEntry.vala:237
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
-#: src/Widgets/AppEntry.vala:45
-#, fuzzy, c-format
-#| msgid "Clear All Notifications"
+#: src/Widgets/AppEntry.vala:42
+msgid "Other"
+msgstr "Прочие"
+
+#: src/Widgets/AppEntry.vala:52
+#, c-format
 msgid "Clear all %s notifications"
-msgstr "Очистить все уведомления"
+msgstr "Очистить все %s уведомлений"
 
 #~ msgid "now"
 #~ msgstr "сейчас"
