@@ -18,12 +18,14 @@
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
 
+    private Gee.HashMap<uint32, NotificationEntry> notification_entries;
     public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
 
     private HashTable<string, int> table;
 
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
+        notification_entries = new Gee.HashMap<uint32, NotificationEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
 
         var placeholder = new Gtk.Label (_("No Notifications")) {
@@ -53,10 +55,16 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             var app_entry = app_entries[notification.desktop_id];
 
             resort_app_entry (app_entry);
-            app_entry.add_notification_entry (entry);
 
-            int insert_pos = table.get (app_entry.app_id);
-            insert (entry, insert_pos + 1);
+            if (notification_entries[notification.replaces_id] != null) {
+                notification_entries[notification.replaces_id].replace (notification);
+            } else {
+                notification_entries[notification.replaces_id] = entry;
+                app_entry.add_notification_entry (entry);
+
+                int insert_pos = table.get (app_entry.app_id);
+                insert (entry, insert_pos + 1);
+            }
         } else {
             var app_entry = new AppEntry (notification.app_info);
             app_entry.add_notification_entry (entry);
