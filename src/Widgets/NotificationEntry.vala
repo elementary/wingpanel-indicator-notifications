@@ -22,7 +22,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
     private Gtk.Revealer revealer;
     private Gtk.Stack content_area;
-    private uint timeout_id;
 
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
@@ -126,6 +125,20 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         notification.closed.connect (() => clear ());
 
+        delete_button.clicked.connect (() => {
+            clear ();
+        });
+
+        eventbox.enter_notify_event.connect ((event) => {
+            delete_revealer.reveal_child = true;
+            return Gdk.EVENT_STOP;
+        });
+
+        eventbox.leave_notify_event.connect ((event) => {
+            delete_revealer.reveal_child = false;
+            return Gdk.EVENT_STOP;
+        });
+
         deck.notify["visible-child"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != overlay) {
                 clear ();
@@ -140,8 +153,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     public void dismiss () {
-        Source.remove (timeout_id);
-
         revealer.notify["child-revealed"].connect (() => {
             if (!revealer.child_revealed) {
                 destroy ();
@@ -161,8 +172,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     private class Contents : Gtk.Grid {
         public Notification notification { get; construct; }
 
+        private uint timeout_id;
+
         public Contents (Notification notification) {
             Object (notification: notification);
+        }
+
+        ~Contents () {
+            Source.remove (timeout_id);
         }
 
         construct {
@@ -228,6 +245,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
                 attach (body_label, 1, 1, 2);
             }
+
+            timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
+                time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
+                return GLib.Source.CONTINUE;
+            });
         }
 
         /**
