@@ -44,15 +44,22 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        var app_icon = notification.app_icon;
-        if (app_icon == "") {
-                app_icon = "dialog-information";
-        }
-
         var app_image = new Gtk.Image () {
-            icon_name = app_icon,
             pixel_size = 48
         };
+
+        if (notification.app_icon == "") {
+            app_image.icon_name = "dialog-information";
+        } else if (notification.app_icon.contains ("/")) {
+            var file = File.new_for_uri (notification.app_icon);
+            if (file.query_exists ()) {
+                app_image.gicon = new FileIcon (file);
+            } else {
+                app_image.icon_name = "dialog-information";
+            }
+        } else {
+            app_image.icon_name = notification.app_icon;
+        }
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
             ellipsize = Pango.EllipsizeMode.END,
@@ -62,7 +69,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             use_markup = true,
             xalign = 0
         };
-
 
         var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
             margin_end = 6
