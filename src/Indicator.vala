@@ -21,35 +21,23 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private const string CHILD_PATH = "/io/elementary/notifications/applications/%s/";
     private const string REMEMBER_KEY = "remember";
 
-    private Gtk.Spinner? dynamic_icon = null;
+    private Gee.HashMap<string, Settings> app_settings_cache;
+    private GLib.Settings notify_settings;
     private Gtk.Grid? main_box = null;
     private Gtk.ModelButton clear_all_btn;
-    private Granite.SwitchModelButton not_disturb_switch;
-
+    private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
 
-    private Gee.HashMap<string, Settings> app_settings_cache;
-
-    public static GLib.Settings notify_settings;
-
     public Indicator () {
-        Object (code_name: Wingpanel.Indicator.MESSAGES);
-
-        visible = true;
+        Object (
+            code_name: Wingpanel.Indicator.MESSAGES,
+            visible: true
+        );
     }
 
     construct {
+        notify_settings = new GLib.Settings ("io.elementary.notifications");
         app_settings_cache = new Gee.HashMap<string, Settings> ();
-    }
-
-    static construct {
-        if (GLib.SettingsSchemaSource.get_default ().lookup ("io.elementary.notifications", true) != null) {
-            debug ("Using io.elementary.notifications server");
-            notify_settings = new GLib.Settings ("io.elementary.notifications");
-        } else {
-            debug ("Using notifications in gala");
-            notify_settings = new GLib.Settings ("org.pantheon.desktop.gala.notifications");
-        }
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -67,7 +55,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
-            unowned Gtk.StyleContext dynamic_icon_style_context = dynamic_icon.get_style_context ();
+            unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
             dynamic_icon_style_context.add_class ("notification-icon");
             dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
@@ -99,7 +87,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
-            not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
+            var not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
             not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
             var dnd_switch_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
@@ -199,7 +187,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void set_display_icon_name () {
-        var dynamic_icon_style_context = dynamic_icon.get_style_context ();
+        unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
         } else if (nlist != null && nlist.app_entries.size > 0) {
