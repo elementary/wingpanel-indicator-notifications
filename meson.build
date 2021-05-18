@@ -16,6 +16,7 @@ add_global_arguments(
     '-DWNCK_I_KNOW_THIS_IS_UNSTABLE',
     language:'c'
 )
+add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.notifications"', language:'c')
 
 asresources = gnome.compile_resources(
     'as-resources', 'data/io.elementary.wingpanel.notifications.gresource.xml',

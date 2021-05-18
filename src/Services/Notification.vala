@@ -72,6 +72,9 @@ public class Notifications.Notification : Object {
             }
 
             app_info = new DesktopAppInfo (desktop_id);
+            if (app_info == null) {
+                app_info = new DesktopAppInfo.from_filename ("/etc/xdg/autostart/%s".printf (desktop_id));
+            }
         }
 
         app_icon = get_string (body, Column.APP_ICON);
@@ -79,7 +82,7 @@ public class Notifications.Notification : Object {
             app_icon = app_info.get_icon ().to_string ();
         }
 
-        if (app_info == null || !app_info.get_boolean ("X-GNOME-UsesNotifications")) {
+        if (app_info == null) {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
