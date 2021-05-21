@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-29 17:02+0000\n"
-"PO-Revision-Date: 2020-10-08 14:14+0000\n"
+"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"PO-Revision-Date: 2021-02-17 14:18+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:108
@@ -27,19 +27,56 @@ msgstr "Borrar todas las notificaciones"
 msgid "Notifications Settings…"
 msgstr "Configuración de notificaciones…"
 
-#: src/Widgets/NotificationsList.vala:28
+#: src/Indicator.vala:223
+msgid "Middle-click to disable Do Not Disturb"
+msgstr "Pulse con el botón central del ratón para desactivar No molestar"
+
+#: src/Indicator.vala:225
+msgid "Middle-click to enable Do Not Disturb"
+msgstr "Pulse con el botón central del ratón para activar No molestar"
+
+#: src/Indicator.vala:232
+msgid "No notifications"
+msgstr "No hay notificaciones"
+
+#: src/Indicator.vala:235
+msgid "1 notification"
+msgstr "1 notificación"
+
+#. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
+#. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
+#: src/Indicator.vala:240
+#, c-format
+msgid "%s from %s"
+msgstr "%s de %s"
+
+#: src/Indicator.vala:241
+#, c-format
+msgid "%u notification"
+msgid_plural "%u notifications"
+msgstr[0] "%u notificación"
+msgstr[1] "%u notificaciones"
+
+#: src/Indicator.vala:242
+#, c-format
+msgid "%i app"
+msgid_plural "%i apps"
+msgstr[0] "%i aplicación"
+msgstr[1] "%i aplicaciones"
+
+#: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
 msgstr "No hay notificaciones"
 
-#: src/Widgets/NotificationEntry.vala:242
+#: src/Widgets/NotificationEntry.vala:237
 msgid "Delete"
 msgstr "Eliminar"
 
-#: src/Widgets/AppEntry.vala:47
+#: src/Widgets/AppEntry.vala:42
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
-#: src/Widgets/AppEntry.vala:56
+#: src/Widgets/AppEntry.vala:52
 #, c-format
 msgid "Clear all %s notifications"
 msgstr "Borrar las %s notificaciones"

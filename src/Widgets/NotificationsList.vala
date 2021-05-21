@@ -23,10 +23,13 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
 
-        var placeholder = new Gtk.Label (_("No Notifications"));
-        placeholder.margin_top = placeholder.margin_bottom = 24;
-        placeholder.margin_start = placeholder.margin_end = 12;
-        placeholder.show ();
+        var placeholder = new Gtk.Label (_("No Notifications")) {
+            margin_top = 24,
+            margin_bottom = 24,
+            margin_start = 12,
+            margin_end = 12,
+            visible = true
+        };
 
         unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
@@ -43,25 +46,23 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     public void add_entry (Notification notification) {
-        if (notification.desktop_id != null) {
-            var entry = new NotificationEntry (notification);
+        var entry = new NotificationEntry (notification);
 
-            if (app_entries[notification.desktop_id] != null) {
-                app_entries[notification.desktop_id].add_notification_entry (entry);
-            } else {
-                var app_entry = new AppEntry (entry);
-                app_entry.clear.connect (clear_app_entry);
+        if (app_entries[notification.desktop_id] != null) {
+            app_entries[notification.desktop_id].add_notification_entry (entry);
+        } else {
+            var app_entry = new AppEntry (notification.app_info);
+            app_entry.clear.connect (clear_app_entry);
 
-                app_entries[notification.desktop_id] = app_entry;
-            }
-
-            add (entry);
-
-            show_all ();
-            invalidate_sort ();
-
-            Session.get_instance ().add_notification (notification);
+            app_entries[notification.desktop_id] = app_entry;
         }
+
+        add (entry);
+
+        show_all ();
+
+
+        Session.get_instance ().add_notification (notification);
     }
 
     [CCode (instance_pos = -1)]
@@ -100,24 +101,27 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     public void clear_all () {
-        app_entries.clear ();
+        var iter = app_entries.map_iterator ();
+        while (iter.next ()) {
+            var entry = iter.get_value ();
+            iter.unset ();
+            clear_app_entry (entry);
+        }
 
-        Session.get_instance ().clear ();
         close_popover ();
-        show_all ();
     }
 
     private void clear_app_entry (AppEntry app_entry) {
+        app_entry.clear.disconnect (clear_app_entry);
+
         app_entries.unset (app_entry.app_id);
 
-        app_entry.app_notifications.foreach ((notification_entry) => {
-            app_entry.remove_notification_entry.begin (notification_entry);
-        });
+        app_entry.clear_all_notification_entries ();
 
         app_entry.destroy ();
 
         if (app_entries.size == 0) {
-            clear_all ();
+            Session.get_instance ().clear ();
         }
     }
 
