@@ -15,24 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notifications.AppEntry : Gtk.ListBoxRow {
+public class Notifications.AppEntry : Gtk.Grid {
     public signal void clear ();
 
     public string app_id { get; private set; }
     public AppInfo? app_info { get; construct; default = null; }
-    public List<NotificationEntry> app_notifications;
 
     public AppEntry (AppInfo? app_info) {
         Object (app_info: app_info);
     }
 
     construct {
-        margin = 12;
-        margin_bottom = 3;
-        margin_top = 6;
-
-        app_notifications = new List<NotificationEntry> ();
-
         unowned string name;
         if (app_info != null) {
             app_id = app_info.get_id ();
@@ -53,44 +46,15 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
-        var grid = new Gtk.Grid () {
-            column_spacing = 6
-        };
-        grid.add (label);
-        grid.add (clear_btn_entry);
-
-        add (grid);
-        show_all ();
+        column_spacing = 6;
+        margin = 12;
+        margin_bottom = 3;
+        margin_top = 6;
+        add (label);
+        add (clear_btn_entry);
 
         clear_btn_entry.clicked.connect (() => {
-            clear_all_notification_entries ();
-        });
-    }
-
-    public void add_notification_entry (NotificationEntry entry) {
-        app_notifications.prepend (entry);
-        entry.clear.connect (remove_notification_entry);
-    }
-
-    public void remove_notification_entry (NotificationEntry entry) {
-        app_notifications.remove (entry);
-        entry.dismiss ();
-
-        Session.get_instance ().remove_notification (entry.notification);
-        if (app_notifications.length () == 0) {
             clear ();
-        }
-    }
-
-    public void clear_all_notification_entries () {
-        Notification[] to_remove = {};
-        app_notifications.@foreach ((entry) => {
-            entry.dismiss ();
-            to_remove += entry.notification;
         });
-
-        app_notifications = new List<NotificationEntry> ();
-        Session.get_instance ().remove_notifications (to_remove);
-        clear ();
     }
 }

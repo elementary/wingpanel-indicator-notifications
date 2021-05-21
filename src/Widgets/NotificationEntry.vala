@@ -16,7 +16,7 @@
  */
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
-    public signal void clear ();
+    public signal void removed ();
 
     public Notification notification { get; construct; }
 
@@ -185,7 +185,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         show_all ();
 
         delete_button.clicked.connect (() => {
-            clear ();
+            dismiss ();
         });
 
         eventbox.enter_notify_event.connect ((event) => {
@@ -203,17 +203,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             return GLib.Source.CONTINUE;
         });
 
-        notification.closed.connect (() => clear ());
+        notification.closed.connect (() => dismiss ());
 
         deck.notify["visible-child"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != overlay) {
-                clear ();
+                dismiss ();
             }
         });
 
         deck.notify["transition-running"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != overlay) {
-                clear ();
+                dismiss ();
             }
         });
     }
@@ -223,7 +223,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         revealer.notify["child-revealed"].connect (() => {
             if (!revealer.child_revealed) {
-                destroy ();
+                removed ();
             }
         });
         revealer.reveal_child = false;

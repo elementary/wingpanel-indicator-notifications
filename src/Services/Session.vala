@@ -23,7 +23,6 @@
  */
 public class Notifications.Session : GLib.Object {
     private const string SESSION_FILE_NAME = ".notifications.session";
-    private static Session? instance = null;
 
     private File session_file = null;
 
@@ -39,15 +38,7 @@ public class Notifications.Session : GLib.Object {
 
     private KeyFile key;
 
-    public static Session get_instance () {
-        if (instance == null) {
-            instance = new Session ();
-        }
-
-        return instance;
-    }
-
-    private Session () {
+    public Session () {
         session_file = File.new_for_path (Path.build_filename (Environment.get_user_cache_dir (), SESSION_FILE_NAME));
         if (!session_file.query_exists ()) {
             create_session_file ();
@@ -57,8 +48,8 @@ public class Notifications.Session : GLib.Object {
         key.set_list_separator (';');
     }
 
-    public List<Notification> get_session_notifications () {
-        var list = new List<Notification> ();
+    public Notification[] get_session_notifications () {
+        Notification[] list = {};
         try {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
@@ -72,7 +63,7 @@ public class Notifications.Session : GLib.Object {
                                                             key.get_int64 (group, UNIX_TIME_KEY),
                                                             key.get_uint64 (group, REPLACES_ID_KEY),
                                                             key.get_string (group, SENDER_KEY));
-                list.append (notification);
+                list += notification;
             }
         } catch (KeyFileError e) {
             warning (e.message);
@@ -102,7 +93,7 @@ public class Notifications.Session : GLib.Object {
         try {
             key.remove_group (notification.id.to_string ());
         } catch (KeyFileError e) {
-            warning (e.message);
+            return;
         }
 
         write_contents ();
