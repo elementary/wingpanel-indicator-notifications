@@ -22,13 +22,20 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private GLib.GenericArray<Notifications.AppEntry> apps;
 
+    public NotificationsList (GLib.ListModel list_model) {
+        bind_model (list_model, create_notification);
+    }
+
     construct {
         apps = new GLib.GenericArray<Notifications.AppEntry> ();
 
-        var placeholder = new Gtk.Label (_("No Notifications"));
-        placeholder.margin_top = placeholder.margin_bottom = 24;
-        placeholder.margin_start = placeholder.margin_end = 12;
-        placeholder.show ();
+        var placeholder = new Gtk.Label (_("No Notifications")) {
+            margin_top = 24,
+            margin_bottom = 24,
+            margin_start = 12,
+            margin_end = 12,
+            visible = true
+        };
 
         unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
@@ -41,10 +48,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         show_all ();
 
         row_activated.connect (on_row_activated);
-    }
-
-    public NotificationsList (GLib.ListModel list_model) {
-        bind_model (list_model, create_notification);
     }
 
     private Gtk.Widget create_notification (GLib.Object object) {

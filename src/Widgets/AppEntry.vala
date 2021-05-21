@@ -19,18 +19,13 @@ public class Notifications.AppEntry : Gtk.Grid {
     public signal void clear ();
 
     public string app_id { get; private set; }
-    public AppInfo? app_info { get; construct; }
+    public AppInfo? app_info { get; construct; default = null; }
 
     public AppEntry (AppInfo? app_info) {
         Object (app_info: app_info);
     }
 
     construct {
-        margin = 12;
-        margin_bottom = 3;
-        margin_top = 6;
-        column_spacing = 6;
-
         unowned string name;
         if (app_info != null) {
             app_id = app_info.get_id ();
@@ -40,9 +35,10 @@ public class Notifications.AppEntry : Gtk.Grid {
             name = _("Other");
         }
 
-        var label = new Gtk.Label (name);
-        label.hexpand = true;
-        label.xalign = 0;
+        var label = new Gtk.Label (name) {
+            hexpand = true,
+            xalign = 0
+        };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
@@ -50,6 +46,10 @@ public class Notifications.AppEntry : Gtk.Grid {
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
+        column_spacing = 6;
+        margin = 12;
+        margin_bottom = 3;
+        margin_top = 6;
         add (label);
         add (clear_btn_entry);
 

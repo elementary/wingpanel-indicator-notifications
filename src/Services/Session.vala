@@ -99,6 +99,18 @@ public class Notifications.Session : GLib.Object {
         write_contents ();
     }
 
+    public void remove_notifications (Notification[] notifications) {
+        foreach (unowned var notification in notifications) {
+            try {
+                key.remove_group (notification.id.to_string ());
+            } catch (KeyFileError e) {
+                warning (e.message);
+            }
+        }
+
+        write_contents ();
+    }
+
     public void clear () {
         try {
             FileUtils.set_contents (session_file.get_path (), "");

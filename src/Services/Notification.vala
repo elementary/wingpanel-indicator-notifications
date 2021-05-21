@@ -33,7 +33,6 @@ public class Notifications.Notification : Object {
     public DesktopAppInfo? app_info = null;
 
     public signal void closed ();
-    public signal bool time_changed (GLib.DateTime span);
 
     private enum Column {
         APP_NAME = 0,
@@ -46,8 +45,6 @@ public class Notifications.Notification : Object {
         EXPIRE_TIMEOUT,
         COUNT
     }
-
-    private uint timeout_id;
 
     private const string DEFAULT_ACTION = "default";
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
@@ -69,10 +66,15 @@ public class Notifications.Notification : Object {
         timestamp = new GLib.DateTime.now_local ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
-        if (desktop_id != "" && !desktop_id.has_suffix (DESKTOP_ID_EXT)) {
-            desktop_id += DESKTOP_ID_EXT;
+        if (desktop_id != null && desktop_id != "") {
+            if (!desktop_id.has_suffix (DESKTOP_ID_EXT)) {
+                desktop_id += DESKTOP_ID_EXT;
+            }
 
             app_info = new DesktopAppInfo (desktop_id);
+            if (app_info == null) {
+                app_info = new DesktopAppInfo.from_filename ("/etc/xdg/autostart/%s".printf (desktop_id));
+            }
         }
 
         app_icon = get_string (body, Column.APP_ICON);
@@ -80,7 +82,7 @@ public class Notifications.Notification : Object {
             app_icon = app_info.get_icon ().to_string ();
         }
 
-        if (app_info == null || !app_info.get_boolean ("X-GNOME-UsesNotifications")) {
+        if (app_info == null) {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
@@ -108,18 +110,8 @@ public class Notifications.Notification : Object {
         app_info = new DesktopAppInfo (desktop_id);
     }
 
-    construct {
-        timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
-            return time_changed (timestamp);
-        });
-    }
-
     public void close () {
         closed ();
-    }
-
-    public void stop_timeout () {
-        Source.remove (timeout_id);
     }
 
     public bool run_default_action () {
