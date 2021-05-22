@@ -62,16 +62,18 @@ public class Notifications.Session : GLib.Object {
         try {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
-                var notification = new Notification.from_data ((uint32)int.parse (group),
-                                                            key.get_string (group, APP_NAME_KEY),
-                                                            key.get_string (group, APP_ICON_KEY),
-                                                            key.get_string (group, SUMMARY_KEY),
-                                                            key.get_string (group, BODY_KEY),
-                                                            key.get_string_list (group, ACTIONS_KEY),
-                                                            key.get_string (group, DESKTOP_ID_KEY),
-                                                            key.get_int64 (group, UNIX_TIME_KEY),
-                                                            key.get_uint64 (group, REPLACES_ID_KEY),
-                                                            key.get_string (group, SENDER_KEY));
+                var notification = new Notification (
+                    (uint32)int.parse (group),
+                    key.get_string (group, APP_NAME_KEY),
+                    key.get_string (group, APP_ICON_KEY),
+                    key.get_string (group, SUMMARY_KEY),
+                    key.get_string (group, BODY_KEY),
+                    key.get_string_list (group, ACTIONS_KEY),
+                    key.get_string (group, DESKTOP_ID_KEY),
+                    key.get_int64 (group, UNIX_TIME_KEY),
+                    key.get_uint64 (group, REPLACES_ID_KEY),
+                    key.get_string (group, SENDER_KEY)
+                );
                 list.append (notification);
             }
         } catch (KeyFileError e) {

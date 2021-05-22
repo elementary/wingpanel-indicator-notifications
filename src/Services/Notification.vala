@@ -51,6 +51,25 @@ public class Notifications.Notification : Object {
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
 
+    public Notification (
+        uint32 _id, string _app_name, string _app_icon, string _summary, string _message_body,
+        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender
+    ) {
+        app_name = _app_name;
+        app_icon = _app_icon;
+        summary = _summary;
+        message_body = _message_body;
+        replaces_id = (uint32) _replaces_id;
+        id = _id;
+        sender = _sender;
+
+        actions = _actions;
+        timestamp = new GLib.DateTime.from_unix_local (_unix_time);
+
+        desktop_id = _desktop_id;
+        app_info = new DesktopAppInfo (desktop_id);
+    }
+
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
 
@@ -89,25 +108,6 @@ public class Notifications.Notification : Object {
 
         var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
         is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
-    }
-
-    public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
-                                string _summary, string _message_body,
-                                string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender) {
-
-        app_name = _app_name;
-        app_icon = _app_icon;
-        summary = _summary;
-        message_body = _message_body;
-        replaces_id = (uint32) _replaces_id;
-        id = _id;
-        sender = _sender;
-
-        actions = _actions;
-        timestamp = new GLib.DateTime.from_unix_local (_unix_time);
-
-        desktop_id = _desktop_id;
-        app_info = new DesktopAppInfo (desktop_id);
     }
 
     public void close () {
