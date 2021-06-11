@@ -100,6 +100,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
             transition_type = Gtk.RevealerTransitionType.CROSSFADE
@@ -137,6 +139,60 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             }
 
             grid.attach (body_label, 1, 1, 2);
+        }
+
+        var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
+        if (notifications_iface != null) {
+            bool default_action = false;
+            bool has_actions = notification.actions.length > 0;
+            if (has_actions ) {
+                var action_area = new Gtk.ButtonBox (Gtk.Orientation.HORIZONTAL) {
+                    layout_style = Gtk.ButtonBoxStyle.END
+                };
+                action_area.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+                bool action_area_packed = false;
+
+                for (int i = 0; i < notification.actions.length; i += 2) {
+                    if (notification.actions[i] != "default") {
+                        var button = new Gtk.Button.with_label (notification.actions[i + 1]) {};
+                        button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+                        var action = notification.actions[i].dup ();
+
+                        button.clicked.connect (() => {
+                            notifications_iface.action_invoked (notification.id, notification.actions[i]);
+                            clear ();
+                        });
+
+                        action_area.pack_end (button);
+
+                        if (!action_area_packed) {
+                            grid.attach (action_area, 0, 2, 3);
+                            action_area_packed = true;
+                        }
+                    } else {
+                        default_action = true;
+                        i += 2;
+                    }
+                }
+            }
+
+            button_release_event.connect ((event) => {
+                if (default_action) {
+                    notifications_iface.action_invoked (notification.id, "default");
+                    clear ();
+                } else if (notification.app_info != null && !has_actions) {
+                    try {
+                        notification.app_info.launch (null, null);
+                        clear ();
+                    } catch (Error e) {
+                        critical ("Unable to launch app: %s", e.message);
+                    }
+                }
+
+                return Gdk.EVENT_STOP;
+            });
         }
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {

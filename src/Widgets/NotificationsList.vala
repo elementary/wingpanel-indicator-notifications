@@ -38,12 +38,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
         placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
         show_all ();
-
-        row_activated.connect (on_row_activated);
     }
 
     public void add_entry (Notification notification) {
@@ -107,27 +104,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         if (app_entries.size == 0) {
             Session.get_instance ().clear ();
-        }
-    }
-
-    private void on_row_activated (Gtk.ListBoxRow row) {
-        bool close = true;
-
-        if (row is AppEntry) {
-            var app_entry = (AppEntry)row;
-            app_entry.clear ();
-
-        } else if (row is NotificationEntry) {
-            unowned NotificationEntry notification_entry = (NotificationEntry) row;
-            notification_entry.notification.run_default_action ();
-            notification_entry.clear ();
-
-        } else {
-            close = false;
-        }
-
-        if (close) {
-            close_popover ();
         }
     }
 }

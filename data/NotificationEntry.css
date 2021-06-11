@@ -48,3 +48,15 @@
     color: #fff;
     -gtk-icon-shadow: 0 1px 1px alpha (#000, 0.6);
 }
+
+buttonbox {
+    margin-top: 12px;
+}
+
+buttonbox:dir(ltr) button + button {
+    margin-right: 6px;
+}
+
+buttonbox:dir(rtl) button + button {
+    margin-left: 6px;
+}
