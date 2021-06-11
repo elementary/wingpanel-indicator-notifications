@@ -44,13 +44,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        var app_image = new Gtk.Image () {
-            pixel_size = 48
-        };
+        var app_image = new Gtk.Image ();
 
-        if (notification.app_icon == "") {
-            app_image.icon_name = "dialog-information";
-        } else if (notification.app_icon.contains ("/")) {
+        if (notification.app_icon.contains ("/")) {
             var file = File.new_for_uri (notification.app_icon);
             if (file.query_exists ()) {
                 app_image.gicon = new FileIcon (file);
@@ -59,6 +55,41 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             }
         } else {
             app_image.icon_name = notification.app_icon;
+        }
+
+        var image_overlay = new Gtk.Overlay ();
+        image_overlay.valign = Gtk.Align.START;
+
+        if (notification.image_path != null && notification.image_path != "") {
+            try {
+                var scale = get_style_context ().get_scale ();
+                var pixbuf = new Gdk.Pixbuf.from_file_at_size (notification.image_path, 48 * scale, 48 * scale);
+
+                var masked_image = new Notifications.MaskedImage (pixbuf);
+
+                app_image.pixel_size = 24;
+                app_image.halign = app_image.valign = Gtk.Align.END;
+
+                image_overlay.add (masked_image);
+                image_overlay.add_overlay (app_image);
+            } catch (Error e) {
+                critical ("Unable to mask image: %s", e.message);
+
+                app_image.pixel_size = 48;
+                image_overlay.add (app_image);
+            }
+        } else {
+            app_image.pixel_size = 48;
+            image_overlay.add (app_image);
+
+            if (notification.badge_icon != null) {
+                var badge_image = new Gtk.Image.from_gicon (notification.badge_icon, Gtk.IconSize.LARGE_TOOLBAR) {
+                    halign = Gtk.Align.END,
+                    valign = Gtk.Align.END,
+                    pixel_size = 24
+                };
+                image_overlay.add_overlay (badge_image);
+            }
         }
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
@@ -106,7 +137,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         delete_revealer.add (delete_button);
 
-        grid.attach (app_image, 0, 0, 1, 2);
+        grid.attach (image_overlay, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
         grid.attach (time_label, 2, 0);
 

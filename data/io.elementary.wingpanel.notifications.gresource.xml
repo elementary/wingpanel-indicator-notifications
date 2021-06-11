@@ -4,4 +4,7 @@
     <file alias="indicator.css" compressed="true">indicator.css</file>
     <file alias="NotificationEntry.css" compressed="true">NotificationEntry.css</file>
   </gresource>
+  <gresource prefix="/io/elementary/notifications">
+    <file alias="image-mask.svg" compressed="true">image-mask.svg</file>
+  </gresource>
 </gresources>
