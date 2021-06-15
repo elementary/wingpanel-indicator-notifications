@@ -23,6 +23,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     private Gtk.Revealer revealer;
     private uint timeout_id;
 
+    private const int ICON_SIZE_PRIMARY = 48;
+    private const int ICON_SIZE_SECONDARY = 24;
+
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
     private static Regex tag_regex;
@@ -63,11 +66,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         if (notification.image_path != null && notification.image_path != "") {
             try {
                 var scale = get_style_context ().get_scale ();
-                var pixbuf = new Gdk.Pixbuf.from_file_at_size (notification.image_path, 48 * scale, 48 * scale);
+                var pixbuf = new Gdk.Pixbuf.from_file_at_size (notification.image_path, ICON_SIZE_PRIMARY * scale, ICON_SIZE_PRIMARY * scale);
 
                 var masked_image = new Notifications.MaskedImage (pixbuf);
 
-                app_image.pixel_size = 24;
+                app_image.pixel_size = ICON_SIZE_SECONDARY;
                 app_image.halign = app_image.valign = Gtk.Align.END;
 
                 image_overlay.add (masked_image);
@@ -75,18 +78,18 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             } catch (Error e) {
                 critical ("Unable to mask image: %s", e.message);
 
-                app_image.pixel_size = 48;
+                app_image.pixel_size = ICON_SIZE_PRIMARY;
                 image_overlay.add (app_image);
             }
         } else {
-            app_image.pixel_size = 48;
+            app_image.pixel_size = ICON_SIZE_PRIMARY;
             image_overlay.add (app_image);
 
             if (notification.badge_icon != null) {
                 var badge_image = new Gtk.Image.from_gicon (notification.badge_icon, Gtk.IconSize.LARGE_TOOLBAR) {
                     halign = Gtk.Align.END,
                     valign = Gtk.Align.END,
-                    pixel_size = 24
+                    pixel_size = ICON_SIZE_SECONDARY
                 };
                 image_overlay.add_overlay (badge_image);
             }
