@@ -111,22 +111,11 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
-        bool close = true;
-
-        if (row is AppEntry) {
-            var app_entry = (AppEntry)row;
-            app_entry.clear ();
-
-        } else if (row is NotificationEntry) {
+        if (row is NotificationEntry) {
             unowned NotificationEntry notification_entry = (NotificationEntry) row;
             notification_entry.notification.run_default_action ();
             notification_entry.clear ();
 
-        } else {
-            close = false;
-        }
-
-        if (close) {
             close_popover ();
         }
     }
