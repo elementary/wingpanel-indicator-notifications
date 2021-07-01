@@ -145,7 +145,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     public override void closed () {
-
     }
 
     private void on_notification_received (DBusMessage message, uint32 id) {
