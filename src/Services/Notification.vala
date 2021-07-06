@@ -22,12 +22,14 @@ public class Notifications.Notification : Object {
     public string app_name;
     public string summary;
     public string message_body;
+    public string image_path { get; private set; default = ""; }
     public string app_icon;
     public string sender;
     public string[] actions;
     public uint32 replaces_id;
     public uint32 id;
     public GLib.DateTime timestamp;
+    public GLib.Icon badge_icon { get; construct set; }
 
     public string desktop_id;
     public DesktopAppInfo? app_info = null;
@@ -50,6 +52,26 @@ public class Notifications.Notification : Object {
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
+
+    public Notification (
+        uint32 _id, string _app_name, string _app_icon, string _summary, string _message_body, string _image_path,
+        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender
+    ) {
+        app_name = _app_name;
+        app_icon = _app_icon;
+        summary = _summary;
+        message_body = _message_body;
+        image_path = _image_path;
+        replaces_id = (uint32) _replaces_id;
+        id = _id;
+        sender = _sender;
+
+        actions = _actions;
+        timestamp = new GLib.DateTime.from_unix_local (_unix_time);
+
+        desktop_id = _desktop_id;
+        app_info = new DesktopAppInfo (desktop_id);
+    }
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
@@ -82,6 +104,23 @@ public class Notifications.Notification : Object {
             app_icon = app_info.get_icon ().to_string ();
         }
 
+        // GLib.Notification.set_icon ()
+        image_path = lookup_string (hints, "image-path");
+        if (image_path != null) {
+            // Ensure we're not being sent symbolic badge icons
+            image_path = image_path.replace ("-symbolic", "");
+
+            // GLib.Notification also sends icon names via this hint
+            if (Gtk.IconTheme.get_default ().has_icon (image_path) && image_path != app_icon) {
+                badge_icon = new ThemedIcon (image_path);
+            }
+
+            var is_a_path = image_path.has_prefix ("/") || image_path.has_prefix ("file://");
+            if (badge_icon != null || !is_a_path) {
+                image_path = "";
+            }
+        }
+
         if (app_info == null) {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
@@ -89,25 +128,6 @@ public class Notifications.Notification : Object {
 
         var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
         is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
-    }
-
-    public Notification.from_data (uint32 _id, string _app_name, string _app_icon,
-                                string _summary, string _message_body,
-                                string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender) {
-
-        app_name = _app_name;
-        app_icon = _app_icon;
-        summary = _summary;
-        message_body = _message_body;
-        replaces_id = (uint32) _replaces_id;
-        id = _id;
-        sender = _sender;
-
-        actions = _actions;
-        timestamp = new GLib.DateTime.from_unix_local (_unix_time);
-
-        desktop_id = _desktop_id;
-        app_info = new DesktopAppInfo (desktop_id);
     }
 
     public void close () {

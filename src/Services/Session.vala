@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright 2015-2021 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -31,6 +31,7 @@ public class Notifications.Session : GLib.Object {
     private const string APP_ICON_KEY = "AppIcon";
     private const string APP_NAME_KEY = "AppName";
     private const string BODY_KEY = "Body";
+    private const string IMAGE_KEY = "Image";
     private const string DESKTOP_ID_KEY = "DesktopID";
     private const string REPLACES_ID_KEY = "ReplacesID";
     private const string SENDER_KEY = "Sender";
@@ -62,16 +63,19 @@ public class Notifications.Session : GLib.Object {
         try {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
-                var notification = new Notification.from_data ((uint32)int.parse (group),
-                                                            key.get_string (group, APP_NAME_KEY),
-                                                            key.get_string (group, APP_ICON_KEY),
-                                                            key.get_string (group, SUMMARY_KEY),
-                                                            key.get_string (group, BODY_KEY),
-                                                            key.get_string_list (group, ACTIONS_KEY),
-                                                            key.get_string (group, DESKTOP_ID_KEY),
-                                                            key.get_int64 (group, UNIX_TIME_KEY),
-                                                            key.get_uint64 (group, REPLACES_ID_KEY),
-                                                            key.get_string (group, SENDER_KEY));
+                var notification = new Notification (
+                    (uint32)int.parse (group),
+                    key.get_string (group, APP_NAME_KEY),
+                    key.get_string (group, APP_ICON_KEY),
+                    key.get_string (group, SUMMARY_KEY),
+                    key.get_string (group, BODY_KEY),
+                    key.get_string (group, IMAGE_KEY),
+                    key.get_string_list (group, ACTIONS_KEY),
+                    key.get_string (group, DESKTOP_ID_KEY),
+                    key.get_int64 (group, UNIX_TIME_KEY),
+                    key.get_uint64 (group, REPLACES_ID_KEY),
+                    key.get_string (group, SENDER_KEY)
+                );
                 list.append (notification);
             }
         } catch (KeyFileError e) {
@@ -89,6 +93,7 @@ public class Notifications.Session : GLib.Object {
         key.set_string (id, APP_ICON_KEY, notification.app_icon);
         key.set_string (id, APP_NAME_KEY, notification.app_name);
         key.set_string (id, BODY_KEY, notification.message_body);
+        key.set_string (id, IMAGE_KEY, notification.image_path);
         key.set_string (id, DESKTOP_ID_KEY, notification.desktop_id);
         key.set_string (id, SENDER_KEY, notification.sender);
         key.set_string (id, SUMMARY_KEY, notification.summary);
