@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/elementary/wingpanel/notifications">
-    <file alias="indicator.css" compressed="true">indicator.css</file>
-    <file alias="NotificationEntry.css" compressed="true">NotificationEntry.css</file>
+    <file compressed="true">indicator.css</file>
+    <file compressed="true">NotificationEntry.css</file>
+
+    <file alias="notification-disabled-10-symbolic.svg" compressed="true">icons/notification-disabled-10-symbolic.svg</file>
+    <file alias="notification-disabled-20-symbolic.svg" compressed="true">icons/notification-disabled-20-symbolic.svg</file>
+    <file alias="notification-disabled-30-symbolic.svg" compressed="true">icons/notification-disabled-30-symbolic.svg</file>
+    <file alias="notification-disabled-40-symbolic.svg" compressed="true">icons/notification-disabled-40-symbolic.svg</file>
+    <file alias="notification-disabled-50-symbolic.svg" compressed="true">icons/notification-disabled-50-symbolic.svg</file>
+    <file alias="notification-disabled-60-symbolic.svg" compressed="true">icons/notification-disabled-60-symbolic.svg</file>
+    <file alias="notification-disabled-70-symbolic.svg" compressed="true">icons/notification-disabled-70-symbolic.svg</file>
+    <file alias="notification-disabled-80-symbolic.svg" compressed="true">icons/notification-disabled-80-symbolic.svg</file>
+    <file alias="notification-disabled-90-symbolic.svg" compressed="true">icons/notification-disabled-90-symbolic.svg</file>
+    <file alias="notification-disabled-symbolic.svg" compressed="true">icons/notification-disabled-symbolic.svg</file>
+
+    <file alias="notification-new-10-symbolic.svg" compressed="true">icons/notification-new-10-symbolic.svg</file>
+    <file alias="notification-new-20-symbolic.svg" compressed="true">icons/notification-new-20-symbolic.svg</file>
+    <file alias="notification-new-30-symbolic.svg" compressed="true">icons/notification-new-30-symbolic.svg</file>
+    <file alias="notification-new-40-symbolic.svg" compressed="true">icons/notification-new-40-symbolic.svg</file>
+    <file alias="notification-new-50-symbolic.svg" compressed="true">icons/notification-new-50-symbolic.svg</file>
+    <file alias="notification-new-60-symbolic.svg" compressed="true">icons/notification-new-60-symbolic.svg</file>
+    <file alias="notification-new-70-symbolic.svg" compressed="true">icons/notification-new-70-symbolic.svg</file>
+    <file alias="notification-new-80-symbolic.svg" compressed="true">icons/notification-new-80-symbolic.svg</file>
+    <file alias="notification-new-90-symbolic.svg" compressed="true">icons/notification-new-90-symbolic.svg</file>
+    <file alias="notification-new-symbolic.svg" compressed="true">icons/notification-new-symbolic.svg</file>
+
+    <file alias="notification-symbolic.svg" compressed="true">icons/notification-symbolic.svg</file>
+  </gresource>
+  <gresource prefix="/io/elementary/notifications">
+    <file alias="image-mask.svg" compressed="true">image-mask.svg</file>
   </gresource>
 </gresources>
