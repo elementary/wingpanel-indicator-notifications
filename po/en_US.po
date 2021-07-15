@@ -1,83 +1,84 @@
-# Haitian translations for notifications-indicator package.
-# Copyright (C) 2018 THE notifications-indicator'S COPYRIGHT HOLDER
+# English translations for notifications-indicator package.
+# Copyright (C) 2021 THE notifications-indicator'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the notifications-indicator package.
-# Automatically generated, 2018.
+# Automatically generated, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-15 10:35-0600\n"
-"PO-Revision-Date: 2018-03-28 16:12-0700\n"
+"PO-Revision-Date: 2021-07-15 10:35-0600\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: ht\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/Indicator.vala:90
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "Do Not Disturb"
 
 #: src/Indicator.vala:110
 msgid "Clear All Notifications"
-msgstr ""
+msgstr "Clear All Notifications"
 
 #: src/Indicator.vala:113
 msgid "Notifications Settings…"
-msgstr ""
+msgstr "Notifications Settings…"
 
 #: src/Indicator.vala:221
 msgid "Middle-click to disable Do Not Disturb"
-msgstr ""
+msgstr "Middle-click to disable Do Not Disturb"
 
 #: src/Indicator.vala:223
 msgid "Middle-click to enable Do Not Disturb"
-msgstr ""
+msgstr "Middle-click to enable Do Not Disturb"
 
 #: src/Indicator.vala:230
 msgid "No notifications"
-msgstr ""
+msgstr "No notifications"
 
 #: src/Indicator.vala:233
 msgid "1 notification"
-msgstr ""
+msgstr "1 notification"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
 #: src/Indicator.vala:238
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s from %s"
 
 #: src/Indicator.vala:239
 #, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%u notification"
+msgstr[1] "%u notifications"
 
 #: src/Indicator.vala:240
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i app"
+msgstr[1] "%i apps"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
-msgstr ""
+msgstr "No Notifications"
 
 #: src/Widgets/NotificationEntry.vala:277
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: src/Widgets/AppEntry.vala:42
 msgid "Other"
-msgstr ""
+msgstr "Other"
 
 #: src/Widgets/AppEntry.vala:52
 #, c-format
 msgid "Clear all %s notifications"
-msgstr ""
+msgstr "Clear all %s notifications"
