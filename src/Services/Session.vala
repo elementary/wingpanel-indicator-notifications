@@ -37,6 +37,7 @@ public class Notifications.Session : GLib.Object {
     private const string SENDER_KEY = "Sender";
     private const string SUMMARY_KEY = "Summary";
     private const string UNIX_TIME_KEY = "UnixTime";
+    private const string HAS_TEMP_FILE_KEY = "HasTempFile";
 
     private KeyFile key;
 
@@ -74,7 +75,8 @@ public class Notifications.Session : GLib.Object {
                     key.get_string (group, DESKTOP_ID_KEY),
                     key.get_int64 (group, UNIX_TIME_KEY),
                     key.get_uint64 (group, REPLACES_ID_KEY),
-                    key.get_string (group, SENDER_KEY)
+                    key.get_string (group, SENDER_KEY),
+                    key.get_boolean (group, HAS_TEMP_FILE_KEY)
                 );
                 list.append (notification);
             }
@@ -99,12 +101,21 @@ public class Notifications.Session : GLib.Object {
         key.set_string (id, SUMMARY_KEY, notification.summary);
         key.set_string_list (id, ACTIONS_KEY, notification.actions);
         key.set_uint64 (id, REPLACES_ID_KEY, notification.replaces_id);
+        key.set_boolean (id, HAS_TEMP_FILE_KEY, notification.has_temp_file);
 
         write_contents ();
     }
 
     public void remove_notification (Notification notification) {
         try {
+            if (notification.has_temp_file) {
+                var file = File.new_for_path (notification.image_path);
+                try {
+                    file.delete ();
+                } catch (Error e) {
+                    critical ("Unable to delete tmpfile: %s", notification.image_path);
+                }
+            }
             key.remove_group (notification.id.to_string ());
         } catch (KeyFileError e) {
             warning (e.message);
@@ -115,11 +126,7 @@ public class Notifications.Session : GLib.Object {
 
     public void remove_notifications (Notification[] notifications) {
         foreach (unowned var notification in notifications) {
-            try {
-                key.remove_group (notification.id.to_string ());
-            } catch (KeyFileError e) {
-                warning (e.message);
-            }
+            remove_notification (notification);
         }
 
         write_contents ();

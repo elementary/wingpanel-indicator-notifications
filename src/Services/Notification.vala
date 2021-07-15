@@ -28,6 +28,7 @@ public class Notifications.Notification : Object {
     public string[] actions;
     public uint32 replaces_id;
     public uint32 id;
+    public bool has_temp_file;
     public GLib.DateTime timestamp;
     public GLib.Icon badge_icon { get; construct set; }
 
@@ -55,7 +56,7 @@ public class Notifications.Notification : Object {
 
     public Notification (
         uint32 _id, string _app_name, string _app_icon, string _summary, string _message_body, string _image_path,
-        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender
+        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender, bool _has_temp_file
     ) {
         app_name = _app_name;
         app_icon = _app_icon;
@@ -71,6 +72,8 @@ public class Notifications.Notification : Object {
 
         desktop_id = _desktop_id;
         app_info = new DesktopAppInfo (desktop_id);
+
+        has_temp_file = _has_temp_file;
     }
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
@@ -105,8 +108,7 @@ public class Notifications.Notification : Object {
         }
 
         // GLib.Notification.set_icon ()
-        image_path = lookup_string (hints, "image-path");
-        if (image_path != null) {
+        if ((image_path = lookup_string (hints, "image-path")) != "" || (image_path = lookup_string (hints, "image_path")) != "") {
             // Ensure we're not being sent symbolic badge icons
             image_path = image_path.replace ("-symbolic", "");
 
@@ -118,6 +120,16 @@ public class Notifications.Notification : Object {
             var is_a_path = image_path.has_prefix ("/") || image_path.has_prefix ("file://");
             if (badge_icon != null || !is_a_path) {
                 image_path = "";
+            }
+        }
+
+        // Raw image data sent within a variant
+        Gdk.Pixbuf? buf = null;
+        if ((buf = lookup_pixbuf (hints, "image-data")) != null || (buf = lookup_pixbuf (hints, "image_data")) != null || (buf = lookup_pixbuf (hints, "icon_data")) != null) {
+            var tmpfile = store_pixbuf (buf);
+            if (tmpfile != null) {
+                image_path = tmpfile;
+                has_temp_file = true;
             }
         }
 
@@ -173,5 +185,55 @@ public class Notifications.Notification : Object {
         }
 
         return child.dup_string ();
+    }
+
+    private Gdk.Pixbuf? lookup_pixbuf (Variant tuple, string key) {
+        var img = tuple.lookup_value (key, null);
+
+        if (img == null || img.get_type_string () != "(iiibiiay)") {
+            return null;
+        }
+
+        int width = img.get_child_value (0).get_int32 ();
+        int height = img.get_child_value (1).get_int32 ();
+        int rowstride = img.get_child_value (2).get_int32 ();
+        bool has_alpha = img.get_child_value (3).get_boolean ();
+        int bits_per_sample = img.get_child_value (4).get_int32 ();
+        unowned uint8[] raw = (uint8[]) img.get_child_value (6).get_data ();
+
+        // Build the pixbuf from the unowned buffer, and copy it to maintain our own instance.
+        Gdk.Pixbuf pixbuf = new Gdk.Pixbuf.with_unowned_data (raw, Gdk.Colorspace.RGB,
+            has_alpha, bits_per_sample, width, height, rowstride, null);
+        return pixbuf.copy ();
+    }
+
+    private string? make_temp_file (string tmpl) {
+        FileIOStream iostream;
+        try {
+            File file = File.new_tmp (tmpl, out iostream);
+            return file.get_path ();
+        } catch (Error e) {
+            return null;
+        }
+    }
+
+    public string? store_pixbuf (Gdk.Pixbuf pixbuf) {
+        string? tmpfile = make_temp_file ("wingpanel-XXXXXX.png");
+        if (tmpfile != null) {
+            try {
+                if (pixbuf.save (tmpfile, "png", null)) {
+                    return tmpfile;
+                }
+            } catch (Error e) {
+                critical ("Unable to cache image: %s", e.message);
+                var file = File.new_for_path (tmpfile);
+                try {
+                    file.delete ();
+                } catch (Error e) {
+                    critical ("Unable to delete tmpfile: %s", tmpfile);
+                }
+            }
+        }
+        return null;
     }
 }
