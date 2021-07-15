@@ -52,6 +52,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 nlist.add_entry (notification);
             });
 
+            Gtk.IconTheme.get_default ().add_resource_path ("/io/elementary/wingpanel/notifications");
+
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
