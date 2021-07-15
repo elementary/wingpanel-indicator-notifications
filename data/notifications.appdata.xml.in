@@ -7,6 +7,17 @@
   <summary>See missed notifications in the panel</summary>
   <icon type="stock">preferences-system-notifications</icon>
   <releases>
+    <release version="6.0.0" date="2021-07-15" urgency="medium">
+      <description>
+        <p>Complete redesign</p>
+        <p>Multitouch gestures to dismiss notifications</p>
+        <p>Close button on each notification</p>
+        <p>Show images and badged icons</p>
+        <p>Show tooltip on hover </p>
+        <p>Performance improvements</p>
+        <p>Updated translations</p>
+      </description>
+    </release>
     <release version="2.1.4" date="2020-04-01" urgency="medium">
       <description>
         <p>Fix issues with disappearing notifications</p>
