@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 00:03+0000\n"
-"PO-Revision-Date: 2020-09-12 16:33+0000\n"
+"PO-Revision-Date: 2021-07-16 00:30+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/uk/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -30,33 +30,31 @@ msgstr "Перегляньте пропущені сповіщення у пан
 
 #: data/notifications.appdata.xml.in:12
 msgid "Complete redesign:"
-msgstr ""
+msgstr "Цілковите оновлення:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Fix issues with disappearing notifications"
 msgid "Multitouch gestures to dismiss notifications"
-msgstr "Виправлено проблеми зникання сповіщень"
+msgstr "Жести для відхилення сповіщень"
 
 #: data/notifications.appdata.xml.in:15
 msgid "Close button on each notification"
-msgstr ""
+msgstr "Кнопка закриття кожного сповіщення"
 
 #: data/notifications.appdata.xml.in:16
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "Показ зображень та піктограм"
 
 #: data/notifications.appdata.xml.in:18
 msgid "Minor updates:"
-msgstr ""
+msgstr "Незначні оновлення:"
 
 #: data/notifications.appdata.xml.in:20
 msgid "Show tooltip on hover"
-msgstr ""
+msgstr "Показ підказок під час наведення"
 
 #: data/notifications.appdata.xml.in:21
 msgid "Performance improvements"
-msgstr ""
+msgstr "Поліпшення швидкодії"
 
 #: data/notifications.appdata.xml.in:22 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:35
