@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 00:03+0000\n"
-"PO-Revision-Date: 2021-07-16 15:40+0000\n"
+"PO-Revision-Date: 2021-07-16 19:27+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/he/>\n"
@@ -29,21 +29,19 @@ msgstr "הצגת התרעות שהוחמצו בלוח"
 
 #: data/notifications.appdata.xml.in:12
 msgid "Complete redesign:"
-msgstr ""
+msgstr "עיצוב מחדש מאפס:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Fix issues with disappearing notifications"
 msgid "Multitouch gestures to dismiss notifications"
-msgstr "תוקנו תקלות עם התראות שנעלמו"
+msgstr "מחוות בכמה אצבעות כדי להתעלם מהתראות"
 
 #: data/notifications.appdata.xml.in:15
 msgid "Close button on each notification"
-msgstr ""
+msgstr "כפתור סגירה לכל התראה"
 
 #: data/notifications.appdata.xml.in:16
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "הצגת תמונות וסמלי עיטורים"
 
 #: data/notifications.appdata.xml.in:18
 msgid "Minor updates:"
