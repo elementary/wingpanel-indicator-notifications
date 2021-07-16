@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"POT-Creation-Date: 2021-07-16 00:03+0000\n"
 "PO-Revision-Date: 2020-02-01 02:08+0000\n"
 "Last-Translator: Rodrigo Oliveira <rod.oliveira@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
@@ -28,17 +28,48 @@ msgid "See missed notifications in the panel"
 msgstr "Veja notificações perdidas no painel"
 
 #: data/notifications.appdata.xml.in:12
-msgid "Fix issues with disappearing notifications"
+msgid "Complete redesign:"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:14
+#, fuzzy
+#| msgid "Fix issues with disappearing notifications"
+msgid "Multitouch gestures to dismiss notifications"
 msgstr "Corrige problemas com notificações que desaparecem"
 
-#: data/notifications.appdata.xml.in:13 data/notifications.appdata.xml.in:19
+#: data/notifications.appdata.xml.in:15
+msgid "Close button on each notification"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:16
+msgid "Show images and badged icons"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:18
+msgid "Minor updates:"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:20
+msgid "Show tooltip on hover"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:21
+msgid "Performance improvements"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:22 data/notifications.appdata.xml.in:29
+#: data/notifications.appdata.xml.in:35
 msgid "Updated translations"
 msgstr "Traduções atualizadas"
 
-#: data/notifications.appdata.xml.in:18
+#: data/notifications.appdata.xml.in:28
+msgid "Fix issues with disappearing notifications"
+msgstr "Corrige problemas com notificações que desaparecem"
+
+#: data/notifications.appdata.xml.in:34
 msgid "Fix a minor visual inconsistency"
 msgstr "Corrige uma inconsistência visual menor"
 
-#: data/notifications.appdata.xml.in:28
+#: data/notifications.appdata.xml.in:44
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
