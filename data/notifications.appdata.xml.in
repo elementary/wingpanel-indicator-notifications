@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2019 elementary, Inc. <contact@elementary.io> -->
+<!-- Copyright 2019–2021 elementary, Inc. <contact@elementary.io> -->
 <component type="addon">
   <id>io.elementary.wingpanel.notifications</id>
   <extends>io.elementary.wingpanel</extends>
@@ -7,6 +7,22 @@
   <summary>See missed notifications in the panel</summary>
   <icon type="stock">preferences-system-notifications</icon>
   <releases>
+    <release version="6.0.0" date="2021-07-15" urgency="medium">
+      <description>
+        <p>Complete redesign:</p>
+        <ul>
+          <li>Multitouch gestures to dismiss notifications</li>
+          <li>Close button on each notification</li>
+          <li>Show images and badged icons</li>
+        </ul>
+        <p>Minor updates:</p>
+        <ul>
+          <li>Show tooltip on hover </li>
+          <li>Performance improvements</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.1.4" date="2020-04-01" urgency="medium">
       <description>
         <p>Fix issues with disappearing notifications</p>
