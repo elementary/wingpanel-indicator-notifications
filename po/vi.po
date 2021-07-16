@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"POT-Creation-Date: 2021-07-16 00:03+0000\n"
 "PO-Revision-Date: 2017-12-27 15:31+0000\n"
 "Last-Translator: Hải Hồ <hochihai1997@gmail.com>\n"
 "Language-Team: Vietnamese <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:92
 msgid "Do Not Disturb"
 msgstr "Không làm phiền"
 
@@ -71,7 +71,7 @@ msgstr[0] ""
 msgid "No Notifications"
 msgstr "Không có thông báo"
 
-#: src/Widgets/NotificationEntry.vala:237
+#: src/Widgets/NotificationEntry.vala:277
 msgid "Delete"
 msgstr ""
 

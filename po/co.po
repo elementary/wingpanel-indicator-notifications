@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"POT-Creation-Date: 2021-07-16 00:03+0000\n"
 "PO-Revision-Date: 2018-03-28 16:12-0700\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:92
 msgid "Do Not Disturb"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgstr[1] ""
 msgid "No Notifications"
 msgstr ""
 
-#: src/Widgets/NotificationEntry.vala:237
+#: src/Widgets/NotificationEntry.vala:277
 msgid "Delete"
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"POT-Creation-Date: 2021-07-16 00:03+0000\n"
 "PO-Revision-Date: 2015-11-16 23:33+0000\n"
 "Last-Translator: Beqa Arabuli <arabulibeqa@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 "X-Generator: Launchpad (build 18331)\n"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:92
 msgid "Do Not Disturb"
 msgstr "არ შემაწუხოთ"
 
@@ -70,7 +70,7 @@ msgstr[0] ""
 msgid "No Notifications"
 msgstr "შეტყობინებები არაა"
 
-#: src/Widgets/NotificationEntry.vala:237
+#: src/Widgets/NotificationEntry.vala:277
 msgid "Delete"
 msgstr ""
 

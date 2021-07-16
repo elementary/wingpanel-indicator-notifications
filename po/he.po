@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"POT-Creation-Date: 2021-07-16 00:03+0000\n"
 "PO-Revision-Date: 2021-02-17 14:18+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:92
 msgid "Do Not Disturb"
 msgstr "לא להפריע"
 
@@ -68,7 +68,7 @@ msgstr[1] "%i יישומונים"
 msgid "No Notifications"
 msgstr "אין התראות"
 
-#: src/Widgets/NotificationEntry.vala:237
+#: src/Widgets/NotificationEntry.vala:277
 msgid "Delete"
 msgstr "מחיקה"
 
