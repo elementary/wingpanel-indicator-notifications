@@ -1,3 +1,68 @@
+wingpanel-indicator-notifications (6.0.0) bionic; urgency=medium
+
+  * Release 6.0.0 (#213)
+  * Indicator: Add resource path to icon theme
+  * Add support for image-data (#211)
+  * po: Remove `en_US` from LINGUAS to fix builds (#212)
+  * Actions: Only run CI on PR (#197)
+  * GResource animation icons (#198)
+  * NotificationsList: Don't clear all on misclick (#199)
+  * Support image paths and badges (#202)
+  * Notification: make from_data the default constructor (#191)
+  * Indicator: misc cleanup (#189)
+  * Show app icons from URIs (#196)
+  * Define log domain (#195)
+  * Notification: Don't rewrite valid appinfo (#190)
+  * NotificationsList: simplify add_entry (#162)
+  * Notification clearing fixes (#187)
+  * Use config file to get the project name (#186)
+  * Use Granite.SwitchModelButton and Gtk.Separator (#185)
+  * Update names of libwingpanel (#182)
+  * Update translation files
+  * Update translation template
+  * LINGUAS: sort, remove en_US
+  * LINGUAS: Sort
+  * Add notifications indicator tooltip (#175)
+  * Move timeout to NotificationEntry (#164)
+  * AppEntry: Simplify the object and base it around the app_info (#170)
+  * Fix notification icons (#158)
+  * NotificationsList: Fix clear all (#166)
+  * NotificationsList: Replace app_entries list with a Hashmap (#160)
+  * AppEntry: Support null appinfo (#159)
+  * Notification: add stop_timeout (#157)
+  * AppData: Add icon name (#156)
+  * Handle NotificationEntry construction in NotificationsList (#154)
+  * Notification: Add is_transient property (#144)
+  * Move UsesNotifications check to Notification (#153)
+  * Reduce spacing between bubbles (#155)
+  * NotificationEntry: Per-notification Delete Button (#149)
+  * Notification: Remove unused expire timeout (#152)
+  * Session: Save/Restore replaces_id (#151)
+  * Notification: Remove data session property (#145)
+  * Notification: remove PID (#142)
+  * Notification: Remove unix time property (#141)
+  * Indicator.css: Fix incorrect opacity (#147)
+  * AppEntry: animate on delete (#139)
+  * Notification: set timeout in construct (#143)
+  * Swipe gesture to dismiss notifications (#136)
+  * AppEntry: use clear-all icon and add tooltip (#137)
+  * NotificationsList: add_entry cleanups (#134)
+  * NotificationEntry: Set the correct time label on construct (#133)
+  * Update POTFILES
+  * Fix settings scheme for remember option (#131)
+  * Fix button sensitivity setting for clear all notifications (#130)
+  * Indicator: Connect to built-in listbox signals (#128)
+  * Launch default action on click (#127)
+  * NotificationsList: simplify add_entry_internal (#124)
+  * NotificationEntry: Add border and icon (#119)
+  * Indicator: Remove deprecated display_name and description (#121)
+  * NotificationEntry: Copy line length and truncate rules (#109)
+  * Indicator: Lookup io.elementary.notifications recursively (#110)
+  * NotificationsList: Move things to construct (#106)
+  * Indicator: Remove single-use method (#108)
+
+ -- elementary, Inc. <builds@elementary.io>  Fri, 16 Jul 2021 00:04:02 +0000
+
 wingpanel-indicator-notifications (2.1.4) bionic; urgency=medium
 
   * Release 2.1.4 (#105)
