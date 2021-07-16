@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 01:18+0000\n"
+"POT-Creation-Date: 2021-07-16 00:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: src/Indicator.vala:108
+#: src/Indicator.vala:92
 msgid "Do Not Disturb"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgstr[1] ""
 msgid "No Notifications"
 msgstr ""
 
-#: src/Widgets/NotificationEntry.vala:237
+#: src/Widgets/NotificationEntry.vala:277
 msgid "Delete"
 msgstr ""
 
