@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 00:03+0000\n"
-"PO-Revision-Date: 2020-06-07 21:11+0000\n"
+"PO-Revision-Date: 2021-07-18 04:52+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/ja/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -29,33 +29,31 @@ msgstr "見逃した通知をパネルで確認します"
 
 #: data/notifications.appdata.xml.in:12
 msgid "Complete redesign:"
-msgstr ""
+msgstr "抜本的なデザイン変更:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Fix issues with disappearing notifications"
 msgid "Multitouch gestures to dismiss notifications"
-msgstr "通知が消える不具合を修正"
+msgstr "マルチタッチジェスチャーで通知を消去できるように変更"
 
 #: data/notifications.appdata.xml.in:15
 msgid "Close button on each notification"
-msgstr ""
+msgstr "通知一つ一つに閉じるボタンを追加"
 
 #: data/notifications.appdata.xml.in:16
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "画像とバッジアイコンを表示"
 
 #: data/notifications.appdata.xml.in:18
 msgid "Minor updates:"
-msgstr ""
+msgstr "軽微なアップデート:"
 
 #: data/notifications.appdata.xml.in:20
 msgid "Show tooltip on hover"
-msgstr ""
+msgstr "ホバー時にツールチップを表示するように変更"
 
 #: data/notifications.appdata.xml.in:21
 msgid "Performance improvements"
-msgstr ""
+msgstr "パフォーマンスの改善"
 
 #: data/notifications.appdata.xml.in:22 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:35
