@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 00:03+0000\n"
-"PO-Revision-Date: 2019-12-25 15:17+0000\n"
-"Last-Translator: Jörg Arnold <j.ar@mailbox.org>\n"
+"PO-Revision-Date: 2021-07-21 03:37+0000\n"
+"Last-Translator: supaeasy <ismo+github@wolffson.ch>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/de/>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -29,31 +29,31 @@ msgstr ""
 
 #: data/notifications.appdata.xml.in:12
 msgid "Complete redesign:"
-msgstr ""
+msgstr "Komplettes Redesign:"
 
 #: data/notifications.appdata.xml.in:14
 msgid "Multitouch gestures to dismiss notifications"
-msgstr ""
+msgstr "Multitouch-Gesten um Benachrichtigungen zu verwerfen"
 
 #: data/notifications.appdata.xml.in:15
 msgid "Close button on each notification"
-msgstr ""
+msgstr "Schließen-Button bei jeder Benachrichtigung"
 
 #: data/notifications.appdata.xml.in:16
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "Zeige Bilder und Icons mit Badge"
 
 #: data/notifications.appdata.xml.in:18
 msgid "Minor updates:"
-msgstr ""
+msgstr "Kleinere Aktualisierungen:"
 
 #: data/notifications.appdata.xml.in:20
 msgid "Show tooltip on hover"
-msgstr ""
+msgstr "Zeige Tooltip beim Darüberfahren"
 
 #: data/notifications.appdata.xml.in:21
 msgid "Performance improvements"
-msgstr ""
+msgstr "Leistungsverbesserungen"
 
 #: data/notifications.appdata.xml.in:22 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:35
@@ -62,11 +62,11 @@ msgstr "Aktualisierte Übersetzungen"
 
 #: data/notifications.appdata.xml.in:28
 msgid "Fix issues with disappearing notifications"
-msgstr ""
+msgstr "Behebt ein Problem mit verschwindenden Benachrichtigungen"
 
 #: data/notifications.appdata.xml.in:34
 msgid "Fix a minor visual inconsistency"
-msgstr ""
+msgstr "Behebt eine kleinere optische Unregelmäßigkeit"
 
 #: data/notifications.appdata.xml.in:44
 msgid "elementary, Inc."
