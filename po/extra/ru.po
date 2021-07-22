@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 00:03+0000\n"
-"PO-Revision-Date: 2021-04-05 00:38+0000\n"
+"PO-Revision-Date: 2021-07-22 13:59+0000\n"
 "Last-Translator: DartDeaDia <jorydit@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/ru/>\n"
@@ -30,33 +30,31 @@ msgstr "Смотрите пропущенные оповещения в пане
 
 #: data/notifications.appdata.xml.in:12
 msgid "Complete redesign:"
-msgstr ""
+msgstr "Полное изменение дизайна:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Fix issues with disappearing notifications"
 msgid "Multitouch gestures to dismiss notifications"
-msgstr "Исправлены проблемы с исчезновением уведомлений"
+msgstr "Мультитач-жесты для отмены уведомлений"
 
 #: data/notifications.appdata.xml.in:15
 msgid "Close button on each notification"
-msgstr ""
+msgstr "Кнопка закрытия на каждом уведомлении"
 
 #: data/notifications.appdata.xml.in:16
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "Отображение изображений и значков"
 
 #: data/notifications.appdata.xml.in:18
 msgid "Minor updates:"
-msgstr ""
+msgstr "Незначительные обновления:"
 
 #: data/notifications.appdata.xml.in:20
 msgid "Show tooltip on hover"
-msgstr ""
+msgstr "Появление всплывающих подсказкок при наведении"
 
 #: data/notifications.appdata.xml.in:21
 msgid "Performance improvements"
-msgstr ""
+msgstr "Улучшения производительности"
 
 #: data/notifications.appdata.xml.in:22 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:35
