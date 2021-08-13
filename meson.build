@@ -28,7 +28,8 @@ wingpanel_dep = dependency('wingpanel')
 wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
 
 config_data = configuration_data()
-config_data.set('GETTEXT_PACKAGE', meson.project_name())
+config_data.set('GETTEXT_PACKAGE', meson.project_name() + '-indicator')
+config_data.set('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
 config_vala = configure_file(
     input: 'src/Config.vala.in',
     output: '@BASENAME@',
