@@ -36,6 +36,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     construct {
+        GLib.Intl.bindtextdomain (Notifications.GETTEXT_PACKAGE, Notifications.LOCALEDIR);
+        GLib.Intl.bind_textdomain_codeset (Notifications.GETTEXT_PACKAGE, "UTF-8");
+
         notify_settings = new GLib.Settings ("io.elementary.notifications");
         app_settings_cache = new Gee.HashMap<string, Settings> ();
     }
