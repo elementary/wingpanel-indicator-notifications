@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 00:03+0000\n"
-"PO-Revision-Date: 2021-08-28 22:49+0000\n"
+"PO-Revision-Date: 2021-09-02 21:53+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/hu/>\n"
@@ -58,7 +58,7 @@ msgstr "Teljesítménybeli javítások"
 #: data/notifications.appdata.xml.in:22 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:35
 msgid "Updated translations"
-msgstr "Fordítási frissítések"
+msgstr "Frissített fordítások"
 
 #: data/notifications.appdata.xml.in:28
 msgid "Fix issues with disappearing notifications"
