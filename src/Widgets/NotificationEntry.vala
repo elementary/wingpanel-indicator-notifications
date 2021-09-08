@@ -151,11 +151,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid.attach (time_label, 2, 0);
 
         var entry_body = notification.message_body;
-        
+
         if (entry_body == "") {
             entry_body = notification.summary;
         }
-        
+
         var body = fix_markup (entry_body);
 
         var body_label = new Gtk.Label (body) {
