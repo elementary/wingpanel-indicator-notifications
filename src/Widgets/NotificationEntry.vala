@@ -95,13 +95,10 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             }
         }
         
-        var entry_title = "";
+        var entry_title = notification.summary;
         
         if (notification.message_body == "") {
             entry_title = notification.app_name;
-        }
-        else {
-            entry_title = notification.summary;
         }
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (entry_title))) {
