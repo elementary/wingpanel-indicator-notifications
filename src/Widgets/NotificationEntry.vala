@@ -94,9 +94,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 image_overlay.add_overlay (badge_image);
             }
         }
-        
+
         var entry_title = notification.summary;
-        
+
         if (notification.message_body == "") {
             entry_title = notification.app_name;
         }
