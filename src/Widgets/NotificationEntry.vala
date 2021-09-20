@@ -95,7 +95,17 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             }
         }
 
-        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.summary))) {
+        var entry_title = notification.summary;
+
+        if (notification.message_body == "") {
+            if (notification.app_name == "" && notification.app_info != null) {
+                notification.app_name = notification.app_info.get_display_name ();
+            }
+
+            entry_title = notification.app_name;
+        }
+
+        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (entry_title))) {
             ellipsize = Pango.EllipsizeMode.END,
             hexpand = true,
             width_chars = 27,
@@ -145,33 +155,36 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid.attach (time_label, 2, 0);
 
         var entry_body = notification.message_body;
-        if (entry_body != "") {
-            var body = fix_markup (entry_body);
 
-            var body_label = new Gtk.Label (body) {
-                ellipsize = Pango.EllipsizeMode.END,
-                lines = 2,
-                use_markup = true,
-                valign = Gtk.Align.START,
-                wrap_mode = Pango.WrapMode.WORD_CHAR,
-                wrap = true,
-                xalign = 0
-            };
+        if (entry_body == "") {
+            entry_body = notification.summary;
+        }
 
-            if ("\n" in body) {
-                string[] lines = body.split ("\n");
-                string stripped_body = lines[0] + "\n";
-                for (int i = 1; i < lines.length; i++) {
-                    stripped_body += lines[i].strip () + " ";
-                }
+        var body = fix_markup (entry_body);
 
-                body_label.label = stripped_body.strip ();
-                body_label.lines = 1;
+        var body_label = new Gtk.Label (body) {
+            ellipsize = Pango.EllipsizeMode.END,
+            lines = 2,
+            use_markup = true,
+            valign = Gtk.Align.START,
+            wrap_mode = Pango.WrapMode.WORD_CHAR,
+            wrap = true,
+            xalign = 0
+        };
 
+        if ("\n" in body) {
+            string[] lines = body.split ("\n");
+            string stripped_body = lines[0] + "\n";
+            for (int i = 1; i < lines.length; i++) {
+                stripped_body += lines[i].strip () + " ";
             }
 
-            grid.attach (body_label, 1, 1, 2);
+            body_label.label = stripped_body.strip ();
+            body_label.lines = 1;
+
         }
+
+        grid.attach (body_label, 1, 1, 2);
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
