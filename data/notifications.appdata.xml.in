@@ -7,6 +7,15 @@
   <summary>See missed notifications in the panel</summary>
   <icon type="stock">preferences-system-notifications</icon>
   <releases>
+    <release version="6.0.1" date="2021-09-20" urgency="medium">
+      <description>
+        <p>Minor updates:</p>
+        <ul>
+          <li>Use app name as fallback title</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="6.0.0" date="2021-07-15" urgency="medium">
       <description>
         <p>Complete redesign:</p>
