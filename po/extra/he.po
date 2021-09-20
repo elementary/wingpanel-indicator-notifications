@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-20 17:19+0000\n"
-"PO-Revision-Date: 2021-07-16 19:27+0000\n"
+"PO-Revision-Date: 2021-09-21 04:57+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/he/>\n"
@@ -33,7 +33,7 @@ msgstr "עדכונים משניים:"
 
 #: data/notifications.appdata.xml.in:14
 msgid "Use app name as fallback title"
-msgstr ""
+msgstr "להשתמש בשם היישום ככותרת לנסיגה"
 
 #: data/notifications.appdata.xml.in:15 data/notifications.appdata.xml.in:31
 #: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:44
