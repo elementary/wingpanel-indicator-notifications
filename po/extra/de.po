@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-20 17:19+0000\n"
-"PO-Revision-Date: 2021-07-21 03:37+0000\n"
-"Last-Translator: felixpoessnecker <felix@felixpoessnecker.de>\n"
+"PO-Revision-Date: 2021-09-23 12:58+0000\n"
+"Last-Translator: supaeasy <ismo+github@wolffson.ch>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/de/>\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
-msgstr "Benachrichtigungsindikator"
+msgstr "Benachrichtigunganzeige"
 
 #: data/notifications.appdata.xml.in:7
 msgid "See missed notifications in the panel"
@@ -33,7 +33,7 @@ msgstr "Kleinere Aktualisierungen:"
 
 #: data/notifications.appdata.xml.in:14
 msgid "Use app name as fallback title"
-msgstr ""
+msgstr "Namen der Anwendung als Fallback-Titel verwenden"
 
 #: data/notifications.appdata.xml.in:15 data/notifications.appdata.xml.in:31
 #: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:44
