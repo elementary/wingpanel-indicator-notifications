@@ -1,3 +1,15 @@
+wingpanel-indicator-notifications (6.0.1) bionic; urgency=medium
+
+  * Release 6.0.1 (#223)
+  * Update translation files
+  * Update translation template
+  * NotificationEntry: Fall back to title and app name when missing body
+    (#222)
+  * do not read appinfo from autostart dir (#221)
+  * l10n: Correctly setup the locales (#218)
+
+ -- elementary, Inc. <builds@elementary.io>  Mon, 27 Sep 2021 20:39:07 +0000
+
 wingpanel-indicator-notifications (6.0.0) bionic; urgency=medium
 
   * Release 6.0.0 (#213)
