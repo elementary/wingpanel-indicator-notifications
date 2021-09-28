@@ -23,9 +23,9 @@
 public class Notifications.NotificationMonitor : Object {
     private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
     private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
-    private const string METHOD_CALL_MATCH_STRING = "eavesdrop='true',type='method_call',interface='org.freedesktop.Notifications'";
-    private const string METHOD_RETURN_MATCH_STRING = "eavesdrop='true',type='method_return'";
-    private const string ERROR_MATCH_STRING = "eavesdrop='true',type='error'";
+    private const string METHOD_CALL_MATCH_STRING = "type='method_call',interface='org.freedesktop.Notifications'";
+    private const string METHOD_RETURN_MATCH_STRING = "type='method_return'";
+    private const string ERROR_MATCH_STRING = "type='error'";
     private const uint32 REASON_DISMISSED = 2;
 
     private static NotificationMonitor? instance = null;
@@ -48,35 +48,39 @@ public class Notifications.NotificationMonitor : Object {
 
     private NotificationMonitor () {
         try {
-            connection = Bus.get_sync (BusType.SESSION);
-            add_rule (ERROR_MATCH_STRING);
-            add_rule (METHOD_CALL_MATCH_STRING);
-            add_rule (METHOD_RETURN_MATCH_STRING);
+            // Set up a private connection to the session bus
+            string address = BusType.get_address_sync (BusType.SESSION);
+            connection = new DBusConnection.for_address_sync (
+                address,
+                DBusConnectionFlags.AUTHENTICATION_CLIENT | DBusConnectionFlags.MESSAGE_BUS_CONNECTION
+            );
             connection.add_filter (message_filter);
+
+            connection.call_sync (
+                "org.freedesktop.DBus",
+                "/org/freedesktop/DBus",
+                "org.freedesktop.DBus.Monitoring",
+                "BecomeMonitor",
+                new Variant.tuple ({
+                    new Variant.array (VariantType.STRING, {
+                        METHOD_CALL_MATCH_STRING,
+                        METHOD_RETURN_MATCH_STRING,
+                        ERROR_MATCH_STRING
+                    }),
+                    (uint32)0
+                }),
+                null,
+                DBusCallFlags.NONE,
+                -1
+            );
         } catch (Error e) {
-            error ("%s\n", e.message);
+            critical ("Unable to monitor notifications bus: %s", e.message);
         }
 
         try {
             notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH);
         } catch (Error e) {
-            error ("%s\n", e.message);
-        }
-    }
-
-    private void add_rule (string rule) {
-        var message = new DBusMessage.method_call ("org.freedesktop.DBus",
-                                                "/org/freedesktop/DBus",
-                                                "org.freedesktop.DBus",
-                                                "AddMatch");
-
-        var body = new Variant.parsed ("(%s,)", rule);
-        message.set_body (body);
-
-        try {
-            connection.send_message (message, DBusSendMessageFlags.NONE, null);
-        } catch (Error e) {
-            error ("%s\n", e.message);
+            warning ("Unable to connection to notifications bus: %s", e.message);
         }
     }
 
