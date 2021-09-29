@@ -49,7 +49,11 @@ public class Notifications.NotificationMonitor : Object {
     private NotificationMonitor () {
         try {
             // Set up a private connection to the session bus
+#if VALA_0_54
+            string address = BusType.SESSION.get_address_sync ();
+#else
             string address = BusType.get_address_sync (BusType.SESSION);
+#endif
             connection = new DBusConnection.for_address_sync (
                 address,
                 DBusConnectionFlags.AUTHENTICATION_CLIENT | DBusConnectionFlags.MESSAGE_BUS_CONNECTION
