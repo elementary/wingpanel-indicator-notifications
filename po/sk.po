@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-20 17:19+0000\n"
-"PO-Revision-Date: 2021-08-26 12:26+0000\n"
+"PO-Revision-Date: 2021-10-08 23:18+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/sk/>\n"
@@ -21,7 +21,7 @@ msgstr "Nerušiť"
 
 #: src/Indicator.vala:115
 msgid "Clear All Notifications"
-msgstr "Vymazať všetky upozornenia"
+msgstr "Vymazať všetky oznámenia"
 
 #: src/Indicator.vala:118
 msgid "Notifications Settings…"
@@ -54,16 +54,16 @@ msgstr "%s od %s"
 #, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "%u oznámenie"
-msgstr[1] "%u oznámení"
+msgstr[0] "%u oznámení"
+msgstr[1] "%u oznámenie"
 msgstr[2] "%u oznámenia"
 
 #: src/Indicator.vala:245
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] "%i aplikácia"
-msgstr[1] "%i aplikácií"
+msgstr[0] "%i aplikácií"
+msgstr[1] "%i aplikácia"
 msgstr[2] "%i aplikácie"
 
 #: src/Widgets/NotificationsList.vala:29
