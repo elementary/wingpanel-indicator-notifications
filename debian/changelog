@@ -1,3 +1,13 @@
+wingpanel-indicator-notifications (6.0.2) bionic; urgency=medium
+
+  * Release 6.0.2 (#227)
+  * Update translation files
+  * Update translation template
+  * NotificationsMonitor: Support Vala 0.54+ (#225)
+  * NotificationsMonitor: Replace deprecated eavesdrop monitoring (#224)
+
+ -- elementary, Inc. <builds@elementary.io>  Tue, 26 Oct 2021 18:02:12 +0000
+
 wingpanel-indicator-notifications (6.0.1) bionic; urgency=medium
 
   * Release 6.0.1 (#223)
