@@ -97,8 +97,8 @@ public class Notifications.NotificationMonitor : Object {
                     warning (e.message);
                 }
             } else if (message.get_member () == "CloseNotification") {
-                var body = message.get_body ();
-                if (body.n_children () != 1) {
+                unowned GLib.Variant? body = message.get_body ();
+                if (body == null || body.n_children () != 1) {
                     return message;
                 }
 
@@ -117,8 +117,8 @@ public class Notifications.NotificationMonitor : Object {
             return null;
         } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {
             if (message.get_message_type () == DBusMessageType.METHOD_RETURN) {
-                var body = message.get_body ();
-                if (body.n_children () != 1) {
+                unowned GLib.Variant? body = message.get_body ();
+                if (body == null || body.n_children () != 1) {
                     return message;
                 }
 
