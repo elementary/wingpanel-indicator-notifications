@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-25 19:37+0000\n"
-"PO-Revision-Date: 2021-11-10 16:21+0000\n"
+"PO-Revision-Date: 2021-11-14 17:40+0000\n"
 "Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
 "Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/pl/>\n"
@@ -26,7 +26,7 @@ msgstr "Wskaźnik powiadomień"
 
 #: data/notifications.appdata.xml.in:7
 msgid "See missed notifications in the panel"
-msgstr ""
+msgstr "Pokaż przegapione powiadomienia w panelu"
 
 #: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:20
 #: data/notifications.appdata.xml.in:35
@@ -41,23 +41,23 @@ msgstr "Zaktualizowano tłumaczenia"
 
 #: data/notifications.appdata.xml.in:22
 msgid "Use app name as fallback title"
-msgstr ""
+msgstr "Użyj nazwy aplikacji jako tytuł zastępczy"
 
 #: data/notifications.appdata.xml.in:29
 msgid "Complete redesign:"
-msgstr ""
+msgstr "Całkowicie przeprojektowano:"
 
 #: data/notifications.appdata.xml.in:31
 msgid "Multitouch gestures to dismiss notifications"
-msgstr ""
+msgstr "Gesty wielodotykowe do zamykania powiadomień"
 
 #: data/notifications.appdata.xml.in:32
 msgid "Close button on each notification"
-msgstr ""
+msgstr "Przycisk zamknięcia dla każdego powiadomienia"
 
 #: data/notifications.appdata.xml.in:33
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "Pokazanie obrazków i ikon odznak"
 
 #: data/notifications.appdata.xml.in:37
 msgid "Show tooltip on hover"
@@ -69,11 +69,11 @@ msgstr "Ulepszenie wydajności"
 
 #: data/notifications.appdata.xml.in:45
 msgid "Fix issues with disappearing notifications"
-msgstr ""
+msgstr "Naprawiono problem ze znikającymi powiadomieniami"
 
 #: data/notifications.appdata.xml.in:51
 msgid "Fix a minor visual inconsistency"
-msgstr ""
+msgstr "Naprawiono pomniejszą niespójność wizualną"
 
 #: data/notifications.appdata.xml.in:61
 msgid "elementary, Inc."
