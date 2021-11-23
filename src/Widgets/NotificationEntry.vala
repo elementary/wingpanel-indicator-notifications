@@ -317,9 +317,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var text = markup;
 
         try {
-            text = entity_regex.replace (markup, markup.length, 0, "&amp;");
-            text = tag_regex.replace (text, text.length, 0, "&lt;");
-            text = tag_regex.replace (text, text.length, 0, "&39;");
+            text = text.replace(/&(?!amp;|quot;|apos;|lt;|gt;)/g, '&amp;');
+
+
         } catch (Error e) {
             warning ("Invalid regex: %s", e.message);
         }
