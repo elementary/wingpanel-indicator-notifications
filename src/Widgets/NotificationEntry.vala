@@ -318,7 +318,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         try {
             text = text.replace ("/&(?!amp;|quot;|apos;|lt;|gt;|nbsp;|#39;)/g, '&amp;'");
-            text = text.replace ("/<(?!\/?[biu]>)/g, '&lt;'");
+            text = text.replace ("/<(?!'\'/?[biu]>)/g, '&lt;'");
         } catch (Error e) {
             warning ("Invalid regex: %s", e.message);
         }
