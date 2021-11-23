@@ -318,6 +318,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         try {
             text = text.replace(/&(?!amp;|quot;|apos;|lt;|gt;)/g, '&amp;');
+            text = text.replace(/<(?!\/?[biu]>)/g, '&lt;');
 
 
         } catch (Error e) {
@@ -326,4 +327,5 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         return text;
     }
+
 }
