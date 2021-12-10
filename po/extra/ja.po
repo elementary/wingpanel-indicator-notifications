@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 19:37+0000\n"
-"PO-Revision-Date: 2021-09-21 18:27+0000\n"
+"POT-Creation-Date: 2021-12-09 00:56+0000\n"
+"PO-Revision-Date: 2021-12-09 08:30+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/ja/>\n"
@@ -27,54 +27,62 @@ msgstr "通知インジケーター"
 msgid "See missed notifications in the panel"
 msgstr "見逃した通知をパネルで確認します"
 
-#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:20
-#: data/notifications.appdata.xml.in:35
+#: data/notifications.appdata.xml.in:12
+msgid "Fixes:"
+msgstr "修正点:"
+
+#: data/notifications.appdata.xml.in:14
+msgid "Handle null message body"
+msgstr "メッセージの本文が空の場合も適切に処理するように修正"
+
+#: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:24
+#: data/notifications.appdata.xml.in:32 data/notifications.appdata.xml.in:47
 msgid "Minor updates:"
 msgstr "軽微なアップデート:"
 
-#: data/notifications.appdata.xml.in:14 data/notifications.appdata.xml.in:23
-#: data/notifications.appdata.xml.in:39 data/notifications.appdata.xml.in:46
-#: data/notifications.appdata.xml.in:52
+#: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:35 data/notifications.appdata.xml.in:51
+#: data/notifications.appdata.xml.in:58 data/notifications.appdata.xml.in:64
 msgid "Updated translations"
 msgstr "翻訳の更新"
 
-#: data/notifications.appdata.xml.in:22
+#: data/notifications.appdata.xml.in:34
 msgid "Use app name as fallback title"
 msgstr ""
 "通知のタイトルが設定されていない場合、アプリ名を代わりに表示するように修正"
 
-#: data/notifications.appdata.xml.in:29
+#: data/notifications.appdata.xml.in:41
 msgid "Complete redesign:"
 msgstr "抜本的なデザイン変更:"
 
-#: data/notifications.appdata.xml.in:31
+#: data/notifications.appdata.xml.in:43
 msgid "Multitouch gestures to dismiss notifications"
 msgstr "マルチタッチジェスチャーで通知を消去できるように変更"
 
-#: data/notifications.appdata.xml.in:32
+#: data/notifications.appdata.xml.in:44
 msgid "Close button on each notification"
 msgstr "通知一つ一つに閉じるボタンを追加"
 
-#: data/notifications.appdata.xml.in:33
+#: data/notifications.appdata.xml.in:45
 msgid "Show images and badged icons"
 msgstr "画像とバッジアイコンを表示"
 
-#: data/notifications.appdata.xml.in:37
+#: data/notifications.appdata.xml.in:49
 msgid "Show tooltip on hover"
 msgstr "ホバー時にツールチップを表示するように変更"
 
-#: data/notifications.appdata.xml.in:38
+#: data/notifications.appdata.xml.in:50
 msgid "Performance improvements"
 msgstr "パフォーマンスの改善"
 
-#: data/notifications.appdata.xml.in:45
+#: data/notifications.appdata.xml.in:57
 msgid "Fix issues with disappearing notifications"
 msgstr "通知が消える不具合を修正"
 
-#: data/notifications.appdata.xml.in:51
+#: data/notifications.appdata.xml.in:63
 msgid "Fix a minor visual inconsistency"
 msgstr "視覚的な非一貫性を微修正"
 
-#: data/notifications.appdata.xml.in:61
+#: data/notifications.appdata.xml.in:73
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

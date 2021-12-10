@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 19:37+0000\n"
-"PO-Revision-Date: 2021-09-23 12:58+0000\n"
+"POT-Creation-Date: 2021-12-09 00:56+0000\n"
+"PO-Revision-Date: 2021-12-09 02:04+0000\n"
 "Last-Translator: Ciarán Ainsworth <ciaranainsworth@outlook.com>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-notifications-extra/en_GB/>\n"
@@ -27,53 +27,61 @@ msgstr "Notifications Indicator"
 msgid "See missed notifications in the panel"
 msgstr "See missed notifications in the panel"
 
-#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:20
-#: data/notifications.appdata.xml.in:35
+#: data/notifications.appdata.xml.in:12
+msgid "Fixes:"
+msgstr "Fixes:"
+
+#: data/notifications.appdata.xml.in:14
+msgid "Handle null message body"
+msgstr "Handle null message body"
+
+#: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:24
+#: data/notifications.appdata.xml.in:32 data/notifications.appdata.xml.in:47
 msgid "Minor updates:"
 msgstr "Minor updates:"
 
-#: data/notifications.appdata.xml.in:14 data/notifications.appdata.xml.in:23
-#: data/notifications.appdata.xml.in:39 data/notifications.appdata.xml.in:46
-#: data/notifications.appdata.xml.in:52
+#: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:35 data/notifications.appdata.xml.in:51
+#: data/notifications.appdata.xml.in:58 data/notifications.appdata.xml.in:64
 msgid "Updated translations"
 msgstr "Updated translations"
 
-#: data/notifications.appdata.xml.in:22
+#: data/notifications.appdata.xml.in:34
 msgid "Use app name as fallback title"
 msgstr "Use app name as fallback title"
 
-#: data/notifications.appdata.xml.in:29
+#: data/notifications.appdata.xml.in:41
 msgid "Complete redesign:"
 msgstr "Complete redesign:"
 
-#: data/notifications.appdata.xml.in:31
+#: data/notifications.appdata.xml.in:43
 msgid "Multitouch gestures to dismiss notifications"
 msgstr "Multitouch gestures to dismiss notifications"
 
-#: data/notifications.appdata.xml.in:32
+#: data/notifications.appdata.xml.in:44
 msgid "Close button on each notification"
 msgstr "Close button on each notification"
 
-#: data/notifications.appdata.xml.in:33
+#: data/notifications.appdata.xml.in:45
 msgid "Show images and badged icons"
 msgstr "Show images and badged icons"
 
-#: data/notifications.appdata.xml.in:37
+#: data/notifications.appdata.xml.in:49
 msgid "Show tooltip on hover"
 msgstr "Show tooltip on hover"
 
-#: data/notifications.appdata.xml.in:38
+#: data/notifications.appdata.xml.in:50
 msgid "Performance improvements"
 msgstr "Performance improvements"
 
-#: data/notifications.appdata.xml.in:45
+#: data/notifications.appdata.xml.in:57
 msgid "Fix issues with disappearing notifications"
 msgstr "Fix issues with disappearing notifications"
 
-#: data/notifications.appdata.xml.in:51
+#: data/notifications.appdata.xml.in:63
 msgid "Fix a minor visual inconsistency"
 msgstr "Fix a minor visual inconsistency"
 
-#: data/notifications.appdata.xml.in:61
+#: data/notifications.appdata.xml.in:73
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
