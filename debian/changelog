@@ -1,3 +1,12 @@
+wingpanel-indicator-notifications (6.0.3) bionic; urgency=medium
+
+  * Release 6.0.3 (#233)
+  * Update translation files
+  * Update translation template
+  * NotificationsMonitor: Handle null body in message_filter (#229)
+
+ -- elementary, Inc. <builds@elementary.io>  Sat, 11 Dec 2021 05:27:32 +0000
+
 wingpanel-indicator-notifications (6.0.2) bionic; urgency=medium
 
   * Release 6.0.2 (#227)
