@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-09 00:56+0000\n"
+"POT-Creation-Date: 2021-12-17 18:36+0000\n"
 "PO-Revision-Date: 2021-10-08 23:18+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,61 +27,67 @@ msgstr "Indikátor oznámení"
 msgid "See missed notifications in the panel"
 msgstr "Skontrolujte na paneli oznámenia, ktoré vám unikli"
 
-#: data/notifications.appdata.xml.in:12
+#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
 msgid "Fixes:"
 msgstr ""
 
 #: data/notifications.appdata.xml.in:14
-msgid "Handle null message body"
+msgid "Fix delayed startup"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:24
-#: data/notifications.appdata.xml.in:32 data/notifications.appdata.xml.in:47
+#: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:28
+#: data/notifications.appdata.xml.in:36 data/notifications.appdata.xml.in:44
+#: data/notifications.appdata.xml.in:59
 msgid "Minor updates:"
 msgstr "Menšie aktualizácie:"
 
-#: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:26
-#: data/notifications.appdata.xml.in:35 data/notifications.appdata.xml.in:51
-#: data/notifications.appdata.xml.in:58 data/notifications.appdata.xml.in:64
+#: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:30
+#: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:47
+#: data/notifications.appdata.xml.in:63 data/notifications.appdata.xml.in:70
+#: data/notifications.appdata.xml.in:76
 msgid "Updated translations"
 msgstr "Aktualizované preklady"
 
-#: data/notifications.appdata.xml.in:34
+#: data/notifications.appdata.xml.in:26
+msgid "Handle null message body"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:46
 msgid "Use app name as fallback title"
 msgstr "Použiť názov aplikácie ako záložný názov"
 
-#: data/notifications.appdata.xml.in:41
+#: data/notifications.appdata.xml.in:53
 msgid "Complete redesign:"
 msgstr "Úplný redizajn:"
 
-#: data/notifications.appdata.xml.in:43
+#: data/notifications.appdata.xml.in:55
 msgid "Multitouch gestures to dismiss notifications"
 msgstr "Multidotykové gestá na zrušenie oznámení"
 
-#: data/notifications.appdata.xml.in:44
+#: data/notifications.appdata.xml.in:56
 msgid "Close button on each notification"
 msgstr "Tlačidlo na zatvorenie na každom oznámení"
 
-#: data/notifications.appdata.xml.in:45
+#: data/notifications.appdata.xml.in:57
 msgid "Show images and badged icons"
 msgstr "Zobrazenie obrázkov a ikoniek s počtom oznámení"
 
-#: data/notifications.appdata.xml.in:49
+#: data/notifications.appdata.xml.in:61
 msgid "Show tooltip on hover"
 msgstr "Zobrazovať popis po umiestnení kurzora"
 
-#: data/notifications.appdata.xml.in:50
+#: data/notifications.appdata.xml.in:62
 msgid "Performance improvements"
 msgstr "Vylepšenia výkonu"
 
-#: data/notifications.appdata.xml.in:57
+#: data/notifications.appdata.xml.in:69
 msgid "Fix issues with disappearing notifications"
 msgstr "Opravený problém s miznúcimi oznámeniami"
 
-#: data/notifications.appdata.xml.in:63
+#: data/notifications.appdata.xml.in:75
 msgid "Fix a minor visual inconsistency"
 msgstr "Opravená drobná vizuálna nejednotnosť"
 
-#: data/notifications.appdata.xml.in:73
+#: data/notifications.appdata.xml.in:85
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
