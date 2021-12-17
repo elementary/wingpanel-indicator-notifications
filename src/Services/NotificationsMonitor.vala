@@ -46,21 +46,25 @@ public class Notifications.NotificationMonitor : Object {
 
     public INotifications? notifications_iface = null;
 
-    private NotificationMonitor () {
+    construct {
+        initialize.begin ();
+    }
+
+    private async void initialize () {
         try {
-            // Set up a private connection to the session bus
 #if VALA_0_54
             string address = BusType.SESSION.get_address_sync ();
 #else
             string address = BusType.get_address_sync (BusType.SESSION);
 #endif
-            connection = new DBusConnection.for_address_sync (
+            connection = yield new DBusConnection.for_address (
                 address,
-                DBusConnectionFlags.AUTHENTICATION_CLIENT | DBusConnectionFlags.MESSAGE_BUS_CONNECTION
+                DBusConnectionFlags.AUTHENTICATION_CLIENT | DBusConnectionFlags.MESSAGE_BUS_CONNECTION,
+                null, null
             );
             connection.add_filter (message_filter);
 
-            connection.call_sync (
+            yield connection.call (
                 "org.freedesktop.DBus",
                 "/org/freedesktop/DBus",
                 "org.freedesktop.DBus.Monitoring",
@@ -75,14 +79,15 @@ public class Notifications.NotificationMonitor : Object {
                 }),
                 null,
                 DBusCallFlags.NONE,
-                -1
+                -1,
+                null
             );
         } catch (Error e) {
             critical ("Unable to monitor notifications bus: %s", e.message);
         }
 
         try {
-            notifications_iface = Bus.get_proxy_sync (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH);
+            notifications_iface = yield Bus.get_proxy (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH, DBusProxyFlags.NONE, null);
         } catch (Error e) {
             warning ("Unable to connection to notifications bus: %s", e.message);
         }
