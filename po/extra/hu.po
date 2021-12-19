@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2021-10-28 00:08+0000\n"
+"PO-Revision-Date: 2021-12-19 17:54+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/hu/>\n"
@@ -25,7 +25,7 @@ msgstr "Értesítéskijelzés"
 
 #: data/notifications.appdata.xml.in:7
 msgid "See missed notifications in the panel"
-msgstr ""
+msgstr "Az elmulasztott értesítések megjelenítése az állapotsoron"
 
 #: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
 msgid "Fixes:"
