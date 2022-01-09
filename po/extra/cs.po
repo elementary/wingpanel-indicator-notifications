@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2020-06-07 21:11+0000\n"
+"PO-Revision-Date: 2022-01-10 01:06+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -39,7 +39,7 @@ msgstr ""
 #: data/notifications.appdata.xml.in:36 data/notifications.appdata.xml.in:44
 #: data/notifications.appdata.xml.in:59
 msgid "Minor updates:"
-msgstr ""
+msgstr "Drobné aktualizace:"
 
 #: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:30
 #: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:47
@@ -80,7 +80,7 @@ msgstr ""
 
 #: data/notifications.appdata.xml.in:62
 msgid "Performance improvements"
-msgstr ""
+msgstr "Vylepšení výkonu"
 
 #: data/notifications.appdata.xml.in:69
 msgid "Fix issues with disappearing notifications"
