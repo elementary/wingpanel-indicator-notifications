@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2022-01-10 01:06+0000\n"
+"PO-Revision-Date: 2022-01-10 17:06+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/cs/>\n"
@@ -29,11 +29,11 @@ msgstr "Mějte na panelu na očích upozornění, která vám unikla"
 
 #: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
 msgid "Fixes:"
-msgstr ""
+msgstr "Opravy:"
 
 #: data/notifications.appdata.xml.in:14
 msgid "Fix delayed startup"
-msgstr ""
+msgstr "Opraveno pozdržené spouštění"
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:28
 #: data/notifications.appdata.xml.in:36 data/notifications.appdata.xml.in:44
@@ -50,33 +50,31 @@ msgstr "Aktualizovány překlady"
 
 #: data/notifications.appdata.xml.in:26
 msgid "Handle null message body"
-msgstr ""
+msgstr "Ošetřeno chování při prázdném těle zprávy"
 
 #: data/notifications.appdata.xml.in:46
 msgid "Use app name as fallback title"
-msgstr ""
+msgstr "Náhradně je jako nadpis používán název aplikace"
 
 #: data/notifications.appdata.xml.in:53
 msgid "Complete redesign:"
-msgstr ""
+msgstr "Úplné předělání:"
 
 #: data/notifications.appdata.xml.in:55
-#, fuzzy
-#| msgid "Fix issues with disappearing notifications"
 msgid "Multitouch gestures to dismiss notifications"
-msgstr "Opraven problém s mizejícími upozorněními"
+msgstr "Vícedotyková gesta pro zahazování upozornění"
 
 #: data/notifications.appdata.xml.in:56
 msgid "Close button on each notification"
-msgstr ""
+msgstr "Každé upozornění nyní obsahuje tlačítko pro jeho zavření"
 
 #: data/notifications.appdata.xml.in:57
 msgid "Show images and badged icons"
-msgstr ""
+msgstr "Zobrazování obrázků a ikon odznáčků"
 
 #: data/notifications.appdata.xml.in:61
 msgid "Show tooltip on hover"
-msgstr ""
+msgstr "Při najetí ukazatelem zobrazit bublinovou nápovědu"
 
 #: data/notifications.appdata.xml.in:62
 msgid "Performance improvements"
