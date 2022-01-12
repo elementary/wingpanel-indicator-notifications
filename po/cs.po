@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2022-01-10 17:06+0000\n"
-"Last-Translator: Michal Grňo <m93a.cz@gmail.com>\n"
+"PO-Revision-Date: 2022-01-12 19:06+0000\n"
+"Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/cs/>\n"
 "Language: cs\n"
@@ -29,11 +29,11 @@ msgstr "Nastavení oznamování…"
 
 #: src/Indicator.vala:226
 msgid "Middle-click to disable Do Not Disturb"
-msgstr "Klikněte kolečkem pro vypnutí režimu Nerušit"
+msgstr "Režim Nerušit vypnete kliknutím kolečkem myši"
 
 #: src/Indicator.vala:228
 msgid "Middle-click to enable Do Not Disturb"
-msgstr "Klikněte kolečkem pro zapnutí režimu Nerušit"
+msgstr "Režim Nerušit vypnete kliknutím kolečkem myši"
 
 #: src/Indicator.vala:235
 msgid "No notifications"
