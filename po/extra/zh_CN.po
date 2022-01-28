@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2021-11-21 02:09+0000\n"
-"Last-Translator: Yuchen Deng <loaden@gmail.com>\n"
+"PO-Revision-Date: 2022-01-28 10:29+0000\n"
+"Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-notifications-extra/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -29,7 +29,7 @@ msgstr "在面板中查看错过的通知"
 
 #: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
 msgid "Fixes:"
-msgstr ""
+msgstr "修复："
 
 #: data/notifications.appdata.xml.in:14
 msgid "Fix delayed startup"
