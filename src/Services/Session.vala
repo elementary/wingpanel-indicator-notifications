@@ -78,7 +78,7 @@ public class Notifications.Session : GLib.Object {
                     key.get_string (group, SENDER_KEY),
                     key.get_boolean (group, HAS_TEMP_FILE_KEY)
                 );
-                list.append (notification);
+                list.prepend (notification);
             }
         } catch (KeyFileError e) {
             warning (e.message);
@@ -86,10 +86,20 @@ public class Notifications.Session : GLib.Object {
             warning (e.message);
         }
 
+        list.reverse ();
         return list;
     }
 
-    public void add_notification (Notification notification) {
+    public uint count_notifications () {
+        uint count = 0;
+        foreach (unowned string group in key.get_groups ()) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public void add_notification (Notification notification, bool write_file = true) {
         string id = notification.id.to_string ();
         key.set_int64 (id, UNIX_TIME_KEY, notification.timestamp.to_unix ());
         key.set_string (id, APP_ICON_KEY, notification.app_icon);
@@ -103,10 +113,12 @@ public class Notifications.Session : GLib.Object {
         key.set_uint64 (id, REPLACES_ID_KEY, notification.replaces_id);
         key.set_boolean (id, HAS_TEMP_FILE_KEY, notification.has_temp_file);
 
-        write_contents ();
+        if (write_file) {
+            write_contents ();
+        }
     }
 
-    public void remove_notification (Notification notification) {
+    public void remove_notification (Notification notification, bool write_file = true) {
         try {
             if (notification.has_temp_file) {
                 var file = File.new_for_path (notification.image_path);
@@ -126,7 +138,7 @@ public class Notifications.Session : GLib.Object {
 
     public void remove_notifications (Notification[] notifications) {
         foreach (unowned var notification in notifications) {
-            remove_notification (notification);
+            remove_notification (notification, false);
         }
 
         write_contents ();

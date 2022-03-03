@@ -46,7 +46,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         row_activated.connect (on_row_activated);
     }
 
-    public void add_entry (Notification notification) {
+    public void add_entry (Notification notification, bool write_file = true) {
         var entry = new NotificationEntry (notification);
 
         if (app_entries[notification.desktop_id] != null) {
@@ -71,7 +71,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         show_all ();
 
-        Session.get_instance ().add_notification (notification);
+        Session.get_instance ().add_notification (notification, write_file);
     }
 
     public void clear_all () {
