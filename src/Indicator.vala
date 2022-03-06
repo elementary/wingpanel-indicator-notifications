@@ -65,8 +65,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var monitor = NotificationMonitor.get_instance ();
-            monitor.notification_received.connect (on_notification_received);
-            monitor.notification_closed.connect (on_notification_closed);
+            Idle.add (() => { // Monitor initialises asynchronously so cannot connect immediately
+                if (monitor.initialized) {
+                    monitor.notification_received.connect (on_notification_received);
+                    monitor.notification_closed.connect (on_notification_closed);
+                    return Source.REMOVE;
+                } else {
+                    return Source.CONTINUE;
+                }
+            });
 
             dynamic_icon.button_press_event.connect ((e) => {
                 if (e.button == Gdk.BUTTON_MIDDLE) {
@@ -180,12 +187,17 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
     }
 
-    private void on_notification_closed (uint32 id) {
-        foreach (var app_entry in nlist.app_entries.values) {
-            foreach (var item in app_entry.app_notifications) {
-                if (item.notification.id == id) {
-                    item.notification.close ();
-                    return;
+    private void on_notification_closed (uint32 id, uint32 reason) {
+        // If notification bubble was dismissed by user do not keep in list
+        if (reason == Notification.CloseReason.DISMISSED ||
+            reason == Notification.CloseReason.CLOSE_NOTIFICATION_CALL) {
+
+            foreach (var app_entry in nlist.app_entries.values) {
+                foreach (var item in app_entry.app_notifications) {
+                    if (item.notification.id == id) {
+                        item.clear ();
+                        return;
+                    }
                 }
             }
         }
