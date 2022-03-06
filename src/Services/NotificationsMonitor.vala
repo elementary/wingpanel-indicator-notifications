@@ -33,8 +33,6 @@ public class Notifications.NotificationMonitor : Object {
     private DBusConnection connection;
     private DBusMessage? awaiting_reply = null;
 
-    public bool initialized { get; set; default = false; }
-
     public signal void notification_received (DBusMessage message, uint32 id);
     public signal void notification_closed (uint32 id, uint32 reason);
 
@@ -53,8 +51,6 @@ public class Notifications.NotificationMonitor : Object {
     }
 
     private async void initialize () {
-        initialized = false;
-
         try {
 #if VALA_0_54
             string address = BusType.SESSION.get_address_sync ();
@@ -96,8 +92,6 @@ public class Notifications.NotificationMonitor : Object {
         } catch (Error e) {
             warning ("Unable to connection to notifications bus: %s", e.message);
         }
-
-        initialized = true;
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {

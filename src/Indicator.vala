@@ -65,15 +65,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var monitor = NotificationMonitor.get_instance ();
-            Idle.add (() => { // Monitor initialises asynchronously so cannot connect immediately
-                if (monitor.initialized) {
-                    monitor.notification_received.connect (on_notification_received);
-                    monitor.notification_closed.connect (on_notification_closed);
-                    return Source.REMOVE;
-                } else {
-                    return Source.CONTINUE;
-                }
-            });
+            monitor.notification_received.connect (on_notification_received);
+            monitor.notification_closed.connect (on_notification_closed);
 
             dynamic_icon.button_press_event.connect ((e) => {
                 if (e.button == Gdk.BUTTON_MIDDLE) {
