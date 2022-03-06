@@ -94,9 +94,7 @@ public class Notifications.NotificationMonitor : Object {
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
-
         if (incoming && message.get_interface () == NOTIFY_IFACE && message.get_message_type () == DBusMessageType.METHOD_CALL) {
-
             if (message.get_member () == "Notify") {
                 try {
                     awaiting_reply = message.copy ();
