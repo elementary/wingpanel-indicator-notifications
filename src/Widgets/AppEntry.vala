@@ -64,6 +64,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         clear_btn_entry.clicked.connect (() => {
             clear_all_notification_entries ();
+            clear (); // Causes app entry to be cleared from NotificationList
         });
     }
 
@@ -82,7 +83,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
     }
 
-    public void clear_all_notification_entries () {
+    private void clear_all_notification_entries () {
         Notification[] to_remove = {};
         app_notifications.@foreach ((entry) => {
             entry.dismiss ();
@@ -91,6 +92,5 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         app_notifications = new List<NotificationEntry> ();
         Session.get_instance ().remove_notifications (to_remove);
-        clear ();
     }
 }

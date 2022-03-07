@@ -133,12 +133,14 @@ public class Notifications.Session : GLib.Object {
             warning (e.message);
         }
 
-        write_contents ();
+        if (write_file) {
+            write_contents ();
+        }
     }
 
     public void remove_notifications (Notification[] notifications) {
         foreach (unowned var notification in notifications) {
-            remove_notification (notification, false);
+            remove_notification (notification, false); // Only update file once
         }
 
         write_contents ();
