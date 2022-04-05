@@ -52,7 +52,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             var previous_session = Session.get_instance ().get_session_notifications ();
             previous_session.foreach ((notification) => {
-                nlist.add_entry (notification);
+                nlist.add_entry (notification, false);
             });
 
             Gtk.IconTheme.get_default ().add_resource_path ("/io/elementary/wingpanel/notifications");
