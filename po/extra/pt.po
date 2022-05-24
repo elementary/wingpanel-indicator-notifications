@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2021-07-22 13:59+0000\n"
+"PO-Revision-Date: 2022-05-24 18:54+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/pt/>\n"
@@ -29,11 +29,11 @@ msgstr "Ver notificações perdidas no painel"
 
 #: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
 msgid "Fixes:"
-msgstr ""
+msgstr "Correções:"
 
 #: data/notifications.appdata.xml.in:14
 msgid "Fix delayed startup"
-msgstr ""
+msgstr "Corrige o arranque atrasado"
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:28
 #: data/notifications.appdata.xml.in:36 data/notifications.appdata.xml.in:44
@@ -50,11 +50,11 @@ msgstr "Traduções atualizadas"
 
 #: data/notifications.appdata.xml.in:26
 msgid "Handle null message body"
-msgstr ""
+msgstr "Lida corpo de mensagem nulo"
 
 #: data/notifications.appdata.xml.in:46
 msgid "Use app name as fallback title"
-msgstr ""
+msgstr "Usar o nome da aplicação como título de recurso"
 
 #: data/notifications.appdata.xml.in:53
 msgid "Complete redesign:"
