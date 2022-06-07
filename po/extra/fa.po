@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2019-11-07 10:52-0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-04-14 22:06+0000\n"
+"Last-Translator: Pikhosh <pikhosh@gmail.com>\n"
+"Language-Team: Persian <https://l10n.elementary.io/projects/wingpanel/"
+"indicator-notifications-extra/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -26,7 +29,7 @@ msgstr ""
 
 #: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
 msgid "Fixes:"
-msgstr ""
+msgstr "رفع اشکالات:"
 
 #: data/notifications.appdata.xml.in:14
 msgid "Fix delayed startup"
@@ -36,14 +39,14 @@ msgstr ""
 #: data/notifications.appdata.xml.in:36 data/notifications.appdata.xml.in:44
 #: data/notifications.appdata.xml.in:59
 msgid "Minor updates:"
-msgstr ""
+msgstr "بروزرسانی های جزئی:"
 
 #: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:30
 #: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:47
 #: data/notifications.appdata.xml.in:63 data/notifications.appdata.xml.in:70
 #: data/notifications.appdata.xml.in:76
 msgid "Updated translations"
-msgstr ""
+msgstr "ترجمه های بروز شده"
 
 #: data/notifications.appdata.xml.in:26
 msgid "Handle null message body"
