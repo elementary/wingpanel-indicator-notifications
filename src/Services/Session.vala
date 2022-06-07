@@ -162,11 +162,21 @@ public class Notifications.Session : GLib.Object {
         }
     }
 
+    private uint write_timeout_id = 0;
     private void write_contents () {
-        try {
-            FileUtils.set_contents (session_file.get_path (), key.to_data ());
-        } catch (FileError e) {
-            warning (e.message);
+        if (write_timeout_id > 0) {
+            Source.remove (write_timeout_id);
         }
+
+        write_timeout_id = Timeout.add (1000, () => {
+            write_timeout_id = 0;
+            try {
+                FileUtils.set_contents (session_file.get_path (), key.to_data ());
+            } catch (FileError e) {
+                warning (e.message);
+            }
+
+            return Source.REMOVE;
+        });
     }
 }

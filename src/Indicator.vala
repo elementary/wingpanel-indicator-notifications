@@ -27,6 +27,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gtk.ModelButton clear_all_btn;
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
+    private List<Notification> previous_session = null;
 
     public Indicator () {
         Object (
@@ -55,10 +56,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
-            unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
-            dynamic_icon_style_context.add_class ("notification-icon");
-            dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
             var monitor = NotificationMonitor.get_instance ();
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
@@ -76,33 +73,28 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 return Gdk.EVENT_PROPAGATE;
             });
 
+            dynamic_icon.tooltip_markup = _("Updating session notifications.  Please wait");
+            dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            previous_session = Session.get_instance ().get_session_notifications ();
+            Timeout.add (2000, () => { // Do not block animated drawing of wingpanel
+                load_session_notifications.begin (() => { // load asynchromously so spinner continues to rotate
+                    dynamic_icon.get_style_context ().add_class ("notification-icon");
+                    set_display_icon_name ();
+                    nlist.add.connect (set_display_icon_name);
+                    nlist.remove.connect (set_display_icon_name);
+                });
 
-            get_session_notifications ();
+                return Source.REMOVE;
+            });
         }
 
         return dynamic_icon;
     }
 
-    private List<Notification> previous_session = null;
-    private void get_session_notifications () {
-        dynamic_icon.tooltip_markup = _("Updating session notifications.  Please wait");
-        dynamic_icon.get_style_context ().add_class ("disabled");
-        previous_session = Session.get_instance ().get_session_notifications ();
-        unowned var list = previous_session;
-        Idle.add (() => {
-            if (list != null && list.data != null) {
-                var notification = list.data;
-                nlist.add_entry (notification, false); // Do not need to write back to file
-                list = list.next;
-                return Source.CONTINUE;
-            } else {
-                nlist.add.connect (set_display_icon_name);
-                nlist.remove.connect (set_display_icon_name);
-                set_display_icon_name ();
-                previous_session = null;
-                return Source.REMOVE;
-            }
-        });
+    private async void load_session_notifications () {
+        foreach (var notification in previous_session) {
+            yield nlist.add_entry (notification, false); // This is slow as NotificationEntry is complex
+        }
     }
 
     public override Gtk.Widget? get_widget () {
@@ -185,7 +177,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         }
 
         if (app_settings == null || app_settings.get_boolean (REMEMBER_KEY)) {
-            nlist.add_entry (notification);
+            nlist.add_entry.begin (notification, true);
         }
 
         set_display_icon_name ();
