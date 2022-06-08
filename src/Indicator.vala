@@ -55,7 +55,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 active = true,
                 tooltip_markup = _("Updating notifications…")
             };
-            dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            unowned var dynamic_icon_context = dynamic_icon.get_style_context ();
+            dynamic_icon_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            dynamic_icon_context.add_class ("notification-icon");
 
             nlist = new NotificationsList ();
 
@@ -79,7 +82,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             previous_session = Session.get_instance ().get_session_notifications ();
             Timeout.add (2000, () => { // Do not block animated drawing of wingpanel
                 load_session_notifications.begin (() => { // load asynchromously so spinner continues to rotate
-                    dynamic_icon.get_style_context ().add_class ("notification-icon");
                     set_display_icon_name ();
                     nlist.add.connect (set_display_icon_name);
                     nlist.remove.connect (set_display_icon_name);
