@@ -56,9 +56,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 tooltip_markup = _("Updating notifications…")
             };
 
-            unowned var dynamic_icon_context = dynamic_icon.get_style_context ();
-            dynamic_icon_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            dynamic_icon_context.add_class ("notification-icon");
+            unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
+            dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            dynamic_icon_style_context.add_class ("notification-icon");
 
             nlist = new NotificationsList ();
 
