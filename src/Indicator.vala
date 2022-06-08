@@ -46,15 +46,18 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
-            dynamic_icon = new Gtk.Spinner ();
-            dynamic_icon.active = true;
-
-            nlist = new NotificationsList ();
-
             Gtk.IconTheme.get_default ().add_resource_path ("/io/elementary/wingpanel/notifications");
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
+
+            dynamic_icon = new Gtk.Spinner () {
+                active = true,
+                tooltip_markup = _("Updating notifications…")
+            };
+            dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            nlist = new NotificationsList ();
 
             var monitor = NotificationMonitor.get_instance ();
             monitor.notification_received.connect (on_notification_received);
@@ -73,8 +76,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 return Gdk.EVENT_PROPAGATE;
             });
 
-            dynamic_icon.tooltip_markup = _("Updating session notifications.  Please wait");
-            dynamic_icon.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             previous_session = Session.get_instance ().get_session_notifications ();
             Timeout.add (2000, () => { // Do not block animated drawing of wingpanel
                 load_session_notifications.begin (() => { // load asynchromously so spinner continues to rotate
