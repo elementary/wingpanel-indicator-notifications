@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-08 16:27+0000\n"
-"PO-Revision-Date: 2021-12-17 23:36+0000\n"
+"PO-Revision-Date: 2022-06-09 07:45+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/he/>\n"
@@ -36,7 +36,7 @@ msgstr "תיקונים:"
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
-msgstr ""
+msgstr "צומצמה ההמתנה בהצגת הלוח לראשונה כשמספר ההתראות גדול"
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:28
 #: data/notifications.appdata.xml.in:40 data/notifications.appdata.xml.in:48
