@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-08 16:27+0000\n"
-"PO-Revision-Date: 2021-02-17 14:18+0000\n"
+"PO-Revision-Date: 2022-06-10 23:46+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ja/>\n"
@@ -16,10 +16,8 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No notifications"
 msgid "Updating notifications…"
-msgstr "通知はありません"
+msgstr "通知を更新しています…"
 
 #: src/Indicator.vala:105
 msgid "Do Not Disturb"
