@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-08 16:27+0000\n"
-"PO-Revision-Date: 2022-01-01 03:09+0000\n"
+"PO-Revision-Date: 2022-06-15 03:50+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/hu/>\n"
@@ -16,10 +16,8 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No notifications"
 msgid "Updating notifications…"
-msgstr "Nincsenek értesítések"
+msgstr "Értesítések frissítése…"
 
 #: src/Indicator.vala:105
 msgid "Do Not Disturb"
