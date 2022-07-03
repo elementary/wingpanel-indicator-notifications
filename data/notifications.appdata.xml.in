@@ -7,11 +7,12 @@
   <summary>See missed notifications in the panel</summary>
   <icon type="stock">preferences-system-notifications</icon>
   <releases>
-    <release version="6.0.5" date="2021-12-17" urgency="medium">
+    <release version="6.0.5" date="2022-07-03" urgency="medium">
       <description>
         <p>Fixes:</p>
         <ul>
           <li>Reduce delay in initially showing wingpanel when there is a large number of notifications</li>
+          <li>Reduce delay in clearing all notifications when there is a large number of notifications</li>
         </ul>
         <p>Minor updates:</p>
         <ul>
