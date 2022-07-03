@@ -1,3 +1,13 @@
+wingpanel-indicator-notifications (6.0.5) bionic; urgency=medium
+
+  * Release 6.0.5 (#247)
+  * Update translation files
+  * Update translation template
+  * Load notifications without blocking (#241)
+  * Clear notifications faster (#242)
+
+ -- elementary, Inc. <builds@elementary.io>  Sun, 03 Jul 2022 17:24:57 +0000
+
 wingpanel-indicator-notifications (6.0.4) bionic; urgency=medium
 
   * Release 6.0.4 (#236)
