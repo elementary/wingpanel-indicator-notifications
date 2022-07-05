@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-03 17:24+0000\n"
-"PO-Revision-Date: 2022-06-09 07:45+0000\n"
+"PO-Revision-Date: 2022-07-05 08:44+0000\n"
 "Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
 "Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/pl/>\n"
@@ -42,15 +42,11 @@ msgstr ""
 "dużej liczby powiadomień"
 
 #: data/notifications.appdata.xml.in:15
-#, fuzzy
-#| msgid ""
-#| "Reduce delay in initially showing wingpanel when there is a large number "
-#| "of notifications"
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr ""
-"Zmniejszono opóźnianie przy pierwszym pokazaniu panelu bocznego w przypadku "
+"Zmniejszono opóźnianie przy usuwaniu wszystkich powiadomień w przypadku "
 "dużej liczby powiadomień"
 
 #: data/notifications.appdata.xml.in:17 data/notifications.appdata.xml.in:29
