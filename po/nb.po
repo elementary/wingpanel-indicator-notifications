@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-03 17:24+0000\n"
-"PO-Revision-Date: 2021-02-18 01:30+0000\n"
+"PO-Revision-Date: 2022-07-08 09:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/nb/>\n"
@@ -16,10 +16,8 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-04-05 07:46+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No notifications"
 msgid "Updating notifications…"
-msgstr "Ingen merknader"
+msgstr "Oppdaterer merknader …"
 
 #: src/Indicator.vala:105
 msgid "Do Not Disturb"
