@@ -145,8 +145,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             nlist.remove.connect (update_clear_all_sensitivity);
 
             clear_all_btn.clicked.connect (() => {
-                nlist.clear_all ();
-                Session.get_instance ().clear ();
+                nlist.clear_all (); // This calls each appentry's clear method, which also clears session
             });
 
             settings_btn.clicked.connect (show_settings);
