@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-03 17:24+0000\n"
+"POT-Creation-Date: 2022-07-11 20:05+0000\n"
 "PO-Revision-Date: 2022-07-08 09:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
@@ -31,37 +31,37 @@ msgstr "Fjern alle varsler"
 msgid "Notifications Settings…"
 msgstr "Innstillinger for varsler…"
 
-#: src/Indicator.vala:235
+#: src/Indicator.vala:234
 msgid "Middle-click to disable Do Not Disturb"
 msgstr "Midt-klikk for å skru av «Ikke-forstyrr»"
 
-#: src/Indicator.vala:237
+#: src/Indicator.vala:236
 msgid "Middle-click to enable Do Not Disturb"
 msgstr "Midt-klikk for å skru på «Ikke-forstyrr»"
 
-#: src/Indicator.vala:244
+#: src/Indicator.vala:243
 msgid "No notifications"
 msgstr "Ingen merknader"
 
-#: src/Indicator.vala:247
+#: src/Indicator.vala:246
 msgid "1 notification"
 msgstr "1 merknad"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
-#: src/Indicator.vala:252
+#: src/Indicator.vala:251
 #, c-format
 msgid "%s from %s"
 msgstr "%s fra %s"
 
-#: src/Indicator.vala:253
+#: src/Indicator.vala:252
 #, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
 msgstr[0] "%u merknad"
 msgstr[1] "%u merknader"
 
-#: src/Indicator.vala:254
+#: src/Indicator.vala:253
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"

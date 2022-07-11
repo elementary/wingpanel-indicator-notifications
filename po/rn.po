@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notifications-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-03 17:24+0000\n"
+"POT-Creation-Date: 2022-07-11 20:05+0000\n"
 "PO-Revision-Date: 2018-03-28 16:12-0700\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,37 +32,37 @@ msgstr ""
 msgid "Notifications Settings…"
 msgstr ""
 
-#: src/Indicator.vala:235
+#: src/Indicator.vala:234
 msgid "Middle-click to disable Do Not Disturb"
 msgstr ""
 
-#: src/Indicator.vala:237
+#: src/Indicator.vala:236
 msgid "Middle-click to enable Do Not Disturb"
 msgstr ""
 
-#: src/Indicator.vala:244
+#: src/Indicator.vala:243
 msgid "No notifications"
 msgstr ""
 
-#: src/Indicator.vala:247
+#: src/Indicator.vala:246
 msgid "1 notification"
 msgstr ""
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
-#: src/Indicator.vala:252
+#: src/Indicator.vala:251
 #, c-format
 msgid "%s from %s"
 msgstr ""
 
-#: src/Indicator.vala:253
+#: src/Indicator.vala:252
 #, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Indicator.vala:254
+#: src/Indicator.vala:253
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"

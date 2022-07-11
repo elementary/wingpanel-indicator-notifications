@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-03 17:24+0000\n"
+"POT-Creation-Date: 2022-07-11 20:05+0000\n"
 "PO-Revision-Date: 2022-06-08 20:18+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
@@ -32,30 +32,30 @@ msgstr "Очистити всі сповіщення"
 msgid "Notifications Settings…"
 msgstr "Налаштування сповіщень…"
 
-#: src/Indicator.vala:235
+#: src/Indicator.vala:234
 msgid "Middle-click to disable Do Not Disturb"
 msgstr "Клацніть середньою клавішею, щоб вимкнути режим «Не турбувати»"
 
-#: src/Indicator.vala:237
+#: src/Indicator.vala:236
 msgid "Middle-click to enable Do Not Disturb"
 msgstr "Клацніть середньою клавішею, щоб увімкнути режим «Не турбувати»"
 
-#: src/Indicator.vala:244
+#: src/Indicator.vala:243
 msgid "No notifications"
 msgstr "Немає сповіщень"
 
-#: src/Indicator.vala:247
+#: src/Indicator.vala:246
 msgid "1 notification"
 msgstr "1 сповіщення"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
-#: src/Indicator.vala:252
+#: src/Indicator.vala:251
 #, c-format
 msgid "%s from %s"
 msgstr "%s від %s"
 
-#: src/Indicator.vala:253
+#: src/Indicator.vala:252
 #, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
@@ -63,7 +63,7 @@ msgstr[0] "%u сповіщення"
 msgstr[1] "%u сповіщення"
 msgstr[2] "%u сповіщень"
 
-#: src/Indicator.vala:254
+#: src/Indicator.vala:253
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
