@@ -1,3 +1,12 @@
+wingpanel-indicator-notifications (6.0.6) bionic; urgency=medium
+
+  * Release 6.0.6 (#249)
+  * Fix operation of Clear All button (#248)
+  * Update translation files
+  * Update translation template
+
+ -- elementary, Inc. <builds@elementary.io>  Mon, 11 Jul 2022 20:05:16 +0000
+
 wingpanel-indicator-notifications (6.0.5) bionic; urgency=medium
 
   * Release 6.0.5 (#247)
