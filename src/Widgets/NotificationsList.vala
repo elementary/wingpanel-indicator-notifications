@@ -102,9 +102,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     private void clear_app_entry (AppEntry app_entry) {
-        // app_entry must already be cleared of notifications entries
         app_entry.clear.disconnect (clear_app_entry);
         app_entries.unset (app_entry.app_id);
+        app_entry.clear_all_notification_entries ();
         app_entry.destroy ();
 
         if (app_entries.size == 0) {
