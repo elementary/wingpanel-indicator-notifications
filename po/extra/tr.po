@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
-"PO-Revision-Date: 2021-12-13 20:43+0000\n"
+"PO-Revision-Date: 2022-07-13 15:55+0000\n"
 "Last-Translator: Özgür Baskin <queeup@zoho.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/tr/>\n"
@@ -33,10 +33,8 @@ msgid "Fixes:"
 msgstr "Düzeltmeler:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "Her bildirime kapat düğmesi eklendi"
+msgstr ""
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:41 data/notifications.appdata.xml.in:53
