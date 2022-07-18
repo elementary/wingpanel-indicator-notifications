@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
-"PO-Revision-Date: 2022-07-04 15:04+0000\n"
+"PO-Revision-Date: 2022-07-18 11:44+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/fr/>\n"
@@ -33,10 +33,10 @@ msgid "Fixes:"
 msgstr "Corrections :"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "Bouton de fermeture sur chaque notification"
+msgstr ""
+"Le bouton « Effacer tout » ne laisse désormais plus de notifications "
+"impossibles à supprimer"
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:41 data/notifications.appdata.xml.in:53
