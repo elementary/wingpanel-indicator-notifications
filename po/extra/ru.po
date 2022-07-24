@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
 "PO-Revision-Date: 2022-07-24 12:00+0000\n"
-"Last-Translator: lenemter <lenemter@gmail.com>\n"
+"Last-Translator: кубик круглый <megarainbow29@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/ru/>\n"
 "Language: ru\n"
@@ -34,10 +34,8 @@ msgid "Fixes:"
 msgstr "Исправления:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "Кнопка закрытия на каждом уведомлении"
+msgstr "Кнопка «Очистить всё» больше не оставляет незакрываемые уведомления"
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:41 data/notifications.appdata.xml.in:53
