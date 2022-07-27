@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
-"PO-Revision-Date: 2022-06-12 04:28+0000\n"
+"PO-Revision-Date: 2022-07-27 18:19+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/pt/>\n"
@@ -33,10 +33,8 @@ msgid "Fixes:"
 msgstr "Correções:"
 
 #: data/notifications.appdata.xml.in:14
-#, fuzzy
-#| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "Botão de fechar em cada notificação"
+msgstr "Botão de Limpar tudo não deixa mais notificações indetetáveis"
 
 #: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:29
 #: data/notifications.appdata.xml.in:41 data/notifications.appdata.xml.in:53
@@ -62,15 +60,11 @@ msgstr ""
 "número de notificações"
 
 #: data/notifications.appdata.xml.in:27
-#, fuzzy
-#| msgid ""
-#| "Reduce delay in initially showing wingpanel when there is a large number "
-#| "of notifications"
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr ""
-"Reduz o atraso em mostrar inicialmente o wingpanel quando há um grande "
+"Reduzir o atraso na limpeza de todas as notificações quando há um grande "
 "número de notificações"
 
 #: data/notifications.appdata.xml.in:39
