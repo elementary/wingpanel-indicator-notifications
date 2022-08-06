@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
-"PO-Revision-Date: 2022-08-05 13:40+0000\n"
+"PO-Revision-Date: 2022-08-06 10:54+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ko/>\n"
@@ -33,30 +33,26 @@ msgstr "알림 설정…"
 
 #: src/Indicator.vala:234
 msgid "Middle-click to disable Do Not Disturb"
-msgstr ""
+msgstr "마우스 가운데 버튼 클릭으로 방해 금지 비활성화"
 
 #: src/Indicator.vala:236
 msgid "Middle-click to enable Do Not Disturb"
-msgstr ""
+msgstr "마우스 가운데 버튼 클릭으로 방해 금지 활성화"
 
 #: src/Indicator.vala:243
-#, fuzzy
-#| msgid "No Notifications"
 msgid "No notifications"
 msgstr "알림 없음"
 
 #: src/Indicator.vala:246
-#, fuzzy
-#| msgid "No Notifications"
 msgid "1 notification"
-msgstr "알림 없음"
+msgstr "알림 1개"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
 #: src/Indicator.vala:251
 #, c-format
 msgid "%s from %s"
-msgstr ""
+msgstr "%s 에서 %s"
 
 #: src/Indicator.vala:252
 #, c-format
@@ -68,7 +64,7 @@ msgstr[0] "%u 알림"
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
-msgstr[0] ""
+msgstr[0] "%i 앱"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
@@ -76,7 +72,7 @@ msgstr "알림 없음"
 
 #: src/Widgets/NotificationEntry.vala:290
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: src/Widgets/AppEntry.vala:42
 msgid "Other"
