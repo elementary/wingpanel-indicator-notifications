@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
-"PO-Revision-Date: 2022-05-22 17:52+0000\n"
+"PO-Revision-Date: 2022-08-14 04:44+0000\n"
 "Last-Translator: Dennis ten Hoove <dennistenhoove@protonmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/nl/>\n"
@@ -16,22 +16,20 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No notifications"
 msgid "Updating notifications…"
-msgstr "Geen notificaties"
+msgstr "Meldingen worden geüpdatet…"
 
 #: src/Indicator.vala:105
 msgid "Do Not Disturb"
-msgstr "Niet Storen"
+msgstr "Niet storen"
 
 #: src/Indicator.vala:125
 msgid "Clear All Notifications"
-msgstr "Alle notificaties verwijderen"
+msgstr "Alle meldingen verwijderen"
 
 #: src/Indicator.vala:128
 msgid "Notifications Settings…"
-msgstr "Notificatie-instellingen…"
+msgstr "Instellingen voor meldingen…"
 
 #: src/Indicator.vala:234
 msgid "Middle-click to disable Do Not Disturb"
@@ -43,11 +41,11 @@ msgstr "Middelklik om Niet Storen aan te zetten"
 
 #: src/Indicator.vala:243
 msgid "No notifications"
-msgstr "Geen notificaties"
+msgstr "Geen meldingen"
 
 #: src/Indicator.vala:246
 msgid "1 notification"
-msgstr "1 notificatie"
+msgstr "1 melding"
 
 #. / TRANSLATORS: A tooltip text for the indicator representing the number of notifications.
 #. / e.g. "2 notifications from 1 app" or "5 notifications from 3 apps"
@@ -60,8 +58,8 @@ msgstr "%s van %s"
 #, c-format
 msgid "%u notification"
 msgid_plural "%u notifications"
-msgstr[0] "%u notificatie"
-msgstr[1] "%u notificaties"
+msgstr[0] "%u melding"
+msgstr[1] "%u meldingen"
 
 #: src/Indicator.vala:253
 #, c-format
@@ -72,7 +70,7 @@ msgstr[1] "%i apps"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
-msgstr "Geen Notificaties"
+msgstr "Geen meldingen"
 
 #: src/Widgets/NotificationEntry.vala:290
 msgid "Delete"
@@ -85,7 +83,7 @@ msgstr "Overige"
 #: src/Widgets/AppEntry.vala:52
 #, c-format
 msgid "Clear all %s notifications"
-msgstr "Alle %s notificaties verwijderen"
+msgstr "Alle %s meldingen verwijderen"
 
 #~ msgid "now"
 #~ msgstr "nu"
