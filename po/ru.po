@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 20:05+0000\n"
-"PO-Revision-Date: 2022-07-13 07:26+0000\n"
+"PO-Revision-Date: 2022-09-30 10:15+0000\n"
 "Last-Translator: lenemter <lenemter@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ru/>\n"
@@ -60,15 +60,15 @@ msgstr "%s от %s"
 msgid "%u notification"
 msgid_plural "%u notifications"
 msgstr[0] "%u уведомление"
-msgstr[1] "%u уведомлений"
-msgstr[2] "%u уведомления"
+msgstr[1] "%u уведомления"
+msgstr[2] "%u уведомлений"
 
 #: src/Indicator.vala:253
 #, c-format
 msgid "%i app"
 msgid_plural "%i apps"
 msgstr[0] "%i приложение"
-msgstr[1] "%i приложений"
+msgstr[1] "%i приложения"
 msgstr[2] "%i приложений"
 
 #: src/Widgets/NotificationsList.vala:29
