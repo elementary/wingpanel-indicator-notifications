@@ -7,7 +7,7 @@
   <summary>See missed notifications in the panel</summary>
   <icon type="stock">preferences-system-notifications</icon>
   <releases>
-    <release version="6.0.7" date="2022-10-14" urgency="medium">
+    <release version="6.0.7" date="2022-10-15" urgency="medium">
       <description>
         <p>Minor updates:</p>
         <ul>
