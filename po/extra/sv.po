@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 20:05+0000\n"
+"POT-Creation-Date: 2022-10-14 18:45+0000\n"
 "PO-Revision-Date: 2019-11-07 10:52-0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -25,86 +25,86 @@ msgstr ""
 msgid "See missed notifications in the panel"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
-#: data/notifications.appdata.xml.in:37 data/notifications.appdata.xml.in:49
-msgid "Fixes:"
-msgstr ""
-
-#: data/notifications.appdata.xml.in:14
-msgid "Clear All button no longer leaves undeletable notifications"
-msgstr ""
-
-#: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:29
-#: data/notifications.appdata.xml.in:41 data/notifications.appdata.xml.in:53
-#: data/notifications.appdata.xml.in:61 data/notifications.appdata.xml.in:69
-#: data/notifications.appdata.xml.in:84
+#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:25
+#: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:50
+#: data/notifications.appdata.xml.in:62 data/notifications.appdata.xml.in:70
+#: data/notifications.appdata.xml.in:78 data/notifications.appdata.xml.in:93
 msgid "Minor updates:"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:31
-#: data/notifications.appdata.xml.in:43 data/notifications.appdata.xml.in:55
-#: data/notifications.appdata.xml.in:63 data/notifications.appdata.xml.in:72
-#: data/notifications.appdata.xml.in:88 data/notifications.appdata.xml.in:95
-#: data/notifications.appdata.xml.in:101
+#: data/notifications.appdata.xml.in:14 data/notifications.appdata.xml.in:27
+#: data/notifications.appdata.xml.in:40 data/notifications.appdata.xml.in:52
+#: data/notifications.appdata.xml.in:64 data/notifications.appdata.xml.in:72
+#: data/notifications.appdata.xml.in:81 data/notifications.appdata.xml.in:97
+#: data/notifications.appdata.xml.in:104 data/notifications.appdata.xml.in:110
 msgid "Updated translations"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:21 data/notifications.appdata.xml.in:33
+#: data/notifications.appdata.xml.in:46 data/notifications.appdata.xml.in:58
+msgid "Fixes:"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:23
+msgid "Clear All button no longer leaves undeletable notifications"
+msgstr ""
+
+#: data/notifications.appdata.xml.in:35
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:27
+#: data/notifications.appdata.xml.in:36
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:39
+#: data/notifications.appdata.xml.in:48
 msgid "Fix delayed startup"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:51
+#: data/notifications.appdata.xml.in:60
 msgid "Handle null message body"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:71
+#: data/notifications.appdata.xml.in:80
 msgid "Use app name as fallback title"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:78
+#: data/notifications.appdata.xml.in:87
 msgid "Complete redesign:"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:80
+#: data/notifications.appdata.xml.in:89
 msgid "Multitouch gestures to dismiss notifications"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:81
+#: data/notifications.appdata.xml.in:90
 msgid "Close button on each notification"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:82
+#: data/notifications.appdata.xml.in:91
 msgid "Show images and badged icons"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:86
+#: data/notifications.appdata.xml.in:95
 msgid "Show tooltip on hover"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:87
+#: data/notifications.appdata.xml.in:96
 msgid "Performance improvements"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:94
+#: data/notifications.appdata.xml.in:103
 msgid "Fix issues with disappearing notifications"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:100
+#: data/notifications.appdata.xml.in:109
 msgid "Fix a minor visual inconsistency"
 msgstr ""
 
-#: data/notifications.appdata.xml.in:110
+#: data/notifications.appdata.xml.in:119
 msgid "elementary, Inc."
 msgstr ""
