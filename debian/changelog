@@ -1,3 +1,11 @@
+wingpanel-indicator-notifications (6.0.7) bionic; urgency=medium
+
+  * Release 6.0.7 (#250)
+  * Update translation files
+  * Update translation template
+
+ -- elementary, Inc. <builds@elementary.io>  Wed, 19 Oct 2022 02:49:04 +0000
+
 wingpanel-indicator-notifications (6.0.6) bionic; urgency=medium
 
   * Release 6.0.6 (#249)
