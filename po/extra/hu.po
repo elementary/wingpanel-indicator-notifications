@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:45+0000\n"
-"PO-Revision-Date: 2021-12-26 01:10+0000\n"
+"PO-Revision-Date: 2022-11-01 23:21+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/hu/>\n"
@@ -49,39 +49,39 @@ msgstr "Javítások:"
 
 #: data/notifications.appdata.xml.in:23
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr ""
+msgstr "Az összes törlése gomb már nem hagy törölhetetlen értesítéseket"
 
 #: data/notifications.appdata.xml.in:35
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
-msgstr ""
+msgstr "A wingpanel megjelenítése kevesebb késleltetéssel sok értesítés esetén"
 
 #: data/notifications.appdata.xml.in:36
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
-msgstr ""
+msgstr "Az összes értesítés törlése kevesebb ideig tart sok értesítés esetén"
 
 #: data/notifications.appdata.xml.in:48
 msgid "Fix delayed startup"
-msgstr ""
+msgstr "Javítva a késleltetett elindulás"
 
 #: data/notifications.appdata.xml.in:60
 msgid "Handle null message body"
-msgstr ""
+msgstr "Üres értesítésszöveg lekezelése"
 
 #: data/notifications.appdata.xml.in:80
 msgid "Use app name as fallback title"
-msgstr ""
+msgstr "Az alkalmazásnév használata, ha más nem érhető el"
 
 #: data/notifications.appdata.xml.in:87
 msgid "Complete redesign:"
-msgstr ""
+msgstr "Teljes redizájn:"
 
 #: data/notifications.appdata.xml.in:89
 msgid "Multitouch gestures to dismiss notifications"
-msgstr ""
+msgstr "Többujjas gesztusok az értesítések törléséhez"
 
 #: data/notifications.appdata.xml.in:90
 msgid "Close button on each notification"
@@ -101,11 +101,11 @@ msgstr "Teljesítménybeli javítások"
 
 #: data/notifications.appdata.xml.in:103
 msgid "Fix issues with disappearing notifications"
-msgstr ""
+msgstr "Javítva az eltűnő értesítésekkel kapcsolatos hibák"
 
 #: data/notifications.appdata.xml.in:109
 msgid "Fix a minor visual inconsistency"
-msgstr ""
+msgstr "Javítva egy kisebb vizuális inkonzisztencia"
 
 #: data/notifications.appdata.xml.in:119
 msgid "elementary, Inc."
