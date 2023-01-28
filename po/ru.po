@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:45+0000\n"
-"PO-Revision-Date: 2022-09-30 10:15+0000\n"
-"Last-Translator: lenemter <lenemter@gmail.com>\n"
+"PO-Revision-Date: 2023-01-29 12:25+0000\n"
+"Last-Translator: кубик круглый <megarainbow29@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ru/>\n"
 "Language: ru\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.14.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:56
@@ -34,11 +34,11 @@ msgstr "Параметры уведомлений…"
 
 #: src/Indicator.vala:234
 msgid "Middle-click to disable Do Not Disturb"
-msgstr "Нажмите средней кнопкой, чтобы выключить режим «Не беспокоить»"
+msgstr "Нажмите средней кнопкой мыши, чтобы выключить режим «Не беспокоить»"
 
 #: src/Indicator.vala:236
 msgid "Middle-click to enable Do Not Disturb"
-msgstr "Нажмите средней кнопкой, чтобы включить режим «Не беспокоить»"
+msgstr "Нажмите средней кнопкой мыши, чтобы включить режим «Не беспокоить»"
 
 #: src/Indicator.vala:243
 msgid "No notifications"
