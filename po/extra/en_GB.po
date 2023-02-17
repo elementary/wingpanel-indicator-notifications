@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:45+0000\n"
-"PO-Revision-Date: 2021-12-09 02:04+0000\n"
-"Last-Translator: Ciarán Ainsworth <ciaranainsworth@outlook.com>\n"
+"PO-Revision-Date: 2023-02-17 14:25+0000\n"
+"Last-Translator: David Hewitt <davidmhewitt@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-notifications-extra/en_GB/>\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -48,22 +48,24 @@ msgid "Fixes:"
 msgstr "Fixes:"
 
 #: data/notifications.appdata.xml.in:23
-#, fuzzy
-#| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "Close button on each notification"
+msgstr "Clear All button no longer leaves undeletable notifications"
 
 #: data/notifications.appdata.xml.in:35
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
 msgstr ""
+"Reduce delay in initially showing wingpanel when there is a large number of "
+"notifications"
 
 #: data/notifications.appdata.xml.in:36
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr ""
+"Reduce delay in clearing all notifications when there is a large number of "
+"notifications"
 
 #: data/notifications.appdata.xml.in:48
 msgid "Fix delayed startup"
