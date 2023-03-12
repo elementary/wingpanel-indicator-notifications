@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:45+0000\n"
-"PO-Revision-Date: 2019-11-07 10:52-0800\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-03-12 18:25+0000\n"
+"Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <https://l10n.elementary.io/projects/wingpanel/"
+"indicator-notifications-extra/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #: data/notifications.appdata.xml.in:6
 msgid "Notifications Indicator"
@@ -37,7 +40,7 @@ msgstr ""
 #: data/notifications.appdata.xml.in:81 data/notifications.appdata.xml.in:97
 #: data/notifications.appdata.xml.in:104 data/notifications.appdata.xml.in:110
 msgid "Updated translations"
-msgstr ""
+msgstr "განახლებული თარგმანები"
 
 #: data/notifications.appdata.xml.in:21 data/notifications.appdata.xml.in:33
 #: data/notifications.appdata.xml.in:46 data/notifications.appdata.xml.in:58
@@ -106,4 +109,4 @@ msgstr ""
 
 #: data/notifications.appdata.xml.in:119
 msgid "elementary, Inc."
-msgstr ""
+msgstr "elementary, Inc."
