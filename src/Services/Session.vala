@@ -78,7 +78,7 @@ public class Notifications.Session : GLib.Object {
                     key.get_string (group, SENDER_KEY),
                     key.get_boolean (group, HAS_TEMP_FILE_KEY)
                 );
-                list.append (notification);
+                list.prepend (notification);
             }
         } catch (KeyFileError e) {
             warning (e.message);
@@ -86,7 +86,17 @@ public class Notifications.Session : GLib.Object {
             warning (e.message);
         }
 
+        list.reverse ();
         return list;
+    }
+
+    public uint count_notifications () {
+        uint count = 0;
+        foreach (unowned string group in key.get_groups ()) {
+            count++;
+        }
+
+        return count;
     }
 
     public void add_notification (Notification notification, bool write_file = true) {
@@ -152,11 +162,21 @@ public class Notifications.Session : GLib.Object {
         }
     }
 
+    private uint write_timeout_id = 0;
     private void write_contents () {
-        try {
-            FileUtils.set_contents (session_file.get_path (), key.to_data ());
-        } catch (FileError e) {
-            warning (e.message);
+        if (write_timeout_id > 0) {
+            Source.remove (write_timeout_id);
         }
+
+        write_timeout_id = Timeout.add (1000, () => {
+            write_timeout_id = 0;
+            try {
+                FileUtils.set_contents (session_file.get_path (), key.to_data ());
+            } catch (FileError e) {
+                warning (e.message);
+            }
+
+            return Source.REMOVE;
+        });
     }
 }

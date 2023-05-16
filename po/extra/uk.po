@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-17 18:36+0000\n"
-"PO-Revision-Date: 2021-12-17 23:36+0000\n"
+"POT-Creation-Date: 2022-10-14 18:45+0000\n"
+"PO-Revision-Date: 2022-07-12 00:03+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/uk/>\n"
@@ -28,67 +28,89 @@ msgstr "Індикатор сповіщень"
 msgid "See missed notifications in the panel"
 msgstr "Перегляньте пропущені сповіщення у панелі"
 
-#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:24
-msgid "Fixes:"
-msgstr "Виправлення:"
-
-#: data/notifications.appdata.xml.in:14
-msgid "Fix delayed startup"
-msgstr "Виправлено затримку запуску"
-
-#: data/notifications.appdata.xml.in:16 data/notifications.appdata.xml.in:28
-#: data/notifications.appdata.xml.in:36 data/notifications.appdata.xml.in:44
-#: data/notifications.appdata.xml.in:59
+#: data/notifications.appdata.xml.in:12 data/notifications.appdata.xml.in:25
+#: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:50
+#: data/notifications.appdata.xml.in:62 data/notifications.appdata.xml.in:70
+#: data/notifications.appdata.xml.in:78 data/notifications.appdata.xml.in:93
 msgid "Minor updates:"
 msgstr "Незначні оновлення:"
 
-#: data/notifications.appdata.xml.in:18 data/notifications.appdata.xml.in:30
-#: data/notifications.appdata.xml.in:38 data/notifications.appdata.xml.in:47
-#: data/notifications.appdata.xml.in:63 data/notifications.appdata.xml.in:70
-#: data/notifications.appdata.xml.in:76
+#: data/notifications.appdata.xml.in:14 data/notifications.appdata.xml.in:27
+#: data/notifications.appdata.xml.in:40 data/notifications.appdata.xml.in:52
+#: data/notifications.appdata.xml.in:64 data/notifications.appdata.xml.in:72
+#: data/notifications.appdata.xml.in:81 data/notifications.appdata.xml.in:97
+#: data/notifications.appdata.xml.in:104 data/notifications.appdata.xml.in:110
 msgid "Updated translations"
 msgstr "Оновлено переклади"
 
-#: data/notifications.appdata.xml.in:26
+#: data/notifications.appdata.xml.in:21 data/notifications.appdata.xml.in:33
+#: data/notifications.appdata.xml.in:46 data/notifications.appdata.xml.in:58
+msgid "Fixes:"
+msgstr "Виправлення:"
+
+#: data/notifications.appdata.xml.in:23
+msgid "Clear All button no longer leaves undeletable notifications"
+msgstr ""
+"Кнопка «Очистити все» більше не залишає сповіщень, які неможливо видалити"
+
+#: data/notifications.appdata.xml.in:35
+msgid ""
+"Reduce delay in initially showing wingpanel when there is a large number of "
+"notifications"
+msgstr ""
+"Скоротити затримку початкового показу Wingpanel, коли є велика кількість "
+"сповіщень"
+
+#: data/notifications.appdata.xml.in:36
+msgid ""
+"Reduce delay in clearing all notifications when there is a large number of "
+"notifications"
+msgstr "Скорочена затримка очищення сповіщень, коли їх велика кількість"
+
+#: data/notifications.appdata.xml.in:48
+msgid "Fix delayed startup"
+msgstr "Виправлено затримку запуску"
+
+#: data/notifications.appdata.xml.in:60
 msgid "Handle null message body"
 msgstr "Обробка повідомлень без вмісту"
 
-#: data/notifications.appdata.xml.in:46
+#: data/notifications.appdata.xml.in:80
 msgid "Use app name as fallback title"
 msgstr "Назва застосунку як запасний заголовок"
 
-#: data/notifications.appdata.xml.in:53
+#: data/notifications.appdata.xml.in:87
 msgid "Complete redesign:"
 msgstr "Цілковите оновлення:"
 
-#: data/notifications.appdata.xml.in:55
+#: data/notifications.appdata.xml.in:89
 msgid "Multitouch gestures to dismiss notifications"
 msgstr "Жести для відхилення сповіщень"
 
-#: data/notifications.appdata.xml.in:56
+#: data/notifications.appdata.xml.in:90
 msgid "Close button on each notification"
 msgstr "Кнопка закриття кожного сповіщення"
 
-#: data/notifications.appdata.xml.in:57
+#: data/notifications.appdata.xml.in:91
 msgid "Show images and badged icons"
 msgstr "Показ зображень та піктограм"
 
-#: data/notifications.appdata.xml.in:61
+#: data/notifications.appdata.xml.in:95
 msgid "Show tooltip on hover"
 msgstr "Показ підказок під час наведення"
 
-#: data/notifications.appdata.xml.in:62
+#: data/notifications.appdata.xml.in:96
 msgid "Performance improvements"
 msgstr "Поліпшення швидкодії"
 
-#: data/notifications.appdata.xml.in:69
+#: data/notifications.appdata.xml.in:103
 msgid "Fix issues with disappearing notifications"
 msgstr "Виправлено проблеми зникання сповіщень"
 
-#: data/notifications.appdata.xml.in:75
+#: data/notifications.appdata.xml.in:109
 msgid "Fix a minor visual inconsistency"
 msgstr "Виправлено незначні невідповідності вигляду"
 
-#: data/notifications.appdata.xml.in:85
+#: data/notifications.appdata.xml.in:119
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

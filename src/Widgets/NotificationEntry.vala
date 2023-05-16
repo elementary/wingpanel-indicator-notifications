@@ -39,7 +39,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         provider.load_from_resource ("io/elementary/wingpanel/notifications/NotificationEntry.css");
 
         try {
-            entity_regex = new Regex ("&(?!amp;|quot;|apos;|lt;|gt;)");
+            entity_regex = new Regex ("&(?!amp;|quot;|apos;|lt;|gt;|nbsp;|#39)");
             tag_regex = new Regex ("<(?!\\/?[biu]>)");
         } catch (Error e) {
             warning ("Invalid regex: %s", e.message);
