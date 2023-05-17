@@ -40,7 +40,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
         activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
-        width_request = 360;
         set_placeholder (placeholder);
         show_all ();
 
