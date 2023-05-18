@@ -129,7 +129,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             main_box = new Gtk.Grid ();
             main_box.orientation = Gtk.Orientation.VERTICAL;
-            main_box.width_request = 300;
+            main_box.width_request = 360;
             main_box.add (not_disturb_switch);
             main_box.add (dnd_switch_separator);
             main_box.add (scrolled);
