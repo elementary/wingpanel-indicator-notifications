@@ -17,6 +17,7 @@
 
 public class Notifications.Notification : Object {
     public const string DESKTOP_ID_EXT = ".desktop";
+    public const string DEFAULT_ACTION = "default";
 
     public bool is_transient = false;
     public string app_name;
@@ -49,7 +50,6 @@ public class Notifications.Notification : Object {
         COUNT
     }
 
-    private const string DEFAULT_ACTION = "default";
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
@@ -143,25 +143,36 @@ public class Notifications.Notification : Object {
         closed ();
     }
 
-    public bool run_default_action () {
-        if (DEFAULT_ACTION in actions) {
-            app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
+    public bool action_invoked (string action) {
+        var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
 
-            var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
+        if (action == DEFAULT_ACTION) {
+            if (DEFAULT_ACTION in actions) {
+                app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
+
+                if (notifications_iface != null) {
+                    notifications_iface.action_invoked (id, DEFAULT_ACTION);
+                }
+
+                return true;
+            } else if (actions.length == 0) {
+                try {
+                    app_info.launch (null, null);
+                    return true;
+                } catch (Error e) {
+                    critical ("Unable to launch app: %s", e.message);
+                }
+            }
+
+            return false;
+        } else {
             if (notifications_iface != null) {
                 notifications_iface.action_invoked (id, DEFAULT_ACTION);
+                return true;
             }
 
-            return true;
-        } else {
-            try {
-                app_info.launch (null, null);
-            } catch (Error e) {
-                critical ("Unable to launch app: %s", e.message);
-            }
+            return false;
         }
-
-        return false;
     }
 
     private string get_string (Variant tuple, int column) {

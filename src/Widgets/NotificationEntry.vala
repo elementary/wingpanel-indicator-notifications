@@ -144,6 +144,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
             transition_type = Gtk.RevealerTransitionType.CROSSFADE
@@ -185,6 +187,40 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         grid.attach (body_label, 1, 1, 2);
+
+        if (notification.actions.length > 0) {
+            var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
+                margin_top = 12,
+                halign = Gtk.Align.END,
+                homogeneous = true
+            };
+
+            bool action_area_packed = false;
+
+            for (int i = 0; i < notification.actions.length; i += 2) {
+                if (notification.actions[i] == Notification.DEFAULT_ACTION) {
+                    i += 2; //TODO: The i += 2 is copied from elementary/notifications. No idea why that's there though?
+                    continue;
+                }
+
+                var button = new Gtk.Button.with_label (notification.actions[i + 1]);
+                var action = notification.actions[i].dup ();
+
+                button.clicked.connect (() => {
+                    if (notification.action_invoked (action)) {
+                        activate ();
+                        clear ();
+                    }
+                });
+
+                action_area.pack_end (button);
+
+                if (!action_area_packed) {
+                    grid.attach (action_area, 0, 2, 3);
+                    action_area_packed = true;
+                }
+            }
+        }
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
@@ -230,6 +266,15 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         add (eventbox);
 
         show_all ();
+
+        button_release_event.connect (() => {
+            if (notification.action_invoked (Notification.DEFAULT_ACTION)) {
+                activate ();
+                clear ();
+            }
+
+            return Gdk.EVENT_STOP;
+        });
 
         delete_button.clicked.connect (() => {
             clear ();
