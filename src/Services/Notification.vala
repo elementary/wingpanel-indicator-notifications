@@ -16,6 +16,13 @@
  */
 
 public class Notifications.Notification : Object {
+    public enum CloseReason { // Matches enum in io.elementary.notifications
+        EXPIRED = 1,
+        DISMISSED = 2,
+        CLOSE_NOTIFICATION_CALL = 3,
+        UNDEFINED = 4
+    }
+
     public const string DESKTOP_ID_EXT = ".desktop";
     public const string DEFAULT_ACTION = "default";
 
@@ -35,8 +42,6 @@ public class Notifications.Notification : Object {
 
     public string desktop_id;
     public DesktopAppInfo? app_info = null;
-
-    public signal void closed ();
 
     private enum Column {
         APP_NAME = 0,
@@ -137,10 +142,6 @@ public class Notifications.Notification : Object {
 
         var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
         is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
-    }
-
-    public void close () {
-        closed ();
     }
 
     public bool action_invoked (string action) {

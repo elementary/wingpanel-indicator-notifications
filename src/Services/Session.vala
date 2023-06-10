@@ -90,15 +90,6 @@ public class Notifications.Session : GLib.Object {
         return list;
     }
 
-    public uint count_notifications () {
-        uint count = 0;
-        foreach (unowned string group in key.get_groups ()) {
-            count++;
-        }
-
-        return count;
-    }
-
     public void add_notification (Notification notification, bool write_file = true) {
         string id = notification.id.to_string ();
         key.set_int64 (id, UNIX_TIME_KEY, notification.timestamp.to_unix ());
