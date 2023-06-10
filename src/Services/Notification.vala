@@ -156,9 +156,10 @@ public class Notifications.Notification : Object {
                         notifications_iface.invoke_action (id, DEFAULT_ACTION);
                         return true;
                     } catch (Error e) {
-                        warning ("Failed to invoke action '%s': %s", action, e.message);
+                        warning ("Failed to invoke action '%s': %s", DEFAULT_ACTION, e.message);
                     }
                 }
+
             } else if (actions.length == 0) {
                 try {
                     app_info.launch (null, null);
