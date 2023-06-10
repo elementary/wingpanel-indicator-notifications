@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-[DBus (name = "org.freedesktop.Notifications")]
+[DBus (name = "io.elementary.Notifications")]
 public interface Notifications.INotifications : Object {
-    public signal void action_invoked (uint32 id, string action);
+    public abstract void invoke_action (uint32 id, string action) throws DBusError, IOError;
 }

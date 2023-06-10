@@ -152,10 +152,13 @@ public class Notifications.Notification : Object {
                 app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
 
                 if (notifications_iface != null) {
-                    notifications_iface.action_invoked (id, DEFAULT_ACTION);
+                    try {
+                        notifications_iface.invoke_action (id, DEFAULT_ACTION);
+                        return true;
+                    } catch (Error e) {
+                        warning ("Failed to invoke action '%s': %s", action, e.message);
+                    }
                 }
-
-                return true;
             } else if (actions.length == 0) {
                 try {
                     app_info.launch (null, null);
@@ -168,8 +171,12 @@ public class Notifications.Notification : Object {
             return false;
         } else {
             if (notifications_iface != null) {
-                notifications_iface.action_invoked (id, DEFAULT_ACTION);
-                return true;
+                try {
+                    notifications_iface.invoke_action (id, action);
+                    return true;
+                } catch (Error e) {
+                    warning ("Failed to invoke action '%s': %s", action, e.message);
+                }
             }
 
             return false;
