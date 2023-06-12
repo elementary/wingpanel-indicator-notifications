@@ -18,10 +18,10 @@ add_global_arguments(
 )
 add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.notifications"', language:'c')
 
-asresources = gnome.compile_resources(
-    'as-resources', 'data/io.elementary.wingpanel.notifications.gresource.xml',
-    source_dir: 'data',
-    c_name: 'as'
+gresource = gnome.compile_resources(
+    'gresource',
+    'data' / 'gresource.xml',
+    source_dir: 'data'
 )
 
 wingpanel_dep = dependency('wingpanel')
@@ -47,7 +47,7 @@ shared_module(
     'src/Services/Notification.vala',
     'src/Services/Session.vala',
     'src/Services/Interfaces.vala',
-    asresources,
+    gresource,
     config_vala,
     dependencies: [
         dependency('glib-2.0'),
