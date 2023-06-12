@@ -46,8 +46,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (dynamic_icon == null) {
-            Gtk.IconTheme.get_default ().add_resource_path ("/io/elementary/wingpanel/notifications");
-
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
