@@ -29,6 +29,22 @@
   <update_contact>contact_at_elementary.io</update_contact>
 
   <releases>
+    <release version="7.0.0" date="2023-06-12" urgency="medium">
+      <description>
+        <p>Minor updates:</p>
+        <ul>
+          <li>Remove notification from list if bubble dismissed</li>
+          <li>Ensure accurate count in tooltip</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/elementary/wingpanel-indicator-notifications/issues/58">The character ' is not rendered correctly</issue>
+        <issue url="https://github.com/elementary/wingpanel-indicator-notifications/issues/168">Indicator width changes when there are no notifications</issue>
+        <issue url="https://github.com/elementary/wingpanel-indicator-notifications/issues/251">Update indicator animation</issue>
+      </issues>
+    </release>
+
     <release version="6.0.7" date="2022-10-15" urgency="medium">
       <description>
         <p>Minor updates:</p>
@@ -78,19 +94,7 @@
       </description>
     </release>
 
-    <release version="6.0.3" date="2021-12-10" urgency="medium">
-      <description>
-        <p>Fixes:</p>
-        <ul>
-          <li>Handle null message body</li>
-        </ul>
-        <p>Minor updates:</p>
-        <ul>
-          <li>Updated translations</li>
-        </ul>
-      </description>
-    </release>
-
+    <release version="6.0.3" date="2021-12-10" urgency="medium" />
     <release version="6.0.2" date="2021-10-26" urgency="medium" />
     <release version="6.0.1" date="2021-09-27" urgency="medium" />
     <release version="6.0.0" date="2021-07-15" urgency="medium" />
