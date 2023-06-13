@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-12 18:15+0000\n"
-"PO-Revision-Date: 2022-10-19 09:57+0000\n"
+"PO-Revision-Date: 2023-06-15 03:07+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/he/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -39,11 +39,11 @@ msgstr "עדכונים משניים:"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "Remove notification from list if bubble dismissed"
-msgstr ""
+msgstr "להסיר התראות מהרשימה אם הבועה בוטלה"
 
 #: data/notifications.metainfo.xml.in:37
 msgid "Ensure accurate count in tooltip"
-msgstr ""
+msgstr "וידוא ספירה נכונה בחלונית העצה"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
 #: data/notifications.metainfo.xml.in:65 data/notifications.metainfo.xml.in:79
