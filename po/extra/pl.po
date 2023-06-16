@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-12 18:15+0000\n"
-"PO-Revision-Date: 2022-07-12 20:21+0000\n"
+"PO-Revision-Date: 2023-06-17 15:07+0000\n"
 "Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
 "Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/pl/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -40,11 +40,11 @@ msgstr "Mniejsze aktualizacje:"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "Remove notification from list if bubble dismissed"
-msgstr ""
+msgstr "Usunięcie powiadomienia z listy przy odwołaniu bańki"
 
 #: data/notifications.metainfo.xml.in:37
 msgid "Ensure accurate count in tooltip"
-msgstr ""
+msgstr "Upewniono się, że w tooltipie będzie poprawna liczba powiadomień"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
 #: data/notifications.metainfo.xml.in:65 data/notifications.metainfo.xml.in:79
