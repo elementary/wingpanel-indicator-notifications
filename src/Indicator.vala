@@ -163,6 +163,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void on_notification_received (DBusMessage message, uint32 id) {
+        print ("notification received");
         var notification = new Notification.from_message (message, id);
         if (notification.is_transient || notification.app_name in EXCEPTIONS) {
             return;

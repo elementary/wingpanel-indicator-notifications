@@ -23,6 +23,7 @@ public class Notifications.Notification : Object {
         UNDEFINED = 4
     }
 
+    public const string ACTION_ID = "fdo-%u.%s";
     public const string DESKTOP_ID_EXT = ".desktop";
     public const string DEFAULT_ACTION = "default";
 
@@ -145,19 +146,15 @@ public class Notifications.Notification : Object {
     }
 
     public bool action_invoked (string action) {
-        var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
+        var notification_actions = NotificationMonitor.get_instance ().notification_actions;
 
         if (action == DEFAULT_ACTION) {
             if (DEFAULT_ACTION in actions) {
                 app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
 
-                if (notifications_iface != null) {
-                    try {
-                        notifications_iface.invoke_action (id, DEFAULT_ACTION);
-                        return true;
-                    } catch (Error e) {
-                        warning ("Failed to invoke action '%s': %s", DEFAULT_ACTION, e.message);
-                    }
+                if (notification_actions != null) {
+                    notification_actions.activate_action ("fdo-" + id.to_string () + "." + DEFAULT_ACTION, null);
+                    return true;
                 }
 
             } else if (actions.length == 0) {
@@ -171,9 +168,9 @@ public class Notifications.Notification : Object {
 
             return false;
         } else {
-            if (notifications_iface != null) {
+            if (notification_actions != null) {
                 try {
-                    notifications_iface.invoke_action (id, action);
+                    notification_actions.activate_action ("fdo-" + id.to_string () + "." + action, null);
                     return true;
                 } catch (Error e) {
                     warning ("Failed to invoke action '%s': %s", action, e.message);

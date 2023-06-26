@@ -47,6 +47,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
+        insert_action_group ("fdo-" + notification.id.to_string (), NotificationMonitor.get_instance ().notification_actions);
+
         var app_image = new Gtk.Image ();
 
         if (notification.app_icon.contains ("/")) {
@@ -138,7 +140,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var delete_button = new Gtk.Button () {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
-            image = delete_image
+            image = delete_image,
+            action_name = "close",
+            action_target = notification.id
         };
         delete_button.get_style_context ().add_class ("close");
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -203,14 +207,13 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                     continue;
                 }
 
-                var button = new Gtk.Button.with_label (notification.actions[i + 1]);
-                var action = notification.actions[i].dup ();
+                var button = new Gtk.Button.with_label (notification.actions[i + 1]) {
+                    action_name = Notification.ACTION_ID.printf (notification.id, notification.actions[i])
+                };
 
                 button.clicked.connect (() => {
-                    if (notification.action_invoked (action)) {
-                        activate ();
-                        clear ();
-                    }
+                    activate ();
+                    clear ();
                 });
 
                 action_area.pack_end (button);
@@ -268,10 +271,12 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         show_all ();
 
         button_release_event.connect (() => {
-            if (notification.action_invoked (Notification.DEFAULT_ACTION)) {
+            // unowned var action_group = get_action_group ("fdo-" + notification.id.to_string ());
+            // action_gr
+            // if (notification.action_invoked (Notification.DEFAULT_ACTION)) {
                 activate ();
                 clear ();
-            }
+            // }
 
             return Gdk.EVENT_STOP;
         });
