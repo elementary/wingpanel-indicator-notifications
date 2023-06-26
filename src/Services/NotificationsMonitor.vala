@@ -44,7 +44,7 @@ public class Notifications.NotificationMonitor : Object {
         return instance;
     }
 
-    public INotifications? notifications_iface = null;
+    public DBusActionGroup? notifications_action_group = null;
 
     construct {
         initialize.begin ();
@@ -87,11 +87,11 @@ public class Notifications.NotificationMonitor : Object {
             critical ("Unable to monitor notifications bus: %s", e.message);
         }
 
-        try {
-            notifications_iface = yield Bus.get_proxy (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH, DBusProxyFlags.NONE, null);
-        } catch (Error e) {
-            warning ("Unable to connection to notifications bus: %s", e.message);
-        }
+        notifications_action_group = DBusActionGroup.get (
+            Application.get_default ().get_dbus_connection (),
+            "org.freedesktop.Notifications",
+            "/org/freedesktop/Notifications"
+        );
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {

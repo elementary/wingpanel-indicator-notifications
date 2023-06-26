@@ -26,6 +26,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     private const int ICON_SIZE_PRIMARY = 48;
     private const int ICON_SIZE_SECONDARY = 24;
 
+    private const string ACTION_GROUP_PREFIX = "notification-entry";
+    private const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
+
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
     private static Regex tag_regex;
@@ -47,6 +50,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
+        insert_action_group (ACTION_GROUP_PREFIX, NotificationMonitor.get_instance ().notifications_action_group);
+
         var app_image = new Gtk.Image ();
 
         if (notification.app_icon.contains ("/")) {
@@ -138,12 +143,16 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var delete_button = new Gtk.Button () {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
-            image = delete_image
+            image = delete_image,
+            action_name = ACTION_PREFIX + "close",
+            action_target = notification.id
         };
         delete_button.get_style_context ().add_class ("close");
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
             transition_type = Gtk.RevealerTransitionType.CROSSFADE
@@ -185,6 +194,33 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         grid.attach (body_label, 1, 1, 2);
+
+        if (notification.actions_with_label.length > 0) {
+            var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
+                margin_top = 12,
+                halign = Gtk.Align.END,
+                homogeneous = true
+            };
+
+            bool action_area_packed = false;
+            foreach (var action_name in notification.actions_with_label.get_keys ()) {
+                var button = new Gtk.Button.with_label (notification.actions_with_label[action_name]) {
+                    action_name = ACTION_PREFIX + Notification.ACTION_ID.printf (notification.id, action_name)
+                };
+
+                button.clicked.connect (() => {
+                    activate ();
+                    clear ();
+                });
+
+                action_area.pack_end (button);
+
+                if (!action_area_packed) {
+                    grid.attach (action_area, 0, 2, 3);
+                    action_area_packed = true;
+                }
+            }
+        }
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
@@ -230,6 +266,27 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         add (eventbox);
 
         show_all ();
+
+        button_release_event.connect (() => {
+            unowned var action_group = get_action_group ("fdo-" + notification.id.to_string ());
+            if (action_group.has_action (Notification.ACTION_ID.printf (notification.id, Notification.DEFAULT_ACTION))) {
+                notification.app_info.launch_action (Notification.DEFAULT_ACTION, new GLib.AppLaunchContext ());
+                action_group.activate_action (Notification.ACTION_ID.printf (notification.id, Notification.DEFAULT_ACTION), null);
+            } else if (notification.actions.length == 0) {
+                try {
+                    notification.app_info.launch (null, null);
+                } catch (Error e) {
+                    critical ("Unable to launch app: %s", e.message);
+                }
+            } else {
+                return Gdk.EVENT_STOP;
+            }
+
+            activate ();
+            clear ();
+
+            return Gdk.EVENT_STOP;
+        });
 
         delete_button.clicked.connect (() => {
             clear ();

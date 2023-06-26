@@ -38,7 +38,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
         placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
         show_all ();
@@ -129,10 +128,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row is NotificationEntry) {
-            unowned NotificationEntry notification_entry = (NotificationEntry) row;
-            notification_entry.notification.run_default_action ();
-            notification_entry.clear ();
-
             close_popover ();
         }
     }
