@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-12 18:02+0000\n"
+"POT-Creation-Date: 2023-06-12 18:15+0000\n"
 "PO-Revision-Date: 2020-09-22 13:14+0000\n"
 "Last-Translator: Shukrullo <shukrullo@umail.uz>\n"
 "Language-Team: Uzbek <https://l10n.elementary.io/projects/wingpanel/"
@@ -31,43 +31,47 @@ msgstr ""
 msgid "elementary, Inc."
 msgstr "elementary Inc."
 
-#: data/notifications.metainfo.xml.in:34 data/notifications.metainfo.xml.in:47
-#: data/notifications.metainfo.xml.in:61 data/notifications.metainfo.xml.in:74
-#: data/notifications.metainfo.xml.in:87
+#: data/notifications.metainfo.xml.in:34 data/notifications.metainfo.xml.in:50
+#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
+#: data/notifications.metainfo.xml.in:90
 msgid "Minor updates:"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:49
-#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:76
-#: data/notifications.metainfo.xml.in:89
+#: data/notifications.metainfo.xml.in:36
+msgid "Remove notification from list if bubble dismissed"
+msgstr ""
+
+#: data/notifications.metainfo.xml.in:37
+msgid "Ensure accurate count in tooltip"
+msgstr ""
+
+#: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
+#: data/notifications.metainfo.xml.in:65 data/notifications.metainfo.xml.in:79
+#: data/notifications.metainfo.xml.in:92
 msgid "Updated translations"
 msgstr "Yangilangan tarjimalar"
 
-#: data/notifications.metainfo.xml.in:43 data/notifications.metainfo.xml.in:56
-#: data/notifications.metainfo.xml.in:70 data/notifications.metainfo.xml.in:83
+#: data/notifications.metainfo.xml.in:59 data/notifications.metainfo.xml.in:72
+#: data/notifications.metainfo.xml.in:86
 msgid "Fixes:"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:45
+#: data/notifications.metainfo.xml.in:61
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:58
+#: data/notifications.metainfo.xml.in:74
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:59
+#: data/notifications.metainfo.xml.in:75
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:72
+#: data/notifications.metainfo.xml.in:88
 msgid "Fix delayed startup"
-msgstr ""
-
-#: data/notifications.metainfo.xml.in:85
-msgid "Handle null message body"
 msgstr ""

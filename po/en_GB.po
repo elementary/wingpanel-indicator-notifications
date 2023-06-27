@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-12 18:02+0000\n"
-"PO-Revision-Date: 2023-02-17 14:25+0000\n"
+"POT-Creation-Date: 2023-06-12 18:15+0000\n"
+"PO-Revision-Date: 2023-06-15 03:07+0000\n"
 "Last-Translator: David Hewitt <davidmhewitt@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/en_GB/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.17\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:54
@@ -62,13 +62,11 @@ msgstr[0] "%u notification"
 msgstr[1] "%u notifications"
 
 #: src/Indicator.vala:256
-#, fuzzy, c-format
-#| msgid "%i app"
-#| msgid_plural "%i apps"
+#, c-format
 msgid "%u app"
 msgid_plural "%u apps"
-msgstr[0] "%i app"
-msgstr[1] "%i apps"
+msgstr[0] "%u app"
+msgstr[1] "%u apps"
 
 #: src/Widgets/NotificationsList.vala:29
 msgid "No Notifications"
