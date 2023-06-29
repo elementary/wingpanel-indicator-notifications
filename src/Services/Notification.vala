@@ -153,7 +153,7 @@ public class Notifications.Notification : Object {
     private HashTable<string, string> validate_actions (string[] actions) {
         var table = new HashTable<string, string> (str_hash, str_equal);
 
-        for (int i = 0; i< actions.length; i+= 2) {
+        for (int i = 0; i < actions.length; i += 2) {
             if (actions[i] == Notification.DEFAULT_ACTION) {
                 continue;
             }
