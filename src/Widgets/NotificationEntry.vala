@@ -144,7 +144,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
             image = delete_image,
-            action_name = ACTION_PREFIX + "close",
+            action_name = ACTION_PREFIX + "close"
             action_target = notification.id
         };
         delete_button.get_style_context ().add_class ("close");
@@ -205,7 +205,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             bool action_area_packed = false;
             foreach (var action_name in notification.actions_with_label.get_keys ()) {
                 var button = new Gtk.Button.with_label (notification.actions_with_label[action_name]) {
-                    action_name = ACTION_PREFIX + Notification.ACTION_ID.printf (notification.id, action_name)
+                    action_name = ACTION_PREFIX + action_name
                 };
 
                 button.clicked.connect (() => {
@@ -268,10 +268,10 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         show_all ();
 
         button_release_event.connect (() => {
-            unowned var action_group = get_action_group ("fdo-" + notification.id.to_string ());
-            if (action_group.has_action (Notification.ACTION_ID.printf (notification.id, Notification.DEFAULT_ACTION))) {
+            unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
+            if (action_group.has_action (notification.default_action)) {
                 notification.app_info.launch_action (Notification.DEFAULT_ACTION, new GLib.AppLaunchContext ());
-                action_group.activate_action (Notification.ACTION_ID.printf (notification.id, Notification.DEFAULT_ACTION), null);
+                action_group.activate_action (notification.default_action, null);
             } else if (notification.actions.length == 0) {
                 try {
                     notification.app_info.launch (null, null);

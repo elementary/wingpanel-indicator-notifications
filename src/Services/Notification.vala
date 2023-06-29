@@ -23,7 +23,6 @@ public class Notifications.Notification : Object {
         UNDEFINED = 4
     }
 
-    public const string ACTION_ID = "fdo-%u.%s";
     public const string DEFAULT_ACTION = "default";
     public const string DESKTOP_ID_EXT = ".desktop";
 
@@ -36,6 +35,7 @@ public class Notifications.Notification : Object {
     public string sender;
     public string[] actions;
     public HashTable<string, string> actions_with_label;
+    public string default_action { owned get { return id.to_string () + "." + DEFAULT_ACTION; } }
     public uint32 replaces_id;
     public uint32 id;
     public bool has_temp_file;
@@ -75,6 +75,8 @@ public class Notifications.Notification : Object {
         sender = _sender;
 
         actions = _actions;
+        actions_with_label = validate_actions (actions);
+
         timestamp = new GLib.DateTime.from_unix_local (_unix_time);
 
         desktop_id = _desktop_id;
@@ -95,7 +97,8 @@ public class Notifications.Notification : Object {
         sender = message.get_sender ();
 
         actions = body.get_child_value (Column.ACTIONS).dup_strv ();
-        set_actions (body.get_child_value (Column.ACTIONS).dup_strv ());
+        actions_with_label = validate_actions (actions);
+
         timestamp = new GLib.DateTime.now_local ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
@@ -147,37 +150,18 @@ public class Notifications.Notification : Object {
         is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
     }
 
-    public void set_actions (string[] actions) {
-        actions_with_label = new HashTable<string, string> (str_hash, str_equal);
+    private HashTable<string, string> validate_actions (string[] actions) {
+        var table = new HashTable<string, string> (str_hash, str_equal);
 
         for (int i = 0; i< actions.length; i+= 2) {
             if (actions[i] == Notification.DEFAULT_ACTION) {
                 continue;
             }
 
-            actions_with_label[actions[i]] = actions[i + 1];
-        }
-    }
-
-    public bool run_default_action () {
-        if (DEFAULT_ACTION in actions) {
-            app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
-
-            // var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
-            // if (notifications_iface != null) {
-            //     notifications_iface.action_invoked (id, DEFAULT_ACTION);
-            // }
-
-            return true;
-        } else {
-            try {
-                app_info.launch (null, null);
-            } catch (Error e) {
-                critical ("Unable to launch app: %s", e.message);
-            }
+            table[id.to_string () + "." + actions[i]] = actions[i + 1];
         }
 
-        return false;
+        return table;
     }
 
     private string get_string (Variant tuple, int column) {
