@@ -144,7 +144,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
             image = delete_image,
-            action_name = ACTION_PREFIX + "close"
+            action_name = ACTION_PREFIX + "close",
             action_target = notification.id
         };
         delete_button.get_style_context ().add_class ("close");
