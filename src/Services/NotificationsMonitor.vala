@@ -23,6 +23,7 @@
 public class Notifications.NotificationMonitor : Object {
     private const string NOTIFY_BUS_NAME = "org.freedesktop.Notifications";
     private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
+    private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
     private const string METHOD_CALL_MATCH_STRING = "type='method_call',interface='org.freedesktop.Notifications'";
     private const string METHOD_RETURN_MATCH_STRING = "type='method_return'";
     private const string ERROR_MATCH_STRING = "type='error'";
