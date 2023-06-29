@@ -90,7 +90,7 @@ public class Notifications.NotificationMonitor : Object {
 
         notifications_action_group = DBusActionGroup.get (
             Application.get_default ().get_dbus_connection (),
-            NOTIFY_IFACE,
+            NOTIFY_BUS_NAME,
             NOTIFY_PATH
         );
     }
