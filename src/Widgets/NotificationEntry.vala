@@ -329,6 +329,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             }
         });
         revealer.reveal_child = false;
+
+        unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
+        action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.id }));
     }
 
     private class DeleteAffordance : Gtk.Grid {

@@ -158,6 +158,12 @@ public class Notifications.Notification : Object {
                 continue;
             }
 
+            var label = actions[i + 1].strip ();
+            if (label == "") {
+                warning ("Action '%s' sent without label, skipping…", actions[i]);
+                continue;
+            }
+
             table[id.to_string () + "." + actions[i]] = actions[i + 1];
         }
 
