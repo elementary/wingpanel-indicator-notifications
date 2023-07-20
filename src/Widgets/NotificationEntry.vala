@@ -16,7 +16,7 @@
  */
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
-    public signal void clear ();
+    public signal void clear (bool close = true);
 
     public Notification notification { get; construct; }
 
@@ -143,9 +143,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var delete_button = new Gtk.Button () {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
-            image = delete_image,
-            action_name = ACTION_PREFIX + "close",
-            action_target = new Variant.array (VariantType.UINT32, { notification.id })
+            image = delete_image
         };
         delete_button.get_style_context ().add_class ("close");
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -210,7 +208,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
                 button.clicked.connect (() => {
                     activate ();
-                    clear ();
+                    clear (false);
                 });
 
                 action_area.pack_end (button);
@@ -272,18 +270,19 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             if (action_group.has_action (notification.default_action)) {
                 notification.app_info.launch_action (Notification.DEFAULT_ACTION, new GLib.AppLaunchContext ());
                 action_group.activate_action (notification.default_action, null);
+                clear (false);
             } else if (notification.actions.length == 0) {
                 try {
                     notification.app_info.launch (null, null);
                 } catch (Error e) {
                     critical ("Unable to launch app: %s", e.message);
                 }
+                clear ();
             } else {
                 return Gdk.EVENT_STOP;
             }
 
             activate ();
-            clear ();
 
             return Gdk.EVENT_STOP;
         });
@@ -320,7 +319,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         });
     }
 
-    public void dismiss () {
+    public void dismiss (bool close) {
         Source.remove (timeout_id);
 
         revealer.notify["child-revealed"].connect (() => {
@@ -330,8 +329,10 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         });
         revealer.reveal_child = false;
 
-        unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
-        action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.id }));
+        if (close) {
+            unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
+            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.id }));
+        }
     }
 
     private class DeleteAffordance : Gtk.Grid {
