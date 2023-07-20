@@ -199,8 +199,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 halign = Gtk.Align.END,
                 homogeneous = true
             };
+            grid.attach (action_area, 0, 2, 3);
 
-            bool action_area_packed = false;
             foreach (var action_name in notification.actions_with_label.get_keys ()) {
                 var button = new Gtk.Button.with_label (notification.actions_with_label[action_name]) {
                     action_name = ACTION_PREFIX + action_name
@@ -212,11 +212,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 });
 
                 action_area.pack_end (button);
-
-                if (!action_area_packed) {
-                    grid.attach (action_area, 0, 2, 3);
-                    action_area_packed = true;
-                }
             }
         }
 
