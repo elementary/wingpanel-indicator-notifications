@@ -45,7 +45,7 @@ public class Notifications.NotificationMonitor : Object {
         return instance;
     }
 
-    public DBusActionGroup? notifications_action_group = null;
+    public DBusActionGroup? notifications_action_group { get; private set; default = null; }
 
     construct {
         initialize.begin ();
