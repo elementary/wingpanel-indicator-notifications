@@ -136,10 +136,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (row is NotificationEntry) {
             var notification_entry = (NotificationEntry)row;
 
-            if (notification_entry.notification.actions_with_label.length > 0) {
-                return;
-            }
-
             try {
                 notification_entry.notification.app_info.launch (null, null);
             } catch (Error e) {
