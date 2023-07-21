@@ -48,6 +48,12 @@ public class Notifications.NotificationMonitor : Object {
     public DBusActionGroup? notifications_action_group { get; private set; default = null; }
 
     construct {
+        notifications_action_group = DBusActionGroup.get (
+            Application.get_default ().get_dbus_connection (),
+            NOTIFY_BUS_NAME,
+            NOTIFY_PATH
+        );
+
         initialize.begin ();
     }
 
@@ -87,12 +93,6 @@ public class Notifications.NotificationMonitor : Object {
         } catch (Error e) {
             critical ("Unable to monitor notifications bus: %s", e.message);
         }
-
-        notifications_action_group = DBusActionGroup.get (
-            Application.get_default ().get_dbus_connection (),
-            NOTIFY_BUS_NAME,
-            NOTIFY_PATH
-        );
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
