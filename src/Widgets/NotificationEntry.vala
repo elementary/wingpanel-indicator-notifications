@@ -189,7 +189,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid.attach (body_label, 1, 1, 2);
 
         if (notification.actions_with_label.length > 0) {
-            activatable = false;
+            if (notification.default_action == null) {
+                activatable = false;
+            }
 
             var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
                 margin_top = 12,
