@@ -138,12 +138,12 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
             try {
                 notification_entry.notification.app_info.launch (null, null);
+
+                notification_entry.clear ();
+                close_popover ();
             } catch (Error e) {
                 critical ("Unable to launch app: %s", e.message);
             }
-
-            notification_entry.clear ();
-            close_popover ();
         }
     }
 }
