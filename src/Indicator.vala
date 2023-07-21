@@ -196,7 +196,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             foreach (var app_entry in nlist.app_entries.values) {
                 foreach (var item in app_entry.app_notifications) {
                     if (item.notification.id == id) {
-                        item.clear ();
+                        item.clear (false);
                         return;
                     }
                 }

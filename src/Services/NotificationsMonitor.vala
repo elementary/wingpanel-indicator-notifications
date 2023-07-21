@@ -166,7 +166,7 @@ public class Notifications.NotificationMonitor : Object {
                         }
 
                         uint32 id = id_val.get_uint32 ();
-                        unowned string action_key = action_key_val.get_string ();
+                        string action_key = action_key_val.get_string ();
                         Idle.add (() => {
                             notification_action_invoked (id, action_key);
                             return Source.REMOVE;
