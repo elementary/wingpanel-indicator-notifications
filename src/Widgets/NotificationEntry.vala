@@ -200,12 +200,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 var button = new Gtk.Button.with_label (notification.actions_with_label[action_name]) {
                     action_name = NotificationsList.ACTION_PREFIX + action_name
                 };
-
-                button.clicked.connect (() => {
-                    activate ();
-                    clear (false);
-                });
-
                 action_area.pack_end (button);
             }
         }
@@ -251,35 +245,15 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         eventbox.add (revealer);
 
+        if (notification.default_action != null) {
+            action_name = NotificationsList.ACTION_PREFIX + notification.default_action;
+        }
+
         add (eventbox);
 
         show_all ();
 
-        button_release_event.connect (() => {
-            unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
-            if (action_group.has_action (notification.default_action)) {
-                notification.app_info.launch_action (Notification.DEFAULT_ACTION, new GLib.AppLaunchContext ());
-                action_group.activate_action (notification.default_action, null);
-                clear (false);
-            } else if (notification.actions.length == 0) {
-                try {
-                    notification.app_info.launch (null, null);
-                } catch (Error e) {
-                    critical ("Unable to launch app: %s", e.message);
-                }
-                clear ();
-            } else {
-                return Gdk.EVENT_STOP;
-            }
-
-            activate ();
-
-            return Gdk.EVENT_STOP;
-        });
-
-        delete_button.clicked.connect (() => {
-            clear ();
-        });
+        delete_button.clicked.connect (() => clear ());
 
         eventbox.enter_notify_event.connect ((event) => {
             delete_revealer.reveal_child = true;

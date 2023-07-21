@@ -35,7 +35,7 @@ public class Notifications.Notification : Object {
     public string sender;
     public string[] actions;
     public HashTable<string, string> actions_with_label;
-    public string default_action { owned get { return id.to_string () + "." + DEFAULT_ACTION; } }
+    public string? default_action { get; private set; default = null; }
     public uint32 replaces_id;
     public uint32 id;
     public bool has_temp_file;
@@ -154,7 +154,8 @@ public class Notifications.Notification : Object {
         var table = new HashTable<string, string> (str_hash, str_equal);
 
         for (int i = 0; i < actions.length; i += 2) {
-            if (actions[i] == Notification.DEFAULT_ACTION) {
+            if (actions[i] == DEFAULT_ACTION) {
+                default_action = id.to_string () + "." + DEFAULT_ACTION;
                 continue;
             }
 

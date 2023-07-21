@@ -41,6 +41,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
         placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
+        activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
         show_all ();
@@ -133,6 +134,19 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row is NotificationEntry) {
+            var notification_entry = (NotificationEntry)row;
+
+            if (notification_entry.notification.actions_with_label.length > 0) {
+                return;
+            }
+
+            try {
+                notification_entry.notification.app_info.launch (null, null);
+            } catch (Error e) {
+                critical ("Unable to launch app: %s", e.message);
+            }
+
+            notification_entry.clear ();
             close_popover ();
         }
     }

@@ -63,6 +63,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var monitor = NotificationMonitor.get_instance ();
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
+            monitor.notification_action_invoked.connect (on_notification_action_invoked);
 
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
@@ -198,6 +199,27 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                         item.clear ();
                         return;
                     }
+                }
+            }
+        }
+    }
+
+    private void on_notification_action_invoked (uint32 id, string action_key) {
+        foreach (var app_entry in nlist.app_entries.values) {
+            foreach (var item in app_entry.app_notifications) {
+                if (item.notification.id == id) {
+                    if (action_key == Notification.DEFAULT_ACTION) {
+                        try {
+                            item.notification.app_info.launch (null, null);
+                        } catch (Error e) {
+                            warning ("Unable to launch app: %s", e.message);
+                        }
+                    }
+
+                    item.clear (false);
+                    close ();
+
+                    return;
                 }
             }
         }
