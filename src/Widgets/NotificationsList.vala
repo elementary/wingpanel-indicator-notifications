@@ -46,7 +46,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         row_activated.connect (on_row_activated);
     }
 
-    public async void add_entry (Notification notification, bool add_to_session = true, bool write_file = true) {
+    public void add_entry (Notification notification) {
         var entry = new NotificationEntry (notification);
 
         if (app_entries[notification.desktop_id] != null) {
@@ -70,13 +70,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         }
 
         show_all ();
-
-        Idle.add (add_entry.callback);
-        yield;
-
-        if (add_to_session) { // If notification was obtained from session do not write it back
-            Session.get_instance ().add_notification (notification);
-        }
     }
 
     public uint count_notifications (out uint number_of_apps) {
@@ -121,10 +114,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         app_entries.unset (app_entry.app_id);
         app_entry.clear_all_notification_entries ();
         app_entry.destroy ();
-
-        if (app_entries.size == 0) {
-            Session.get_instance ().clear ();
-        }
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {

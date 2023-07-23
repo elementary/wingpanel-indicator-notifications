@@ -76,7 +76,6 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         app_notifications.remove (entry);
         entry.dismiss ();
 
-        Session.get_instance ().remove_notification (entry.notification);
         if (app_notifications.length () == 0) {
             clear ();
         }
@@ -90,6 +89,5 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         });
 
         app_notifications = new List<NotificationEntry> ();
-        Session.get_instance ().remove_notifications (to_remove);
     }
 }
