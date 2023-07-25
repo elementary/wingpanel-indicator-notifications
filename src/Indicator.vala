@@ -206,22 +206,23 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void on_notification_action_invoked (uint32 id, string action_key) {
         foreach (var app_entry in nlist.app_entries.values) {
-            foreach (var item in app_entry.app_notifications) {
-                if (item.notification.id == id) {
-                    if (action_key == Notification.DEFAULT_ACTION) {
-                        try {
-                            item.notification.app_info.launch (null, null);
-                        } catch (Error e) {
-                            warning ("Unable to launch app: %s", e.message);
-                        }
-                    }
+            unowned var entry = app_entry.app_notifications.search (id, (e, i) => (int)(((uint32)i) - e.notification.id));
+            if (entry == null) {
+                continue;
+            }
 
-                    item.clear (false);
-                    close ();
-
-                    return;
+            if (action_key == Notification.DEFAULT_ACTION) {
+                try {
+                    entry.data.notification.app_info.launch (null, null);
+                } catch (Error e) {
+                    warning ("Unable to launch app: %s", e.message);
                 }
             }
+
+            entry.data.clear (false);
+            close ();
+
+            return;
         }
     }
 
