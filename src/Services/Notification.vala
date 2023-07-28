@@ -35,7 +35,6 @@ public class Notifications.Notification : Object {
     public string[] actions;
     public uint32 replaces_id;
     public uint32 id;
-    public bool has_temp_file;
     public GLib.DateTime timestamp;
     public GLib.Icon badge_icon { get; construct set; }
 
@@ -58,28 +57,6 @@ public class Notifications.Notification : Object {
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
-
-    public Notification (
-        uint32 _id, string _app_name, string _app_icon, string _summary, string _message_body, string _image_path,
-        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender, bool _has_temp_file
-    ) {
-        app_name = _app_name;
-        app_icon = _app_icon;
-        summary = _summary;
-        message_body = _message_body;
-        image_path = _image_path;
-        replaces_id = (uint32) _replaces_id;
-        id = _id;
-        sender = _sender;
-
-        actions = _actions;
-        timestamp = new GLib.DateTime.from_unix_local (_unix_time);
-
-        desktop_id = _desktop_id;
-        app_info = new DesktopAppInfo (desktop_id);
-
-        has_temp_file = _has_temp_file;
-    }
 
     public Notification.from_message (DBusMessage message, uint32 _id) {
         var body = message.get_body ();
@@ -131,7 +108,6 @@ public class Notifications.Notification : Object {
             var tmpfile = store_pixbuf (buf);
             if (tmpfile != null) {
                 image_path = tmpfile;
-                has_temp_file = true;
             }
         }
 
