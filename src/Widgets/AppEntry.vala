@@ -94,7 +94,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         app_notifications.prepend (entry);
         entry.clear.connect (remove_notification_entry);
 
-        entry.revealer.reveal_child = expander.expanded;
+        expander.bind_property ("expanded", entry.revealer, "reveal-child", SYNC_CREATE);
     }
 
     public void remove_notification_entry (NotificationEntry entry) {
