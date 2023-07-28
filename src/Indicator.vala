@@ -16,7 +16,6 @@
  */
 
 public class Notifications.Indicator : Wingpanel.Indicator {
-    private const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
     private const string CHILD_SCHEMA_ID = "io.elementary.notifications.applications";
     private const string CHILD_PATH = "/io/elementary/notifications/applications/%s/";
     private const string REMEMBER_KEY = "remember";
@@ -173,12 +172,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void on_notification_received (DBusMessage message, uint32 id) {
         var notification = new Notification.from_message (message, id);
-        if (notification.is_transient || notification.app_name in EXCEPTIONS) {
-            return;
-        }
 
         string app_id = notification.desktop_id.replace (Notification.DESKTOP_ID_EXT, "");
-
         Settings? app_settings = app_settings_cache.get (app_id);
 
         var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
@@ -198,18 +193,16 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
     }
 
-    private void on_notification_closed (uint32 id, uint32 reason) {
-        // If notification bubble was dismissed by user do not keep in list
-        if (reason == Notification.CloseReason.DISMISSED ||
-            reason == Notification.CloseReason.CLOSE_NOTIFICATION_CALL) {
+    private void on_notification_closed (uint32 id, Notification.CloseReason reason) {
+        SearchFunc<NotificationEntry, uint32> find_entry = (e, i) => {
+            return i == e.notification.id ? 0 : i > e.notification.id ? 1 : -1;
+        };
 
-            foreach (var app_entry in nlist.app_entries.values) {
-                foreach (var item in app_entry.app_notifications) {
-                    if (item.notification.id == id) {
-                        item.clear ();
-                        return;
-                    }
-                }
+        foreach (var app_entry in nlist.app_entries.values) {
+            unowned var node = app_entry.app_notifications.search (id, find_entry);
+            if (node != null) {
+                node.data.clear ();
+                return;
             }
         }
     }

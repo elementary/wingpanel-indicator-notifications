@@ -11,7 +11,7 @@
 [SingleInstance]
 public sealed class Notifications.NotificationsMonitor : Object {
     public signal void notification_received (DBusMessage message, uint32 id);
-    public signal void notification_closed (uint32 id, uint32 reason);
+    public signal void notification_closed (uint32 id, Notification.CloseReason reason);
 
     // matches method calls and signal emissions in the org.freedesktop.Notifications interface at /org/freedesktop/Notifications.
     private const string CALL_MATCH = "interface='org.freedesktop.Notifications',path='/org/freedesktop/Notifications'";
@@ -20,8 +20,8 @@ public sealed class Notifications.NotificationsMonitor : Object {
     // matches errors sent from the org.freeedesktop.Notifications name.
     private const string ERROR_MATCH = "type=error,sender='org.freedesktop.Notifications'";
 
+    private Gee.Map<uint32, DBusMessage> awaiting = new Gee.HashMap<uint32, DBusMessage> ();
     private DBusConnection connection;
-    private DBusMessage? awaiting_reply = null;
 
     public async void init () throws Error {
 #if VALA_0_54
@@ -45,106 +45,97 @@ public sealed class Notifications.NotificationsMonitor : Object {
             -1
         );
 
-        connection.add_filter (message_filter);
+        connection.add_filter (filter);
     }
 
-    private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
-        if (incoming) {
-            switch (message.get_message_type ()) {
-                case DBusMessageType.METHOD_CALL:
-                    if (message.get_member () == "Notify") {
-                        try {
-                            awaiting_reply = message.copy ();
-                        } catch (Error e) {
-                            warning (e.message);
-                        }
-                    } else if (message.get_member () == "CloseNotification") {
-                        unowned GLib.Variant? body = message.get_body ();
-                        if (body == null || body.n_children () != 1) {
-                            return message;
-                        }
-
-                        var child = body.get_child_value (0);
-                        if (!child.is_of_type (VariantType.UINT32)) {
-                            return message;
-                        }
-
-                        uint32 id = child.get_uint32 ();
-                        Idle.add (() => {
-                            notification_closed (id, Notification.CloseReason.CLOSE_NOTIFICATION_CALL);
-                            return Source.REMOVE;
-                        });
-                    }
-
-                    break;
-
-                case DBusMessageType.SIGNAL:
-                    if (message.get_member () == "NotificationClosed") {
-                        unowned GLib.Variant? body = message.get_body ();
-                        if (body == null || body.n_children () != 2) {
-                            return message;
-                        }
-
-                        var id_val = body.get_child_value (0);
-                        if (!id_val.is_of_type (VariantType.UINT32)) {
-                            return message;
-                        }
-
-                        var reason_val = body.get_child_value (1);
-                        if (!reason_val.is_of_type (VariantType.UINT32)) {
-                            return message;
-                        }
-
-                        uint32 id = id_val.get_uint32 ();
-                        uint32 reason = reason_val.get_uint32 ().clamp (1, 4);
-                        Idle.add (() => {
-                            notification_closed (id, reason);
-                            return Source.REMOVE;
-                        });
-                    }
-
-                    break;
-
-                default:
-                    break;
-            }
-
+    private DBusMessage? filter (DBusConnection connection, owned DBusMessage message, bool incoming) {
+        if (!incoming) {
             return null;
-        } else if (awaiting_reply != null && awaiting_reply.get_serial () == message.get_reply_serial ()) {
-            switch (message.get_message_type ()) {
-                case DBusMessageType.METHOD_RETURN:
-                    unowned GLib.Variant? body = message.get_body ();
-                    if (body == null || body.n_children () != 1) {
-                        return message;
-                    }
-
-                    var child = body.get_child_value (0);
-                    if (!child.is_of_type (VariantType.UINT32)) {
-                        return message;
-                    }
-
-                    uint32 id = child.get_uint32 ();
-                    try {
-                        var copy = awaiting_reply.copy ();
-                        Idle.add (() => {
-                            notification_received (copy, id);
-                            return Source.REMOVE;
-                        });
-                    } catch (Error e) {
-                        warning (e.message);
-                    }
-
-                    awaiting_reply = null;
-                    break;
-
-                case DBusMessageType.ERROR:
-                    awaiting_reply = null;
-                    break;
-                default:
-                    break;
-            }
         }
 
-        return message;
+        var body = message.get_body ();
+        debug (
+            "got message (" +
+            @"$(message.get_message_type ()), " +
+            @"$(message.get_interface () ?? "null"), " +
+            @"$(message.get_member () ?? "null"), " +
+            @"$(body != null ? body.print (true) : "null"))"
+        );
+
+        switch (message.get_member ()) {
+            case "Notify":
+                try {
+                    awaiting[message.get_serial ()] = message.copy ();
+                } catch {
+                    warning ("failed to make a copy of notify message, notification won't be included in the list");
+                }
+
+                break;
+
+            case "CloseNotification":
+            case "NotificationClosed":
+                Notification.CloseReason reason;
+                uint32 id;
+
+                if (message.get_member () == "NotificationClosed") {
+                    body.get ("(uu)", out id, out reason);
+                } else {
+                    id = body.get_child_value (0).get_uint32 ();
+                    reason = CLOSE_NOTIFICATION_CALL;
+                }
+
+                emit_closed (id, reason);
+                break;
+
+            case null: // if null it's either a method_return or a error.
+                DBusMessage awaiting_message;
+
+                if (awaiting.unset (message.get_reply_serial (), out awaiting_message)) {
+                    if (message.get_message_type () != METHOD_RETURN) {
+                        break;
+                    }
+
+                    var hints = new VariantDict (awaiting_message.get_body ().get_child_value (6));
+                    var id = body.get_child_value (0).get_uint32 ();
+
+                    emit_closed (id, UNDEFINED); // make sure we remove a replaced notification.
+                    bool transient;
+
+                    if (hints.lookup ("transient", "b", out transient) && transient
+                    || "x-canonical-private-synchronous" in hints
+                    ) {
+                        break; // don't append transient notifications.
+                    }
+
+                    // XXX: are this list still needed? or even right?
+                    const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
+                    var app_name = awaiting_message.get_body ().get_child_value (0).get_string ();
+                    if (app_name in EXCEPTIONS) {
+                        break;
+                    }
+
+                    emit_received (awaiting_message, id);
+                }
+
+                break;
+        }
+
+        return null;
+    }
+
+    private inline void emit_closed (uint32 id, Notification.CloseReason reason) {
+        // HIGH_IDLE so that they got executed before gtk's resize/redrawing sources.
+        GLib.MainContext.default ().invoke_full (GLib.Priority.HIGH_IDLE, () => {
+            notification_closed (id, reason);
+            return GLib.Source.REMOVE;
+        });
+    }
+
+    private inline void emit_received (DBusMessage message, uint32 id) {
+        // HIGH_IDLE + 1 so closed emissions run first.
+        GLib.MainContext.default ().invoke_full (GLib.Priority.HIGH_IDLE + 1, () => {
+            notification_received (message, id);
+            return GLib.Source.REMOVE;
+        });
     }
 }
