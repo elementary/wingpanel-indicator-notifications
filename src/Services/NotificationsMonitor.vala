@@ -21,46 +21,34 @@ public sealed class Notifications.NotificationsMonitor : Object {
     public signal void notification_received (DBusMessage message, uint32 id);
     public signal void notification_closed (uint32 id, uint32 reason);
 
-    construct {
-        initialize.begin ();
-    }
-
-    private async void initialize () {
-        try {
+    public async void init () throws Error {
 #if VALA_0_54
-            string address = BusType.SESSION.get_address_sync ();
+        string address = BusType.SESSION.get_address_sync ();
 #else
-            string address = BusType.get_address_sync (BusType.SESSION);
+        string address = BusType.get_address_sync (BusType.SESSION);
 #endif
-            connection = yield new DBusConnection.for_address (
-                address,
-                DBusConnectionFlags.AUTHENTICATION_CLIENT | DBusConnectionFlags.MESSAGE_BUS_CONNECTION,
-                null, null
-            );
-            connection.add_filter (message_filter);
+        connection = yield new DBusConnection.for_address (address, AUTHENTICATION_CLIENT | MESSAGE_BUS_CONNECTION);
 
-            yield connection.call (
-                "org.freedesktop.DBus",
-                "/org/freedesktop/DBus",
-                "org.freedesktop.DBus.Monitoring",
-                "BecomeMonitor",
-                new Variant.tuple ({
-                    new Variant.array (VariantType.STRING, {
-                        METHOD_CALL_MATCH_STRING,
-                        METHOD_RETURN_MATCH_STRING,
-                        ERROR_MATCH_STRING,
-                        SIGNAL_MATCH_STRING
-                    }),
-                    (uint32)0
+        yield connection.call (
+            "org.freedesktop.DBus",
+            "/org/freedesktop/DBus",
+            "org.freedesktop.DBus.Monitoring",
+            "BecomeMonitor",
+            new Variant.tuple ({
+                new Variant.array (VariantType.STRING, {
+                    METHOD_CALL_MATCH_STRING,
+                    METHOD_RETURN_MATCH_STRING,
+                    ERROR_MATCH_STRING,
+                    SIGNAL_MATCH_STRING
                 }),
-                null,
-                DBusCallFlags.NONE,
-                -1,
-                null
-            );
-        } catch (Error e) {
-            critical ("Unable to monitor notifications bus: %s", e.message);
-        }
+                0U
+            }),
+            null,
+            NONE,
+            -1
+        );
+
+        connection.add_filter (message_filter);
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {

@@ -45,6 +45,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
         notify_settings = new GLib.Settings ("io.elementary.notifications");
         app_settings_cache = new Gee.HashMap<string, Settings> ();
+
+        monitor = new NotificationsMonitor ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -63,9 +65,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             nlist = new NotificationsList ();
 
-            monitor = new NotificationsMonitor ();
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
+            monitor.init.begin ((obj, res) => {
+                try {
+                    ((NotificationsMonitor) obj).init.end (res);
+                } catch (Error e) {
+                    critical ("Unable to monitor notifications bus: %s", e.message);
+                }
+            });
 
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
