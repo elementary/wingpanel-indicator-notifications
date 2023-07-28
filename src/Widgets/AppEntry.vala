@@ -76,18 +76,9 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         );
         settings.bind ("expanded", expander, "expanded", DEFAULT);
 
-        update_expanded_state ();
-        expander.notify["expanded"].connect (update_expanded_state);
-
         clear_btn_entry.clicked.connect (() => {
             clear (); // Causes notification list to destroy this app entry after clearing its notification entries
         });
-    }
-
-    private void update_expanded_state () {
-        foreach (var notification in app_notifications) {
-            notification.revealer.reveal_child = expander.expanded;
-        }
     }
 
     public void add_notification_entry (NotificationEntry entry) {
