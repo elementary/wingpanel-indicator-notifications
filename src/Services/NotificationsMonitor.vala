@@ -8,27 +8,18 @@
  * Original code from:
  * http://bazaar.launchpad.net/~jconti/recent-notifications/gnome3/view/head:/src/recent-notifications.vala
  */
-public class Notifications.NotificationMonitor : Object {
+[SingleInstance]
+public sealed class Notifications.NotificationsMonitor : Object {
     private const string METHOD_CALL_MATCH_STRING = "type='method_call',interface='org.freedesktop.Notifications'";
     private const string METHOD_RETURN_MATCH_STRING = "type='method_return'";
     private const string ERROR_MATCH_STRING = "type='error'";
     private const string SIGNAL_MATCH_STRING = "type='signal'";
-
-    private static NotificationMonitor? instance = null;
 
     private DBusConnection connection;
     private DBusMessage? awaiting_reply = null;
 
     public signal void notification_received (DBusMessage message, uint32 id);
     public signal void notification_closed (uint32 id, uint32 reason);
-
-    public static NotificationMonitor get_instance () {
-        if (instance == null) {
-            instance = new NotificationMonitor ();
-        }
-
-        return instance;
-    }
 
     construct {
         initialize.begin ();

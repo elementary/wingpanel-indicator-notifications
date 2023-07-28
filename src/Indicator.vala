@@ -23,11 +23,14 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private Gee.HashMap<string, Settings> app_settings_cache;
     private GLib.Settings notify_settings;
+
     private Gtk.Grid? main_box = null;
     private Gtk.ModelButton clear_all_btn;
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
+
     private List<Notification> previous_session = null;
+    private NotificationsMonitor monitor;
 
     public Indicator () {
         Object (
@@ -60,7 +63,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             nlist = new NotificationsList ();
 
-            var monitor = NotificationMonitor.get_instance ();
+            monitor = new NotificationsMonitor ();
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
 
