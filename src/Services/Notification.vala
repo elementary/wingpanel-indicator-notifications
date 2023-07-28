@@ -144,27 +144,6 @@ public class Notifications.Notification : Object {
         is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
     }
 
-    public bool run_default_action () {
-        if (DEFAULT_ACTION in actions) {
-            app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
-
-            var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
-            if (notifications_iface != null) {
-                notifications_iface.action_invoked (id, DEFAULT_ACTION);
-            }
-
-            return true;
-        } else {
-            try {
-                app_info.launch (null, null);
-            } catch (Error e) {
-                critical ("Unable to launch app: %s", e.message);
-            }
-        }
-
-        return false;
-    }
-
     private string get_string (Variant tuple, int column) {
         var child = tuple.get_child_value (column);
         return child.dup_string ();

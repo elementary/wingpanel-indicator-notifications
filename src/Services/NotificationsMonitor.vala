@@ -9,8 +9,6 @@
  * http://bazaar.launchpad.net/~jconti/recent-notifications/gnome3/view/head:/src/recent-notifications.vala
  */
 public class Notifications.NotificationMonitor : Object {
-    private const string NOTIFY_IFACE = "org.freedesktop.Notifications";
-    private const string NOTIFY_PATH = "/org/freedesktop/Notifications";
     private const string METHOD_CALL_MATCH_STRING = "type='method_call',interface='org.freedesktop.Notifications'";
     private const string METHOD_RETURN_MATCH_STRING = "type='method_return'";
     private const string ERROR_MATCH_STRING = "type='error'";
@@ -31,8 +29,6 @@ public class Notifications.NotificationMonitor : Object {
 
         return instance;
     }
-
-    public INotifications? notifications_iface = null;
 
     construct {
         initialize.begin ();
@@ -74,16 +70,10 @@ public class Notifications.NotificationMonitor : Object {
         } catch (Error e) {
             critical ("Unable to monitor notifications bus: %s", e.message);
         }
-
-        try {
-            notifications_iface = yield Bus.get_proxy (BusType.SESSION, NOTIFY_IFACE, NOTIFY_PATH, DBusProxyFlags.NONE, null);
-        } catch (Error e) {
-            warning ("Unable to connection to notifications bus: %s", e.message);
-        }
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
-        if (incoming && message.get_interface () == NOTIFY_IFACE) {
+        if (incoming && message.get_interface () == "org.freedesktop.Notifications") {
             switch (message.get_message_type ()) {
                 case DBusMessageType.METHOD_CALL:
                     if (message.get_member () == "Notify") {
