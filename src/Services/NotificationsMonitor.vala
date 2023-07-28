@@ -10,16 +10,18 @@
  */
 [SingleInstance]
 public sealed class Notifications.NotificationsMonitor : Object {
-    private const string METHOD_CALL_MATCH_STRING = "type='method_call',interface='org.freedesktop.Notifications'";
-    private const string METHOD_RETURN_MATCH_STRING = "type='method_return'";
-    private const string ERROR_MATCH_STRING = "type='error'";
-    private const string SIGNAL_MATCH_STRING = "type='signal'";
+    public signal void notification_received (DBusMessage message, uint32 id);
+    public signal void notification_closed (uint32 id, uint32 reason);
+
+    // matches method calls and signal emissions in the org.freedesktop.Notifications interface at /org/freedesktop/Notifications.
+    private const string CALL_MATCH = "interface='org.freedesktop.Notifications',path='/org/freedesktop/Notifications'";
+    // matches responses sent from the org.freedesktop.Notifications name.
+    private const string RESPONSE_MATCH = "type=method_return,sender='org.freedesktop.Notifications'";
+    // matches errors sent from the org.freeedesktop.Notifications name.
+    private const string ERROR_MATCH = "type=error,sender='org.freedesktop.Notifications'";
 
     private DBusConnection connection;
     private DBusMessage? awaiting_reply = null;
-
-    public signal void notification_received (DBusMessage message, uint32 id);
-    public signal void notification_closed (uint32 id, uint32 reason);
 
     public async void init () throws Error {
 #if VALA_0_54
@@ -35,12 +37,7 @@ public sealed class Notifications.NotificationsMonitor : Object {
             "org.freedesktop.DBus.Monitoring",
             "BecomeMonitor",
             new Variant.tuple ({
-                new Variant.array (VariantType.STRING, {
-                    METHOD_CALL_MATCH_STRING,
-                    METHOD_RETURN_MATCH_STRING,
-                    ERROR_MATCH_STRING,
-                    SIGNAL_MATCH_STRING
-                }),
+                new Variant.array (VariantType.STRING, { CALL_MATCH, RESPONSE_MATCH, ERROR_MATCH }),
                 0U
             }),
             null,
@@ -52,7 +49,7 @@ public sealed class Notifications.NotificationsMonitor : Object {
     }
 
     private DBusMessage? message_filter (DBusConnection con, owned DBusMessage message, bool incoming) {
-        if (incoming && message.get_interface () == "org.freedesktop.Notifications") {
+        if (incoming) {
             switch (message.get_message_type ()) {
                 case DBusMessageType.METHOD_CALL:
                     if (message.get_member () == "Notify") {
