@@ -22,6 +22,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public AppInfo? app_info { get; construct; default = null; }
     public List<NotificationEntry> app_notifications;
 
+    private Gtk.Expander expander;
+
     public AppEntry (AppInfo? app_info) {
         Object (app_info: app_info);
     }
@@ -57,7 +59,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
-        var expander = new Gtk.Expander (null) {
+        expander = new Gtk.Expander (null) {
             label_widget = new ExpanderLable (name)
         };
 
@@ -74,23 +76,25 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         );
         settings.bind ("expanded", expander, "expanded", DEFAULT);
 
-        update_expanded_state (expander.expanded);
-        expander.notify["expanded"].connect (() => update_expanded_state (expander.expanded));
+        update_expanded_state ();
+        expander.notify["expanded"].connect (update_expanded_state);
 
         clear_btn_entry.clicked.connect (() => {
             clear (); // Causes notification list to destroy this app entry after clearing its notification entries
         });
     }
 
-    private void update_expanded_state (bool expanded) {
+    private void update_expanded_state () {
         foreach (var notification in app_notifications) {
-            notification.revealer.reveal_child = expanded;
+            notification.revealer.reveal_child = expander.expanded;
         }
     }
 
     public void add_notification_entry (NotificationEntry entry) {
         app_notifications.prepend (entry);
         entry.clear.connect (remove_notification_entry);
+
+        entry.revealer.reveal_child = expander.expanded;
     }
 
     public void remove_notification_entry (NotificationEntry entry) {
