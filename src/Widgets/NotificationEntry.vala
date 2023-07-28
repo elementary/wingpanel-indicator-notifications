@@ -19,8 +19,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
     public Notification notification { get; construct; }
+    public Gtk.Revealer revealer { get; construct; }
 
-    private Gtk.Revealer revealer;
     private uint timeout_id;
 
     private const int ICON_SIZE_PRIMARY = 48;
@@ -265,6 +265,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
     public void dismiss () {
         Source.remove (timeout_id);
+
+        if (!revealer.child_revealed) {
+            destroy ();
+            return;
+        }
 
         revealer.notify["child-revealed"].connect (() => {
             if (!revealer.child_revealed) {

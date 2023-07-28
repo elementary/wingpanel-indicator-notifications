@@ -27,6 +27,10 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     }
 
     construct {
+        var provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntry.css");
+        get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
         margin = 12;
         margin_bottom = 3;
         margin_top = 6;
@@ -53,18 +57,35 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
-        var grid = new Gtk.Grid () {
-            column_spacing = 6
+        var expander = new Gtk.Expander (null) {
+            label_widget = new ExpanderLable (name)
         };
-        grid.add (label);
-        grid.add (clear_btn_entry);
 
-        add (grid);
+        var box = new Gtk.Box (HORIZONTAL, 6);
+        box.add (expander);
+        box.add (clear_btn_entry);
+
+        child = box;
         show_all ();
+
+        var settings = new Settings.with_path (
+            "io.elementary.wingpanel.notifications.appsection",
+            "/io/elementary/wingpanel/notifications/appsection/%s/".printf (app_id)
+        );
+        settings.bind ("expanded", expander, "expanded", DEFAULT);
+
+        update_expanded_state (expander.expanded);
+        expander.notify["expanded"].connect (() => update_expanded_state (expander.expanded));
 
         clear_btn_entry.clicked.connect (() => {
             clear (); // Causes notification list to destroy this app entry after clearing its notification entries
         });
+    }
+
+    private void update_expanded_state (bool expanded) {
+        foreach (var notification in app_notifications) {
+            notification.revealer.reveal_child = expanded;
+        }
     }
 
     public void add_notification_entry (NotificationEntry entry) {
@@ -91,5 +112,27 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         app_notifications = new List<NotificationEntry> ();
         Session.get_instance ().remove_notifications (to_remove);
+    }
+}
+
+// We want the whole header area to be clickable to
+// expand/collapse. The expander doesn't let us go over our
+// natural width though, so we report it as pretty much infinite
+private class ExpanderLable : Gtk.Box {
+    public ExpanderLable (string name) {
+        var label = new Gtk.Label (name) {
+            hexpand = true,
+            xalign = 0
+        };
+        label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
+
+        add (label);
+    }
+
+    public override void get_preferred_width (out int min, out int nat) {
+        base.get_preferred_width (out min, out nat);
+
+        // -100 otherwise it throws Warnings
+        nat = int.MAX - 100;
     }
 }

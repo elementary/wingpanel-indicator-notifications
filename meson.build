@@ -61,5 +61,7 @@ shared_module(
     install_dir : wingpanel_indicatorsdir,
 )
 
+gnome.post_install (glib_compile_schemas: true)
+
 subdir('data')
 subdir('po')
