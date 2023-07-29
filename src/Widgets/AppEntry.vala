@@ -23,12 +23,17 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public List<NotificationEntry> app_notifications;
 
     private static Gtk.CssProvider provider;
+    private static Settings settings;
+    private static HashTable<string, bool> headers;
 
     private Gtk.ToggleButton expander;
 
     static construct {
         provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryExpander.css");
+
+        settings = new Settings ("io.elementary.wingpanel.notifications");
+        headers = (HashTable<string, bool>)settings.get_value ("headers");
     }
 
     public AppEntry (AppInfo? app_info) {
@@ -87,16 +92,11 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         child = box;
         show_all ();
 
-        var settings = new Settings ("io.elementary.wingpanel.notifications");
-        var headers = (HashTable<string, bool>)settings.get_value ("headers");
-
         if (app_info.get_id () in headers) {
             expander.active = headers[app_info.get_id ()];
         }
 
         expander.toggled.connect (() => {
-            headers = (HashTable<string, bool>)settings.get_value ("headers");
-
             headers[app_info.get_id ()] = expander.active;
             settings.set_value ("headers", headers);
         });
