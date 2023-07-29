@@ -95,6 +95,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
 
         expander.toggled.connect (() => {
+            headers = (HashTable<string, bool>)settings.get_value ("headers");
+
             headers[app_info.get_id ()] = expander.active;
             settings.set_value ("headers", headers);
         });
