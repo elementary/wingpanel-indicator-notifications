@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-<schema id="io.elementary.wingpanel.notifications.appsection">
-  <key name="expanded" type="b">
-    <default>true</default>
-    <summary>Whether the app section is expanded</summary>
-    <description>Whether the app section is expanded</description>
+<schema path="/io/elementary/wingpanel/notifications/" id="io.elementary.wingpanel.notifications">
+  <key name="headers" type="a{sb}">
+    <default>{}</default>
+    <summary>The expanded state of the headers</summary>
+    <description>The expanded state of the headers</description>
   </key>
 </schema>
 </schemalist>

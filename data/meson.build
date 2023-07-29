@@ -8,5 +8,5 @@ i18n.merge_file(
 )
 
 install_data('io.elementary.wingpanel.notifications.gschema.xml',
-  install_dir: get_option('datadir') / 'glib-2.0/schemas',
+  install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )

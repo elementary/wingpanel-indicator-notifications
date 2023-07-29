@@ -268,15 +268,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         if (!revealer.child_revealed) {
             destroy ();
-            return;
+        } else {
+            revealer.notify["child-revealed"].connect (() => {
+                if (!revealer.child_revealed) {
+                    destroy ();
+                }
+            });
+            revealer.reveal_child = false;
         }
-
-        revealer.notify["child-revealed"].connect (() => {
-            if (!revealer.child_revealed) {
-                destroy ();
-            }
-        });
-        revealer.reveal_child = false;
     }
 
     private class DeleteAffordance : Gtk.Grid {

@@ -22,21 +22,20 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public AppInfo? app_info { get; construct; default = null; }
     public List<NotificationEntry> app_notifications;
 
-    private Gtk.Expander expander;
+    private static Gtk.CssProvider provider;
+
+    private Gtk.ToggleButton expander;
+
+    static construct {
+        provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryExpander.css");
+    }
 
     public AppEntry (AppInfo? app_info) {
         Object (app_info: app_info);
     }
 
     construct {
-        var provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntry.css");
-        get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-        margin = 12;
-        margin_bottom = 3;
-        margin_top = 6;
-
         app_notifications = new List<NotificationEntry> ();
 
         unowned string name;
@@ -48,33 +47,57 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             name = _("Other");
         }
 
+        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
+        image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
         var label = new Gtk.Label (name) {
             hexpand = true,
             xalign = 0
         };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
+        var expander_content = new Gtk.Box (HORIZONTAL, 3);
+        expander_content.add (image);
+        expander_content.add (label);
+
+        expander = new Gtk.ToggleButton () {
+            child = expander_content,
+            can_focus = false
+        };
+        unowned var expander_style_context = expander.get_style_context ();
+        expander_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        expander_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
+        expander_style_context.add_class ("image-button");
+
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
             tooltip_text = _("Clear all %s notifications").printf (name)
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
-        expander = new Gtk.Expander (null) {
-            label_widget = new ExpanderLable (name)
-        };
-
         var box = new Gtk.Box (HORIZONTAL, 6);
         box.add (expander);
+        box.add (new Gtk.Separator (VERTICAL));
         box.add (clear_btn_entry);
 
+        margin_start = 12;
+        margin_end = 12;
+        margin_bottom = 3;
+        margin_top = 6;
+        can_focus = false;
         child = box;
         show_all ();
 
-        var settings = new Settings.with_path (
-            "io.elementary.wingpanel.notifications.appsection",
-            "/io/elementary/wingpanel/notifications/appsection/%s/".printf (app_id)
-        );
-        settings.bind ("expanded", expander, "expanded", DEFAULT);
+        var settings = new Settings ("io.elementary.wingpanel.notifications");
+        var headers = (HashTable<string, bool>)settings.get_value ("headers");
+
+        if (app_info.get_id () in headers) {
+            expander.active = headers[app_info.get_id ()];
+        }
+
+        expander.toggled.connect (() => {
+            headers[app_info.get_id ()] = expander.active;
+            settings.set_value ("headers", headers);
+        });
 
         clear_btn_entry.clicked.connect (() => {
             clear (); // Causes notification list to destroy this app entry after clearing its notification entries
@@ -85,7 +108,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         app_notifications.prepend (entry);
         entry.clear.connect (remove_notification_entry);
 
-        expander.bind_property ("expanded", entry.revealer, "reveal-child", SYNC_CREATE);
+        expander.bind_property ("active", entry.revealer, "reveal-child", SYNC_CREATE);
     }
 
     public void remove_notification_entry (NotificationEntry entry) {
@@ -107,27 +130,5 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         app_notifications = new List<NotificationEntry> ();
         Session.get_instance ().remove_notifications (to_remove);
-    }
-}
-
-// We want the whole header area to be clickable to
-// expand/collapse. The expander doesn't let us go over our
-// natural width though, so we report it as pretty much infinite
-private class ExpanderLable : Gtk.Box {
-    public ExpanderLable (string name) {
-        var label = new Gtk.Label (name) {
-            hexpand = true,
-            xalign = 0
-        };
-        label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
-
-        add (label);
-    }
-
-    public override void get_preferred_width (out int min, out int nat) {
-        base.get_preferred_width (out min, out nat);
-
-        // -100 otherwise it throws Warnings
-        nat = int.MAX - 100;
     }
 }
