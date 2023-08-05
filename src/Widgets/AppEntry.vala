@@ -33,7 +33,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryExpander.css");
 
         settings = new Settings ("io.elementary.wingpanel.notifications");
-        headers = (HashTable<string, bool>)settings.get_value ("headers");
+        headers = (HashTable<string, bool>) settings.get_value ("headers");
     }
 
     public AppEntry (AppInfo? app_info) {
@@ -92,12 +92,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         child = box;
         show_all ();
 
-        if (app_info.get_id () in headers) {
-            expander.active = headers[app_info.get_id ()];
+        if (app_id in headers) {
+            expander.active = headers[app_id];
         }
 
         expander.toggled.connect (() => {
-            headers[app_info.get_id ()] = expander.active;
+            headers[app_id] = expander.active;
             settings.set_value ("headers", headers);
         });
 
