@@ -83,6 +83,7 @@ public class Notifications.Session : GLib.Object {
             }
         } catch (KeyFileError e) {
             warning (e.message);
+            create_session_file ();
         } catch (FileError e) {
             warning (e.message);
         }
