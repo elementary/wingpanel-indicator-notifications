@@ -26,6 +26,12 @@ public class Notifications.Notification : Object {
     public const string DEFAULT_ACTION = "default";
     public const string DESKTOP_ID_EXT = ".desktop";
 
+    public string internal_id {
+        owned get {
+            return timestamp.to_unix ().to_string () + "." + id.to_string ();
+        }
+    }
+
     public bool is_transient = false;
     public string app_name;
     public string summary;
@@ -39,6 +45,7 @@ public class Notifications.Notification : Object {
     public uint32 replaces_id;
     public uint32 id;
     public bool has_temp_file;
+    public bool is_old { get; set; default = false; }
     public GLib.DateTime timestamp;
     public GLib.Icon badge_icon { get; construct set; }
 
@@ -63,7 +70,8 @@ public class Notifications.Notification : Object {
 
     public Notification (
         uint32 _id, string _app_name, string _app_icon, string _summary, string _message_body, string _image_path,
-        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender, bool _has_temp_file
+        string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender,
+        bool _has_temp_file, bool _is_old
     ) {
         app_name = _app_name;
         app_icon = _app_icon;
@@ -83,6 +91,7 @@ public class Notifications.Notification : Object {
         app_info = new DesktopAppInfo (desktop_id);
 
         has_temp_file = _has_temp_file;
+        is_old = _is_old;
     }
 
     public Notification.from_message (DBusMessage message, uint32 _id) {

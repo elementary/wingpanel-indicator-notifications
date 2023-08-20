@@ -134,7 +134,14 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row is NotificationEntry) {
-            var notification_entry = (NotificationEntry)row;
+            var notification_entry = (NotificationEntry) row;
+
+            if (notification_entry.notification.default_action != null) {
+                unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
+                action_group.activate_action (notification_entry.notification.default_action, null);
+            } else if (notification_entry.notification.actions.length > 0) {
+                return;
+            }
 
             try {
                 notification_entry.notification.app_info.launch (null, null);

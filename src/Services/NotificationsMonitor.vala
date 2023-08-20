@@ -36,7 +36,6 @@ public class Notifications.NotificationMonitor : Object {
 
     public signal void notification_received (DBusMessage message, uint32 id);
     public signal void notification_closed (uint32 id, uint32 reason);
-    public signal void notification_action_invoked (uint32 id, string action_key);
 
     public static NotificationMonitor get_instance () {
         if (instance == null) {
@@ -127,7 +126,7 @@ public class Notifications.NotificationMonitor : Object {
                     break;
 
                 case DBusMessageType.SIGNAL:
-                    if (message.get_member () == "NotificationClosed") {
+                    if (message.get_member () == "NotificationClosed" || message.get_member () == "ActionInvoked") {
                         unowned GLib.Variant? body = message.get_body ();
                         if (body == null || body.n_children () != 2) {
                             return message;
@@ -139,36 +138,18 @@ public class Notifications.NotificationMonitor : Object {
                         }
 
                         var reason_val = body.get_child_value (1);
-                        if (!reason_val.is_of_type (VariantType.UINT32)) {
+                        uint32 reason;
+                        if (reason_val.is_of_type (VariantType.STRING)) {
+                            reason = Notification.CloseReason.UNDEFINED;
+                        } else if (reason_val.is_of_type (VariantType.UINT32)) {
+                            reason = reason_val.get_uint32 ().clamp (1, 4);
+                        } else {
                             return message;
                         }
 
                         uint32 id = id_val.get_uint32 ();
-                        uint32 reason = reason_val.get_uint32 ().clamp (1, 4);
                         Idle.add (() => {
                             notification_closed (id, reason);
-                            return Source.REMOVE;
-                        });
-                    } else if (message.get_member () == "ActionInvoked") {
-                        unowned GLib.Variant? body = message.get_body ();
-                        if (body == null || body.n_children () != 2) {
-                            return message;
-                        }
-
-                        var id_val = body.get_child_value (0);
-                        if (!id_val.is_of_type (VariantType.UINT32)) {
-                            return message;
-                        }
-
-                        var action_key_val = body.get_child_value (1);
-                        if (!action_key_val.is_of_type (VariantType.STRING)) {
-                            return message;
-                        }
-
-                        uint32 id = id_val.get_uint32 ();
-                        string action_key = action_key_val.get_string ();
-                        Idle.add (() => {
-                            notification_action_invoked (id, action_key);
                             return Source.REMOVE;
                         });
                     }

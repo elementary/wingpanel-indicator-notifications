@@ -63,7 +63,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var monitor = NotificationMonitor.get_instance ();
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
-            monitor.notification_action_invoked.connect (on_notification_action_invoked);
 
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
@@ -189,10 +188,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void on_notification_closed (uint32 id, uint32 reason) {
-        // If notification bubble was dismissed by user do not keep in list
-        if (reason == Notification.CloseReason.DISMISSED ||
-            reason == Notification.CloseReason.CLOSE_NOTIFICATION_CALL) {
-
+        if (reason != Notification.CloseReason.EXPIRED) {
             foreach (var app_entry in nlist.app_entries.values) {
                 foreach (var item in app_entry.app_notifications) {
                     if (item.notification.id == id) {
@@ -201,28 +197,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                     }
                 }
             }
-        }
-    }
-
-    private void on_notification_action_invoked (uint32 id, string action_key) {
-        foreach (var app_entry in nlist.app_entries.values) {
-            unowned var entry = app_entry.app_notifications.search (id, (e, i) => (int)(((uint32)i) - e.notification.id));
-            if (entry == null) {
-                continue;
-            }
-
-            if (action_key == Notification.DEFAULT_ACTION) {
-                try {
-                    entry.data.notification.app_info.launch (null, null);
-                } catch (Error e) {
-                    warning ("Unable to launch app: %s", e.message);
-                }
-            }
-
-            entry.data.clear (false);
-            close ();
-
-            return;
         }
     }
 
