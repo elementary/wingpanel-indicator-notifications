@@ -102,7 +102,7 @@ public class Notifications.Notification : Object {
 
         timestamp = new GLib.DateTime.now_local ();
 
-        internal_id = "%t.%u".printf (timestamp.to_unix (), server_id);
+        internal_id = timestamp.to_unix ().to_string () + "." + server_id.to_string ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
         if (desktop_id != null && desktop_id != "") {
