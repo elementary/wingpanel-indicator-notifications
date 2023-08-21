@@ -30,7 +30,6 @@ public class Notifications.Session : GLib.Object {
     private const string APP_ICON_KEY = "AppIcon";
     private const string APP_NAME_KEY = "AppName";
     private const string BODY_KEY = "Body";
-    private const string ID_KEY = "ID";
     private const string IMAGE_KEY = "Image";
     private const string DESKTOP_ID_KEY = "DesktopID";
     private const string REPLACES_ID_KEY = "ReplacesID";
@@ -65,7 +64,7 @@ public class Notifications.Session : GLib.Object {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
                 var notification = new Notification (
-                    (uint32) key.get_uint64 (group, ID_KEY),
+                    group,
                     key.get_string (group, APP_NAME_KEY),
                     key.get_string (group, APP_ICON_KEY),
                     key.get_string (group, SUMMARY_KEY),
@@ -76,8 +75,7 @@ public class Notifications.Session : GLib.Object {
                     key.get_int64 (group, UNIX_TIME_KEY),
                     key.get_uint64 (group, REPLACES_ID_KEY),
                     key.get_string (group, SENDER_KEY),
-                    key.get_boolean (group, HAS_TEMP_FILE_KEY),
-                    true
+                    key.get_boolean (group, HAS_TEMP_FILE_KEY)
                 );
                 list.prepend (notification);
             }
@@ -94,7 +92,6 @@ public class Notifications.Session : GLib.Object {
 
     public void add_notification (Notification notification, bool write_file = true) {
         string id = notification.internal_id;
-        key.set_uint64 (id, ID_KEY, notification.id);
         key.set_int64 (id, UNIX_TIME_KEY, notification.timestamp.to_unix ());
         key.set_string (id, APP_ICON_KEY, notification.app_icon);
         key.set_string (id, APP_NAME_KEY, notification.app_name);

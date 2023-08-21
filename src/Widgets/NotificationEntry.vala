@@ -289,9 +289,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         });
         revealer.reveal_child = false;
 
-        if (close && !notification.is_old) {
+        if (close && notification.server_id > 0) {
             unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
-            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.id }));
+            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
         }
     }
 

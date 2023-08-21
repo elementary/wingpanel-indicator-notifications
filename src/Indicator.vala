@@ -191,8 +191,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         if (reason != Notification.CloseReason.EXPIRED) {
             foreach (var app_entry in nlist.app_entries.values) {
                 foreach (var item in app_entry.app_notifications) {
-                    if (item.notification.id == id) {
-                        item.clear (false);
+                    if (item.notification.server_id == id) {
+                        item.notification.server_id = 0; // Notification is now outdated
+                        item.clear ();
                         return;
                     }
                 }
