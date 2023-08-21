@@ -149,7 +149,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 notification_entry.clear ();
                 close_popover ();
             } catch (Error e) {
-                critical ("Unable to launch app: %s", e.message);
+                warning ("Unable to launch app: %s", e.message);
             }
         }
     }
