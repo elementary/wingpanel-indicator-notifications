@@ -35,7 +35,7 @@ public class Notifications.Notification : Object {
     public string app_icon;
     public string sender;
     public string[] actions;
-    public HashTable<string, string> actions_with_label;
+    public List<Gtk.Button> buttons;
     public string? default_action { get; private set; default = null; }
     public uint32 replaces_id;
     public uint32 server_id { get; construct set; default = 0; } // 0 means the notification is outdated i.e. not present in the server anymore
@@ -76,7 +76,7 @@ public class Notifications.Notification : Object {
         sender = _sender;
 
         actions = _actions;
-        actions_with_label = validate_actions (actions);
+        buttons = validate_actions (actions);
 
         timestamp = new GLib.DateTime.from_unix_local (_unix_time);
 
@@ -98,7 +98,7 @@ public class Notifications.Notification : Object {
         sender = message.get_sender ();
 
         actions = body.get_child_value (Column.ACTIONS).dup_strv ();
-        actions_with_label = validate_actions (actions);
+        buttons = validate_actions (actions);
 
         timestamp = new GLib.DateTime.now_local ();
 
@@ -153,8 +153,8 @@ public class Notifications.Notification : Object {
         is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
     }
 
-    private HashTable<string, string> validate_actions (string[] actions) {
-        var table = new HashTable<string, string> (str_hash, str_equal);
+    private List<Gtk.Button> validate_actions (string[] actions) {
+        var list = new List<Gtk.Button> ();
 
         for (int i = 0; i < actions.length; i += 2) {
             if (actions[i] == DEFAULT_ACTION) {
@@ -168,10 +168,15 @@ public class Notifications.Notification : Object {
                 continue;
             }
 
-            table[server_id.to_string () + "." + actions[i]] = actions[i + 1];
+            var button = new Gtk.Button.with_label (label) {
+                action_name = NotificationsList.ACTION_PREFIX + server_id.to_string () + "." + actions[i],
+                width_request = 86
+            };
+
+            list.append (button);
         }
 
-        return table;
+        return list;
     }
 
     private string get_string (Variant tuple, int column) {

@@ -188,7 +188,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         grid.attach (body_label, 1, 1, 2);
 
-        if (notification.actions_with_label.length > 0) {
+        if (notification.buttons.length () > 0) {
             var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
                 margin_top = 12,
                 halign = Gtk.Align.END,
@@ -196,13 +196,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             };
             grid.attach (action_area, 0, 2, 3);
 
-            foreach (var action_name in notification.actions_with_label.get_keys ()) {
-                var button = new Gtk.Button.with_label (notification.actions_with_label[action_name]) {
-                    action_name = NotificationsList.ACTION_PREFIX + action_name,
-                    width_request = 86
-                };
+            foreach (var button in notification.buttons) {
                 action_area.pack_end (button);
-            }
+            };
         }
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {

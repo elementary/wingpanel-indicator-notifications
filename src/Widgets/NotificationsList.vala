@@ -18,7 +18,7 @@
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
 
-    public const string ACTION_GROUP_PREFIX = "notification-list";
+    public const string ACTION_GROUP_PREFIX = "notifications-list";
     public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
 
     public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
