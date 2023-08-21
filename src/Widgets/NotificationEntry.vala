@@ -198,7 +198,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
             foreach (var action_name in notification.actions_with_label.get_keys ()) {
                 var button = new Gtk.Button.with_label (notification.actions_with_label[action_name]) {
-                    action_name = NotificationsList.ACTION_PREFIX + action_name
+                    action_name = NotificationsList.ACTION_PREFIX + action_name,
+                    width_request = 86
                 };
                 action_area.pack_end (button);
             }
