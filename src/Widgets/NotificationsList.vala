@@ -139,8 +139,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             if (notification_entry.notification.default_action != null) {
                 unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
                 action_group.activate_action (notification_entry.notification.default_action, null);
-            } else if (notification_entry.notification.actions.length > 0) {
-                return;
             }
 
             try {
