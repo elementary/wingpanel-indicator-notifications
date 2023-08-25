@@ -139,15 +139,15 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             if (notification_entry.notification.default_action != null) {
                 unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
                 action_group.activate_action (notification_entry.notification.default_action, null);
-            }
-
-            try {
-                notification_entry.notification.app_info.launch (null, null);
-
-                notification_entry.clear ();
                 close_popover ();
-            } catch (Error e) {
-                warning ("Unable to launch app: %s", e.message);
+            } else {
+                try {
+                    notification_entry.notification.app_info.launch (null, null);
+                    notification_entry.clear ();
+                    close_popover ();
+                } catch (Error e) {
+                    warning ("Unable to launch app: %s", e.message);
+                }
             }
         }
     }
