@@ -144,6 +144,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
+            halign = Gtk.Align.START,
+            valign = Gtk.Align.START,
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
             transition_type = Gtk.RevealerTransitionType.CROSSFADE
@@ -185,6 +187,19 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         grid.attach (body_label, 1, 1, 2);
+
+        if (notification.buttons.length () > 0) {
+            var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
+                margin_top = 12,
+                halign = Gtk.Align.END,
+                homogeneous = true
+            };
+            grid.attach (action_area, 0, 2, 3);
+
+            foreach (var button in notification.buttons) {
+                action_area.pack_end (button);
+            };
+        }
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
@@ -231,9 +246,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         show_all ();
 
-        delete_button.clicked.connect (() => {
-            clear ();
-        });
+        delete_button.clicked.connect (() => clear ());
 
         eventbox.enter_notify_event.connect ((event) => {
             delete_revealer.reveal_child = true;
@@ -272,6 +285,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             }
         });
         revealer.reveal_child = false;
+
+        if (notification.server_id > 0) {
+            unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
+            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
+        }
     }
 
     private class DeleteAffordance : Gtk.Grid {

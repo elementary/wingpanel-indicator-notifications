@@ -18,6 +18,9 @@
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
 
+    public const string ACTION_GROUP_PREFIX = "notifications-list";
+    public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
+
     public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
 
     private HashTable<string, int> table;
@@ -42,6 +45,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
         show_all ();
+
+        insert_action_group (ACTION_GROUP_PREFIX, new NotificationsMonitor ().notifications_action_group);
 
         row_activated.connect (on_row_activated);
     }
@@ -129,17 +134,22 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row is NotificationEntry) {
-            unowned NotificationEntry notification_entry = (NotificationEntry) row;
-            var context = notification_entry.get_display ().get_app_launch_context ();
+            unowned var notification_entry = (NotificationEntry) row;
 
-            if (notification_entry.notification.app_info != null) try {
-                notification_entry.notification.app_info.launch (null, context);
-            } catch (Error e) {
-                critical ("Unable to launch app: %s", e.message);
+            if (notification_entry.notification.default_action != null) {
+                unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
+                action_group.activate_action (notification_entry.notification.default_action, null);
+                close_popover ();
+            } else {
+                try {
+                    var context = notification_entry.get_display ().get_app_launch_context ();
+                    notification_entry.notification.app_info.launch (null, context);
+                    notification_entry.clear ();
+                    close_popover ();
+                } catch (Error e) {
+                    warning ("Unable to launch app: %s", e.message);
+                }
             }
-
-            notification_entry.clear ();
-            close_popover ();
         }
     }
 }

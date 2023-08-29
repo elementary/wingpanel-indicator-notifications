@@ -23,6 +23,16 @@ public sealed class Notifications.NotificationsMonitor : Object {
     private Gee.Map<uint32, DBusMessage> awaiting = new Gee.HashMap<uint32, DBusMessage> ();
     private DBusConnection connection;
 
+    public DBusActionGroup? notifications_action_group { get; private set; }
+
+    construct {
+        notifications_action_group = DBusActionGroup.get (
+            Application.get_default ().get_dbus_connection (),
+            "org.freedesktop.Notifications",
+            "/org/freedesktop/Notifications"
+        );
+    }
+
     public async void init () throws Error {
 #if VALA_0_54
         string address = BusType.SESSION.get_address_sync ();
@@ -74,13 +84,15 @@ public sealed class Notifications.NotificationsMonitor : Object {
 
             case "CloseNotification":
             case "NotificationClosed":
+            case "ActionInvoked":
                 Notification.CloseReason reason;
-                uint32 id;
+                uint32 id = body.get_child_value (0).get_uint32 ();
 
                 if (message.get_member () == "NotificationClosed") {
-                    body.get ("(uu)", out id, out reason);
+                    reason = (Notification.CloseReason) body.get_child_value (1).get_uint32 ();
+                } else if (message.get_member () == "ActionInvoked") {
+                    reason = UNDEFINED;
                 } else {
-                    id = body.get_child_value (0).get_uint32 ();
                     reason = CLOSE_NOTIFICATION_CALL;
                 }
 
