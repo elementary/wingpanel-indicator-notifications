@@ -16,18 +16,20 @@
  */
 
 public class Notifications.Indicator : Wingpanel.Indicator {
-    private const string[] EXCEPTIONS = { "NetworkManager", "gnome-settings-daemon", "gnome-power-panel" };
     private const string CHILD_SCHEMA_ID = "io.elementary.notifications.applications";
     private const string CHILD_PATH = "/io/elementary/notifications/applications/%s/";
     private const string REMEMBER_KEY = "remember";
 
     private Gee.HashMap<string, Settings> app_settings_cache;
     private GLib.Settings notify_settings;
+
     private Gtk.Grid? main_box = null;
     private Gtk.ModelButton clear_all_btn;
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
+
     private List<Notification> previous_session = null;
+    private NotificationsMonitor monitor;
 
     public Indicator () {
         Object (
@@ -42,6 +44,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
         notify_settings = new GLib.Settings ("io.elementary.notifications");
         app_settings_cache = new Gee.HashMap<string, Settings> ();
+
+        monitor = new NotificationsMonitor ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -60,9 +64,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             nlist = new NotificationsList ();
 
-            var monitor = NotificationMonitor.get_instance ();
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
+            monitor.init.begin ((obj, res) => {
+                try {
+                    ((NotificationsMonitor) obj).init.end (res);
+                } catch (Error e) {
+                    critical ("Unable to monitor notifications bus: %s", e.message);
+                }
+            });
 
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
@@ -162,12 +172,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void on_notification_received (DBusMessage message, uint32 id) {
         var notification = new Notification.from_message (message, id);
-        if (notification.is_transient || notification.app_name in EXCEPTIONS) {
-            return;
-        }
 
         string app_id = notification.desktop_id.replace (Notification.DESKTOP_ID_EXT, "");
-
         Settings? app_settings = app_settings_cache.get (app_id);
 
         var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
@@ -187,16 +193,17 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         clear_all_btn.sensitive = nlist.app_entries.size > 0;
     }
 
-    private void on_notification_closed (uint32 id, uint32 reason) {
-        if (reason != Notification.CloseReason.EXPIRED) {
-            foreach (var app_entry in nlist.app_entries.values) {
-                foreach (var item in app_entry.app_notifications) {
-                    if (item.notification.server_id == id) {
-                        item.notification.server_id = 0; // Notification is now outdated
-                        item.clear ();
-                        return;
-                    }
-                }
+    private void on_notification_closed (uint32 id, Notification.CloseReason reason) {
+        SearchFunc<NotificationEntry, uint32> find_entry = (e, i) => {
+            return i == e.notification.id ? 0 : i > e.notification.id ? 1 : -1;
+        };
+
+        foreach (var app_entry in nlist.app_entries.values) {
+            unowned var node = app_entry.app_notifications.search (id, find_entry);
+            if (node != null) {
+                node.data.notification.server_id = 0; // Notification is now outdated
+                node.data.clear ();
+                return;
             }
         }
     }

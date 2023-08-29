@@ -134,7 +134,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row is NotificationEntry) {
-            var notification_entry = (NotificationEntry) row;
+            unowned var notification_entry = (NotificationEntry) row;
 
             if (notification_entry.notification.default_action != null) {
                 unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
@@ -142,7 +142,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                 close_popover ();
             } else {
                 try {
-                    notification_entry.notification.app_info.launch (null, null);
+                    var context = notification_entry.get_display ().get_app_launch_context ();
+                    notification_entry.notification.app_info.launch (null, context);
                     notification_entry.clear ();
                     close_popover ();
                 } catch (Error e) {
