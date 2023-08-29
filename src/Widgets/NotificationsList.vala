@@ -46,7 +46,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         set_placeholder (placeholder);
         show_all ();
 
-        insert_action_group (ACTION_GROUP_PREFIX, NotificationMonitor.get_instance ().notifications_action_group);
+        insert_action_group (ACTION_GROUP_PREFIX, new NotificationsMonitor ().notifications_action_group);
 
         row_activated.connect (on_row_activated);
     }

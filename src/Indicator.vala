@@ -195,7 +195,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void on_notification_closed (uint32 id, Notification.CloseReason reason) {
         SearchFunc<NotificationEntry, uint32> find_entry = (e, i) => {
-            return i == e.notification.id ? 0 : i > e.notification.id ? 1 : -1;
+            return i == e.notification.server_id ? 0 : i > e.notification.server_id ? 1 : -1;
         };
 
         foreach (var app_entry in nlist.app_entries.values) {

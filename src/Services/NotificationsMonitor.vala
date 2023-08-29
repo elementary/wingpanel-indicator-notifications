@@ -28,11 +28,9 @@ public sealed class Notifications.NotificationsMonitor : Object {
     construct {
         notifications_action_group = DBusActionGroup.get (
             Application.get_default ().get_dbus_connection (),
-            NOTIFY_BUS_NAME,
-            NOTIFY_PATH
+            "org.freedesktop.Notifications",
+            "/org/freedesktop/Notifications"
         );
-
-        initialize.begin ();
     }
 
     public async void init () throws Error {
@@ -91,7 +89,7 @@ public sealed class Notifications.NotificationsMonitor : Object {
                 uint32 id = body.get_child_value (0).get_uint32 ();
 
                 if (message.get_member () == "NotificationClosed") {
-                    reason = body.get_child_value (1).get_uint32 ();
+                    reason = (Notification.CloseReason) body.get_child_value (1).get_uint32 ();
                 } else if (message.get_member () == "ActionInvoked") {
                     reason = UNDEFINED;
                 } else {
