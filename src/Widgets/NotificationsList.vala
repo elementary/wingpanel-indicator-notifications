@@ -130,9 +130,15 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     private void on_row_activated (Gtk.ListBoxRow row) {
         if (row is NotificationEntry) {
             unowned NotificationEntry notification_entry = (NotificationEntry) row;
-            notification_entry.notification.run_default_action ();
-            notification_entry.clear ();
+            var context = notification_entry.get_display ().get_app_launch_context ();
 
+            if (notification_entry.notification.app_info != null) try {
+                notification_entry.notification.app_info.launch (null, context);
+            } catch (Error e) {
+                critical ("Unable to launch app: %s", e.message);
+            }
+
+            notification_entry.clear ();
             close_popover ();
         }
     }

@@ -25,7 +25,6 @@ public class Notifications.Notification : Object {
 
     public const string DESKTOP_ID_EXT = ".desktop";
 
-    public bool is_transient = false;
     public string app_name;
     public string summary;
     public string message_body;
@@ -139,30 +138,6 @@ public class Notifications.Notification : Object {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
-
-        var transient_hint = hints.lookup_value ("transient", VariantType.BOOLEAN);
-        is_transient = hints.lookup_value (X_CANONICAL_PRIVATE_KEY, null) != null || (transient_hint != null && transient_hint.get_boolean ());
-    }
-
-    public bool run_default_action () {
-        if (DEFAULT_ACTION in actions) {
-            app_info.launch_action (DEFAULT_ACTION, new GLib.AppLaunchContext ());
-
-            var notifications_iface = NotificationMonitor.get_instance ().notifications_iface;
-            if (notifications_iface != null) {
-                notifications_iface.action_invoked (id, DEFAULT_ACTION);
-            }
-
-            return true;
-        } else {
-            try {
-                app_info.launch (null, null);
-            } catch (Error e) {
-                critical ("Unable to launch app: %s", e.message);
-            }
-        }
-
-        return false;
     }
 
     private string get_string (Variant tuple, int column) {
