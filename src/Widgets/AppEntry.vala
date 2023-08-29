@@ -52,9 +52,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             name = _("Other");
         }
 
-        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR) {
-            tooltip_text = _("Show less")
-        };
+        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
         image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var label = new Gtk.Label (name) {
@@ -97,18 +95,17 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
 
         expander.toggled.connect (() => {
-            if (expander.active) {
-                image.tooltip_text = _("Show less");
-            } else {
-                image.tooltip_text = _("Show more");
-            }
-
             headers[app_id] = expander.active;
             settings.set_value ("headers", headers);
         });
 
         clear_btn_entry.clicked.connect (() => {
             clear (); // Causes notification list to destroy this app entry after clearing its notification entries
+        });
+
+        expander.bind_property ("active", image, "tooltip-text", SYNC_CREATE, (binding, srcval, ref targetval) => {
+            targetval = (bool) srcval ? _("Show less") : _("Show more");
+            return true;
         });
     }
 
