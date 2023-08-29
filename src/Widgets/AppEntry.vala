@@ -52,7 +52,9 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             name = _("Other");
         }
 
-        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
+        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR) {
+            tooltip_text = _("Show less")
+        };
         image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var label = new Gtk.Label (name) {
@@ -60,18 +62,17 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             xalign = 0
         };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
+        label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var expander_content = new Gtk.Box (HORIZONTAL, 3);
-        expander_content.add (image);
         expander_content.add (label);
+        expander_content.add (image);
 
         expander = new Gtk.ToggleButton () {
-            child = expander_content,
-            can_focus = false
+            child = expander_content
         };
         unowned var expander_style_context = expander.get_style_context ();
         expander_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        expander_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
         expander_style_context.add_class ("image-button");
 
         var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
@@ -81,7 +82,6 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         var box = new Gtk.Box (HORIZONTAL, 6);
         box.add (expander);
-        box.add (new Gtk.Separator (VERTICAL));
         box.add (clear_btn_entry);
 
         margin_start = 12;
@@ -97,6 +97,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
 
         expander.toggled.connect (() => {
+            if (expander.active) {
+                image.tooltip_text = _("Show less");
+            } else {
+                image.tooltip_text = _("Show more");
+            }
+
             headers[app_id] = expander.active;
             settings.set_value ("headers", headers);
         });
