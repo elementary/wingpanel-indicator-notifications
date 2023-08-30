@@ -19,8 +19,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
 
     public Notification notification { get; construct; }
+    public Gtk.Revealer revealer { get; construct; }
 
-    private Gtk.Revealer revealer;
     private uint timeout_id;
 
     private const int ICON_SIZE_PRIMARY = 48;
@@ -279,12 +279,16 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public void dismiss () {
         Source.remove (timeout_id);
 
-        revealer.notify["child-revealed"].connect (() => {
-            if (!revealer.child_revealed) {
-                destroy ();
-            }
-        });
-        revealer.reveal_child = false;
+        if (!revealer.child_revealed) {
+            destroy ();
+        } else {
+            revealer.notify["child-revealed"].connect (() => {
+                if (!revealer.child_revealed) {
+                    destroy ();
+                }
+            });
+            revealer.reveal_child = false;
+        }
 
         if (notification.server_id > 0) {
             unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
