@@ -23,8 +23,10 @@ public class Notifications.Notification : Object {
         UNDEFINED = 4
     }
 
+    public const string DEFAULT_ACTION = "default";
     public const string DESKTOP_ID_EXT = ".desktop";
 
+    public string internal_id { get; construct set; } // Format: "timestamp.server_id"
     public string app_name;
     public string summary;
     public string message_body;
@@ -32,8 +34,10 @@ public class Notifications.Notification : Object {
     public string app_icon;
     public string sender;
     public string[] actions;
+    public List<Gtk.Button> buttons;
+    public string? default_action { get; private set; default = null; }
     public uint32 replaces_id;
-    public uint32 id;
+    public uint32 server_id { get; construct set; default = 0; } // 0 means the notification is outdated i.e. not present in the server anymore
     public bool has_temp_file;
     public GLib.DateTime timestamp;
     public GLib.Icon badge_icon { get; construct set; }
@@ -53,25 +57,26 @@ public class Notifications.Notification : Object {
         COUNT
     }
 
-    private const string DEFAULT_ACTION = "default";
     private const string X_CANONICAL_PRIVATE_KEY = "x-canonical-private-synchronous";
     private const string DESKTOP_ENTRY_KEY = "desktop-entry";
     private const string FALLBACK_DESKTOP_ID = "gala-other" + DESKTOP_ID_EXT;
 
     public Notification (
-        uint32 _id, string _app_name, string _app_icon, string _summary, string _message_body, string _image_path,
+        string _internal_id, string _app_name, string _app_icon, string _summary, string _message_body, string _image_path,
         string[] _actions, string _desktop_id, int64 _unix_time, uint64 _replaces_id, string _sender, bool _has_temp_file
     ) {
+        internal_id = _internal_id;
         app_name = _app_name;
         app_icon = _app_icon;
         summary = _summary;
         message_body = _message_body;
         image_path = _image_path;
         replaces_id = (uint32) _replaces_id;
-        id = _id;
         sender = _sender;
 
         actions = _actions;
+        buttons = validate_actions (actions);
+
         timestamp = new GLib.DateTime.from_unix_local (_unix_time);
 
         desktop_id = _desktop_id;
@@ -88,11 +93,15 @@ public class Notifications.Notification : Object {
         message_body = get_string (body, Column.BODY);
         var hints = body.get_child_value (Column.HINTS);
         replaces_id = get_uint32 (body, Column.REPLACES_ID);
-        id = _id;
+        server_id = _id;
         sender = message.get_sender ();
 
         actions = body.get_child_value (Column.ACTIONS).dup_strv ();
+        buttons = validate_actions (actions);
+
         timestamp = new GLib.DateTime.now_local ();
+
+        internal_id = timestamp.to_unix ().to_string () + "." + server_id.to_string ();
 
         desktop_id = lookup_string (hints, DESKTOP_ENTRY_KEY);
         if (desktop_id != null && desktop_id != "") {
@@ -138,6 +147,32 @@ public class Notifications.Notification : Object {
             desktop_id = FALLBACK_DESKTOP_ID;
             app_info = new DesktopAppInfo (desktop_id);
         }
+    }
+
+    private List<Gtk.Button> validate_actions (string[] actions) {
+        var list = new List<Gtk.Button> ();
+
+        for (int i = 0; i < actions.length; i += 2) {
+            if (actions[i] == DEFAULT_ACTION) {
+                default_action = server_id.to_string () + "." + DEFAULT_ACTION;
+                continue;
+            }
+
+            var label = actions[i + 1].strip ();
+            if (label == "") {
+                warning ("Action '%s' sent without label, skipping…", actions[i]);
+                continue;
+            }
+
+            var button = new Gtk.Button.with_label (label) {
+                action_name = NotificationsList.ACTION_PREFIX + server_id.to_string () + "." + actions[i],
+                width_request = 86
+            };
+
+            list.append (button);
+        }
+
+        return list;
     }
 
     private string get_string (Variant tuple, int column) {

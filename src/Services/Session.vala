@@ -65,7 +65,7 @@ public class Notifications.Session : GLib.Object {
             key.load_from_file (session_file.get_path (), KeyFileFlags.NONE);
             foreach (unowned string group in key.get_groups ()) {
                 var notification = new Notification (
-                    (uint32)int.parse (group),
+                    group,
                     key.get_string (group, APP_NAME_KEY),
                     key.get_string (group, APP_ICON_KEY),
                     key.get_string (group, SUMMARY_KEY),
@@ -82,6 +82,7 @@ public class Notifications.Session : GLib.Object {
             }
         } catch (KeyFileError e) {
             warning (e.message);
+            create_session_file ();
         } catch (FileError e) {
             warning (e.message);
         }
@@ -91,7 +92,7 @@ public class Notifications.Session : GLib.Object {
     }
 
     public void add_notification (Notification notification, bool write_file = true) {
-        string id = notification.id.to_string ();
+        string id = notification.internal_id;
         key.set_int64 (id, UNIX_TIME_KEY, notification.timestamp.to_unix ());
         key.set_string (id, APP_ICON_KEY, notification.app_icon);
         key.set_string (id, APP_NAME_KEY, notification.app_name);
@@ -119,7 +120,7 @@ public class Notifications.Session : GLib.Object {
                     critical ("Unable to delete tmpfile: %s", notification.image_path);
                 }
             }
-            key.remove_group (notification.id.to_string ());
+            key.remove_group (notification.internal_id);
         } catch (KeyFileError e) {
             warning (e.message);
         }
