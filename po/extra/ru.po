@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:25+0000\n"
+"POT-Creation-Date: 2023-09-06 18:47+0000\n"
 "PO-Revision-Date: 2023-06-15 03:07+0000\n"
 "Last-Translator: lenemter <lenemter@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
@@ -32,51 +32,60 @@ msgstr "Смотрите пропущенные оповещения в пане
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
 
-#: data/notifications.metainfo.xml.in:34 data/notifications.metainfo.xml.in:50
-#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
-#: data/notifications.metainfo.xml.in:90
-msgid "Minor updates:"
-msgstr "Незначительные обновления:"
+#: data/notifications.metainfo.xml.in:34
+msgid "New Features:"
+msgstr ""
 
 #: data/notifications.metainfo.xml.in:36
-msgid "Remove notification from list if bubble dismissed"
-msgstr "Удаление уведомление из списка, если оно было отклонено"
+msgid "Support notifications with buttons"
+msgstr ""
 
 #: data/notifications.metainfo.xml.in:37
-msgid "Ensure accurate count in tooltip"
-msgstr "Исправлен подсчёт элементов во вспывающей подсказке"
+msgid "Collapsible app sections"
+msgstr ""
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
-#: data/notifications.metainfo.xml.in:65 data/notifications.metainfo.xml.in:79
-#: data/notifications.metainfo.xml.in:92
+#: data/notifications.metainfo.xml.in:66 data/notifications.metainfo.xml.in:79
+#: data/notifications.metainfo.xml.in:93
 msgid "Updated translations"
 msgstr "Обновлены переводы"
 
-#: data/notifications.metainfo.xml.in:59 data/notifications.metainfo.xml.in:72
-#: data/notifications.metainfo.xml.in:86
+#: data/notifications.metainfo.xml.in:48 data/notifications.metainfo.xml.in:64
+#: data/notifications.metainfo.xml.in:77 data/notifications.metainfo.xml.in:91
+msgid "Minor updates:"
+msgstr "Незначительные обновления:"
+
+#: data/notifications.metainfo.xml.in:50
+msgid "Remove notification from list if bubble dismissed"
+msgstr "Удаление уведомление из списка, если оно было отклонено"
+
+#: data/notifications.metainfo.xml.in:51
+msgid "Ensure accurate count in tooltip"
+msgstr "Исправлен подсчёт элементов во вспывающей подсказке"
+
+#: data/notifications.metainfo.xml.in:73 data/notifications.metainfo.xml.in:86
 msgid "Fixes:"
 msgstr "Исправления:"
 
-#: data/notifications.metainfo.xml.in:61
+#: data/notifications.metainfo.xml.in:75
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr "Кнопка «Очистить всё» больше не оставляет незакрываемые уведомления"
 
-#: data/notifications.metainfo.xml.in:74
+#: data/notifications.metainfo.xml.in:88
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
 msgstr ""
 "Уменьшена задержка при первом показе панели с большим количеством уведомлений"
 
-#: data/notifications.metainfo.xml.in:75
+#: data/notifications.metainfo.xml.in:89
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr "Уменьшена задержка при очистке большого количества уведомлений"
 
-#: data/notifications.metainfo.xml.in:88
-msgid "Fix delayed startup"
-msgstr "Исправлена задержка при запуске"
+#~ msgid "Fix delayed startup"
+#~ msgstr "Исправлена задержка при запуске"
 
 #~ msgid "Handle null message body"
 #~ msgstr "Обработка уведомлений без содержимого"
