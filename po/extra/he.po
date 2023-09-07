@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-06 18:47+0000\n"
-"PO-Revision-Date: 2023-06-15 03:07+0000\n"
+"PO-Revision-Date: 2023-09-07 13:34+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/he/>\n"
@@ -33,15 +33,15 @@ msgstr "elementary בע״מ"
 
 #: data/notifications.metainfo.xml.in:34
 msgid "New Features:"
-msgstr ""
+msgstr "יכולות חדשות:"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "Support notifications with buttons"
-msgstr ""
+msgstr "תמיכה בהתראות עם כפתורים"
 
 #: data/notifications.metainfo.xml.in:37
 msgid "Collapsible app sections"
-msgstr ""
+msgstr "סעיפים שניתן לצמצם ביישום"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
 #: data/notifications.metainfo.xml.in:66 data/notifications.metainfo.xml.in:79
