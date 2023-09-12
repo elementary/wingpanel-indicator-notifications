@@ -67,7 +67,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         expander_content.add (image);
 
         expander = new Gtk.ToggleButton () {
-            child = expander_content
+            child = expander_content,
+            active = true
         };
         unowned var expander_style_context = expander.get_style_context ();
         expander_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
