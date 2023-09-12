@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:25+0000\n"
-"PO-Revision-Date: 2023-06-15 03:07+0000\n"
+"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"PO-Revision-Date: 2023-09-12 10:08+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/ca/>\n"
@@ -31,37 +31,47 @@ msgstr "Vegeu les notificacions al plafó."
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
 
-#: data/notifications.metainfo.xml.in:34 data/notifications.metainfo.xml.in:50
-#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
-#: data/notifications.metainfo.xml.in:90
-msgid "Minor updates:"
-msgstr "Actualitzacions menors:"
+#: data/notifications.metainfo.xml.in:34
+msgid "New Features:"
+msgstr "Característiques noves:"
 
 #: data/notifications.metainfo.xml.in:36
-msgid "Remove notification from list if bubble dismissed"
-msgstr "Suprimeix la notificació de la llista si la bombolla s'ha descartat"
+msgid "Support notifications with buttons"
+msgstr "Suport de notificacions amb botons"
 
 #: data/notifications.metainfo.xml.in:37
-msgid "Ensure accurate count in tooltip"
-msgstr "Assegura un recompte precís a la informació sobre eines"
+msgid "Collapsible app sections"
+msgstr "Seccions d'aplicacions replegables"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
-#: data/notifications.metainfo.xml.in:65 data/notifications.metainfo.xml.in:79
-#: data/notifications.metainfo.xml.in:92
+#: data/notifications.metainfo.xml.in:66 data/notifications.metainfo.xml.in:79
+#: data/notifications.metainfo.xml.in:93
 msgid "Updated translations"
 msgstr "Traduccions actualitzades"
 
-#: data/notifications.metainfo.xml.in:59 data/notifications.metainfo.xml.in:72
-#: data/notifications.metainfo.xml.in:86
+#: data/notifications.metainfo.xml.in:48 data/notifications.metainfo.xml.in:64
+#: data/notifications.metainfo.xml.in:77 data/notifications.metainfo.xml.in:91
+msgid "Minor updates:"
+msgstr "Actualitzacions menors:"
+
+#: data/notifications.metainfo.xml.in:50
+msgid "Remove notification from list if bubble dismissed"
+msgstr "Suprimeix la notificació de la llista si la bombolla s'ha descartat"
+
+#: data/notifications.metainfo.xml.in:51
+msgid "Ensure accurate count in tooltip"
+msgstr "Assegura un recompte precís a la informació sobre eines"
+
+#: data/notifications.metainfo.xml.in:73 data/notifications.metainfo.xml.in:86
 msgid "Fixes:"
 msgstr "Correccions:"
 
-#: data/notifications.metainfo.xml.in:61
+#: data/notifications.metainfo.xml.in:75
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr ""
 "El botó «Neteja-ho tot» ja no deixa notificacions que no es puguin esborrar."
 
-#: data/notifications.metainfo.xml.in:74
+#: data/notifications.metainfo.xml.in:88
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
@@ -69,16 +79,15 @@ msgstr ""
 "Redueix el retard en mostrar inicialment el plafó quan hi ha un gran nombre "
 "de notificacions."
 
-#: data/notifications.metainfo.xml.in:75
+#: data/notifications.metainfo.xml.in:89
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr ""
 "Reducció del retard en esborrar totes les notificacions quan n'hi ha moltes"
 
-#: data/notifications.metainfo.xml.in:88
-msgid "Fix delayed startup"
-msgstr "Correcció de l'inici retardat"
+#~ msgid "Fix delayed startup"
+#~ msgstr "Correcció de l'inici retardat"
 
 #~ msgid "Handle null message body"
 #~ msgstr "Gestió del cos del missatge nul"

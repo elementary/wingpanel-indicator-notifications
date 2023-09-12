@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:25+0000\n"
-"PO-Revision-Date: 2023-06-17 15:07+0000\n"
+"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"PO-Revision-Date: 2023-09-09 09:08+0000\n"
 "Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
 "Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/pl/>\n"
@@ -32,37 +32,47 @@ msgstr "Pokaż przegapione powiadomienia w panelu"
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
 
-#: data/notifications.metainfo.xml.in:34 data/notifications.metainfo.xml.in:50
-#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
-#: data/notifications.metainfo.xml.in:90
-msgid "Minor updates:"
-msgstr "Mniejsze aktualizacje:"
+#: data/notifications.metainfo.xml.in:34
+msgid "New Features:"
+msgstr "Nowe funkcje:"
 
 #: data/notifications.metainfo.xml.in:36
-msgid "Remove notification from list if bubble dismissed"
-msgstr "Usunięcie powiadomienia z listy przy odwołaniu bańki"
+msgid "Support notifications with buttons"
+msgstr "Wsparcie dla powiadomień z przyciskami"
 
 #: data/notifications.metainfo.xml.in:37
-msgid "Ensure accurate count in tooltip"
-msgstr "Upewniono się, że w tooltipie będzie poprawna liczba powiadomień"
+msgid "Collapsible app sections"
+msgstr "Zwijalne sekcje aplikacji"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
-#: data/notifications.metainfo.xml.in:65 data/notifications.metainfo.xml.in:79
-#: data/notifications.metainfo.xml.in:92
+#: data/notifications.metainfo.xml.in:66 data/notifications.metainfo.xml.in:79
+#: data/notifications.metainfo.xml.in:93
 msgid "Updated translations"
 msgstr "Zaktualizowano tłumaczenia"
 
-#: data/notifications.metainfo.xml.in:59 data/notifications.metainfo.xml.in:72
-#: data/notifications.metainfo.xml.in:86
+#: data/notifications.metainfo.xml.in:48 data/notifications.metainfo.xml.in:64
+#: data/notifications.metainfo.xml.in:77 data/notifications.metainfo.xml.in:91
+msgid "Minor updates:"
+msgstr "Mniejsze aktualizacje:"
+
+#: data/notifications.metainfo.xml.in:50
+msgid "Remove notification from list if bubble dismissed"
+msgstr "Usunięcie powiadomienia z listy przy odwołaniu bańki"
+
+#: data/notifications.metainfo.xml.in:51
+msgid "Ensure accurate count in tooltip"
+msgstr "Upewniono się, że w tooltipie będzie poprawna liczba powiadomień"
+
+#: data/notifications.metainfo.xml.in:73 data/notifications.metainfo.xml.in:86
 msgid "Fixes:"
 msgstr "Poprawki:"
 
-#: data/notifications.metainfo.xml.in:61
+#: data/notifications.metainfo.xml.in:75
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr ""
 "Przycisk czyszczenia notyfikacji nie zostawia już nieusuwalnych powiadomień"
 
-#: data/notifications.metainfo.xml.in:74
+#: data/notifications.metainfo.xml.in:88
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
@@ -70,7 +80,7 @@ msgstr ""
 "Zmniejszono opóźnianie przy pierwszym pokazaniu panelu bocznego w przypadku "
 "dużej liczby powiadomień"
 
-#: data/notifications.metainfo.xml.in:75
+#: data/notifications.metainfo.xml.in:89
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
@@ -78,9 +88,8 @@ msgstr ""
 "Zmniejszono opóźnianie przy usuwaniu wszystkich powiadomień w przypadku "
 "dużej liczby powiadomień"
 
-#: data/notifications.metainfo.xml.in:88
-msgid "Fix delayed startup"
-msgstr "Naprawiono opóźnione włączanie"
+#~ msgid "Fix delayed startup"
+#~ msgstr "Naprawiono opóźnione włączanie"
 
 #~ msgid "Handle null message body"
 #~ msgstr "Obsługa wiadomości bez głównej treści"
