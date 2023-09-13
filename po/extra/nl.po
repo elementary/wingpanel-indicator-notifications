@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-06 18:47+0000\n"
-"PO-Revision-Date: 2022-01-13 21:09+0000\n"
-"Last-Translator: Dennis ten Hoove <dennistenhoove@protonmail.com>\n"
+"PO-Revision-Date: 2023-09-14 19:08+0000\n"
+"Last-Translator: DutchVipperloid <svenroelof@e.email>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/nl/>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -33,15 +33,15 @@ msgstr "elementary, Inc."
 
 #: data/notifications.metainfo.xml.in:34
 msgid "New Features:"
-msgstr ""
+msgstr "Nieuwe functies:"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "Support notifications with buttons"
-msgstr ""
+msgstr "Ondersteun notificaties met knoppen"
 
 #: data/notifications.metainfo.xml.in:37
 msgid "Collapsible app sections"
-msgstr ""
+msgstr "Opvouwbare app-secties"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
 #: data/notifications.metainfo.xml.in:66 data/notifications.metainfo.xml.in:79
@@ -56,7 +56,7 @@ msgstr "Kleine updates:"
 
 #: data/notifications.metainfo.xml.in:50
 msgid "Remove notification from list if bubble dismissed"
-msgstr ""
+msgstr "Verwijder notificatie uit lijst als de bubbel is afgewezen"
 
 #: data/notifications.metainfo.xml.in:51
 msgid "Ensure accurate count in tooltip"
