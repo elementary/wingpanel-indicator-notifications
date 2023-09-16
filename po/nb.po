@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-06 18:47+0000\n"
-"PO-Revision-Date: 2022-07-08 09:11+0000\n"
+"PO-Revision-Date: 2023-09-17 12:08+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-notifications/nb/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.17\n"
 "X-Launchpad-Export-Date: 2017-04-05 07:46+0000\n"
 
 #: src/Indicator.vala:58
@@ -90,11 +90,11 @@ msgstr "Fjern alle %s merknader"
 
 #: src/Widgets/AppEntry.vala:107
 msgid "Show less"
-msgstr ""
+msgstr "Vis mindre"
 
 #: src/Widgets/AppEntry.vala:107
 msgid "Show more"
-msgstr ""
+msgstr "Vis mer"
 
 #~ msgid "now"
 #~ msgstr "nå"
