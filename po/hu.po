@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-06 18:47+0000\n"
-"PO-Revision-Date: 2023-07-11 14:07+0000\n"
+"PO-Revision-Date: 2023-09-26 22:08+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/hu/>\n"
@@ -87,11 +87,11 @@ msgstr "Az összes %s értesítés törlése"
 
 #: src/Widgets/AppEntry.vala:107
 msgid "Show less"
-msgstr ""
+msgstr "Kevesebb mutatása"
 
 #: src/Widgets/AppEntry.vala:107
 msgid "Show more"
-msgstr ""
+msgstr "Több mutatása"
 
 #~ msgid "now"
 #~ msgstr "most"
