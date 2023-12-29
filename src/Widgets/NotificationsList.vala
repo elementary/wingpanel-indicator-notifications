@@ -21,9 +21,14 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public const string ACTION_GROUP_PREFIX = "notifications-list";
     public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
 
+    public NotificationsMonitor monitor { get; construct; }
     public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
 
     private HashTable<string, int> table;
+
+    public NotificationsList (NotificationsMonitor monitor) {
+        Object (monitor: monitor);
+    }
 
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
@@ -46,7 +51,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         set_placeholder (placeholder);
         show_all ();
 
-        insert_action_group (ACTION_GROUP_PREFIX, new NotificationsMonitor ().notifications_action_group);
+        insert_action_group (ACTION_GROUP_PREFIX, monitor.notifications_action_group);
 
         row_activated.connect (on_row_activated);
     }

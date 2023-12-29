@@ -62,7 +62,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             dynamic_icon_style_context.add_class ("notification-icon");
 
-            nlist = new NotificationsList ();
+            nlist = new NotificationsList (monitor);
 
             monitor.notification_received.connect (on_notification_received);
             monitor.notification_closed.connect (on_notification_closed);
