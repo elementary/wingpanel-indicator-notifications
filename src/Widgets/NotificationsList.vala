@@ -51,7 +51,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         row_activated.connect (on_row_activated);
     }
 
-    public async void add_entry (Notification notification, bool add_to_session = true, bool write_file = true) {
+    public async void add_entry (Notification notification, bool add_to_session = true) {
         var entry = new NotificationEntry (notification);
 
         if (app_entries[notification.desktop_id] != null) {
