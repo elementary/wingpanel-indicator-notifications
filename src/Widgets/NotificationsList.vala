@@ -1,5 +1,5 @@
 /*-
- * Copyright 2015-2020 elementary, Inc (https://elementary.io)
+ * Copyright 2015-2023 elementary, Inc (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as published by
@@ -21,13 +21,10 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public const string ACTION_GROUP_PREFIX = "notifications-list";
     public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
 
-    public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
-
-    private HashTable<string, int> table;
+    public Gee.HashMap<string, AppSection> app_sections { get; private set; }
 
     construct {
-        app_entries = new Gee.HashMap<string, AppEntry> ();
-        table = new HashTable<string, int> (str_hash, str_equal);
+        app_sections = new Gee.HashMap<string, AppSection> ();
 
         var placeholder = new Gtk.Label (_("No Notifications")) {
             margin_top = 24,
@@ -36,42 +33,35 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             margin_end = 12,
             visible = true
         };
+        placeholder.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+        placeholder.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
-        placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
-        placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
-
-        activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
         show_all ();
 
         insert_action_group (ACTION_GROUP_PREFIX, new NotificationsMonitor ().notifications_action_group);
-
-        row_activated.connect (on_row_activated);
     }
 
     public async void add_entry (Notification notification, bool add_to_session = true, bool write_file = true) {
-        var entry = new NotificationEntry (notification);
+        if (app_sections[notification.desktop_id] != null) {
+            var app_section = app_sections[notification.desktop_id];
 
-        if (app_entries[notification.desktop_id] != null) {
-            var app_entry = app_entries[notification.desktop_id];
-
-            resort_app_entry (app_entry);
-            app_entry.add_notification_entry (entry);
-
-            int insert_pos = table.get (app_entry.app_id);
-            insert (entry, insert_pos + 1);
+            move_app_section_to_top (app_section);
+            app_section.add_notification (notification);
         } else {
-            var app_entry = new AppEntry (notification.app_info);
-            app_entry.add_notification_entry (entry);
-            app_entry.clear.connect (clear_app_entry);
+            var app_section = new AppSection (notification.app_info);
+            app_sections[notification.desktop_id] = app_section;
 
-            app_entries[notification.desktop_id] = app_entry;
+            prepend (app_section);
+            app_section.add_notification (notification);
 
-            prepend (app_entry);
-            insert (entry, 1);
-            table.insert (app_entry.app_id, 0);
+            app_section.clear.connect (clear_app_section);
+            app_section.close_popover.connect (() => close_popover ());
+            app_section.activate_action.connect ((action_name, parameter) => {
+                unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
+                action_group.activate_action (action_name, parameter);
+            });
         }
 
         show_all ();
@@ -85,70 +75,50 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     public uint count_notifications (out uint number_of_apps) {
-        var count = 0;
-        var n_apps = 0;
+        uint count = 0;
         @foreach ((widget) => {
-            if (widget is NotificationEntry) {
-                count++;
-            } else if (widget is AppEntry) {
-                n_apps++;
-            }
+            var app_section = (AppSection) widget;
+            count += app_section.count_notifications ();
         });
 
-        number_of_apps = n_apps;
+        number_of_apps = get_children ().length ();
         return count;
     }
 
     public void clear_all () {
-        var iter = app_entries.map_iterator ();
+        var iter = app_sections.map_iterator ();
         while (iter.next ()) {
             var entry = iter.get_value ();
             iter.unset ();
-            clear_app_entry (entry);
+            clear_app_section (entry);
         }
 
         close_popover ();
     }
 
-    private void resort_app_entry (AppEntry app_entry) {
-        if (get_row_at_index (0) != app_entry) {
-            remove (app_entry);
-            prepend (app_entry);
-            app_entry.app_notifications.foreach ((notification_entry) => {
-                remove (notification_entry);
-                insert (notification_entry, 1);
-            });
+    private void move_app_section_to_top (AppSection app_section) {
+        if (get_row_at_index (0) != app_section) {
+            remove (app_section);
+            prepend (app_section);
         }
     }
 
-    private void clear_app_entry (AppEntry app_entry) {
-        app_entry.clear.disconnect (clear_app_entry);
-        app_entries.unset (app_entry.app_id);
-        app_entry.clear_all_notification_entries ();
-        app_entry.destroy ();
+    private void clear_app_section (AppSection app_section) {
+        app_section.clear.disconnect (clear_app_section);
+        app_sections.unset (app_section.app_id);
+        app_section.clear_all_notification_entries ();
+        app_section.destroy ();
 
-        if (app_entries.size == 0) {
+        if (app_sections.size == 0) {
             Session.get_instance ().clear ();
         }
     }
 
-    private void on_row_activated (Gtk.ListBoxRow row) {
-        if (row is NotificationEntry) {
-            unowned var notification_entry = (NotificationEntry) row;
-
-            if (notification_entry.notification.default_action != null) {
-                unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
-                action_group.activate_action (notification_entry.notification.default_action, null);
-                close_popover ();
-            } else {
-                try {
-                    var context = notification_entry.get_display ().get_app_launch_context ();
-                    notification_entry.notification.app_info.launch (null, context);
-                    notification_entry.clear ();
-                    close_popover ();
-                } catch (Error e) {
-                    warning ("Unable to launch app: %s", e.message);
-                }
+    public void close_notification (uint32 id) {
+        foreach (unowned var child in get_children ()) {
+            var app_section = (AppSection) child;
+            if (app_section.close_notification (id)) {
+                return;
             }
         }
     }

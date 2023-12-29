@@ -39,10 +39,11 @@ config_vala = configure_file(
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
+    'src/Widgets/AppHeader.vala',
+    'src/Widgets/AppSection.vala',
     'src/Widgets/MaskedImage.vala',
     'src/Widgets/NotificationsList.vala',
     'src/Widgets/NotificationEntry.vala',
-    'src/Widgets/AppEntry.vala',
     'src/Services/NotificationsMonitor.vala',
     'src/Services/Notification.vala',
     'src/Services/Session.vala',

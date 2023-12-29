@@ -17,6 +17,7 @@
 
 public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public signal void clear ();
+    public signal void activate_action (string action_name, GLib.Variant? parameter);
 
     public Notification notification { get; construct; }
     public Gtk.Revealer revealer { get; construct; }
@@ -279,21 +280,22 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     public void dismiss () {
         Source.remove (timeout_id);
 
-        if (!revealer.child_revealed) {
-            destroy ();
-        } else {
-            revealer.notify["child-revealed"].connect (() => {
-                if (!revealer.child_revealed) {
-                    destroy ();
-                }
-            });
-            revealer.reveal_child = false;
+        if (notification.server_id > 0) {
+            activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
         }
 
-        if (notification.server_id > 0) {
-            unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
-            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
-        }
+        //  if (!revealer.child_revealed) {
+        //      destroy ();
+        //  } else {
+        //      revealer.notify["child-revealed"].connect (() => {
+        //          if (!revealer.child_revealed) {
+        //              destroy ();
+        //          }
+        //      });
+        //      revealer.reveal_child = false;
+        //  }
+
+        warning ("%u", ref_count);
     }
 
     private class DeleteAffordance : Gtk.Grid {

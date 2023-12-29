@@ -190,29 +190,18 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void update_clear_all_sensitivity () {
-        clear_all_btn.sensitive = nlist.app_entries.size > 0;
+        clear_all_btn.sensitive = nlist.app_sections.size > 0;
     }
 
     private void on_notification_closed (uint32 id, Notification.CloseReason reason) {
-        SearchFunc<NotificationEntry, uint32> find_entry = (e, i) => {
-            return i == e.notification.server_id ? 0 : i > e.notification.server_id ? 1 : -1;
-        };
-
-        foreach (var app_entry in nlist.app_entries.values) {
-            unowned var node = app_entry.app_notifications.search (id, find_entry);
-            if (node != null) {
-                node.data.notification.server_id = 0; // Notification is now outdated
-                node.data.clear ();
-                return;
-            }
-        }
+        nlist.close_notification (id);
     }
 
     private void set_display_icon_name () {
         unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
-        } else if (nlist != null && nlist.app_entries.size > 0) {
+        } else if (nlist != null && nlist.app_sections.size > 0) {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.add_class ("new");
         } else {
