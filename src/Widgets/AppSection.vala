@@ -119,7 +119,6 @@ public class Notifications.AppSection : Gtk.ListBoxRow {
             if (entry.notification.server_id == id) {
                 notifications_listbox.remove (child);
                 entry.dismiss ();
-                entry.destroy ();
 
                 if (notifications_listbox.get_children ().length () == 0) {
                     clear ();

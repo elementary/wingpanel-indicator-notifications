@@ -284,18 +284,16 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
         }
 
-        //  if (!revealer.child_revealed) {
-        //      destroy ();
-        //  } else {
-        //      revealer.notify["child-revealed"].connect (() => {
-        //          if (!revealer.child_revealed) {
-        //              destroy ();
-        //          }
-        //      });
-        //      revealer.reveal_child = false;
-        //  }
-
-        warning ("%u", ref_count);
+        if (!revealer.child_revealed) {
+            destroy ();
+        } else {
+            revealer.notify["child-revealed"].connect (() => {
+                if (!revealer.child_revealed) {
+                    destroy ();
+                }
+            });
+            revealer.reveal_child = false;
+        }        
     }
 
     private class DeleteAffordance : Gtk.Grid {
