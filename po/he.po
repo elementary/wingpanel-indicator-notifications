@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2023-09-07 13:34+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -80,16 +80,16 @@ msgstr "מחיקה"
 msgid "Other"
 msgstr "אחר"
 
-#: src/Widgets/AppEntry.vala:77
+#: src/Widgets/AppEntry.vala:78
 #, c-format
 msgid "Clear all %s notifications"
 msgstr "לפנות את כל %s ההתרעות"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show less"
 msgstr "להציג פחות"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show more"
 msgstr "להציג יותר"
 

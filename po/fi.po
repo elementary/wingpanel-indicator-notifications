@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2023-09-17 12:08+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://l10n.elementary.io/projects/wingpanel/"
@@ -83,16 +83,16 @@ msgstr "Poista"
 msgid "Other"
 msgstr "Muu"
 
-#: src/Widgets/AppEntry.vala:77
+#: src/Widgets/AppEntry.vala:78
 #, c-format
 msgid "Clear all %s notifications"
 msgstr "Tyhjennä kaikki %s-ilmoitukset"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show less"
 msgstr "Näytä vähemmän"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show more"
 msgstr "Näytä enemmän"
 

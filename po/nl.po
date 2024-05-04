@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2024-04-25 16:13+0000\n"
 "Last-Translator: Dennis ten Hoove <dennistenhoove@protonmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
@@ -80,16 +80,16 @@ msgstr "Verwijderen"
 msgid "Other"
 msgstr "Overige"
 
-#: src/Widgets/AppEntry.vala:77
+#: src/Widgets/AppEntry.vala:78
 #, c-format
 msgid "Clear all %s notifications"
 msgstr "Alle %s meldingen verwijderen"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show less"
 msgstr "Minder tonen"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show more"
 msgstr "Meer tonen"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2021-09-04 23:27+0000\n"
 "Last-Translator: Muhammad Al-Jayyousi <m7md.j99@protonmail.com>\n"
 "Language-Team: Arabic <https://l10n.elementary.io/projects/wingpanel/"
@@ -93,16 +93,16 @@ msgstr "امسح"
 msgid "Other"
 msgstr "أخرى"
 
-#: src/Widgets/AppEntry.vala:77
+#: src/Widgets/AppEntry.vala:78
 #, c-format
 msgid "Clear all %s notifications"
 msgstr "امسح جميع الإشعارات"
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show less"
 msgstr ""
 
-#: src/Widgets/AppEntry.vala:107
+#: src/Widgets/AppEntry.vala:108
 msgid "Show more"
 msgstr ""
 
