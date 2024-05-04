@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 18:47+0000\n"
+"POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2023-09-07 13:34+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,60 +27,59 @@ msgstr "מחוון התראות"
 msgid "See missed notifications in the panel"
 msgstr "הצגת התרעות שהוחמצו בלוח"
 
-#: data/notifications.metainfo.xml.in:27
-msgid "elementary, Inc."
-msgstr "elementary בע״מ"
-
-#: data/notifications.metainfo.xml.in:34
+#: data/notifications.metainfo.xml.in:36
 msgid "New Features:"
 msgstr "יכולות חדשות:"
 
-#: data/notifications.metainfo.xml.in:36
+#: data/notifications.metainfo.xml.in:38
 msgid "Support notifications with buttons"
 msgstr "תמיכה בהתראות עם כפתורים"
 
-#: data/notifications.metainfo.xml.in:37
+#: data/notifications.metainfo.xml.in:39
 msgid "Collapsible app sections"
 msgstr "סעיפים שניתן לצמצם ביישום"
 
-#: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:52
-#: data/notifications.metainfo.xml.in:66 data/notifications.metainfo.xml.in:79
-#: data/notifications.metainfo.xml.in:93
+#: data/notifications.metainfo.xml.in:40 data/notifications.metainfo.xml.in:54
+#: data/notifications.metainfo.xml.in:68 data/notifications.metainfo.xml.in:81
+#: data/notifications.metainfo.xml.in:95
 msgid "Updated translations"
 msgstr "עודכנו התרגומים"
 
-#: data/notifications.metainfo.xml.in:48 data/notifications.metainfo.xml.in:64
-#: data/notifications.metainfo.xml.in:77 data/notifications.metainfo.xml.in:91
+#: data/notifications.metainfo.xml.in:50 data/notifications.metainfo.xml.in:66
+#: data/notifications.metainfo.xml.in:79 data/notifications.metainfo.xml.in:93
 msgid "Minor updates:"
 msgstr "עדכונים משניים:"
 
-#: data/notifications.metainfo.xml.in:50
+#: data/notifications.metainfo.xml.in:52
 msgid "Remove notification from list if bubble dismissed"
 msgstr "להסיר התראות מהרשימה אם הבועה בוטלה"
 
-#: data/notifications.metainfo.xml.in:51
+#: data/notifications.metainfo.xml.in:53
 msgid "Ensure accurate count in tooltip"
 msgstr "וידוא ספירה נכונה בחלונית העצה"
 
-#: data/notifications.metainfo.xml.in:73 data/notifications.metainfo.xml.in:86
+#: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
 msgid "Fixes:"
 msgstr "תיקונים:"
 
-#: data/notifications.metainfo.xml.in:75
+#: data/notifications.metainfo.xml.in:77
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr "כפתור לפנות הכול לא משאיר עוד התראות שלא ניתן למחוק"
 
-#: data/notifications.metainfo.xml.in:88
+#: data/notifications.metainfo.xml.in:90
 msgid ""
 "Reduce delay in initially showing wingpanel when there is a large number of "
 "notifications"
 msgstr "צומצמה ההמתנה בהצגת הלוח לראשונה כשמספר ההתראות גדול"
 
-#: data/notifications.metainfo.xml.in:89
+#: data/notifications.metainfo.xml.in:91
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
 msgstr "צומצמה ההמתנה לפינוי כל ההתראות כשמספר ההתראות גדול"
+
+#~ msgid "elementary, Inc."
+#~ msgstr "elementary בע״מ"
 
 #~ msgid "Fix delayed startup"
 #~ msgstr "תיקון הפעלה מושהית"
