@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2021-09-21 18:27+0000\n"
-"Last-Translator: Rafael Bautista Martínez <iuninefrendor@gmail.com>\n"
+"PO-Revision-Date: 2024-05-27 16:13+0000\n"
+"Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/es/>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 5.5\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -29,7 +29,7 @@ msgstr "Ver notificaciones perdidas en el panel"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "New Features:"
-msgstr ""
+msgstr "Nuevas características:"
 
 #: data/notifications.metainfo.xml.in:38
 msgid "Support notifications with buttons"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
 msgid "Fixes:"
-msgstr ""
+msgstr "Correcciones:"
 
 #: data/notifications.metainfo.xml.in:77
 msgid "Clear All button no longer leaves undeletable notifications"
