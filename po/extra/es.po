@@ -66,7 +66,7 @@ msgstr "Correcciones:"
 
 #: data/notifications.metainfo.xml.in:77
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "El botón \"Limpiar Todo\" ya no deja notificaciones no descartables"
+msgstr "El botón «Borrar Todo» ya no deja notificaciones no descartables"
 
 #: data/notifications.metainfo.xml.in:90
 msgid ""
