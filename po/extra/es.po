@@ -80,7 +80,7 @@ msgstr ""
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
-msgstr ""
+msgstr "Reducido el delay al limpiar notificaciones cuando había un gran número"
 
 #~ msgid "elementary, Inc."
 #~ msgstr "elementary, Inc."
