@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2024-05-28 15:25+0000\n"
-"Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
+"Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/es/>\n"
 "Language: es\n"
@@ -25,7 +25,7 @@ msgstr "Indicador de notificaciones"
 
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
-msgstr "Ver notificaciones perdidas en el panel"
+msgstr "Ver notificaciones antiguas en el Panel"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "New Features:"
