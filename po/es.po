@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2024-05-28 15:25+0000\n"
+"PO-Revision-Date: 2024-05-29 16:13+0000\n"
 "Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/es/>\n"
@@ -25,7 +25,7 @@ msgstr "No molestar"
 
 #: src/Indicator.vala:133
 msgid "Clear All Notifications"
-msgstr "Borrar todas las notificaciones"
+msgstr "Limpiar todas las notificaciones"
 
 #: src/Indicator.vala:136
 msgid "Notifications Settings…"
@@ -83,7 +83,7 @@ msgstr "Otros"
 #: src/Widgets/AppEntry.vala:78
 #, c-format
 msgid "Clear all %s notifications"
-msgstr "Borrar las %s notificaciones"
+msgstr "Limpiar las %s notificaciones"
 
 #: src/Widgets/AppEntry.vala:108
 msgid "Show less"
