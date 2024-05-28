@@ -29,7 +29,7 @@ msgstr "Ver notificaciones antiguas en el Panel"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "New Features:"
-msgstr "Novedades:"
+msgstr "Nuevas características:"
 
 #: data/notifications.metainfo.xml.in:38
 msgid "Support notifications with buttons"
