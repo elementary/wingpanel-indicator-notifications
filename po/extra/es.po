@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2024-05-28 15:28+0000\n"
+"PO-Revision-Date: 2024-05-29 16:13+0000\n"
 "Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/es/>\n"
@@ -33,7 +33,7 @@ msgstr "Nuevas características:"
 
 #: data/notifications.metainfo.xml.in:38
 msgid "Support notifications with buttons"
-msgstr "Ahora se pueden controlar las notificaciones con botones"
+msgstr "Ahora se pueden controlar las notificaciones con atajos"
 
 #: data/notifications.metainfo.xml.in:39
 msgid "Collapsible app sections"
@@ -66,7 +66,7 @@ msgstr "Correcciones:"
 
 #: data/notifications.metainfo.xml.in:77
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "El botón «Borrar Todo» ya no deja notificaciones no descartables"
+msgstr "El botón «Limpiar Todo» ya no deja notificaciones no descartables"
 
 #: data/notifications.metainfo.xml.in:90
 msgid ""
@@ -80,7 +80,7 @@ msgstr ""
 msgid ""
 "Reduce delay in clearing all notifications when there is a large number of "
 "notifications"
-msgstr "Reducido el delay al limpiar notificaciones cuando había un gran número"
+msgstr "Reducido el retardo al limpiar notificaciones cuando hay un gran número"
 
 #~ msgid "elementary, Inc."
 #~ msgstr "elementary, Inc."
