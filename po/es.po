@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
 "PO-Revision-Date: 2024-05-28 15:23+0000\n"
-"Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
+"Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/es/>\n"
 "Language: es\n"
@@ -33,11 +33,11 @@ msgstr "Configuración de notificaciones…"
 
 #: src/Indicator.vala:242
 msgid "Middle-click to disable Do Not Disturb"
-msgstr "Pulse con el botón central del ratón para desactivar No molestar"
+msgstr "Haga clic con el botón central del ratón para desactivar No molestar"
 
 #: src/Indicator.vala:244
 msgid "Middle-click to enable Do Not Disturb"
-msgstr "Pulse con el botón central del ratón para activar No molestar"
+msgstr "Haga clic con el botón central del ratón para activar No molestar"
 
 #: src/Indicator.vala:251
 msgid "No notifications"
