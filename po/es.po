@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2024-05-28 15:22+0000\n"
+"PO-Revision-Date: 2024-05-28 15:23+0000\n"
 "Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/es/>\n"
@@ -62,13 +62,11 @@ msgstr[0] "%u notificación"
 msgstr[1] "%u notificaciones"
 
 #: src/Indicator.vala:261
-#, fuzzy, c-format
-#| msgid "%i app"
-#| msgid_plural "%i apps"
+#, c-format
 msgid "%u app"
 msgid_plural "%u apps"
-msgstr[0] "%i aplicación"
-msgstr[1] "%i aplicaciones"
+msgstr[0] "%u aplicación"
+msgstr[1] "%u aplicaciones"
 
 #: src/Widgets/NotificationsList.vala:32
 msgid "No Notifications"
