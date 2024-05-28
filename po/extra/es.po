@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2024-05-28 15:27+0000\n"
+"PO-Revision-Date: 2024-05-28 15:28+0000\n"
 "Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/es/>\n"
@@ -66,7 +66,7 @@ msgstr "Problemas solucionados:"
 
 #: data/notifications.metainfo.xml.in:77
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr ""
+msgstr "El botón \"Limpiar Todo\" ya no deja notificaciones no descartables"
 
 #: data/notifications.metainfo.xml.in:90
 msgid ""
