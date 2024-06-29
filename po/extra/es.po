@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2024-06-15 19:16+0000\n"
+"PO-Revision-Date: 2024-06-30 14:16+0000\n"
 "Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/es/>\n"
@@ -57,8 +57,7 @@ msgstr "Ahora se quita la notificación de la lista si su burbuja es descartada"
 #: data/notifications.metainfo.xml.in:53
 msgid "Ensure accurate count in tooltip"
 msgstr ""
-"Se garantiza un conteo adecuado de notificaciones en la información en "
-"pantalla"
+"Se garantiza un conteo adecuado de notificaciones en la descripción emergente"
 
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
 msgid "Fixes:"
