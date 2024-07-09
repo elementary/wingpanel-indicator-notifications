@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2022-09-30 22:56+0000\n"
+"PO-Revision-Date: 2024-07-10 19:16+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/sk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -29,15 +29,15 @@ msgstr "Skontrolujte na paneli oznámenia, ktoré vám unikli"
 
 #: data/notifications.metainfo.xml.in:36
 msgid "New Features:"
-msgstr ""
+msgstr "Nové funkcie:"
 
 #: data/notifications.metainfo.xml.in:38
 msgid "Support notifications with buttons"
-msgstr ""
+msgstr "Podpora oznámení s tlačidlami"
 
 #: data/notifications.metainfo.xml.in:39
 msgid "Collapsible app sections"
-msgstr ""
+msgstr "Skladateľné sekcie aplikácií"
 
 #: data/notifications.metainfo.xml.in:40 data/notifications.metainfo.xml.in:54
 #: data/notifications.metainfo.xml.in:68 data/notifications.metainfo.xml.in:81
@@ -52,11 +52,11 @@ msgstr "Menšie aktualizácie:"
 
 #: data/notifications.metainfo.xml.in:52
 msgid "Remove notification from list if bubble dismissed"
-msgstr ""
+msgstr "Odstrániť oznámenie zo zoznamu, ak je bublina odmietnutá"
 
 #: data/notifications.metainfo.xml.in:53
 msgid "Ensure accurate count in tooltip"
-msgstr ""
+msgstr "Zaistiť presný počet v nápovede"
 
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
 msgid "Fixes:"
