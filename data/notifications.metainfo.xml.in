@@ -31,6 +31,15 @@
   <update_contact>contact_at_elementary.io</update_contact>
 
   <releases>
+    <release version="7.1.1" date="2024-07-17" urgency="medium">
+      <description>
+        <p>Minor updates:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="7.1.0" date="2023-09-18" urgency="medium">
       <description>
         <p>New Features:</p>
@@ -83,20 +92,7 @@
       </description>
     </release>
 
-    <release version="6.0.5" date="2022-07-03" urgency="medium">
-      <description>
-        <p>Fixes:</p>
-        <ul>
-          <li>Reduce delay in initially showing wingpanel when there is a large number of notifications</li>
-          <li>Reduce delay in clearing all notifications when there is a large number of notifications</li>
-        </ul>
-        <p>Minor updates:</p>
-        <ul>
-          <li>Updated translations</li>
-        </ul>
-      </description>
-    </release>
-
+    <release version="6.0.5" date="2022-07-03" urgency="medium" />
     <release version="6.0.4" date="2021-12-17" urgency="medium" />
     <release version="6.0.3" date="2021-12-10" urgency="medium" />
     <release version="6.0.2" date="2021-10-26" urgency="medium" />
