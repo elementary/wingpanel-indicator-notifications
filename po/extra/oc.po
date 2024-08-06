@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 18:04+0000\n"
-"PO-Revision-Date: 2020-11-09 10:15+0000\n"
-"Last-Translator: Mejans <farga@mejans.fr>\n"
+"PO-Revision-Date: 2024-08-07 18:16+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Occitan <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/oc/>\n"
 "Language: oc\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -30,7 +30,7 @@ msgstr ""
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
 msgid "Minor updates:"
-msgstr ""
+msgstr "Mesas a jorn mendre :"
 
 #: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:49
 #: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
