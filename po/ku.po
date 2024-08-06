@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: wingpanel-indicator-notifications\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 18:04+0000\n"
-"PO-Revision-Date: 2017-05-04 20:05+0000\n"
-"Last-Translator: Rokar <rokartv10@gmail.com>\n"
-"Language-Team: ku (generated) <https://l10n.elementary.io/projects/wingpanel/"
+"PO-Revision-Date: 2024-08-07 18:16+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
+"Language-Team: Kurdish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ku/>\n"
 "Language: ku\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.13-dev\n"
+"X-Generator: Weblate 5.6.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:58
@@ -90,7 +90,7 @@ msgstr ""
 
 #: src/Widgets/AppEntry.vala:52
 msgid "Other"
-msgstr ""
+msgstr "Wekî Din"
 
 #: src/Widgets/AppEntry.vala:78
 #, fuzzy, c-format
