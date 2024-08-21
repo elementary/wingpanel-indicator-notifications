@@ -1,3 +1,9 @@
+wingpanel-indicator-notifications (7.1.1) jammy; urgency=medium
+
+  * Release 7.1.1 (#280)
+
+ -- elementary, Inc. <builds@elementary.io>  Wed, 21 Aug 2024 18:16:06 +0000
+
 wingpanel-indicator-notifications (7.1.0) jammy; urgency=medium
 
   * New upstream release
