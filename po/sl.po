@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2017-05-31 21:13+0000\n"
-"Last-Translator: Jernej Virag <jernej@virag.si>\n"
+"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"PO-Revision-Date: 2024-08-07 18:16+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Slovenian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/sl/>\n"
 "Language: sl\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 2.14\n"
+"X-Generator: Weblate 5.6.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:58
@@ -90,7 +90,7 @@ msgstr ""
 
 #: src/Widgets/AppEntry.vala:52
 msgid "Other"
-msgstr ""
+msgstr "Drugo"
 
 #: src/Widgets/AppEntry.vala:78
 #, fuzzy, c-format

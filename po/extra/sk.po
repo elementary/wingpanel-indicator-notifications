@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 06:41+0000\n"
+"POT-Creation-Date: 2024-07-17 18:04+0000\n"
 "PO-Revision-Date: 2024-07-10 19:16+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,58 +27,56 @@ msgstr "Indikátor oznámení"
 msgid "See missed notifications in the panel"
 msgstr "Skontrolujte na paneli oznámenia, ktoré vám unikli"
 
-#: data/notifications.metainfo.xml.in:36
-msgid "New Features:"
-msgstr "Nové funkcie:"
-
-#: data/notifications.metainfo.xml.in:38
-msgid "Support notifications with buttons"
-msgstr "Podpora oznámení s tlačidlami"
-
-#: data/notifications.metainfo.xml.in:39
-msgid "Collapsible app sections"
-msgstr "Skladateľné sekcie aplikácií"
-
-#: data/notifications.metainfo.xml.in:40 data/notifications.metainfo.xml.in:54
-#: data/notifications.metainfo.xml.in:68 data/notifications.metainfo.xml.in:81
-#: data/notifications.metainfo.xml.in:95
-msgid "Updated translations"
-msgstr "Aktualizované preklady"
-
-#: data/notifications.metainfo.xml.in:50 data/notifications.metainfo.xml.in:66
-#: data/notifications.metainfo.xml.in:79 data/notifications.metainfo.xml.in:93
+#: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
+#: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
 msgid "Minor updates:"
 msgstr "Menšie aktualizácie:"
 
-#: data/notifications.metainfo.xml.in:52
+#: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:49
+#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
+#: data/notifications.metainfo.xml.in:90
+msgid "Updated translations"
+msgstr "Aktualizované preklady"
+
+#: data/notifications.metainfo.xml.in:45
+msgid "New Features:"
+msgstr "Nové funkcie:"
+
+#: data/notifications.metainfo.xml.in:47
+msgid "Support notifications with buttons"
+msgstr "Podpora oznámení s tlačidlami"
+
+#: data/notifications.metainfo.xml.in:48
+msgid "Collapsible app sections"
+msgstr "Skladateľné sekcie aplikácií"
+
+#: data/notifications.metainfo.xml.in:61
 msgid "Remove notification from list if bubble dismissed"
 msgstr "Odstrániť oznámenie zo zoznamu, ak je bublina odmietnutá"
 
-#: data/notifications.metainfo.xml.in:53
+#: data/notifications.metainfo.xml.in:62
 msgid "Ensure accurate count in tooltip"
 msgstr "Zaistiť presný počet v nápovede"
 
-#: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
+#: data/notifications.metainfo.xml.in:84
 msgid "Fixes:"
 msgstr "Opravy:"
 
-#: data/notifications.metainfo.xml.in:77
+#: data/notifications.metainfo.xml.in:86
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr "Tlačidlo Vymazať všetky už neponechá nezmazateľné oznámenia"
 
-#: data/notifications.metainfo.xml.in:90
-msgid ""
-"Reduce delay in initially showing wingpanel when there is a large number of "
-"notifications"
-msgstr ""
-"Znížené oneskorenie prvotného zobrazenia horného panelu, ak sa v ňom "
-"nachádza veľké množstvo oznámení"
+#~ msgid ""
+#~ "Reduce delay in initially showing wingpanel when there is a large number "
+#~ "of notifications"
+#~ msgstr ""
+#~ "Znížené oneskorenie prvotného zobrazenia horného panelu, ak sa v ňom "
+#~ "nachádza veľké množstvo oznámení"
 
-#: data/notifications.metainfo.xml.in:91
-msgid ""
-"Reduce delay in clearing all notifications when there is a large number of "
-"notifications"
-msgstr "Znížené oneskorenie pri odstraňovaní veľkého množstva oznámení"
+#~ msgid ""
+#~ "Reduce delay in clearing all notifications when there is a large number "
+#~ "of notifications"
+#~ msgstr "Znížené oneskorenie pri odstraňovaní veľkého množstva oznámení"
 
 #~ msgid "elementary, Inc."
 #~ msgstr "elementary, Inc."

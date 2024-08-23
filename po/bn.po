@@ -2,17 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2015-06-21 23:23+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"PO-Revision-Date: 2024-08-07 18:16+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
+"Language-Team: Bengali <https://l10n.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-notifications/bn/>\n"
+"Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
-"X-Generator: Launchpad (build 18331)\n"
 
 #: src/Indicator.vala:58
 msgid "Updating notifications…"
@@ -77,7 +78,7 @@ msgstr ""
 
 #: src/Widgets/AppEntry.vala:52
 msgid "Other"
-msgstr ""
+msgstr "অন্য"
 
 #: src/Widgets/AppEntry.vala:78
 #, c-format

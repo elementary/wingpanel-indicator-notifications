@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-04 06:41+0000\n"
-"PO-Revision-Date: 2020-09-22 13:14+0000\n"
-"Last-Translator: Shukrullo <shukrullo@umail.uz>\n"
+"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"PO-Revision-Date: 2024-08-07 18:16+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Uzbek <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/uz/>\n"
 "Language: uz\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -27,55 +27,43 @@ msgstr ""
 msgid "See missed notifications in the panel"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:36
-msgid "New Features:"
-msgstr ""
+#: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
+#: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
+msgid "Minor updates:"
+msgstr "Kichik yangilanishlar:"
 
-#: data/notifications.metainfo.xml.in:38
-msgid "Support notifications with buttons"
-msgstr ""
-
-#: data/notifications.metainfo.xml.in:39
-msgid "Collapsible app sections"
-msgstr ""
-
-#: data/notifications.metainfo.xml.in:40 data/notifications.metainfo.xml.in:54
-#: data/notifications.metainfo.xml.in:68 data/notifications.metainfo.xml.in:81
-#: data/notifications.metainfo.xml.in:95
+#: data/notifications.metainfo.xml.in:38 data/notifications.metainfo.xml.in:49
+#: data/notifications.metainfo.xml.in:63 data/notifications.metainfo.xml.in:77
+#: data/notifications.metainfo.xml.in:90
 msgid "Updated translations"
 msgstr "Yangilangan tarjimalar"
 
-#: data/notifications.metainfo.xml.in:50 data/notifications.metainfo.xml.in:66
-#: data/notifications.metainfo.xml.in:79 data/notifications.metainfo.xml.in:93
-msgid "Minor updates:"
+#: data/notifications.metainfo.xml.in:45
+msgid "New Features:"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:52
+#: data/notifications.metainfo.xml.in:47
+msgid "Support notifications with buttons"
+msgstr ""
+
+#: data/notifications.metainfo.xml.in:48
+msgid "Collapsible app sections"
+msgstr ""
+
+#: data/notifications.metainfo.xml.in:61
 msgid "Remove notification from list if bubble dismissed"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:53
+#: data/notifications.metainfo.xml.in:62
 msgid "Ensure accurate count in tooltip"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
+#: data/notifications.metainfo.xml.in:84
 msgid "Fixes:"
 msgstr ""
 
-#: data/notifications.metainfo.xml.in:77
+#: data/notifications.metainfo.xml.in:86
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr ""
-
-#: data/notifications.metainfo.xml.in:90
-msgid ""
-"Reduce delay in initially showing wingpanel when there is a large number of "
-"notifications"
-msgstr ""
-
-#: data/notifications.metainfo.xml.in:91
-msgid ""
-"Reduce delay in clearing all notifications when there is a large number of "
-"notifications"
 msgstr ""
 
 #~ msgid "elementary, Inc."
