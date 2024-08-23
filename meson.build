@@ -1,7 +1,8 @@
 project(
     'notifications',
     'vala', 'c',
-    version: '7.1.0'
+    version: '7.1.0',
+    meson_version: '>= 0.58.0'
 )
 
 gettext_name = meson.project_name() + '-indicator'
@@ -9,7 +10,7 @@ gnome = import('gnome')
 i18n = import('i18n')
 
 prefix = get_option('prefix')
-libdir = join_paths(prefix, get_option('libdir'))
+libdir = prefix / get_option('libdir')
 
 add_global_arguments(
     '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
@@ -25,11 +26,11 @@ gresource = gnome.compile_resources(
 )
 
 wingpanel_dep = dependency('wingpanel')
-wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
+wingpanel_indicatorsdir = wingpanel_dep.get_variable('indicatorsdir', pkgconfig_define: ['libdir', libdir])
 
 config_data = configuration_data()
 config_data.set('GETTEXT_PACKAGE', meson.project_name() + '-indicator')
-config_data.set('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+config_data.set('LOCALEDIR', prefix / get_option('localedir'))
 config_vala = configure_file(
     input: 'src/Config.vala.in',
     output: '@BASENAME@',
