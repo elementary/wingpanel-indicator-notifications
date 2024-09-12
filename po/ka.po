@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 18:04+0000\n"
-"PO-Revision-Date: 2023-07-14 06:07+0000\n"
+"PO-Revision-Date: 2024-09-13 00:01+0000\n"
 "Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-notifications/ka/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 "X-Launchpad-Export-Date: 2017-03-14 07:32+0000\n"
 
 #: src/Indicator.vala:58
@@ -85,11 +85,11 @@ msgstr "ყველა %s გაფრთხილების გასუფ�
 
 #: src/Widgets/AppEntry.vala:108
 msgid "Show less"
-msgstr ""
+msgstr "ნაკლების ჩვენება"
 
 #: src/Widgets/AppEntry.vala:108
 msgid "Show more"
-msgstr ""
+msgstr "მეტის ჩვენება"
 
 #~ msgid "now"
 #~ msgstr "ახლა"
