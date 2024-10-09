@@ -30,7 +30,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
     static construct {
         provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryExpander.css");
+        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntry.css");
+        Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         settings = new Settings ("io.elementary.wingpanel.notifications");
         headers = (HashTable<string, bool>) settings.get_value ("headers");
@@ -53,14 +54,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
 
         var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
-        image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var label = new Gtk.Label (name) {
             hexpand = true,
             xalign = 0
         };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
-        label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var expander_content = new Gtk.Box (HORIZONTAL, 3);
         expander_content.add (label);
@@ -71,11 +70,15 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             active = true
         };
         unowned var expander_style_context = expander.get_style_context ();
-        expander_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         expander_style_context.add_class ("image-button");
+        expander_style_context.add_class ("expander");
 
-        var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
-            tooltip_text = _("Clear all %s notifications").printf (name)
+        var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        clear_btn_image.get_style_context ().add_class ("sweep-animation");
+
+        var clear_btn_entry = new Gtk.Button () {
+            tooltip_text = _("Clear all %s notifications").printf (name),
+            child = clear_btn_image
         };
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
@@ -101,7 +104,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         });
 
         clear_btn_entry.clicked.connect (() => {
-            clear (); // Causes notification list to destroy this app entry after clearing its notification entries
+            clear_btn_image.get_style_context ().add_class ("active");
+            clear_all_notification_entries ();
+            GLib.Timeout.add (600, () => {
+                clear (); // Causes notification list to destroy this app entry after clearing its notification entries
+                return GLib.Source.REMOVE;
+            });
         });
 
         expander.bind_property ("active", image, "tooltip-text", SYNC_CREATE, (binding, srcval, ref targetval) => {
