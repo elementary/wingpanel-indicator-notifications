@@ -23,7 +23,6 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public List<NotificationEntry> app_notifications;
 
     private static Gtk.CssProvider provider;
-    private static Gtk.CssProvider clear_provider;
     private static Settings settings;
     private static HashTable<string, bool> headers;
 
