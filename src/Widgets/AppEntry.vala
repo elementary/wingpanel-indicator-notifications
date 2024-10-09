@@ -81,7 +81,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn_image.get_style_context ().add_provider (clear_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         clear_btn_image.get_style_context ().add_class ("sweep-animation");
-        
+
         var clear_btn_entry = new Gtk.Button () {
             tooltip_text = _("Clear all %s notifications").printf (name)
         };
