@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/io/elementary/wingpanel/notifications">
     <file compressed="true">AppEntryExpander.css</file>
+    <file compressed="true">AppEntryClear.css</file>
     <file compressed="true">indicator.css</file>
     <file compressed="true">NotificationEntry.css</file>
   </gresource>

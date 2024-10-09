@@ -23,6 +23,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     public List<NotificationEntry> app_notifications;
 
     private static Gtk.CssProvider provider;
+    private static Gtk.CssProvider clear_provider;
     private static Settings settings;
     private static HashTable<string, bool> headers;
 
@@ -31,6 +32,9 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
     static construct {
         provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryExpander.css");
+
+        clear_provider = new Gtk.CssProvider ();
+        clear_provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryClear.css");
 
         settings = new Settings ("io.elementary.wingpanel.notifications");
         headers = (HashTable<string, bool>) settings.get_value ("headers");
@@ -74,9 +78,14 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         expander_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         expander_style_context.add_class ("image-button");
 
-        var clear_btn_entry = new Gtk.Button.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR) {
+        var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        clear_btn_image.get_style_context ().add_provider (clear_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        clear_btn_image.get_style_context ().add_class ("sweep-animation");
+        
+        var clear_btn_entry = new Gtk.Button () {
             tooltip_text = _("Clear all %s notifications").printf (name)
         };
+        clear_btn_entry.add (clear_btn_image);
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
         var box = new Gtk.Box (HORIZONTAL, 6);
@@ -101,7 +110,11 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         });
 
         clear_btn_entry.clicked.connect (() => {
-            clear (); // Causes notification list to destroy this app entry after clearing its notification entries
+            clear_btn_image.get_style_context ().add_class ("active");
+            GLib.Timeout.add (550, () => {
+                clear (); // Causes notification list to destroy this app entry after clearing its notification entries
+                return GLib.Source.REMOVE;
+            });
         });
 
         expander.bind_property ("active", image, "tooltip-text", SYNC_CREATE, (binding, srcval, ref targetval) => {
