@@ -23,3 +23,19 @@
 .toggle label {
     font-weight: inherit;
 }
+
+@keyframes sweep {
+    0%   { -gtk-icon-transform: rotate(0deg) translatex(0);   }
+    20%  { -gtk-icon-transform: rotate(40deg) translatex(-5px); }
+    60%  { -gtk-icon-transform: rotate(0deg)   translatex(0); }
+    80%  { -gtk-icon-transform: rotate(-30deg) translatex(3px);  }
+    100% { -gtk-icon-transform: rotate(0deg) translatex(0);   }
+}
+
+.sweep-animation {
+    transition: all 175ms ease-in-out;
+}
+
+.sweep-animation.active {
+    animation: sweep 600ms ease-in-out;
+}

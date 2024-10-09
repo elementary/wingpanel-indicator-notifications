@@ -31,10 +31,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
     static construct {
         provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryExpander.css");
-
-        clear_provider = new Gtk.CssProvider ();
-        clear_provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntryClear.css");
+        provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntry.css");
+        Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         settings = new Settings ("io.elementary.wingpanel.notifications");
         headers = (HashTable<string, bool>) settings.get_value ("headers");
@@ -57,14 +55,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         }
 
         var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
-        image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var label = new Gtk.Label (name) {
             hexpand = true,
             xalign = 0
         };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
-        label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var expander_content = new Gtk.Box (HORIZONTAL, 3);
         expander_content.add (label);
@@ -75,11 +71,9 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             active = true
         };
         unowned var expander_style_context = expander.get_style_context ();
-        expander_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         expander_style_context.add_class ("image-button");
 
         var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        clear_btn_image.get_style_context ().add_provider (clear_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         clear_btn_image.get_style_context ().add_class ("sweep-animation");
 
         var clear_btn_entry = new Gtk.Button () {
@@ -111,7 +105,8 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
 
         clear_btn_entry.clicked.connect (() => {
             clear_btn_image.get_style_context ().add_class ("active");
-            GLib.Timeout.add (550, () => {
+            clear_all_notification_entries ();
+            GLib.Timeout.add (600, () => {
                 clear (); // Causes notification list to destroy this app entry after clearing its notification entries
                 return GLib.Source.REMOVE;
             });
