@@ -3,24 +3,24 @@
 * SPDX-FileCopyrightText: 2017-2023 elementary, Inc. (https://elementary.io)
 */
 
-.toggle:checked {
+.expander:checked {
     background: transparent;
 }
 
-.toggle:checked:focus {
+.expander:checked:focus {
     background: @selected_bg_color;
 }
 
-.toggle image {
+.expander image {
     transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.toggle:checked image {
+.expander:checked image {
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     -gtk-icon-transform: rotate(90deg);
 }
 
-.toggle label {
+.expander label {
     font-weight: inherit;
 }
 

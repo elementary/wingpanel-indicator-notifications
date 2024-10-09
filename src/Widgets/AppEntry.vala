@@ -72,14 +72,15 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         };
         unowned var expander_style_context = expander.get_style_context ();
         expander_style_context.add_class ("image-button");
+        expander_style_context.add_class ("expander");
 
         var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         clear_btn_image.get_style_context ().add_class ("sweep-animation");
 
         var clear_btn_entry = new Gtk.Button () {
-            tooltip_text = _("Clear all %s notifications").printf (name)
+            tooltip_text = _("Clear all %s notifications").printf (name),
+            child = clear_btn_image
         };
-        clear_btn_entry.add (clear_btn_image);
         clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
         var box = new Gtk.Box (HORIZONTAL, 6);
