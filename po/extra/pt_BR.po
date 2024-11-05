@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 18:04+0000\n"
-"PO-Revision-Date: 2024-08-07 18:16+0000\n"
-"Last-Translator: anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2024-11-05 19:01+0000\n"
+"Last-Translator: Guilherme Faura <guilhermefaura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-notifications-extra/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -40,7 +40,7 @@ msgstr "Traduções atualizadas"
 
 #: data/notifications.metainfo.xml.in:45
 msgid "New Features:"
-msgstr ""
+msgstr "Novos Recursos:"
 
 #: data/notifications.metainfo.xml.in:47
 msgid "Support notifications with buttons"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: data/notifications.metainfo.xml.in:84
 msgid "Fixes:"
-msgstr ""
+msgstr "Correções:"
 
 #: data/notifications.metainfo.xml.in:86
 msgid "Clear All button no longer leaves undeletable notifications"
