@@ -9,7 +9,7 @@
   <key name="keep-notifications" type="b">
     <default>true</default>
     <summary>Keep notifications</summary>
-    <description>Whether to keep notifications accross reboots</description>
+    <description>Keep new notifications between sessions</description>
   </key>
 </schema>
 </schemalist>
