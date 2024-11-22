@@ -9,7 +9,7 @@
   <key name="keep-notifications" type="b">
     <default>true</default>
     <summary>Keep notifications</summary>
-    <description>Keep new notifications between sessions</description>
+    <description>Whether to keep new notifications between sessions</description>
   </key>
 </schema>
 </schemalist>
