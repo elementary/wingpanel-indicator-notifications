@@ -25,9 +25,12 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private HashTable<string, int> table;
 
+    private static GLib.Settings? settings;
+
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
+        notify_settings = new GLib.Settings ("io.elementary.notifications");
 
         var placeholder = new Gtk.Label (_("No Notifications")) {
             margin_top = 24,
@@ -80,7 +83,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         yield;
 
         if (add_to_session) { // If notification was obtained from session do not write it back
-            Session.get_instance ().add_notification (notification,Notifications.Session.notify_settings);
+            Session.get_instance ().add_notification (notification,notify_settings.Get_Boolean("keep-notifications"));
         }
     }
 
