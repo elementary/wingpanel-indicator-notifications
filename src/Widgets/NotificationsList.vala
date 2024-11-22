@@ -25,7 +25,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     private HashTable<string, int> table;
 
-    private static GLib.Settings? settings;
+    private GLib.Settings notify_settings;
 
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
@@ -83,7 +83,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         yield;
 
         if (add_to_session) { // If notification was obtained from session do not write it back
-            Session.get_instance ().add_notification (notification,notify_settings.Get_Boolean("keep-notifications"));
+            var write_file = notify_settings.get_boolean ( "keep-notifications");
+            Session.get_instance ().add_notification (notification, write_file);
         }
     }
 
