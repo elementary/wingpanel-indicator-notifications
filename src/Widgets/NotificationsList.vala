@@ -30,7 +30,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
         table = new HashTable<string, int> (str_hash, str_equal);
-        notify_settings = new GLib.Settings ("io.elementary.notifications");
+        notify_settings = new GLib.Settings ("io.elementary.wingpanel.notifications");
 
         var placeholder = new Gtk.Label (_("No Notifications")) {
             margin_top = 24,
@@ -56,6 +56,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
     public async void add_entry (Notification notification, bool add_to_session = true) {
         var entry = new NotificationEntry (notification);
+        var write_file = notify_settings.get_boolean ( "keep-notifications");
 
         if (app_entries[notification.desktop_id] != null) {
             var app_entry = app_entries[notification.desktop_id];
@@ -83,7 +84,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         yield;
 
         if (add_to_session) { // If notification was obtained from session do not write it back
-            var write_file = notify_settings.get_boolean ( "keep-notifications");
             Session.get_instance ().add_notification (notification, write_file);
         }
     }
