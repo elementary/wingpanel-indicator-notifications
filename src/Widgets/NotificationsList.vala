@@ -80,7 +80,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         yield;
 
         if (add_to_session) { // If notification was obtained from session do not write it back
-            Session.get_instance ().add_notification (notification);
+            Session.get_instance ().add_notification (notification,Notifications.Session.notify_settings);
         }
     }
 
