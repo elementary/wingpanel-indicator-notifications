@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 18:04+0000\n"
-"PO-Revision-Date: 2021-10-08 17:10+0000\n"
+"PO-Revision-Date: 2024-12-02 09:59+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-notifications-extra/fi/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/notifications.metainfo.xml.in:11
 msgid "Notifications Indicator"
@@ -40,7 +40,7 @@ msgstr "Päivitetyt kielikäännökset"
 
 #: data/notifications.metainfo.xml.in:45
 msgid "New Features:"
-msgstr ""
+msgstr "Uudet ominaisuudet:"
 
 #: data/notifications.metainfo.xml.in:47
 msgid "Support notifications with buttons"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: data/notifications.metainfo.xml.in:84
 msgid "Fixes:"
-msgstr ""
+msgstr "Korjaukset:"
 
 #: data/notifications.metainfo.xml.in:86
 msgid "Clear All button no longer leaves undeletable notifications"
