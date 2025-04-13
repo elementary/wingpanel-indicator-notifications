@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-public class Portal.Notification : Object {
+public class Notifications.Notification : Object {
     [Flags]
     public enum DisplayHint {
         TRANSIENT,
@@ -25,7 +25,11 @@ public class Portal.Notification : Object {
         public DisplayHint display_hint;
     }
 
+    private static HashTable<string, DateTime> latest_for_app_id = new HashTable<string, DateTime> (str_hash, str_equal);
+
     public string internal_id { get; construct; }
+
+    public string app_id { get; construct; }
 
     public string title { get; construct; }
     public string body { get; construct; }
@@ -69,15 +73,36 @@ public class Portal.Notification : Object {
 
         Object (
             internal_id: data.internal_id,
+            app_id: data.app_id,
             title: title,
             body: body,
             primary_icon: primary_icon,
+            timestamp: new DateTime.now_local (),
             dismiss_action_name: data.dismiss_action_name,
             default_action_name: data.default_action_name,
             default_action_target: maybe_from_array (data.default_action_target),
             buttons: buttons,
             display_hint: data.display_hint
         );
+    }
+
+    construct {
+        latest_for_app_id[app_id] = timestamp;
+    }
+
+    public int compare_time (Notification other) {
+        return timestamp.compare (other.timestamp);
+    }
+
+    public int compare_section (Notification other) {
+        if (other.app_id == app_id) {
+            return 0;
+        }
+
+        var latest = latest_for_app_id[app_id];
+        var other_latest = latest_for_app_id[other.app_id];
+
+        return latest.compare (other_latest);
     }
 }
 
