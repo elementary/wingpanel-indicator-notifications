@@ -39,7 +39,10 @@ public class Notifications.NotificationsList : Granite.Bin {
         var list_view = new Gtk.ListView (selection_model, factory);
 
         var scrolled = new Gtk.ScrolledWindow () {
-            child = list_view
+            child = list_view,
+            hscrollbar_policy = NEVER,
+            max_content_height = 500,
+            propagate_natural_height = true
         };
 
         child = scrolled;
