@@ -15,55 +15,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notifications.AppEntry : Gtk.ListBoxRow {
-    public signal void clear ();
-
-    public string app_id { get; private set; }
-    public AppInfo? app_info { get; construct; default = null; }
-    public List<NotificationEntry> app_notifications;
-
+public class Notifications.AppEntry : Granite.Bin {
     private static Gtk.CssProvider provider;
     private static Settings settings;
     private static HashTable<string, bool> headers;
 
-    private Gtk.ToggleButton expander;
-
     static construct {
         provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/wingpanel/notifications/AppEntry.css");
-        Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         settings = new Settings ("io.elementary.wingpanel.notifications");
         headers = (HashTable<string, bool>) settings.get_value ("headers");
     }
 
-    public AppEntry (AppInfo? app_info) {
-        Object (app_info: app_info);
+    public unowned Gtk.ListHeader header { get; construct; }
+
+    private string app_id;
+
+    private Gtk.Label label;
+    private Gtk.Button clear_btn_entry;
+    private Gtk.ToggleButton expander;
+
+    public AppEntry (Gtk.ListHeader header) {
+        Object (header: header);
     }
 
     construct {
-        app_notifications = new List<NotificationEntry> ();
+        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic");
 
-        unowned string name;
-        if (app_info != null) {
-            app_id = app_info.get_id ();
-            name = app_info.get_name ();
-        } else {
-            app_id = "other";
-            name = _("Other");
-        }
-
-        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
-
-        var label = new Gtk.Label (name) {
+        label = new Gtk.Label (null) {
             hexpand = true,
             xalign = 0
         };
         label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var expander_content = new Gtk.Box (HORIZONTAL, 3);
-        expander_content.add (label);
-        expander_content.add (image);
+        expander_content.append (label);
+        expander_content.append (image);
 
         expander = new Gtk.ToggleButton () {
             child = expander_content,
@@ -73,18 +62,17 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         expander_style_context.add_class ("image-button");
         expander_style_context.add_class ("expander");
 
-        var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic");
         clear_btn_image.get_style_context ().add_class ("sweep-animation");
 
-        var clear_btn_entry = new Gtk.Button () {
-            tooltip_text = _("Clear all %s notifications").printf (name),
+        clear_btn_entry = new Gtk.Button () {
             child = clear_btn_image
         };
-        clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+        clear_btn_entry.get_style_context ().add_class (Granite.STYLE_CLASS_FLAT);
 
         var box = new Gtk.Box (HORIZONTAL, 6);
-        box.add (expander);
-        box.add (clear_btn_entry);
+        box.append (expander);
+        box.append (clear_btn_entry);
 
         margin_start = 12;
         margin_end = 12;
@@ -92,24 +80,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         margin_top = 6;
         can_focus = false;
         child = box;
-        show_all ();
 
-        if (app_id in headers) {
-            expander.active = headers[app_id];
-        }
-
-        expander.toggled.connect (() => {
-            headers[app_id] = expander.active;
-            settings.set_value ("headers", headers);
-        });
+        expander.toggled.connect (expander_toggled);
 
         clear_btn_entry.clicked.connect (() => {
             clear_btn_image.get_style_context ().add_class ("active");
-            clear_all_notification_entries ();
-            GLib.Timeout.add (600, () => {
-                clear (); // Causes notification list to destroy this app entry after clearing its notification entries
-                return GLib.Source.REMOVE;
-            });
+            clear_section ();
         });
 
         expander.bind_property ("active", image, "tooltip-text", SYNC_CREATE, (binding, srcval, ref targetval) => {
@@ -118,35 +94,38 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         });
     }
 
-    public void add_notification_entry (NotificationEntry entry) {
-        app_notifications.prepend (entry);
-        entry.clear.connect (remove_notification_entry);
+    private void expander_toggled () {
+        headers[app_id] = expander.active;
+        settings.set_value ("headers", headers);
 
-        expander.bind_property ("active", entry.revealer, "reveal-child", SYNC_CREATE);
-    }
-
-    public void remove_notification_entry (NotificationEntry entry) {
-        app_notifications.remove (entry);
-        entry.dismiss ();
-
-        Session.get_instance ().remove_notification (entry.notification);
-        if (app_notifications.length () == 0) {
-            if (headers.remove (app_id)) {
-                settings.set_value ("headers", headers);
-            }
-
-            clear ();
+        if (expander.active) {
+            activate_action_variant (NotificationsList.INTERNAL_ACTION_PREFIX + NotificationsList.ACTION_UPDATE_SECTION, new Variant ("(uuu)", header.start, header.end, NotificationsList.UpdateKind.EXPAND));
+        } else {
+            activate_action_variant (NotificationsList.INTERNAL_ACTION_PREFIX + NotificationsList.ACTION_UPDATE_SECTION, new Variant ("(uuu)", header.start, header.end, NotificationsList.UpdateKind.COLLAPSE));
         }
     }
 
-    public void clear_all_notification_entries () {
-        Notification[] to_remove = {};
-        app_notifications.@foreach ((entry) => {
-            entry.dismiss ();
-            to_remove += entry.notification;
-        });
+    private void clear_section () {
+        activate_action_variant (NotificationsList.INTERNAL_ACTION_PREFIX + NotificationsList.ACTION_UPDATE_SECTION, new Variant ("(uuu)", header.start, header.end, NotificationsList.UpdateKind.DISMISS));
+    }
 
-        app_notifications = new List<NotificationEntry> ();
-        Session.get_instance ().remove_notifications (to_remove);
+    public void bind (Notification notification) {
+        app_id = notification.app_id;
+
+        var app_info = new DesktopAppInfo (app_id + ".desktop");
+
+        unowned string name;
+        if (app_info != null) {
+            name = app_info.get_name ();
+        } else {
+            name = _("Other");
+        }
+
+        label.label = name;
+        clear_btn_entry.tooltip_text = _("Clear all %s notifications").printf (name);
+
+        if (app_id in headers) {
+            expander.active = headers[app_id];
+        }
     }
 }

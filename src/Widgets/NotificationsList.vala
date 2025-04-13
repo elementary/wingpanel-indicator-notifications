@@ -16,27 +16,43 @@
  */
 
 public class Notifications.NotificationsList : Granite.Bin {
+    public enum UpdateKind {
+        COLLAPSE,
+        EXPAND,
+        DISMISS
+    }
+
     public signal void close_popover ();
 
     public const string ACTION_GROUP_PREFIX = "notifications-list";
     public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
 
-    // add action update section with uuu, so start, end, kind (COLLAPSE, EXPAND, DISMISS) for headers
+    public const string INTERNAL_ACTION_PREFIX = "notifications-list-custom.";
+    public const string ACTION_UPDATE_SECTION = "update-section";
+
+    class construct {
+        install_action (INTERNAL_ACTION_PREFIX + ACTION_UPDATE_SECTION, "(uuu)", on_update_section);
+    }
 
     private NotificationManager manager;
 
     construct {
         manager = new NotificationManager ();
 
-        var sort_model = new Gtk.SortListModel (manager.notifications, null);
-
-        var selection_model = new Gtk.NoSelection (sort_model);
+        var selection_model = new Gtk.NoSelection (manager.notifications);
 
         var factory = new Gtk.SignalListItemFactory ();
         factory.setup.connect (setup);
         factory.bind.connect (bind);
+        factory.unbind.connect (unbind);
 
-        var list_view = new Gtk.ListView (selection_model, factory);
+        var header_factory = new Gtk.SignalListItemFactory ();
+        header_factory.setup.connect (setup_header);
+        header_factory.bind.connect (bind_header);
+
+        var list_view = new Gtk.ListView (selection_model, factory) {
+            header_factory = header_factory,
+        };
 
         var scrolled = new Gtk.ScrolledWindow () {
             child = list_view,
@@ -60,5 +76,47 @@ public class Notifications.NotificationsList : Granite.Bin {
         var entry = (NotificationEntry) item.child;
         var notification = (Notification) item.item;
         entry.bind (notification);
+    }
+
+    private void unbind (Object obj) {
+        var item = (Gtk.ListItem) obj;
+        var entry = (NotificationEntry) item.child;
+        entry.unbind ();
+    }
+
+    private void setup_header (Object obj) {
+        var item = (Gtk.ListHeader) obj;
+        item.child = new AppEntry (item);
+    }
+
+    private void bind_header (Object obj) {
+        var item = (Gtk.ListHeader) obj;
+        var entry = (AppEntry) item.child;
+        var notification = (Notification) item.item;
+        entry.bind (notification);
+    }
+
+    public void update_section (uint start, uint end, UpdateKind kind) {
+        for (uint i = start; i < end; i++) {
+            var notification = (Notification) manager.notifications.get_item (i);
+
+            switch (kind) {
+                case COLLAPSE:
+                case EXPAND:
+                    notification.collapsed = (kind == COLLAPSE);
+                    break;
+
+                case DISMISS:
+                    activate_action_variant (ACTION_PREFIX + notification.dismiss_action_name, null);
+                    break;
+            }
+        }
+    }
+
+    private static void on_update_section (Gtk.Widget widget, string action, Variant? parameters) {
+        var list = (NotificationsList) widget;
+        uint start, end, kind;
+        parameters.get ("(uuu)", out start, out end, out kind);
+        list.update_section (start, end, (UpdateKind) kind);
     }
 }

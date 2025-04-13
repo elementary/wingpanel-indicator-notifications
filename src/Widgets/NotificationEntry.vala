@@ -16,10 +16,6 @@
  */
 
 public class Notifications.NotificationEntry : Granite.Bin {
-    public Notification notification { get; construct; }
-
-    private uint timeout_id;
-
     private const int ICON_SIZE_PRIMARY = 48;
     private const int ICON_SIZE_SECONDARY = 24;
 
@@ -39,6 +35,9 @@ public class Notifications.NotificationEntry : Granite.Bin {
         }
     }
 
+    private Adw.Carousel carousel;
+    private Gtk.Overlay overlay;
+
     private Gtk.Image primary_image;
     private Gtk.Label title_label;
     private Gtk.Label body_label;
@@ -47,7 +46,9 @@ public class Notifications.NotificationEntry : Granite.Bin {
     private Gtk.FlowBox flow_box;
     private Gtk.Revealer revealer;
 
+    private Notification? notification;
     private Binding? collapsed_binding;
+    private uint timeout_id;
 
     construct {
         primary_image = new Gtk.Image () {
@@ -145,20 +146,22 @@ public class Notifications.NotificationEntry : Granite.Bin {
         };
         delete_right.get_style_context ().add_class ("right");
 
-        var overlay = new Gtk.Overlay () {
+        overlay = new Gtk.Overlay () {
             child = grid
         };
         overlay.add_overlay (delete_revealer);
 
-        var carousel = new Adw.Carousel ();
+        carousel = new Adw.Carousel () {
+            hexpand = true,
+            halign = CENTER
+        };
         carousel.append (delete_left);
         carousel.append (overlay);
         carousel.append (delete_right);
-        carousel.scroll_to (overlay, false);
 
         revealer = new Gtk.Revealer () {
             reveal_child = true,
-            transition_duration = 200,
+            transition_duration = NotificationManager.REMOVAL_ANIMATION,
             transition_type = Gtk.RevealerTransitionType.SLIDE_UP,
             child = carousel
         };
@@ -169,31 +172,28 @@ public class Notifications.NotificationEntry : Granite.Bin {
         motion_controller.bind_property ("contains-pointer", delete_revealer, "reveal-child", SYNC_CREATE);
         add_controller (motion_controller);
 
-        //  timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
-        //      time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
-        //      return GLib.Source.CONTINUE;
-        //  });
+        //  carousel.page_changed.connect (on_page_changed);
+    }
 
-        //  deck.notify["visible-child"].connect (() => {
-        //      if (deck.transition_running == false && deck.visible_child != overlay) {
-        //          clear ();
-        //      }
-        //  });
-
-        //  deck.notify["transition-running"].connect (() => {
-        //      if (deck.transition_running == false && deck.visible_child != overlay) {
-        //          clear ();
-        //      }
-        //  });
+    //TODO
+    private void on_page_changed (uint index) {
+        if (notification != null && index != 2) {
+            activate_action_variant (NotificationsList.ACTION_PREFIX + notification.dismiss_action_name, null);
+        }
     }
 
     public void bind (Notification notification) {
+        carousel.scroll_to (overlay, false);
+
+        this.notification = notification;
+
         primary_image.gicon = notification.primary_icon;
 
         title_label.label = notification.title;
         body_label.label = fix_markup (notification.body);
 
         time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
+        timeout_id = Timeout.add_seconds (60, update_time_label);
 
         delete_button.action_name = NotificationsList.ACTION_PREFIX + notification.dismiss_action_name;
 
@@ -202,9 +202,9 @@ public class Notifications.NotificationEntry : Granite.Bin {
         collapsed_binding = notification.bind_property ("collapsed", revealer, "reveal-child", SYNC_CREATE | INVERT_BOOLEAN);
     }
 
-    public void unbind () {
-        collapsed_binding.unbind ();
-        collapsed_binding = null;
+    private bool update_time_label () {
+        time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
+        return Source.CONTINUE;
     }
 
     private Gtk.Widget create_button (Object object) {
@@ -213,6 +213,13 @@ public class Notifications.NotificationEntry : Granite.Bin {
             action_name = button.action_name,
             action_target = button.action_target
         };
+    }
+
+    public void unbind () {
+        notification = null;
+        collapsed_binding.unbind ();
+        collapsed_binding = null;
+        Source.remove (timeout_id);
     }
 
     private class DeleteAffordance : Granite.Bin {
