@@ -165,15 +165,9 @@ public class Notifications.NotificationEntry : Granite.Bin {
 
         child = revealer;
 
-        //  eventbox.enter_notify_event.connect ((event) => {
-        //      delete_revealer.reveal_child = true;
-        //      return Gdk.EVENT_STOP;
-        //  });
-
-        //  eventbox.leave_notify_event.connect ((event) => {
-        //      delete_revealer.reveal_child = false;
-        //      return Gdk.EVENT_STOP;
-        //  });
+        var motion_controller = new Gtk.EventControllerMotion ();
+        motion_controller.bind_property ("contains-pointer", delete_revealer, "reveal-child", SYNC_CREATE);
+        add_controller (motion_controller);
 
         //  timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
         //      time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
@@ -201,7 +195,7 @@ public class Notifications.NotificationEntry : Granite.Bin {
 
         time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
 
-        delete_button.action_name = notification.dismiss_action_name;
+        delete_button.action_name = NotificationsList.ACTION_PREFIX + notification.dismiss_action_name;
 
         flow_box.bind_model (notification.buttons, create_button);
 
