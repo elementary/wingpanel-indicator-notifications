@@ -90,13 +90,9 @@ public class Notifications.Notification : Object {
         latest_for_app_id[app_id] = timestamp;
     }
 
-    public int compare_time (Notification other) {
-        return timestamp.compare (other.timestamp);
-    }
-
-    public int compare_section (Notification other) {
+    public int compare (Notification other) {
         if (other.app_id == app_id) {
-            return 0;
+            return timestamp.compare (other.timestamp);
         }
 
         var latest = latest_for_app_id[app_id];
