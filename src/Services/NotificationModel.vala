@@ -35,7 +35,10 @@ public class Notifications.NotificationModel : Object, ListModel {
             "/io/elementary/portal/NotificationProvider"
         );
 
-        connect_to_provider.begin ();
+        Bus.watch_name (SESSION, "org.freedesktop.impl.portal.desktop.pantheon", NONE, () => connect_to_provider.begin (), () => {
+            provider = null;
+            store.remove_all ();
+        });
     }
 
     private async void connect_to_provider () {
