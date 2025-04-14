@@ -15,6 +15,8 @@ public class Notifications.NotificationModel : Object, ListModel {
     public const uint REMOVAL_ANIMATION = 300;
 
     public ActionGroup action_group { get; construct; }
+    public uint n_notifications { get { return store.n_items; } }
+    public uint n_apps { get; private set; default = 0; }
 
     private Gee.List<uint> sorted;
     private ListStore store;
@@ -134,6 +136,8 @@ public class Notifications.NotificationModel : Object, ListModel {
         } else {
             critical ("Unexpected change occured in the backing store");
         }
+
+        notify_property ("n-notifications");
     }
 
     private void shift (uint from, uint by) {

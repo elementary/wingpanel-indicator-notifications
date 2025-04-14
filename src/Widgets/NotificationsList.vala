@@ -15,108 +15,94 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notifications.NotificationsList : Granite.Bin {
+ public class Notifications.NotificationsList : Gtk.ListBox {
     public enum UpdateKind {
-        COLLAPSE,
         EXPAND,
+        COLLAPSE,
         DISMISS
     }
 
     public signal void close_popover ();
 
+    public const string NOTIFICATION_ACTION_GROUP_PREFIX = "notification";
+    public const string NOTIFICATION_ACTION_PREFIX = NOTIFICATION_ACTION_GROUP_PREFIX + ".";
+
     public const string ACTION_GROUP_PREFIX = "notifications-list";
     public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
-
-    public const string INTERNAL_ACTION_PREFIX = "notifications-list-custom.";
     public const string ACTION_UPDATE_SECTION = "update-section";
 
-    class construct {
-        install_action (INTERNAL_ACTION_PREFIX + ACTION_UPDATE_SECTION, "(uuu)", on_update_section);
-    }
-
-    private NotificationManager manager;
+    public NotificationModel model { get; construct; }
 
     construct {
-        manager = new NotificationManager ();
+        model = new NotificationModel ();
 
-        var selection_model = new Gtk.NoSelection (manager.notifications);
-
-        var factory = new Gtk.SignalListItemFactory ();
-        factory.setup.connect (setup);
-        factory.bind.connect (bind);
-        factory.unbind.connect (unbind);
-
-        var header_factory = new Gtk.SignalListItemFactory ();
-        header_factory.setup.connect (setup_header);
-        header_factory.bind.connect (bind_header);
-
-        var list_view = new Gtk.ListView (selection_model, factory) {
-            header_factory = header_factory,
+        var placeholder = new Gtk.Label (_("No Notifications")) {
+            margin_top = 24,
+            margin_bottom = 24,
+            margin_start = 12,
+            margin_end = 12,
+            visible = true
         };
 
-        var scrolled = new Gtk.ScrolledWindow () {
-            child = list_view,
-            hscrollbar_policy = NEVER,
-            max_content_height = 500,
-            propagate_natural_height = true
-        };
+        unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
+        placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
+        placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        child = scrolled;
+        activate_on_single_click = true;
+        selection_mode = Gtk.SelectionMode.NONE;
+        set_placeholder (placeholder);
+        set_header_func (header_func);
+        bind_model (model, create_entry_func);
+        show_all ();
 
-        insert_action_group (ACTION_GROUP_PREFIX, manager.action_group);
+        insert_action_group (NOTIFICATION_ACTION_GROUP_PREFIX, model.action_group);
+
+        var section_action = new SimpleAction (ACTION_UPDATE_SECTION, new VariantType ("(uu)"));
+        section_action.activate.connect (update_section);
+
+        var action_group = new SimpleActionGroup ();
+        action_group.add_action (section_action);
+
+        insert_action_group (ACTION_GROUP_PREFIX, action_group);
     }
 
-    private void setup (Object obj) {
-        var item = (Gtk.ListItem) obj;
-        item.child = new NotificationEntry ();
+    private void header_func (Gtk.ListBoxRow row, Gtk.ListBoxRow? before) {
+        var notification = ((NotificationEntry) row).notification;
+
+        if (before != null && notification.app_id == ((NotificationEntry) before).notification.app_id) {
+            return;
+        }
+
+        var info = new DesktopAppInfo (notification.app_id + ".desktop");
+        row.set_header (new AppEntry (info, row));
     }
 
-    private void bind (Object obj) {
-        var item = (Gtk.ListItem) obj;
-        var entry = (NotificationEntry) item.child;
-        var notification = (Notification) item.item;
-        entry.bind (notification);
+    private Gtk.Widget create_entry_func (Object obj) {
+        var notification = (Notification) obj;
+        return new NotificationEntry (notification);
     }
 
-    private void unbind (Object obj) {
-        var item = (Gtk.ListItem) obj;
-        var entry = (NotificationEntry) item.child;
-        entry.unbind ();
-    }
+    private void update_section (Variant? parameter) {
+        uint start, kind;
+        parameter.get ("(uu)", out start, out kind);
 
-    private void setup_header (Object obj) {
-        var item = (Gtk.ListHeader) obj;
-        item.child = new AppEntry (item);
-    }
-
-    private void bind_header (Object obj) {
-        var item = (Gtk.ListHeader) obj;
-        var entry = (AppEntry) item.child;
-        var notification = (Notification) item.item;
-        entry.bind (notification);
-    }
-
-    public void update_section (uint start, uint end, UpdateKind kind) {
-        for (uint i = start; i < end; i++) {
-            var notification = (Notification) manager.notifications.get_item (i);
+        var app_id = ((Notification) model.get_item (start)).app_id;
+        for (uint i = start; i < model.get_n_items (); i++) {
+            var notification = (Notification) model.get_item (i);
+            if (notification.app_id != app_id) {
+                break;
+            }
 
             switch (kind) {
-                case COLLAPSE:
-                case EXPAND:
-                    notification.collapsed = (kind == COLLAPSE);
+                case UpdateKind.EXPAND:
+                case UpdateKind.COLLAPSE:
+                    notification.collapsed = kind == UpdateKind.COLLAPSE;
                     break;
 
-                case DISMISS:
-                    activate_action_variant (ACTION_PREFIX + notification.dismiss_action_name, null);
+                case UpdateKind.DISMISS:
+                    model.action_group.activate_action (notification.dismiss_action_name, null);
                     break;
             }
         }
-    }
-
-    private static void on_update_section (Gtk.Widget widget, string action, Variant? parameters) {
-        var list = (NotificationsList) widget;
-        uint start, end, kind;
-        parameters.get ("(uuu)", out start, out end, out kind);
-        list.update_section (start, end, (UpdateKind) kind);
     }
 }
