@@ -6,15 +6,15 @@
 /**
  * This is the sorted model that holds all our notifications.
  * The structure consists of multiple ListModel concepts:
- * provider -> store -> this
- * Each stage only depends on the one directly before it and only reflects its changes.
+ * provider -> store -> #this
+ * Each stage only depends on the one directly before it and reflects its and only its changes.
  *
  * The store "passes through" (it actually caches them) the notifications of the provider.
  * The only difference is that when notifications are removed from the provider we don't
  * immediately remove them from the store but instead mark them as removed and only really remove
  * them after a timeout. This is to allow for animations to be shown.
  *
- * #This passes through the notifications from the store but with a sorting applied.
+ * #this passes through the notifications from the store but with a sorting applied.
  * The sorting is in sections of apps where the app section with the newest notification
  * comes first. Within a section the notifications are sorted by timestamp.
  */
@@ -89,7 +89,9 @@ public class Notifications.NotificationModel : Object, ListModel {
                 delay_removal (pos);
             }
 
-            store.splice (0, 0, added_notification);
+            if (added_notification.length > 0) {
+                store.splice (0, 0, added_notification);
+            }
         }
     }
 

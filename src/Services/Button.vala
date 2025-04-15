@@ -18,7 +18,7 @@ public class Notifications.Button : Object {
         Object (
             label: data.label,
             action_name: data.action_name,
-            action_target: maybe_from_array (data.action_target)
+            action_target: Utils.maybe_from_array (data.action_target)
         );
     }
 }

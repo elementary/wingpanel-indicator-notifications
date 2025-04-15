@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- public class Notifications.NotificationsList : Gtk.ListBox {
+public class Notifications.NotificationsList : Gtk.ListBox {
     public enum UpdateKind {
         EXPAND,
         COLLAPSE,
@@ -87,9 +87,13 @@
         parameter.get ("(uu)", out start, out kind);
 
         var app_id = ((Notification) model.get_item (start)).app_id;
+        update_items (0, app_id, kind);
+    }
+
+    public void update_items (uint start, string? app_id, UpdateKind kind) {
         for (uint i = start; i < model.get_n_items (); i++) {
             var notification = (Notification) model.get_item (i);
-            if (notification.app_id != app_id) {
+            if (app_id != null && notification.app_id != app_id) {
                 break;
             }
 

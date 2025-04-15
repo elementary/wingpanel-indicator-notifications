@@ -15,7 +15,7 @@ public class Notifications.Notification : Object {
     }
 
     public struct Data {
-        public string internal_id;
+        public int64 timestamp;
         public HashTable<string, Variant> raw_data;
         public string app_id;
         public string dismiss_action_name;
@@ -26,8 +26,6 @@ public class Notifications.Notification : Object {
     }
 
     private static HashTable<string, DateTime> latest_for_app_id = new HashTable<string, DateTime> (str_hash, str_equal);
-
-    public string internal_id { get; construct; }
 
     public string app_id { get; construct; }
 
@@ -72,15 +70,14 @@ public class Notifications.Notification : Object {
         }
 
         Object (
-            internal_id: data.internal_id,
             app_id: data.app_id,
             title: title,
             body: body,
             primary_icon: primary_icon,
-            timestamp: new DateTime.now_local (),
+            timestamp: new DateTime.from_unix_local (data.timestamp),
             dismiss_action_name: data.dismiss_action_name,
             default_action_name: data.default_action_name,
-            default_action_target: maybe_from_array (data.default_action_target),
+            default_action_target: Utils.maybe_from_array (data.default_action_target),
             buttons: buttons,
             display_hint: data.display_hint
         );
@@ -100,12 +97,4 @@ public class Notifications.Notification : Object {
 
         return latest.compare (other_latest);
     }
-}
-
-private static Variant? maybe_from_array (Variant[] array) {
-    if (array.length == 0) {
-        return null;
-    }
-
-    return array[0];
 }
