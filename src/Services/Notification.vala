@@ -20,10 +20,17 @@ public class Notifications.Notification : Object {
         public string app_id;
         public string dismiss_action_name;
         public string default_action_name;
-        public Variant[] default_action_target;
+        public Variant default_action_target;
         public Button.Data[] buttons;
         public DisplayHint display_hint;
     }
+
+    /**
+     * Action targets for the action names provided by the notification and its buttons
+     * should be (sv) variants where s is an XDG_ACTIVATION_TOKEN and v is the action_target
+     * provided
+     */
+    public const string ACTION_TARGET_TYPE_STRING = "(sv)";
 
     private static HashTable<string, DateTime> latest_for_app_id = new HashTable<string, DateTime> (str_hash, str_equal);
 
@@ -38,7 +45,7 @@ public class Notifications.Notification : Object {
 
     public string dismiss_action_name { get; construct; }
     public string default_action_name { get; construct; }
-    public Variant? default_action_target { get; construct; }
+    public Variant default_action_target { get; construct; }
     public ListStore buttons { get; construct; }
 
     public DisplayHint display_hint { get; construct; }
@@ -77,7 +84,7 @@ public class Notifications.Notification : Object {
             timestamp: new DateTime.from_unix_local (data.timestamp),
             dismiss_action_name: data.dismiss_action_name,
             default_action_name: data.default_action_name,
-            default_action_target: Utils.maybe_from_array (data.default_action_target),
+            default_action_target: data.default_action_target,
             buttons: buttons,
             display_hint: data.display_hint
         );

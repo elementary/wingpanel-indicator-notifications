@@ -217,9 +217,7 @@
         eventbox.add (revealer);
 
         action_name = NotificationsList.NOTIFICATION_ACTION_PREFIX + notification.default_action_name;
-        if (notification.default_action_target != null) {
-            action_target = notification.default_action_target;
-        }
+        action_target = new Variant (Notification.ACTION_TARGET_TYPE_STRING, "token todo", notification.default_action_target);
         add (eventbox);
 
         show_all ();
@@ -262,7 +260,7 @@
         var button = (Button) obj;
         return new Gtk.Button.with_label(button.label) {
             action_name = NotificationsList.NOTIFICATION_ACTION_PREFIX + button.action_name,
-            action_target = button.action_target
+            action_target = new Variant (Notification.ACTION_TARGET_TYPE_STRING, "token todo", button.action_target)
         };
     }
 
