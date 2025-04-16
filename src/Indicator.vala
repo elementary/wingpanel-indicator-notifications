@@ -59,6 +59,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             nlist = new NotificationsList ();
 
+            nlist.model.notify["n-notifications"].connect (set_display_icon_name);
+
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
             });
@@ -99,6 +101,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             clear_all_btn = new Gtk.ModelButton ();
             clear_all_btn.text = _("Clear All Notifications");
+            nlist.model.bind_property ("n-notifications", clear_all_btn, "sensitive", SYNC_CREATE, (binding, src_val, ref target_val) => {
+                target_val.set_boolean (src_val.get_uint () > 0);
+                return true;
+            });
 
             var settings_btn = new Gtk.ModelButton ();
             settings_btn.text = _("Notifications Settings…");
@@ -117,12 +123,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             nlist.close_popover.connect (() => close ());
-            nlist.add.connect (update_clear_all_sensitivity);
-            nlist.remove.connect (update_clear_all_sensitivity);
 
-            clear_all_btn.clicked.connect (() => {
-                //  nlist.clear_all (); // This calls each appentry's clear method, which also clears session
-            });
+            clear_all_btn.clicked.connect (() => nlist.update_items (0, null, DISMISS));
 
             settings_btn.clicked.connect (show_settings);
         }
@@ -130,22 +132,17 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         return main_box;
     }
 
-    public override void opened () {
-        update_clear_all_sensitivity ();
-    }
+    public override void opened () { }
 
-    public override void closed () {
-
-    }
-
-    private void update_clear_all_sensitivity () {
-        clear_all_btn.sensitive = nlist.model.n_notifications > 0;
-    }
+    public override void closed () { }
 
     private void set_display_icon_name () {
         unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
+        } else if (nlist.model.n_notifications > 0) {
+            dynamic_icon_style_context.remove_class ("disabled");
+            dynamic_icon_style_context.add_class ("new");
         } else {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.remove_class ("new");

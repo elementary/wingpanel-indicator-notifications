@@ -47,6 +47,7 @@ shared_module(
     'src/Services/Button.vala',
     'src/Services/Notification.vala',
     'src/Services/NotificationModel.vala',
+    'src/Services/Utils.vala',
     gresource,
     config_vala,
     dependencies: [
