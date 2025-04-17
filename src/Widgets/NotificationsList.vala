@@ -34,7 +34,9 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public NotificationModel model { get; construct; }
 
     construct {
-        model = new NotificationModel ();
+        var provider = new NotificationProvider ();
+
+        model = new NotificationModel (provider);
 
         var placeholder = new Gtk.Label (_("No Notifications")) {
             margin_top = 24,
@@ -55,7 +57,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         bind_model (model, create_entry_func);
         show_all ();
 
-        insert_action_group (NOTIFICATION_ACTION_GROUP_PREFIX, model.action_group);
+        insert_action_group (NOTIFICATION_ACTION_GROUP_PREFIX, provider.action_group);
 
         var section_action = new SimpleAction (ACTION_UPDATE_SECTION, new VariantType ("(uu)"));
         section_action.activate.connect (update_section);
@@ -87,7 +89,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         parameter.get ("(uu)", out start, out kind);
 
         var app_id = ((Notification) model.get_item (start)).app_id;
-        update_items (0, app_id, kind);
+        update_items (start, app_id, kind);
     }
 
     public void update_items (uint start, string? app_id, UpdateKind kind) {
@@ -104,7 +106,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
                     break;
 
                 case UpdateKind.DISMISS:
-                    model.action_group.activate_action (notification.dismiss_action_name, null);
+                    get_action_group (NOTIFICATION_ACTION_GROUP_PREFIX).activate_action (notification.dismiss_action_name, null);
                     break;
             }
         }
