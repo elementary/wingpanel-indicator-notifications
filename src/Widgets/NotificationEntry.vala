@@ -15,20 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notifications.NotificationEntry : Gtk.ListBoxRow {
-    public signal void clear ();
-
-    public Notification notification { get; construct; }
-    public Gtk.Revealer revealer { get; construct; }
-
-    private uint timeout_id;
-
+ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     private const int ICON_SIZE_PRIMARY = 48;
     private const int ICON_SIZE_SECONDARY = 24;
 
     private static Gtk.CssProvider provider;
     private static Regex entity_regex;
     private static Regex tag_regex;
+
+    public Notification notification { get; construct; }
+
+    private Gtk.Revealer revealer;
+
+    private uint timeout_id;
 
     public NotificationEntry (Notification notification) {
         Object (notification: notification);
@@ -47,65 +46,48 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     construct {
-        var app_image = new Gtk.Image ();
+        var primary_image = new Gtk.Image.from_gicon (notification.primary_icon, Gtk.IconSize.LARGE_TOOLBAR) {
+            pixel_size = ICON_SIZE_PRIMARY,
+        };
 
-        if (notification.app_icon.contains ("/")) {
-            var file = File.new_for_uri (notification.app_icon);
-            if (file.query_exists ()) {
-                app_image.gicon = new FileIcon (file);
-            } else {
-                app_image.icon_name = "dialog-information";
-            }
-        } else {
-            app_image.icon_name = notification.app_icon;
-        }
+        var image_overlay = new Gtk.Overlay () {
+            child = primary_image,
+            valign = START
+        };
 
-        var image_overlay = new Gtk.Overlay ();
-        image_overlay.valign = Gtk.Align.START;
+        //  if (notification.image_path != null && notification.image_path != "") {
+        //      try {
+        //          var scale = get_style_context ().get_scale ();
+        //          var pixbuf = new Gdk.Pixbuf.from_file_at_size (notification.image_path, ICON_SIZE_PRIMARY * scale, ICON_SIZE_PRIMARY * scale);
 
-        if (notification.image_path != null && notification.image_path != "") {
-            try {
-                var scale = get_style_context ().get_scale ();
-                var pixbuf = new Gdk.Pixbuf.from_file_at_size (notification.image_path, ICON_SIZE_PRIMARY * scale, ICON_SIZE_PRIMARY * scale);
+        //          var masked_image = new Notifications.MaskedImage (pixbuf);
 
-                var masked_image = new Notifications.MaskedImage (pixbuf);
+        //          app_image.pixel_size = ICON_SIZE_SECONDARY;
+        //          app_image.halign = app_image.valign = Gtk.Align.END;
 
-                app_image.pixel_size = ICON_SIZE_SECONDARY;
-                app_image.halign = app_image.valign = Gtk.Align.END;
+        //          image_overlay.add (masked_image);
+        //          image_overlay.add_overlay (app_image);
+        //      } catch (Error e) {
+        //          critical ("Unable to mask image: %s", e.message);
 
-                image_overlay.add (masked_image);
-                image_overlay.add_overlay (app_image);
-            } catch (Error e) {
-                critical ("Unable to mask image: %s", e.message);
+        //          app_image.pixel_size = ICON_SIZE_PRIMARY;
+        //          image_overlay.add (app_image);
+        //      }
+        //  } else {
+        //      app_image.pixel_size = ICON_SIZE_PRIMARY;
+        //      image_overlay.add (app_image);
 
-                app_image.pixel_size = ICON_SIZE_PRIMARY;
-                image_overlay.add (app_image);
-            }
-        } else {
-            app_image.pixel_size = ICON_SIZE_PRIMARY;
-            image_overlay.add (app_image);
+        //      if (notification.badge_icon != null) {
+        //          var badge_image = new Gtk.Image.from_gicon (notification.badge_icon, Gtk.IconSize.LARGE_TOOLBAR) {
+        //              halign = Gtk.Align.END,
+        //              valign = Gtk.Align.END,
+        //              pixel_size = ICON_SIZE_SECONDARY
+        //          };
+        //          image_overlay.add_overlay (badge_image);
+        //      }
+        //  }
 
-            if (notification.badge_icon != null) {
-                var badge_image = new Gtk.Image.from_gicon (notification.badge_icon, Gtk.IconSize.LARGE_TOOLBAR) {
-                    halign = Gtk.Align.END,
-                    valign = Gtk.Align.END,
-                    pixel_size = ICON_SIZE_SECONDARY
-                };
-                image_overlay.add_overlay (badge_image);
-            }
-        }
-
-        var entry_title = notification.summary;
-
-        if (notification.message_body == "") {
-            if (notification.app_name == "" && notification.app_info != null) {
-                notification.app_name = notification.app_info.get_display_name ();
-            }
-
-            entry_title = notification.app_name;
-        }
-
-        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (entry_title))) {
+        var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (notification.title))) {
             ellipsize = Pango.EllipsizeMode.END,
             hexpand = true,
             width_chars = 27,
@@ -138,7 +120,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var delete_button = new Gtk.Button () {
             halign = Gtk.Align.START,
             valign = Gtk.Align.START,
-            image = delete_image
+            image = delete_image,
+            action_name = NotificationsList.NOTIFICATION_ACTION_PREFIX + notification.dismiss_action_name
         };
         delete_button.get_style_context ().add_class ("close");
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -156,13 +139,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid.attach (title_label, 1, 0);
         grid.attach (time_label, 2, 0);
 
-        var entry_body = notification.message_body;
-
-        if (entry_body == "") {
-            entry_body = notification.summary;
-        }
-
-        var body = fix_markup (entry_body);
+        var body = fix_markup (notification.body);
 
         var body_label = new Gtk.Label (body) {
             ellipsize = Pango.EllipsizeMode.END,
@@ -188,18 +165,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         grid.attach (body_label, 1, 1, 2);
 
-        if (notification.buttons.length () > 0) {
-            var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
-                margin_top = 12,
-                halign = Gtk.Align.END,
-                homogeneous = true
-            };
-            grid.attach (action_area, 0, 2, 3);
+        var flow_box = new Gtk.FlowBox () {
+            margin_top = 12,
+            halign = END,
+            homogeneous = true,
+        };
+        flow_box.bind_model (notification.buttons, create_button_func);
 
-            foreach (var button in notification.buttons) {
-                action_area.pack_end (button);
-            };
-        }
+        grid.attach (flow_box, 0, 2, 3);
 
         var delete_left = new DeleteAffordance (Gtk.Align.END) {
             // Have to match with the grid
@@ -235,6 +208,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             transition_type = Gtk.RevealerTransitionType.SLIDE_UP
         };
         revealer.add (deck);
+        notification.bind_property ("collapsed", revealer, "reveal-child", SYNC_CREATE | INVERT_BOOLEAN);
 
         var eventbox = new Gtk.EventBox ();
         eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
@@ -242,11 +216,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         eventbox.add (revealer);
 
+        action_name = NotificationsList.NOTIFICATION_ACTION_PREFIX + notification.default_action_name;
+        action_target = new Variant (Notification.ACTION_TARGET_TYPE_STRING, "token todo", notification.default_action_target);
         add (eventbox);
 
         show_all ();
-
-        delete_button.clicked.connect (() => clear ());
 
         eventbox.enter_notify_event.connect ((event) => {
             delete_revealer.reveal_child = true;
@@ -265,35 +239,29 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         deck.notify["visible-child"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != overlay) {
-                clear ();
+                get_action_group (NotificationsList.NOTIFICATION_ACTION_GROUP_PREFIX).activate_action (
+                    notification.dismiss_action_name,
+                    null
+                );
             }
         });
 
         deck.notify["transition-running"].connect (() => {
             if (deck.transition_running == false && deck.visible_child != overlay) {
-                clear ();
+                get_action_group (NotificationsList.NOTIFICATION_ACTION_GROUP_PREFIX).activate_action (
+                    notification.dismiss_action_name,
+                    null
+                );
             }
         });
     }
 
-    public void dismiss () {
-        Source.remove (timeout_id);
-
-        if (!revealer.child_revealed) {
-            destroy ();
-        } else {
-            revealer.notify["child-revealed"].connect (() => {
-                if (!revealer.child_revealed) {
-                    destroy ();
-                }
-            });
-            revealer.reveal_child = false;
-        }
-
-        if (notification.server_id > 0) {
-            unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
-            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
-        }
+    private Gtk.Widget create_button_func (Object obj) {
+        var button = (Button) obj;
+        return new Gtk.Button.with_label(button.label) {
+            action_name = NotificationsList.NOTIFICATION_ACTION_PREFIX + button.action_name,
+            action_target = new Variant (Notification.ACTION_TARGET_TYPE_STRING, "token todo", button.action_target)
+        };
     }
 
     private class DeleteAffordance : Gtk.Grid {

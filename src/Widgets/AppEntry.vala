@@ -15,18 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notifications.AppEntry : Gtk.ListBoxRow {
-    public signal void clear ();
-
-    public string app_id { get; private set; }
-    public AppInfo? app_info { get; construct; default = null; }
-    public List<NotificationEntry> app_notifications;
-
+ public class Notifications.AppEntry : Gtk.Bin {
     private static Gtk.CssProvider provider;
     private static Settings settings;
     private static HashTable<string, bool> headers;
-
-    private Gtk.ToggleButton expander;
 
     static construct {
         provider = new Gtk.CssProvider ();
@@ -37,13 +29,17 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         headers = (HashTable<string, bool>) settings.get_value ("headers");
     }
 
-    public AppEntry (AppInfo? app_info) {
-        Object (app_info: app_info);
+    public AppInfo? app_info { get; construct; }
+    public unowned Gtk.ListBoxRow row { get; construct; }
+
+    private string app_id;
+    private Gtk.ToggleButton expander;
+
+    public AppEntry (AppInfo? app_info, Gtk.ListBoxRow row) {
+        Object (app_info: app_info, row: row);
     }
 
     construct {
-        app_notifications = new List<NotificationEntry> ();
-
         unowned string name;
         if (app_info != null) {
             app_id = app_info.get_id ();
@@ -101,15 +97,12 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         expander.toggled.connect (() => {
             headers[app_id] = expander.active;
             settings.set_value ("headers", headers);
+            update_section (expander.active ? NotificationsList.UpdateKind.EXPAND : NotificationsList.UpdateKind.COLLAPSE);
         });
 
         clear_btn_entry.clicked.connect (() => {
             clear_btn_image.get_style_context ().add_class ("active");
-            clear_all_notification_entries ();
-            GLib.Timeout.add (600, () => {
-                clear (); // Causes notification list to destroy this app entry after clearing its notification entries
-                return GLib.Source.REMOVE;
-            });
+            update_section (DISMISS);
         });
 
         expander.bind_property ("active", image, "tooltip-text", SYNC_CREATE, (binding, srcval, ref targetval) => {
@@ -118,35 +111,10 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         });
     }
 
-    public void add_notification_entry (NotificationEntry entry) {
-        app_notifications.prepend (entry);
-        entry.clear.connect (remove_notification_entry);
-
-        expander.bind_property ("active", entry.revealer, "reveal-child", SYNC_CREATE);
-    }
-
-    public void remove_notification_entry (NotificationEntry entry) {
-        app_notifications.remove (entry);
-        entry.dismiss ();
-
-        Session.get_instance ().remove_notification (entry.notification);
-        if (app_notifications.length () == 0) {
-            if (headers.remove (app_id)) {
-                settings.set_value ("headers", headers);
-            }
-
-            clear ();
-        }
-    }
-
-    public void clear_all_notification_entries () {
-        Notification[] to_remove = {};
-        app_notifications.@foreach ((entry) => {
-            entry.dismiss ();
-            to_remove += entry.notification;
-        });
-
-        app_notifications = new List<NotificationEntry> ();
-        Session.get_instance ().remove_notifications (to_remove);
+    private void update_section (NotificationsList.UpdateKind kind) {
+        get_action_group (NotificationsList.ACTION_GROUP_PREFIX).activate_action (
+            NotificationsList.ACTION_UPDATE_SECTION,
+            new Variant ("(uu)", (uint) row.get_index (), kind)
+        );
     }
 }

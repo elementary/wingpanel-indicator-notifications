@@ -40,13 +40,15 @@ config_vala = configure_file(
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
-    'src/Widgets/MaskedImage.vala',
+    # 'src/Widgets/MaskedImage.vala',
     'src/Widgets/NotificationsList.vala',
     'src/Widgets/NotificationEntry.vala',
     'src/Widgets/AppEntry.vala',
-    'src/Services/NotificationsMonitor.vala',
+    'src/Services/Button.vala',
     'src/Services/Notification.vala',
-    'src/Services/Session.vala',
+    'src/Services/NotificationModel.vala',
+    'src/Services/NotificationProvider.vala',
+    'src/Services/Utils.vala',
     gresource,
     config_vala,
     dependencies: [

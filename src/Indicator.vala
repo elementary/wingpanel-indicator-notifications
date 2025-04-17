@@ -28,9 +28,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
 
-    private List<Notification> previous_session = null;
-    private NotificationsMonitor monitor;
-
     public Indicator () {
         Object (
             code_name: Wingpanel.Indicator.MESSAGES,
@@ -44,8 +41,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
         notify_settings = new GLib.Settings ("io.elementary.notifications");
         app_settings_cache = new Gee.HashMap<string, Settings> ();
-
-        monitor = new NotificationsMonitor ();
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -64,15 +59,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             nlist = new NotificationsList ();
 
-            monitor.notification_received.connect (on_notification_received);
-            monitor.notification_closed.connect (on_notification_closed);
-            monitor.init.begin ((obj, res) => {
-                try {
-                    ((NotificationsMonitor) obj).init.end (res);
-                } catch (Error e) {
-                    critical ("Unable to monitor notifications bus: %s", e.message);
-                }
-            });
+            nlist.model.notify["n-notifications"].connect (set_display_icon_name);
 
             notify_settings.changed["do-not-disturb"].connect (() => {
                 set_display_icon_name ();
@@ -86,26 +73,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
                 return Gdk.EVENT_PROPAGATE;
             });
-
-            previous_session = Session.get_instance ().get_session_notifications ();
-            Timeout.add (2000, () => { // Do not block animated drawing of wingpanel
-                load_session_notifications.begin (() => { // load asynchromously so spinner continues to rotate
-                    set_display_icon_name ();
-                    nlist.add.connect (set_display_icon_name);
-                    nlist.remove.connect (set_display_icon_name);
-                });
-
-                return Source.REMOVE;
-            });
         }
 
         return dynamic_icon;
-    }
-
-    private async void load_session_notifications () {
-        foreach (var notification in previous_session) {
-            yield nlist.add_entry (notification, false); // This is slow as NotificationEntry is complex
-        }
     }
 
     public override Gtk.Widget? get_widget () {
@@ -131,6 +101,10 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
             clear_all_btn = new Gtk.ModelButton ();
             clear_all_btn.text = _("Clear All Notifications");
+            nlist.model.bind_property ("n-notifications", clear_all_btn, "sensitive", SYNC_CREATE, (binding, src_val, ref target_val) => {
+                target_val.set_boolean (src_val.get_uint () > 0);
+                return true;
+            });
 
             var settings_btn = new Gtk.ModelButton ();
             settings_btn.text = _("Notifications Settings…");
@@ -149,12 +123,8 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             nlist.close_popover.connect (() => close ());
-            nlist.add.connect (update_clear_all_sensitivity);
-            nlist.remove.connect (update_clear_all_sensitivity);
 
-            clear_all_btn.clicked.connect (() => {
-                nlist.clear_all (); // This calls each appentry's clear method, which also clears session
-            });
+            clear_all_btn.clicked.connect (() => nlist.update_items (0, null, DISMISS));
 
             settings_btn.clicked.connect (show_settings);
         }
@@ -162,57 +132,15 @@ public class Notifications.Indicator : Wingpanel.Indicator {
         return main_box;
     }
 
-    public override void opened () {
-        update_clear_all_sensitivity ();
-    }
+    public override void opened () { }
 
-    public override void closed () {
-
-    }
-
-    private void on_notification_received (DBusMessage message, uint32 id) {
-        var notification = new Notification.from_message (message, id);
-
-        string app_id = notification.desktop_id.replace (Notification.DESKTOP_ID_EXT, "");
-        Settings? app_settings = app_settings_cache.get (app_id);
-
-        var schema = SettingsSchemaSource.get_default ().lookup (CHILD_SCHEMA_ID, true);
-        if (schema != null && app_settings == null && app_id != "") {
-            app_settings = new Settings.full (schema, null, CHILD_PATH.printf (app_id));
-            app_settings_cache.set (app_id, app_settings);
-        }
-
-        if (app_settings == null || app_settings.get_boolean (REMEMBER_KEY)) {
-            nlist.add_entry.begin (notification, true);
-        }
-
-        set_display_icon_name ();
-    }
-
-    private void update_clear_all_sensitivity () {
-        clear_all_btn.sensitive = nlist.app_entries.size > 0;
-    }
-
-    private void on_notification_closed (uint32 id, Notification.CloseReason reason) {
-        SearchFunc<NotificationEntry, uint32> find_entry = (e, i) => {
-            return i == e.notification.server_id ? 0 : i > e.notification.server_id ? 1 : -1;
-        };
-
-        foreach (var app_entry in nlist.app_entries.values) {
-            unowned var node = app_entry.app_notifications.search (id, find_entry);
-            if (node != null) {
-                node.data.notification.server_id = 0; // Notification is now outdated
-                node.data.clear ();
-                return;
-            }
-        }
-    }
+    public override void closed () { }
 
     private void set_display_icon_name () {
         unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
             dynamic_icon_style_context.add_class ("disabled");
-        } else if (nlist != null && nlist.app_entries.size > 0) {
+        } else if (nlist.model.n_notifications > 0) {
             dynamic_icon_style_context.remove_class ("disabled");
             dynamic_icon_style_context.add_class ("new");
         } else {
@@ -234,7 +162,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private void update_tooltip () {
         uint number_of_apps = 0;
-        uint number_of_notifications = nlist.count_notifications (out number_of_apps);
+        uint number_of_notifications = nlist.model.n_notifications;
         string description;
         string accel_label;
 
