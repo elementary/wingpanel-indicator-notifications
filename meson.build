@@ -14,7 +14,6 @@ libdir = prefix / get_option('libdir')
 
 add_global_arguments(
     '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
-    '-DWNCK_I_KNOW_THIS_IS_UNSTABLE',
     language:'c'
 )
 add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.notifications"', language:'c')
