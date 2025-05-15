@@ -23,7 +23,7 @@ jobs:
     - name: Install Dependencies
       run: |
         apt update
-        apt install -y libhandy-1-dev gettext libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-dev libwnck-3-dev meson valac
+        apt install -y libhandy-1-dev gettext libdbus-glib-1-dev libgdk-pixbuf2.0-dev libglib2.0-dev libgranite-dev libwingpanel-dev meson valac
     - name: Build
       env:
         DESTDIR: out
