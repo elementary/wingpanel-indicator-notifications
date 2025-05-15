@@ -117,7 +117,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var time_label = new Gtk.Label (Granite.DateTime.get_relative_datetime (notification.timestamp)) {
             margin_end = 6
         };
-        time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+        time_label.add_css_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
         var grid = new Gtk.Grid () {
             hexpand = true,
@@ -140,7 +140,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             valign = Gtk.Align.START,
             image = delete_image
         };
-        delete_button.get_style_context ().add_class ("close");
+        delete_button.add_css_class ("close");
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
@@ -206,14 +206,14 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             margin_top = 9,
             margin_bottom = 9
         };
-        delete_left.get_style_context ().add_class ("left");
+        delete_left.add_css_class ("left");
 
         var delete_right = new DeleteAffordance (Gtk.Align.START) {
             // Have to match with the grid
             margin_top = 9,
             margin_bottom = 9
         };
-        delete_right.get_style_context ().add_class ("right");
+        delete_right.add_css_class ("right");
 
         var overlay = new Gtk.Overlay ();
         overlay.add (grid);
@@ -243,8 +243,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         eventbox.add (revealer);
 
         add (eventbox);
-
-        show_all ();
 
         delete_button.clicked.connect (() => clear ());
 

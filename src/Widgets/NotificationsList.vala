@@ -44,7 +44,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
         set_placeholder (placeholder);
-        show_all ();
 
         insert_action_group (ACTION_GROUP_PREFIX, new NotificationsMonitor ().notifications_action_group);
 
@@ -74,7 +73,6 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             table.insert (app_entry.app_id, 0);
         }
 
-        show_all ();
 
         Idle.add (add_entry.callback);
         yield;

@@ -24,7 +24,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private GLib.Settings notify_settings;
 
     private Gtk.Grid? main_box = null;
-    private Gtk.ModelButton clear_all_btn;
+    private Wingpanel.PopoverMenuItem clear_all_btn;
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
 
@@ -54,13 +54,13 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
             dynamic_icon = new Gtk.Spinner () {
-                active = true,
+                spinning = true,
                 tooltip_markup = _("Updating notifications…")
             };
 
             unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
             dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            dynamic_icon_style_context.add_class ("notification-icon");
+            dynamic_icon.add_css_class ("notification-icon");
 
             nlist = new NotificationsList ();
 
@@ -111,7 +111,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     public override Gtk.Widget? get_widget () {
         if (main_box == null) {
             var not_disturb_switch = new Granite.SwitchModelButton (_("Do Not Disturb"));
-            not_disturb_switch.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+            not_disturb_switch.add_css_class (Granite.STYLE_CLASS_H4_LABEL);
 
             var dnd_switch_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_top = 3,
@@ -129,11 +129,13 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 margin_bottom = 3
             };
 
-            clear_all_btn = new Gtk.ModelButton ();
-            clear_all_btn.text = _("Clear All Notifications");
+            clear_all_btn = new Wingpanel.PopoverMenuItem () {
+                text = _("Clear All Notifications")
+            };
 
-            var settings_btn = new Gtk.ModelButton ();
-            settings_btn.text = _("Notifications Settings…");
+            var settings_btn = new Wingpanel.PopoverMenuItem () {
+                text = _("Notifications Settings…")
+            };
 
             main_box = new Gtk.Grid ();
             main_box.orientation = Gtk.Orientation.VERTICAL;
@@ -144,7 +146,6 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             main_box.add (clear_all_btn_separator);
             main_box.add (clear_all_btn);
             main_box.add (settings_btn);
-            main_box.show_all ();
 
             notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 

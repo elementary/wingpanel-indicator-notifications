@@ -53,38 +53,37 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             name = _("Other");
         }
 
-        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic", SMALL_TOOLBAR);
+        var image = new Gtk.Image.from_icon_name ("pan-end-symbolic");
 
         var label = new Gtk.Label (name) {
             hexpand = true,
             xalign = 0
         };
-        label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
+        label.add_css_class (Granite.STYLE_CLASS_H3_LABEL);
 
         var expander_content = new Gtk.Box (HORIZONTAL, 3);
-        expander_content.add (label);
-        expander_content.add (image);
+        expander_content.append (label);
+        expander_content.append (image);
 
         expander = new Gtk.ToggleButton () {
             child = expander_content,
             active = true
         };
-        unowned var expander_style_context = expander.get_style_context ();
-        expander_style_context.add_class ("image-button");
-        expander_style_context.add_class ("expander");
+        expander.add_css_class ("image-button");
+        expander.add_css_class ("expander");
 
-        var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        clear_btn_image.get_style_context ().add_class ("sweep-animation");
+        var clear_btn_image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic");
+        clear_btn_image.add_css_class ("sweep-animation");
 
         var clear_btn_entry = new Gtk.Button () {
             tooltip_text = _("Clear all %s notifications").printf (name),
-            child = clear_btn_image
+            child = clear_btn_image,
+            has_frame = false
         };
-        clear_btn_entry.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
         var box = new Gtk.Box (HORIZONTAL, 6);
-        box.add (expander);
-        box.add (clear_btn_entry);
+        box.append (expander);
+        box.append (clear_btn_entry);
 
         margin_start = 12;
         margin_end = 12;
@@ -92,7 +91,6 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         margin_top = 6;
         can_focus = false;
         child = box;
-        show_all ();
 
         if (app_id in headers) {
             expander.active = headers[app_id];
@@ -104,7 +102,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
         });
 
         clear_btn_entry.clicked.connect (() => {
-            clear_btn_image.get_style_context ().add_class ("active");
+            clear_btn_image.add_css_class ("active");
             clear_all_notification_entries ();
             GLib.Timeout.add (600, () => {
                 clear (); // Causes notification list to destroy this app entry after clearing its notification entries
