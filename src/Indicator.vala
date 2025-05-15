@@ -18,6 +18,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
 
     private List<Notification> previous_session = null;
     private NotificationsMonitor monitor;
+    private Gtk.GestureMultiPress gesture_click;
 
     public Indicator () {
         Object (
@@ -66,13 +67,14 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 set_display_icon_name ();
             });
 
-            dynamic_icon.button_press_event.connect ((e) => {
-                if (e.button == Gdk.BUTTON_MIDDLE) {
-                    notify_settings.set_boolean ("do-not-disturb", !notify_settings.get_boolean ("do-not-disturb"));
-                    return Gdk.EVENT_STOP;
-                }
+            gesture_click = new Gtk.GestureMultiPress (dynamic_icon) {
+                button = Gdk.BUTTON_MIDDLE
+            };
 
-                return Gdk.EVENT_PROPAGATE;
+            gesture_click.pressed.connect (() => {
+                notify_settings.set_boolean ("do-not-disturb", !notify_settings.get_boolean ("do-not-disturb"));
+                gesture_click.set_state (CLAIMED);
+                gesture_click.reset ();
             });
 
             previous_session = Session.get_instance ().get_session_notifications ();
