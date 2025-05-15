@@ -42,14 +42,17 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
+            Gtk.StyleContext.add_provider_for_screen (
+                Gdk.Screen.get_default (),
+                provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+
             dynamic_icon = new Gtk.Spinner () {
                 active = true,
                 tooltip_markup = _("Updating notifications…")
             };
-
-            unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
-            dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            dynamic_icon_style_context.add_class ("notification-icon");
+            dynamic_icon.get_style_context ().add_class ("notification-icon");
 
             nlist = new NotificationsList ();
 
