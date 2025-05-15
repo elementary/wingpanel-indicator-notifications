@@ -14,7 +14,6 @@ libdir = prefix / get_option('libdir')
 
 add_global_arguments(
     '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
-    '-DWNCK_I_KNOW_THIS_IS_UNSTABLE',
     language:'c'
 )
 add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.notifications"', language:'c')
@@ -25,7 +24,7 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
-wingpanel_dep = dependency('wingpanel')
+wingpanel_dep = dependency('wingpanel-8')
 wingpanel_indicatorsdir = wingpanel_dep.get_variable('indicatorsdir', pkgconfig_define: ['libdir', libdir])
 
 config_data = configuration_data()
@@ -52,9 +51,9 @@ shared_module(
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('granite', version: '>=6.0.0'),
-        dependency('gtk+-3.0'),
-        dependency('libhandy-1'),
+        dependency('granite-7', version: '>=7.0.0'),
+        dependency('gtk4'),
+        dependency('libadwaita-1'),
         wingpanel_dep
     ],
     install: true,
