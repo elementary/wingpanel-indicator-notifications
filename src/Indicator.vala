@@ -106,22 +106,25 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 margin_bottom = 3
             };
 
-            var scrolled = new Gtk.ScrolledWindow (null, null);
-            scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
-            scrolled.max_content_height = 500;
-            scrolled.propagate_natural_height = true;
-            scrolled.add (nlist);
+            var scrolled = new Gtk.ScrolledWindow (null, null) {
+                child = nlist,
+                hscrollbar_policy = NEVER,
+                max_content_height = 500,
+                propagate_natural_height = true
+            };
 
             var clear_all_btn_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_top = 3,
                 margin_bottom = 3
             };
 
-            clear_all_btn = new Gtk.ModelButton ();
-            clear_all_btn.text = _("Clear All Notifications");
+            clear_all_btn = new Gtk.ModelButton () {
+                text = _("Clear All Notifications")
+            };
 
-            var settings_btn = new Gtk.ModelButton ();
-            settings_btn.text = _("Notifications Settings…");
+            var settings_btn = new Gtk.ModelButton () {
+                text = _("Notifications Settings…")
+            };
 
             main_box = new Gtk.Box (VERTICAL, 0) {
                 width_request = 360
