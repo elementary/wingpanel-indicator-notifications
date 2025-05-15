@@ -11,7 +11,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gee.HashMap<string, Settings> app_settings_cache;
     private GLib.Settings notify_settings;
 
-    private Gtk.Grid? main_box = null;
+    private Gtk.Box? main_box = null;
     private Gtk.ModelButton clear_all_btn;
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
@@ -123,9 +123,9 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var settings_btn = new Gtk.ModelButton ();
             settings_btn.text = _("Notifications Settings…");
 
-            main_box = new Gtk.Grid ();
-            main_box.orientation = Gtk.Orientation.VERTICAL;
-            main_box.width_request = 360;
+            main_box = new Gtk.Box (VERTICAL, 0) {
+                width_request = 360
+            };
             main_box.add (not_disturb_switch);
             main_box.add (dnd_switch_separator);
             main_box.add (scrolled);
