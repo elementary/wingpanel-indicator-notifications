@@ -142,8 +142,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             nlist.close_popover.connect (() => close ());
-            nlist.add.connect (update_clear_all_sensitivity);
-            nlist.remove.connect (update_clear_all_sensitivity);
+            nlist.items_changed.connect (update_clear_all_sensitivity);
 
             clear_all_btn.clicked.connect (() => {
                 nlist.clear_all (); // This calls each appentry's clear method, which also clears session
