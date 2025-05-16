@@ -223,25 +223,21 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             transition_type = SLIDE_UP
         };
 
-        var eventbox = new Gtk.EventBox ();
-        eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
-                           Gdk.EventMask.LEAVE_NOTIFY_MASK;
-
-        eventbox.add (revealer);
-
-        child = eventbox;
+        child = revealer;
 
         delete_button.clicked.connect (() => clear ());
 
-        eventbox.enter_notify_event.connect ((event) => {
+        var motion_controller = new Gtk.EventControllerMotion ();
+
+        motion_controller.enter.connect (() => {
             delete_revealer.reveal_child = true;
-            return Gdk.EVENT_STOP;
         });
 
-        eventbox.leave_notify_event.connect ((event) => {
+        motion_controller.leave.connect (() => {
             delete_revealer.reveal_child = false;
-            return Gdk.EVENT_STOP;
         });
+
+        revealer.add_controller (motion_controller);
 
         timeout_id = Timeout.add_seconds_full (Priority.DEFAULT, 60, () => {
             time_label.label = Granite.DateTime.get_relative_datetime (notification.timestamp);
