@@ -37,10 +37,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             margin_end = 12,
             visible = true
         };
-
-        unowned Gtk.StyleContext placeholder_style_context = placeholder.get_style_context ();
-        placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
-        placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+        placeholder.add_css_class (Granite.STYLE_CLASS_H2_LABEL);
+        placeholder.add_css_class (Granite.STYLE_CLASS_DIM_LABEL);
 
         activate_on_single_click = true;
         selection_mode = Gtk.SelectionMode.NONE;
