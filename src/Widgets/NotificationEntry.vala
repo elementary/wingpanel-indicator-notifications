@@ -285,7 +285,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
     }
 
-    private class DeleteAffordance : Gtk.Grid {
+    private class DeleteAffordance : Gtk.Bin {
         public Gtk.Align alignment { get; construct; }
 
         public DeleteAffordance (Gtk.Align alignment) {
@@ -308,10 +308,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             delete_internal_grid.attach (image, 0, 0);
             delete_internal_grid.attach (label, 0, 1);
 
-            add (delete_internal_grid);
+            child = delete_internal_grid;
 
-            unowned Gtk.StyleContext context = get_style_context ();
-            context.add_class ("delete-affordance");
+            get_style_context ().add_class ("delete-affordance");
         }
     }
 
