@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Notifications.NotificationsList : Gtk.ListBox {
+public class Notifications.NotificationsList : Gtk.Bin {
     public signal void close_popover ();
     public signal void items_changed ();
 
@@ -25,6 +25,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public Gee.HashMap<string, AppEntry> app_entries { get; private set; }
 
     private HashTable<string, int> table;
+
+    private Gtk.ListBox listbox;
 
     construct {
         app_entries = new Gee.HashMap<string, AppEntry> ();
@@ -42,14 +44,18 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         placeholder_style_context.add_class (Granite.STYLE_CLASS_H2_LABEL);
         placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        activate_on_single_click = true;
-        selection_mode = Gtk.SelectionMode.NONE;
-        set_placeholder (placeholder);
+        listbox = new Gtk.ListBox () {
+            activate_on_single_click = true,
+            selection_mode = NONE
+        };
+        listbox.set_placeholder (placeholder);
+
+        child = listbox;
         show_all ();
 
         insert_action_group (ACTION_GROUP_PREFIX, new NotificationsMonitor ().notifications_action_group);
 
-        row_activated.connect (on_row_activated);
+        listbox.row_activated.connect (on_row_activated);
     }
 
     public async void add_entry (Notification notification, bool add_to_session = true) {
@@ -62,7 +68,7 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             app_entry.add_notification_entry (entry);
 
             int insert_pos = table.get (app_entry.app_id);
-            insert (entry, insert_pos + 1);
+            listbox.insert (entry, insert_pos + 1);
         } else {
             var app_entry = new AppEntry (notification.app_info);
             app_entry.add_notification_entry (entry);
@@ -70,8 +76,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
 
             app_entries[notification.desktop_id] = app_entry;
 
-            prepend (app_entry);
-            insert (entry, 1);
+            listbox.prepend (app_entry);
+            listbox.insert (entry, 1);
             table.insert (app_entry.app_id, 0);
         }
 
@@ -91,10 +97,10 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         var count = 0;
         var n_apps = 0;
 
-        for (int i = 0; get_row_at_index (i) != null; i++) {
-            if (get_row_at_index (i) is NotificationEntry) {
+        for (int i = 0; listbox.get_row_at_index (i) != null; i++) {
+            if (listbox.get_row_at_index (i) is NotificationEntry) {
                 count++;
-            } else if (get_row_at_index (i) is AppEntry) {
+            } else if (listbox.get_row_at_index (i) is AppEntry) {
                 n_apps++;
             }
         }
@@ -115,12 +121,12 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     }
 
     private void resort_app_entry (AppEntry app_entry) {
-        if (get_row_at_index (0) != app_entry) {
-            remove (app_entry);
-            prepend (app_entry);
+        if (listbox.get_row_at_index (0) != app_entry) {
+            listbox.remove (app_entry);
+            listbox.prepend (app_entry);
             app_entry.app_notifications.foreach ((notification_entry) => {
-                remove (notification_entry);
-                insert (notification_entry, 1);
+                listbox.remove (notification_entry);
+                listbox.insert (notification_entry, 1);
             });
         }
     }
