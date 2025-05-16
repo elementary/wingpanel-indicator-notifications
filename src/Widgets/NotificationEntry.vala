@@ -48,8 +48,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             app_image.icon_name = notification.app_icon;
         }
 
-        var image_overlay = new Gtk.Overlay ();
-        image_overlay.valign = Gtk.Align.START;
+        var image_overlay = new Gtk.Overlay () {
+            valign = START
+        };
 
         if (notification.image_path != null && notification.image_path != "") {
             try {
@@ -59,24 +60,24 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 var masked_image = new Notifications.MaskedImage (pixbuf);
 
                 app_image.pixel_size = ICON_SIZE_SECONDARY;
-                app_image.halign = app_image.valign = Gtk.Align.END;
+                app_image.halign = app_image.valign = END;
 
-                image_overlay.add (masked_image);
+                image_overlay.child = masked_image;
                 image_overlay.add_overlay (app_image);
             } catch (Error e) {
                 critical ("Unable to mask image: %s", e.message);
 
                 app_image.pixel_size = ICON_SIZE_PRIMARY;
-                image_overlay.add (app_image);
+                image_overlay.child = app_image;
             }
         } else {
             app_image.pixel_size = ICON_SIZE_PRIMARY;
-            image_overlay.add (app_image);
+            image_overlay.child = app_image;
 
             if (notification.badge_icon != null) {
                 var badge_image = new Gtk.Image.from_gicon (notification.badge_icon, Gtk.IconSize.LARGE_TOOLBAR) {
-                    halign = Gtk.Align.END,
-                    valign = Gtk.Align.END,
+                    halign = END,
+                    valign = END,
                     pixel_size = ICON_SIZE_SECONDARY
                 };
                 image_overlay.add_overlay (badge_image);
@@ -94,7 +95,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         var title_label = new Gtk.Label ("<b>%s</b>".printf (fix_markup (entry_title))) {
-            ellipsize = Pango.EllipsizeMode.END,
+            ellipsize = END,
             hexpand = true,
             width_chars = 27,
             max_width_chars = 27,
@@ -124,21 +125,21 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_button = new Gtk.Button () {
-            halign = Gtk.Align.START,
-            valign = Gtk.Align.START,
+            halign = START,
+            valign = START,
             image = delete_image
         };
         delete_button.get_style_context ().add_class ("close");
         delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
-            halign = Gtk.Align.START,
-            valign = Gtk.Align.START,
+            child = delete_button,
+            halign = START,
+            valign = START,
             reveal_child = false,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
-            transition_type = Gtk.RevealerTransitionType.CROSSFADE
+            transition_type = CROSSFADE
         };
-        delete_revealer.add (delete_button);
 
         grid.attach (image_overlay, 0, 0, 1, 2);
         grid.attach (title_label, 1, 0);
@@ -153,11 +154,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         var body = fix_markup (entry_body);
 
         var body_label = new Gtk.Label (body) {
-            ellipsize = Pango.EllipsizeMode.END,
+            ellipsize = END,
             lines = 2,
             use_markup = true,
-            valign = Gtk.Align.START,
-            wrap_mode = Pango.WrapMode.WORD_CHAR,
+            valign = START,
+            wrap_mode = WORD_CHAR,
             wrap = true,
             xalign = 0
         };
@@ -177,9 +178,9 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         grid.attach (body_label, 1, 1, 2);
 
         if (notification.buttons.length () > 0) {
-            var action_area = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6) {
+            var action_area = new Gtk.Box (HORIZONTAL, 6) {
                 margin_top = 12,
-                halign = Gtk.Align.END,
+                halign = END,
                 homogeneous = true
             };
             grid.attach (action_area, 0, 2, 3);
@@ -189,22 +190,23 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             };
         }
 
-        var delete_left = new DeleteAffordance (Gtk.Align.END) {
+        var delete_left = new DeleteAffordance (END) {
             // Have to match with the grid
             margin_top = 9,
             margin_bottom = 9
         };
         delete_left.get_style_context ().add_class ("left");
 
-        var delete_right = new DeleteAffordance (Gtk.Align.START) {
+        var delete_right = new DeleteAffordance (START) {
             // Have to match with the grid
             margin_top = 9,
             margin_bottom = 9
         };
         delete_right.get_style_context ().add_class ("right");
 
-        var overlay = new Gtk.Overlay ();
-        overlay.add (grid);
+        var overlay = new Gtk.Overlay () {
+            child = grid
+        };
         overlay.add_overlay (delete_revealer);
 
         var deck = new Hdy.Deck () {
@@ -218,11 +220,11 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         deck.visible_child = overlay;
 
         revealer = new Gtk.Revealer () {
+            child = deck,
             reveal_child = true,
             transition_duration = 200,
-            transition_type = Gtk.RevealerTransitionType.SLIDE_UP
+            transition_type = SLIDE_UP
         };
-        revealer.add (deck);
 
         var eventbox = new Gtk.EventBox ();
         eventbox.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
@@ -230,7 +232,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         eventbox.add (revealer);
 
-        add (eventbox);
+        child = eventbox;
 
         show_all ();
 
@@ -304,7 +306,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
                 halign = alignment,
                 hexpand = true,
                 row_spacing = 3,
-                valign = Gtk.Align.CENTER,
+                valign = CENTER,
                 vexpand = true
             };
             delete_internal_grid.attach (image, 0, 0);
