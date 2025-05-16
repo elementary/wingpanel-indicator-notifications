@@ -1,19 +1,7 @@
-/*-
- * Copyright 2015-2020 elementary, Inc. (https://elementary.io)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Library General Public License as published by
- * the Free Software Foundation, either version 2.1 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Library General Public License for more details.
- *
- * You should have received a copy of the GNU Library General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+/*
+* SPDX-License-Identifier: LGPL-2.1-or-later
+* SPDX-FileCopyrightText: 2015-2025 elementary, Inc. (https://elementary.io)
+*/
 
 public class Notifications.Indicator : Wingpanel.Indicator {
     private const string CHILD_SCHEMA_ID = "io.elementary.notifications.applications";
@@ -23,7 +11,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     private Gee.HashMap<string, Settings> app_settings_cache;
     private GLib.Settings notify_settings;
 
-    private Gtk.Grid? main_box = null;
+    private Gtk.Box? main_box = null;
     private Wingpanel.PopoverMenuItem clear_all_btn;
     private Gtk.Spinner? dynamic_icon = null;
     private NotificationsList nlist;
@@ -53,13 +41,16 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("io/elementary/wingpanel/notifications/indicator.css");
 
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (),
+                provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+
             dynamic_icon = new Gtk.Spinner () {
                 spinning = true,
                 tooltip_markup = _("Updating notifications…")
             };
-
-            unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
-            dynamic_icon_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             dynamic_icon.add_css_class ("notification-icon");
 
             nlist = new NotificationsList ();
@@ -78,21 +69,23 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 set_display_icon_name ();
             });
 
-            dynamic_icon.button_press_event.connect ((e) => {
-                if (e.button == Gdk.BUTTON_MIDDLE) {
-                    notify_settings.set_boolean ("do-not-disturb", !notify_settings.get_boolean ("do-not-disturb"));
-                    return Gdk.EVENT_STOP;
-                }
+            var gesture_click = new Gtk.GestureClick () {
+                button = Gdk.BUTTON_MIDDLE
+            };
 
-                return Gdk.EVENT_PROPAGATE;
+            gesture_click.pressed.connect (() => {
+                notify_settings.set_boolean ("do-not-disturb", !notify_settings.get_boolean ("do-not-disturb"));
+                gesture_click.set_state (CLAIMED);
+                gesture_click.reset ();
             });
+
+            dynamic_icon.add_controller (gesture_click);
 
             previous_session = Session.get_instance ().get_session_notifications ();
             Timeout.add (2000, () => { // Do not block animated drawing of wingpanel
                 load_session_notifications.begin (() => { // load asynchromously so spinner continues to rotate
                     set_display_icon_name ();
-                    nlist.add.connect (set_display_icon_name);
-                    nlist.remove.connect (set_display_icon_name);
+                    nlist.items_changed.connect (set_display_icon_name);
                 });
 
                 return Source.REMOVE;
@@ -118,11 +111,12 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 margin_bottom = 3
             };
 
-            var scrolled = new Gtk.ScrolledWindow (null, null);
-            scrolled.hscrollbar_policy = Gtk.PolicyType.NEVER;
-            scrolled.max_content_height = 500;
-            scrolled.propagate_natural_height = true;
-            scrolled.add (nlist);
+            var scrolled = new Gtk.ScrolledWindow () {
+                child = nlist,
+                hscrollbar_policy = NEVER,
+                max_content_height = 500,
+                propagate_natural_height = true
+            };
 
             var clear_all_btn_separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_top = 3,
@@ -137,21 +131,20 @@ public class Notifications.Indicator : Wingpanel.Indicator {
                 text = _("Notifications Settings…")
             };
 
-            main_box = new Gtk.Grid ();
-            main_box.orientation = Gtk.Orientation.VERTICAL;
-            main_box.width_request = 360;
-            main_box.add (not_disturb_switch);
-            main_box.add (dnd_switch_separator);
-            main_box.add (scrolled);
-            main_box.add (clear_all_btn_separator);
-            main_box.add (clear_all_btn);
-            main_box.add (settings_btn);
+            main_box = new Gtk.Box (VERTICAL, 0) {
+                width_request = 360
+            };
+            main_box.append (not_disturb_switch);
+            main_box.append (dnd_switch_separator);
+            main_box.append (scrolled);
+            main_box.append (clear_all_btn_separator);
+            main_box.append (clear_all_btn);
+            main_box.append (settings_btn);
 
             notify_settings.bind ("do-not-disturb", not_disturb_switch, "active", GLib.SettingsBindFlags.DEFAULT);
 
             nlist.close_popover.connect (() => close ());
-            nlist.add.connect (update_clear_all_sensitivity);
-            nlist.remove.connect (update_clear_all_sensitivity);
+            nlist.items_changed.connect (update_clear_all_sensitivity);
 
             clear_all_btn.clicked.connect (() => {
                 nlist.clear_all (); // This calls each appentry's clear method, which also clears session
@@ -210,15 +203,14 @@ public class Notifications.Indicator : Wingpanel.Indicator {
     }
 
     private void set_display_icon_name () {
-        unowned var dynamic_icon_style_context = dynamic_icon.get_style_context ();
         if (notify_settings.get_boolean ("do-not-disturb")) {
-            dynamic_icon_style_context.add_class ("disabled");
+            dynamic_icon.add_css_class ("disabled");
         } else if (nlist != null && nlist.app_entries.size > 0) {
-            dynamic_icon_style_context.remove_class ("disabled");
-            dynamic_icon_style_context.add_class ("new");
+            dynamic_icon.remove_css_class ("disabled");
+            dynamic_icon.add_css_class ("new");
         } else {
-            dynamic_icon_style_context.remove_class ("disabled");
-            dynamic_icon_style_context.remove_class ("new");
+            dynamic_icon.remove_css_class ("disabled");
+            dynamic_icon.remove_css_class ("new");
         }
         update_tooltip ();
     }

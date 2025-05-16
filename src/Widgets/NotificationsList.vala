@@ -17,6 +17,7 @@
 
 public class Notifications.NotificationsList : Gtk.ListBox {
     public signal void close_popover ();
+    public signal void items_changed ();
 
     public const string ACTION_GROUP_PREFIX = "notifications-list";
     public const string ACTION_PREFIX = ACTION_GROUP_PREFIX + ".";
@@ -80,6 +81,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (add_to_session) { // If notification was obtained from session do not write it back
             Session.get_instance ().add_notification (notification);
         }
+
+        items_changed ();
     }
 
     public uint count_notifications (out uint number_of_apps) {
@@ -128,6 +131,8 @@ public class Notifications.NotificationsList : Gtk.ListBox {
         if (app_entries.size == 0) {
             Session.get_instance ().clear ();
         }
+
+        items_changed ();
     }
 
     private void on_row_activated (Gtk.ListBoxRow row) {
