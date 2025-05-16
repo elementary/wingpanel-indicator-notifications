@@ -24,7 +24,7 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
-wingpanel_dep = dependency('wingpanel')
+wingpanel_dep = dependency('wingpanel-8')
 wingpanel_indicatorsdir = wingpanel_dep.get_variable('indicatorsdir', pkgconfig_define: ['libdir', libdir])
 
 config_data = configuration_data()
@@ -39,7 +39,6 @@ config_vala = configure_file(
 shared_module(
     meson.project_name(),
     'src/Indicator.vala',
-    'src/Widgets/MaskedImage.vala',
     'src/Widgets/NotificationsList.vala',
     'src/Widgets/NotificationEntry.vala',
     'src/Widgets/AppEntry.vala',
@@ -51,9 +50,9 @@ shared_module(
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('granite', version: '>=6.0.0'),
-        dependency('gtk+-3.0'),
-        dependency('libhandy-1'),
+        dependency('granite-7', version: '>=7.6.0'),
+        dependency('gtk4'),
+        dependency('libadwaita-1'),
         wingpanel_dep
     ],
     install: true,
