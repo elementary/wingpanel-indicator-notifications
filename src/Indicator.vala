@@ -84,8 +84,7 @@ public class Notifications.Indicator : Wingpanel.Indicator {
             Timeout.add (2000, () => { // Do not block animated drawing of wingpanel
                 load_session_notifications.begin (() => { // load asynchromously so spinner continues to rotate
                     set_display_icon_name ();
-                    nlist.add.connect (set_display_icon_name);
-                    nlist.remove.connect (set_display_icon_name);
+                    nlist.items_changed.connect (set_display_icon_name);
                 });
 
                 return Source.REMOVE;
