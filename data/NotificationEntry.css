@@ -1,6 +1,12 @@
 notification .card {
     border-radius: 6px;
     padding: 6px;
+    /* Box shadow is clipped to the margin area */
+    margin: 0.75em 1em;
+}
+
+notification .title {
+    font-weight: bold;
 }
 
 .delete-affordance {
