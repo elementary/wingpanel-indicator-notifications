@@ -138,8 +138,10 @@ public class Notifications.NotificationsList : Gtk.ListBox {
             unowned var notification_entry = (NotificationEntry) row;
 
             if (notification_entry.notification.default_action != null) {
-                unowned var action_group = get_action_group (ACTION_GROUP_PREFIX);
-                action_group.activate_action (notification_entry.notification.default_action, null);
+                activate_action (
+                    ACTION_PREFIX + notification_entry.notification.default_action,
+                    null
+                );
                 close_popover ();
             } else {
                 try {

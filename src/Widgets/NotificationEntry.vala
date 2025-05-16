@@ -278,8 +278,10 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         }
 
         if (notification.server_id > 0) {
-            unowned var action_group = get_action_group (NotificationsList.ACTION_GROUP_PREFIX);
-            action_group.activate_action ("close", new Variant.array (VariantType.UINT32, { notification.server_id }));
+            activate_action_variant (
+                NotificationsList.ACTION_PREFIX + "close",
+                new Variant.array (VariantType.UINT32, { notification.server_id })
+            );
         }
     }
 
