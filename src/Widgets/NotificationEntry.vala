@@ -63,10 +63,12 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         if (notification.image_path != null && notification.image_path != "") {
             try {
-                var scale = get_style_context ().get_scale ();
-                var pixbuf = new Gdk.Pixbuf.from_file_at_size (notification.image_path, ICON_SIZE_PRIMARY * scale, ICON_SIZE_PRIMARY * scale);
-
-                var masked_image = new Notifications.MaskedImage (pixbuf);
+                var masked_image = new Gtk.Image.from_file (notification.image_path) {
+                    pixel_size = ICON_SIZE_PRIMARY,
+                    overflow = HIDDEN
+                };
+                masked_image.add_css_class (Granite.STYLE_CLASS_CARD);
+                masked_image.add_css_class (Granite.STYLE_CLASS_ROUNDED);
 
                 app_image.pixel_size = ICON_SIZE_SECONDARY;
                 app_image.halign = app_image.valign = END;
