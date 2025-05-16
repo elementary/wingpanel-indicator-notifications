@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2024-06-30 14:16+0000\n"
 "Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
@@ -26,6 +26,10 @@ msgstr "Indicador de notificaciones"
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
 msgstr "Ver notificaciones antiguas en el Panel"
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
+msgstr "elementary, Inc."
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
@@ -79,9 +83,6 @@ msgstr "El botón «Limpiar Todo» ya no deja notificaciones no descartables"
 #~ "of notifications"
 #~ msgstr ""
 #~ "Reducido el retardo al limpiar notificaciones cuando hay un gran número"
-
-#~ msgid "elementary, Inc."
-#~ msgstr "elementary, Inc."
 
 #, fuzzy
 #~| msgid "Fix issues with disappearing notifications"

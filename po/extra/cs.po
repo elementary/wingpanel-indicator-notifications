@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2022-01-10 17:06+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
@@ -26,6 +26,10 @@ msgstr "Indikátor oznámení"
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
 msgstr "Mějte na panelu na očích upozornění, která vám unikla"
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
+msgstr "elementary, Inc."
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
@@ -67,9 +71,6 @@ msgstr "Opravy:"
 #| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr "Každé upozornění nyní obsahuje tlačítko pro jeho zavření"
-
-#~ msgid "elementary, Inc."
-#~ msgstr "elementary, Inc."
 
 #~ msgid "Fix delayed startup"
 #~ msgstr "Opraveno pozdržené spouštění"

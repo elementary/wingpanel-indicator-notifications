@@ -1,6 +1,12 @@
-.card {
+notification .card {
     border-radius: 6px;
     padding: 6px;
+    /* Box shadow is clipped to the margin area */
+    margin: 0.75em 1em;
+}
+
+notification .title {
+    font-weight: bold;
 }
 
 .delete-affordance {
@@ -24,7 +30,7 @@
     font-weight: 600;
 }
 
-.close {
+notification .close {
     padding: 3px;
     border: none;
     border-radius: 100%;
@@ -44,7 +50,7 @@
     margin: 3px;
 }
 
-.close image {
+notification .close image {
     color: #fff;
     -gtk-icon-shadow: 0 1px 1px alpha (#000, 0.6);
 }

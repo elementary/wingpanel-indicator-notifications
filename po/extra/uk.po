@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2023-09-07 13:34+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,6 +27,10 @@ msgstr "Індикатор сповіщень"
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
 msgstr "Перегляньте пропущені сповіщення у панелі"
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
+msgstr "elementary, Inc."
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
@@ -79,9 +83,6 @@ msgstr ""
 #~ "Reduce delay in clearing all notifications when there is a large number "
 #~ "of notifications"
 #~ msgstr "Скорочена затримка очищення сповіщень, коли їх велика кількість"
-
-#~ msgid "elementary, Inc."
-#~ msgstr "elementary, Inc."
 
 #~ msgid "Fix delayed startup"
 #~ msgstr "Виправлено затримку запуску"

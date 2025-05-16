@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2021-08-27 11:29+0000\n"
 "Last-Translator: Muhammad Al-Jayyousi <m7md.j99@protonmail.com>\n"
 "Language-Team: Arabic <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,6 +27,10 @@ msgstr "مؤشر الإشعارات"
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
 msgstr "قم برؤية الإشعارات الفائتة في اللوحة"
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
+msgstr "elementary, Inc."
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
@@ -68,9 +72,6 @@ msgstr ""
 #| msgid "Close button on each notification"
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr "زر إغلاق على كل إشعار"
-
-#~ msgid "elementary, Inc."
-#~ msgstr "elementary, Inc."
 
 #~ msgid "Complete redesign:"
 #~ msgstr "إعادة التصميم:"

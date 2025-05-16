@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2025-03-20 07:55+0000\n"
 "Last-Translator: Carmina16 <mistresssilvara@hotmail.com>\n"
 "Language-Team: Occidental <https://l10n.elementaryos.org/projects/wingpanel/"
@@ -25,6 +25,10 @@ msgstr ""
 
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
+msgstr ""
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
 msgstr ""
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
