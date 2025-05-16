@@ -14,7 +14,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     private const int ICON_SIZE_PRIMARY = 48;
     private const int ICON_SIZE_SECONDARY = 24;
 
-    private static Gtk.CssProvider provider;
     private static Regex entity_regex;
     private static Regex tag_regex;
 
@@ -23,15 +22,25 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
     }
 
     static construct {
-        provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("io/elementary/wingpanel/notifications/NotificationEntry.css");
-
         try {
             entity_regex = new Regex ("&(?!amp;|quot;|apos;|lt;|gt;|nbsp;|#39)");
             tag_regex = new Regex ("<(?!\\/?[biu]>)");
         } catch (Error e) {
             warning ("Invalid regex: %s", e.message);
         }
+    }
+
+    class construct {
+        set_css_name ("notification");
+
+        var provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("io/elementary/wingpanel/notifications/NotificationEntry.css");
+
+        Gtk.StyleContext.add_provider_for_screen (
+            Gdk.Screen.get_default (),
+            provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        );
     }
 
     construct {
@@ -119,10 +128,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         unowned Gtk.StyleContext grid_context = grid.get_style_context ();
         grid_context.add_class (Granite.STYLE_CLASS_CARD);
-        grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        delete_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_button = new Gtk.Button () {
             halign = START,
@@ -130,7 +137,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             image = delete_image
         };
         delete_button.get_style_context ().add_class ("close");
-        delete_button.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var delete_revealer = new Gtk.Revealer () {
             child = delete_button,
@@ -295,12 +301,10 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
         construct {
             var image = new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.MENU);
-            image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var label = new Gtk.Label ("<small>%s</small>".printf (_("Delete"))) {
                 use_markup = true
             };
-            label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var delete_internal_grid = new Gtk.Grid () {
                 halign = alignment,
@@ -316,7 +320,6 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
 
             unowned Gtk.StyleContext context = get_style_context ();
             context.add_class ("delete-affordance");
-            context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
     }
 
