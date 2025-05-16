@@ -124,12 +124,10 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         grid.get_style_context ().add_class (Granite.STYLE_CLASS_CARD);
 
-        var delete_image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
 
-        var delete_button = new Gtk.Button () {
+        var delete_button = new Gtk.Button.from_icon_name ("window-close-symbolic") {
             halign = START,
-            valign = START,
-            image = delete_image
+            valign = START
         };
         delete_button.get_style_context ().add_class ("close");
 
