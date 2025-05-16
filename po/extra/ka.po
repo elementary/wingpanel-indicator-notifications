@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2025-05-07 03:55+0000\n"
 "Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://l10n.elementaryos.org/projects/wingpanel/"
@@ -26,6 +26,10 @@ msgstr "გაფრთხილებების მაჩვენებე�
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
 msgstr "გამოტოვებული გაფრთხილებების ნახვა პანელზე"
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
+msgstr "elementary, Inc."
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
@@ -65,9 +69,6 @@ msgstr "შეცდომების გასწორებები:"
 #: data/notifications.metainfo.xml.in:86
 msgid "Clear All button no longer leaves undeletable notifications"
 msgstr ""
-
-#~ msgid "elementary, Inc."
-#~ msgstr "elementary, Inc."
 
 #~ msgid "Show tooltip on hover"
 #~ msgstr "გადატარებისას მინიშნების ჩვენება"

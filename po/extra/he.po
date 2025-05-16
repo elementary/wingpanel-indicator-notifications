@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 18:04+0000\n"
+"POT-Creation-Date: 2025-05-15 20:48+0000\n"
 "PO-Revision-Date: 2024-07-15 07:16+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -26,6 +26,10 @@ msgstr "מחוון התראות"
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
 msgstr "הצגת התרעות שהוחמצו בלוח"
+
+#: data/notifications.metainfo.xml.in:28
+msgid "elementary, Inc."
+msgstr "elementary בע״מ"
 
 #: data/notifications.metainfo.xml.in:36 data/notifications.metainfo.xml.in:59
 #: data/notifications.metainfo.xml.in:75 data/notifications.metainfo.xml.in:88
@@ -75,9 +79,6 @@ msgstr "כפתור לפנות הכול לא משאיר עוד התראות של�
 #~ "Reduce delay in clearing all notifications when there is a large number "
 #~ "of notifications"
 #~ msgstr "צומצמה ההמתנה לפינוי כל ההתראות כשמספר ההתראות גדול"
-
-#~ msgid "elementary, Inc."
-#~ msgstr "elementary בע״מ"
 
 #~ msgid "Fix delayed startup"
 #~ msgstr "תיקון הפעלה מושהית"
