@@ -86,13 +86,14 @@ public class Notifications.NotificationsList : Gtk.ListBox {
     public uint count_notifications (out uint number_of_apps) {
         var count = 0;
         var n_apps = 0;
-        @foreach ((widget) => {
-            if (widget is NotificationEntry) {
+
+        for (int i = 0; get_row_at_index (i) != null; i++) {
+            if (get_row_at_index (i) is NotificationEntry) {
                 count++;
-            } else if (widget is AppEntry) {
+            } else if (get_row_at_index (i) is AppEntry) {
                 n_apps++;
             }
-        });
+        }
 
         number_of_apps = n_apps;
         return count;
