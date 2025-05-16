@@ -208,18 +208,16 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         };
         overlay.add_overlay (delete_revealer);
 
-        var deck = new Hdy.Deck () {
-            can_swipe_back = true,
-            can_swipe_forward = true,
-            transition_type = Hdy.DeckTransitionType.SLIDE
+        var carousel = new Adw.Carousel () {
+            allow_scroll_wheel = false
         };
-        deck.add (delete_left);
-        deck.add (overlay);
-        deck.add (delete_right);
-        deck.visible_child = overlay;
+        carousel.append (delete_left);
+        carousel.append (overlay);
+        carousel.append (delete_right);
+        carousel.scroll_to (overlay, false);
 
         revealer = new Gtk.Revealer () {
-            child = deck,
+            child = carousel,
             reveal_child = true,
             transition_duration = 200,
             transition_type = SLIDE_UP
@@ -250,14 +248,8 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             return GLib.Source.CONTINUE;
         });
 
-        deck.notify["visible-child"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != overlay) {
-                clear ();
-            }
-        });
-
-        deck.notify["transition-running"].connect (() => {
-            if (deck.transition_running == false && deck.visible_child != overlay) {
+        carousel.page_changed.connect (() => {
+            if (carousel.position != 2) {
                 clear ();
             }
         });
