@@ -37,7 +37,7 @@ public class Notifications.AppEntry : Gtk.ListBoxRow {
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         );
 
-        settings = new Settings ("io.elementary.wingpanel.notifications");
+        settings = new Settings ("io.elementary.panel.notifications");
         headers = (HashTable<string, bool>) settings.get_value ("headers");
     }
 

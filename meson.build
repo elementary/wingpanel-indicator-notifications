@@ -5,7 +5,7 @@ project(
     meson_version: '>= 0.58.0'
 )
 
-gettext_name = meson.project_name() + '-indicator'
+gettext_name = 'io.elementary.panel.' + meson.project_name()
 gnome = import('gnome')
 i18n = import('i18n')
 
@@ -16,7 +16,7 @@ add_global_arguments(
     '-DGETTEXT_PACKAGE="@0@"'.format(gettext_name),
     language:'c'
 )
-add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.notifications"', language:'c')
+add_project_arguments('-DG_LOG_DOMAIN="io.elementary.panel.notifications"', language:'c')
 
 gresource = gnome.compile_resources(
     'gresource',
