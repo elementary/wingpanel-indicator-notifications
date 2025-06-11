@@ -138,6 +138,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
             halign = START,
             valign = START,
             reveal_child = false,
+            overflow = VISIBLE,
             transition_duration = Granite.TRANSITION_DURATION_CLOSE,
             transition_type = CROSSFADE
         };
@@ -247,7 +248,7 @@ public class Notifications.NotificationEntry : Gtk.ListBoxRow {
         });
 
         carousel.page_changed.connect (() => {
-            if (carousel.position != 2) {
+            if (carousel.position != 1) {
                 clear ();
             }
         });
