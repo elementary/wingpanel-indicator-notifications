@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-15 20:48+0000\n"
-"PO-Revision-Date: 2025-10-22 09:58+0000\n"
+"PO-Revision-Date: 2025-10-31 11:55+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <https://l10n.elementaryos.org/projects/wingpanel/"
 "indicator-notifications-extra/sv/>\n"
@@ -25,7 +25,7 @@ msgstr "Indikator för aviseringar"
 
 #: data/notifications.metainfo.xml.in:12
 msgid "See missed notifications in the panel"
-msgstr "Se missade meddelanden i panelen"
+msgstr "Se missade aviseringar i panelen"
 
 #: data/notifications.metainfo.xml.in:28
 msgid "elementary, Inc."
@@ -48,19 +48,19 @@ msgstr "Nya funktioner:"
 
 #: data/notifications.metainfo.xml.in:47
 msgid "Support notifications with buttons"
-msgstr "Stöd för meddelanden med knappar"
+msgstr "Stöd för aviseringar med knappar"
 
 #: data/notifications.metainfo.xml.in:48
 msgid "Collapsible app sections"
-msgstr "Hopfällbara app-sektioner"
+msgstr "Infällbara app-sektioner"
 
 #: data/notifications.metainfo.xml.in:61
 msgid "Remove notification from list if bubble dismissed"
-msgstr "Ta bort meddelandet från listan om bubblan avfärdas"
+msgstr "Ta bort avisering från listan om bubblan avfärdas"
 
 #: data/notifications.metainfo.xml.in:62
 msgid "Ensure accurate count in tooltip"
-msgstr "Säkerställ korrekt antal i verktygstipset"
+msgstr "Säkerställ korrekt antal i verktygstips"
 
 #: data/notifications.metainfo.xml.in:84
 msgid "Fixes:"
@@ -68,4 +68,4 @@ msgstr "Åtgärdar:"
 
 #: data/notifications.metainfo.xml.in:86
 msgid "Clear All button no longer leaves undeletable notifications"
-msgstr "Knappen Rensa alla lämnar inte längre meddelanden som inte kan raderas"
+msgstr "Knappen Töm alla lämnar inte längre aviseringar som inte kan raderas"
