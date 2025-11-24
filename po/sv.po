@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-15 20:48+0000\n"
-"PO-Revision-Date: 2025-10-23 12:55+0000\n"
+"PO-Revision-Date: 2025-10-31 11:55+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <https://l10n.elementaryos.org/projects/wingpanel/"
 "wingpanel-indicator-notifications/sv/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:53
 msgid "Updating notifications…"
-msgstr "Uppdaterar meddelanden…"
+msgstr "Uppdaterar aviseringar…"
 
 #: src/Indicator.vala:106
 msgid "Do Not Disturb"
@@ -83,7 +83,7 @@ msgstr "Övrigt"
 #: src/Widgets/AppEntry.vala:80
 #, c-format
 msgid "Clear all %s notifications"
-msgstr "Rensa alla %s meddelanden"
+msgstr "Töm alla %s aviseringar"
 
 #: src/Widgets/AppEntry.vala:116
 msgid "Show less"
