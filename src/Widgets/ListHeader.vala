@@ -79,6 +79,12 @@ public class Notifications.ListHeader : Granite.Bin {
         child = box;
 
         bind_property ("app-name", label, "label");
+        bind_property ("app-name", clear_btn_entry, "tooltip-text", DEFAULT,
+                        (binding, app_name, ref tooltip_text) => {
+                            tooltip_text = _("Clear all %s notifications").printf ((string) app_name);
+                            return true;
+                        },
+                        () => { return false; });
 
         expander.toggled.connect (() => {
             headers[app_id] = expander.active;
