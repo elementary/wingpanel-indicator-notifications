@@ -69,7 +69,7 @@ public class Notifications.ListHeader : Granite.Bin {
         clear_btn_image.add_css_class ("sweep-animation");
 
         clear_btn_entry = new Gtk.Button () {
-                action_name = Wingpanel.Indicator.MESSAGES + ".clear-app",
+            action_name = Wingpanel.Indicator.MESSAGES + ".clear-app",
             tooltip_text = _("Clear all %s notifications").printf (app_name),
             child = clear_btn_image,
             has_frame = false
