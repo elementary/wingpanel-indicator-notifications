@@ -125,9 +125,7 @@ public class Notifications.NotificationsList : Granite.Bin {
     }
 
     private void setup_header_factory (Object item) {
-        var app_entry = new ListHeader ();
-
-        ((Gtk.ListHeader) item).child = app_entry;
+        ((Gtk.ListHeader) item).child = new ListHeader ();
     }
 
     private void bind_header_factory (Object item) {
