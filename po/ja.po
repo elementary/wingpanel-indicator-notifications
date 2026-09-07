@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-04 20:13+0000\n"
-"PO-Revision-Date: 2026-08-29 09:01+0000\n"
+"PO-Revision-Date: 2026-09-05 22:01+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementaryos.org/projects/wingpanel/"
 "notifications/ja/>\n"
@@ -49,12 +49,10 @@ msgid_plural "%u notifications"
 msgstr[0] "%u 件の通知"
 
 #: src/Indicator.vala:175
-#, fuzzy, c-format
-#| msgid "%i app"
-#| msgid_plural "%i apps"
+#, c-format
 msgid "%i app"
 msgid_plural "%u apps"
-msgstr[0] "%i 個のアプリ"
+msgstr[0] "%u 個のアプリ"
 
 #: src/Widgets/NotificationsList.vala:31
 msgid "Do Not Disturb"

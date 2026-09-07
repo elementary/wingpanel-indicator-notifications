@@ -44,7 +44,7 @@ public class Notifications.ListHeader : Granite.Bin {
     construct {
         var image = new Gtk.Image.from_icon_name ("pan-end-symbolic");
 
-        var label = new Granite.HeaderLabel (name) {
+        var label = new Granite.HeaderLabel (app_name) {
             hexpand = true,
             size = H3
         };
@@ -65,7 +65,7 @@ public class Notifications.ListHeader : Granite.Bin {
         clear_btn_image.add_css_class ("sweep-animation");
 
         var clear_btn_entry = new Gtk.Button () {
-            tooltip_text = _("Clear all %s notifications").printf (name),
+            tooltip_text = _("Clear all %s notifications").printf (app_name),
             child = clear_btn_image,
             has_frame = false
         };
@@ -79,6 +79,12 @@ public class Notifications.ListHeader : Granite.Bin {
         child = box;
 
         bind_property ("app-name", label, "label");
+        bind_property ("app-name", clear_btn_entry, "tooltip-text", DEFAULT,
+                       (binding, _app_name, ref _tooltip_text) => {
+                           _tooltip_text = _("Clear all %s notifications").printf ((string) _app_name);
+                           return true;
+                       },
+                       () => { return false; });
 
         expander.toggled.connect (() => {
             headers[app_id] = expander.active;
